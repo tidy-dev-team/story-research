@@ -13,9 +13,9 @@ const meta = {
     argTypes: {
         size: {
             control: {
-                type: 'select',
+                type: 'select', // Use a dropdown control
             },
-            options: Object.values(AvatarSize)
+            options: Object.values(AvatarSize),
         },
     },
 } satisfies Meta<typeof Avatar>;
@@ -25,21 +25,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Small: Story = {
     args: {
-        size: AvatarSize.Sm,
         label: '',
+        size: AvatarSize.Sm,
     },
 };
 
 export const Medium: Story = {
     args: {
-        size: AvatarSize.Md,
         label: '',
+        size: AvatarSize.Md,
     },
 };
 
 export const Large: Story = {
     args: {
-        size: AvatarSize.Lg,
         label: '',
+        size: AvatarSize.Lg,
     },
 };
