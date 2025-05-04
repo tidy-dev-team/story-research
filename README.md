@@ -16,7 +16,7 @@ sudo npm run dev
 
 Or get right into the Storybook like this:
 ```bash
-npm run storybook
+sudo npm run storybook
 ```
 
 If something doesn't work, make sure you're in the right folder (story) or try running the commands with ```sudo``` at the start.
