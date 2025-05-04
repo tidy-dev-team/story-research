@@ -27,17 +27,20 @@ type Story = StoryObj<typeof meta>;
 export const Small: Story = {
     args: {
         size: AvatarSize.Sm,
+        label: '',
     },
 };
 
 export const Medium: Story = {
     args: {
         size: AvatarSize.Md,
+        label: '',
     },
 };
 
 export const Large: Story = {
     args: {
         size: AvatarSize.Lg,
+        label: '',
     },
 };
