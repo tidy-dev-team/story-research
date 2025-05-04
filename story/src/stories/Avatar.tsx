@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
-import "../app/globals.css"
 
 export enum AvatarSize {
     Sm = 'sm',
