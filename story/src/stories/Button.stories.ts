@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "./Button";
-import { ButtonSize } from "./Button";
+import { ButtonSize, ButtonType } from "./Button";
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Example/Button",
   component: Button,
@@ -12,34 +11,53 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     size: {
-      control: {
-        type: "select", // Use a dropdown control
-      },
+      control: "select",
       options: Object.values(ButtonSize),
+    },
+    type: {
+      control: "select",
+      options: Object.values(ButtonType),
+    },
+    rtl: {
+      control: "boolean",
+      description: "Right to left text direction",
     },
   },
 } satisfies Meta<typeof Button>;
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
-export const Small: Story = {
+export const Primary: Story = {
   args: {
-    label: "",
-    size: ButtonSize.Sm,
+    type: ButtonType.Primary,
+    label: "Button",
+    size: ButtonSize.Medium,
   },
 };
 
-export const Medium: Story = {
+export const Secondary: Story = {
   args: {
-    label: "",
-    size: ButtonSize.Md,
+    type: ButtonType.Secondary,
+    label: "Button",
+    size: ButtonSize.Medium,
   },
 };
 
-export const Large: Story = {
+export const Ghost: Story = {
   args: {
-    label: "",
-    size: ButtonSize.Lg,
+    type: ButtonType.Ghost,
+    label: "Button",
+    size: ButtonSize.Medium,
+  },
+};
+
+export const RightToLeft: Story = {
+  args: {
+    type: ButtonType.Primary,
+    label: "טקסט",
+    size: ButtonSize.Medium,
+    rtl: true,
   },
 };
