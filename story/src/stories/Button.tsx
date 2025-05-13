@@ -1,41 +1,45 @@
-import React from 'react';
+import React, { ReactElement } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { twMerge } from "tailwind-merge";
 
-import './button.css';
-
-export interface ButtonProps {
-  /** Is this the principal call to action on the page? */
-  primary?: boolean;
-  /** What background color to use */
-  backgroundColor?: string;
-  /** How large should the button be? */
-  size?: 'small' | 'medium' | 'large';
-  /** Button contents */
-  label: string;
-  /** Optional click handler */
-  onClick?: () => void;
+export enum ButtonSize {
+  Sm = "sm",
+  Md = "md",
+  Lg = "lg",
 }
 
-/** Primary UI component for user interaction */
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
-}: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-  return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      {...props}
-    >
-      {label}
-      <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style>
-    </button>
-  );
+const avatarStyles = cva(
+  "flex justify-center items-center rounded-full overflow-hidden select-none text-white !box-border",
+  {
+    variants: {
+      size: {
+        [ButtonSize.Sm]: "h-8 w-8 pb-0.5 text-xs font-medium",
+        [ButtonSize.Md]: "h-14 w-14 pb-1 text-xl font-normal",
+        [ButtonSize.Lg]: "h-24 w-24 pb-2 text-4xl font-normal",
+      },
+      filled: {
+        true: "bg-[var(--prisma-light-blue)]",
+        false: "bg-zinc-700",
+      },
+    },
+    defaultVariants: {
+      size: ButtonSize.Md,
+      filled: true,
+    },
+  }
+);
+
+interface ButtonProps extends VariantProps<typeof avatarStyles> {
+  label?: string;
+  size?: ButtonSize;
+}
+
+const Button = ({ size, label }: ButtonProps): ReactElement => {
+  const isFilled = typeof label === "string" && label.length > 0;
+
+  const classes = twMerge(avatarStyles({ size, filled: isFilled }));
+
+  return <div className={classes}>{isFilled ? label : "N/A"}</div>;
 };
+
+export default Button;
