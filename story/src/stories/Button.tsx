@@ -3,9 +3,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
 export enum ButtonSize {
-  Small = "s",
-  Medium = "m",
-  Large = "l",
+  Small = "S",
+  Medium = "M",
+  Large = "L",
 }
 
 export enum ButtonType {
@@ -16,22 +16,32 @@ export enum ButtonType {
 
 const buttonStyles = cva(
   [
-    "flex",
+    "h-6",
+    "min-w-20",
+    "max-h-6",
+    "min-h-6",
+    "px-3",
+    "py-0.5",
+    "bg-systemColors-bg-primary",
+    "rounded",
+    "inline-flex",
     "justify-center",
     "items-center",
     "gap-2",
-    "rounded",
-    "select-none",
-    "transition-all",
-  ].join(" "),
+    "overflow-hidden",
+    "focus:outline-none",
+    "focus-visible:ring-2",
+    "focus-visible:ring-[#0E75B5]",
+  ],
   {
     variants: {
       type: {
         [ButtonType.Primary]: [
           "bg-[#0093EE]",
           "text-white",
-          "hover:bg-[#0093EE]/88",
-          "active:bg-[#0093EE]/62",
+          "relative",
+          "hover:bg-[#0081D1]",
+          "active:bg-[#005B94]",
           "disabled:bg-white/12",
           "disabled:text-white/38",
         ].join(" "),
@@ -56,8 +66,15 @@ const buttonStyles = cva(
       },
       size: {
         [ButtonSize.Small]: ["px-3", "py-0.5", "h-6", "text-sm"].join(" "),
-        [ButtonSize.Medium]: ["px-4", "py-1", "h-8", "text-base"].join(" "),
-        [ButtonSize.Large]: ["px-5", "py-1", "h-10", "text-base"].join(" "),
+        [ButtonSize.Medium]: ["max-h-8", " min-h-8", "px-4 py-1"].join(" "),
+        [ButtonSize.Large]: [
+          "h-10",
+          "min-w-20",
+          "max-h-10",
+          "min-h-10",
+          "px-5",
+          "py-1",
+        ].join(" "),
       },
       rtl: {
         true: "flex-row-reverse",
@@ -103,7 +120,9 @@ export const Button = ({
 }: ButtonProps): ReactElement => {
   const content = [
     leadingIcon,
-    <span key="label">{label}</span>,
+    <span key="label" className={["text-sm", "font-normal"].join(" ")}>
+      {label}
+    </span>,
     trailingIcon,
   ].filter(Boolean);
 
@@ -113,7 +132,7 @@ export const Button = ({
       type="button"
       {...rest}
     >
-      {rtl ? content.reverse() : content}
+      {content}
     </button>
   );
 };

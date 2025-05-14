@@ -12,6 +12,7 @@ import React from "react";
 type ButtonStoryArgs = ComponentProps<typeof Button> & {
   hasLeadingIcon?: boolean;
   hasTrailingIcon?: boolean;
+  disabled?: boolean;
 };
 
 const meta = {
@@ -21,6 +22,8 @@ const meta = {
     label: "Button",
     hasLeadingIcon: false,
     hasTrailingIcon: false,
+    rtl: false,
+    disabled: false,
   },
   parameters: {
     layout: "centered",
@@ -28,24 +31,48 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     size: {
-      control: "select",
+      control: "radio",
       options: Object.values(ButtonSize),
+      defaultValue: ButtonSize.Medium,
+      labels: {
+        [ButtonSize.Small]: "Small",
+        [ButtonSize.Medium]: "Medium",
+        [ButtonSize.Large]: "Large",
+      },
     },
     type: {
-      control: "select",
+      control: "radio",
       options: Object.values(ButtonType),
+      defaultValue: ButtonType.Primary,
+      labels: {
+        [ButtonType.Primary]: "Primary",
+        [ButtonType.Secondary]: "Secondary",
+        [ButtonType.Ghost]: "Ghost",
+      },
     },
     rtl: {
       control: "boolean",
       description: "Right to left text direction",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "false" },
+      },
     },
     hasLeadingIcon: {
       control: "boolean",
       description: "Show leading icon",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "false" },
+      },
     },
     hasTrailingIcon: {
       control: "boolean",
       description: "Show trailing icon",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "false" },
+      },
     },
     leadingIcon: {
       table: {
@@ -55,6 +82,12 @@ const meta = {
     trailingIcon: {
       table: {
         disable: true,
+      },
+    },
+    disabled: {
+      control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
       },
     },
   },
