@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
+import React from "react";
 import { Button } from "./Button";
 import { ButtonSize, ButtonType } from "./Button";
-import { GlobeIcon } from "./icons/GlobeIcon";
-import { ArrowRightIcon } from "./icons/ArrowRightIcon";
-import React from "react";
+import LanguageIcon from "@mui/icons-material/Language";
+import CloseIcon from "@mui/icons-material/Close";
 
 /**
  * Story args include Button props plus controls for leading/trailing icons
@@ -99,9 +99,9 @@ type Story = StoryObj<ButtonStoryArgs>;
 
 const renderIcon = (
   condition: boolean | undefined,
-  Icon: React.FC<React.SVGProps<SVGSVGElement>>
+  Icon: typeof LanguageIcon
 ) => {
-  return condition ? <Icon /> : undefined;
+  return condition ? <Icon sx={{ fontSize: "inherit" }} /> : undefined;
 };
 
 export const Primary: Story = {
@@ -112,8 +112,8 @@ export const Primary: Story = {
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
     <Button
       {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, GlobeIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, ArrowRightIcon)}
+      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
     />
   ),
 };
@@ -126,8 +126,8 @@ export const Secondary: Story = {
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
     <Button
       {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, GlobeIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, ArrowRightIcon)}
+      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
     />
   ),
 };
@@ -140,8 +140,8 @@ export const Ghost: Story = {
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
     <Button
       {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, GlobeIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, ArrowRightIcon)}
+      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
     />
   ),
 };
@@ -156,8 +156,8 @@ export const WithLeadingIcon: Story = {
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
     <Button
       {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, GlobeIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, ArrowRightIcon)}
+      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
     />
   ),
 };
@@ -172,8 +172,8 @@ export const WithTrailingIcon: Story = {
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
     <Button
       {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, GlobeIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, ArrowRightIcon)}
+      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
     />
   ),
 };
@@ -189,8 +189,8 @@ export const WithBothIcons: Story = {
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
     <Button
       {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, GlobeIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, ArrowRightIcon)}
+      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
     />
   ),
 };
