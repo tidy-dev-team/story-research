@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "./Button";
 import { ButtonSize, ButtonType } from "./Button";
 import LanguageIcon from "@mui/icons-material/Language";
-import CloseIcon from "@mui/icons-material/Close";
+import HeadphonesIcon from "@mui/icons-material/Headphones";
 
 /**
  * Story args include Button props plus controls for leading/trailing icons
@@ -113,7 +113,7 @@ export const Primary: Story = {
     <Button
       {...args}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
     />
   ),
 };
@@ -127,7 +127,7 @@ export const Secondary: Story = {
     <Button
       {...args}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
     />
   ),
 };
@@ -141,7 +141,7 @@ export const Ghost: Story = {
     <Button
       {...args}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
     />
   ),
 };
@@ -157,7 +157,7 @@ export const WithLeadingIcon: Story = {
     <Button
       {...args}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
     />
   ),
 };
@@ -173,7 +173,7 @@ export const WithTrailingIcon: Story = {
     <Button
       {...args}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
     />
   ),
 };
@@ -190,7 +190,7 @@ export const WithBothIcons: Story = {
     <Button
       {...args}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, CloseIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
     />
   ),
 };
