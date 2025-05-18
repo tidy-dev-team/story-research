@@ -16,7 +16,7 @@ type ButtonStoryArgs = ComponentProps<typeof Button> & {
 };
 
 const meta = {
-  title: "Component/Button",
+  title: "Component/Button/Button",
   component: Button,
   args: {
     label: "Button",
@@ -167,23 +167,6 @@ export const WithTrailingIcon: Story = {
     type: ButtonType.Primary,
     size: ButtonSize.Medium,
     label: "Next Page",
-    hasTrailingIcon: true,
-  },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <Button
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
-};
-
-export const WithBothIcons: Story = {
-  args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
-    label: "Visit Website",
-    hasLeadingIcon: true,
     hasTrailingIcon: true,
   },
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
