@@ -90,6 +90,11 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
+    onClick: {
+      table: {
+        disable: true,
+      },
+    },
   },
 } satisfies Meta<ButtonStoryArgs>;
 

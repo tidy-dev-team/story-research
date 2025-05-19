@@ -15,6 +15,7 @@ interface IconButtonStoryArgs {
   iconName: keyof typeof iconMap;
   disabled?: boolean;
   focused?: boolean; // Added focused to argTypes if controllable
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const iconMap = {
@@ -74,6 +75,11 @@ const meta = {
       control: "boolean",
       table: {
         defaultValue: { summary: "false" },
+      },
+    },
+    onClick: {
+      table: {
+        disable: true,
       },
     },
     // Removed argTypes for label, rtl, hasLeadingIcon, hasTrailingIcon, leadingIcon, trailingIcon
