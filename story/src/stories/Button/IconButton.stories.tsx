@@ -1,20 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
-// import type { ComponentProps } from "react"; // No longer needed directly for Omit if IconButtonProps is imported
 import React from "react";
-import { Button, ButtonSize, ButtonType } from "./IconButton"; // Assuming Button is the exported component name from IconButton.tsx
+import { Button, ButtonSize, ButtonType } from "./IconButton";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import SettingsIcon from "@mui/icons-material/Settings";
-import AddIcon from "@mui/icons-material/Add"; // Example for XSmall
+import AddIcon from "@mui/icons-material/Add";
 
-// Define a type for the props of the IconButton component if not directly exported or to augment
-// For this story, we'll define what's needed.
 interface IconButtonStoryArgs {
   type?: ButtonType;
   size?: ButtonSize;
   iconName: keyof typeof iconMap;
   disabled?: boolean;
-  focused?: boolean; // Added focused to argTypes if controllable
+  focused?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -26,36 +23,20 @@ const iconMap = {
 };
 
 const meta = {
-  title: "Component/Button/Icon Button",
-  component: Button, // Use the exported name from IconButton.tsx
+  title: "Component/Button/IconButton",
+  component: Button,
   args: {
-    disabled: false,
-    focused: false,
-    iconName: "language",
     type: ButtonType.Primary,
     size: ButtonSize.Medium,
+    iconName: "language",
+    disabled: false,
+    focused: false,
   },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    type: {
-      control: "radio",
-      options: Object.values(ButtonType),
-      defaultValue: ButtonType.Primary,
-    },
-    size: {
-      control: "radio",
-      options: Object.values(ButtonSize),
-      defaultValue: ButtonSize.Medium,
-      labels: {
-        [ButtonSize.XSmall]: "XSmall (20px)",
-        [ButtonSize.Small]: "Small (24px)",
-        [ButtonSize.Medium]: "Medium (32px)",
-        [ButtonSize.Large]: "Large (40px)",
-      },
-    },
     iconName: {
       control: "select",
       options: Object.keys(iconMap),
@@ -65,24 +46,58 @@ const meta = {
         defaultValue: { summary: "language" },
       },
     },
+    type: {
+      control: "radio",
+      options: Object.values(ButtonType),
+      description: "The type of the button",
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: ButtonType.Primary },
+      },
+      labels: {
+        [ButtonType.Primary]: "Primary",
+        [ButtonType.Secondary]: "Secondary",
+        [ButtonType.Ghost]: "Ghost",
+      },
+    },
+    size: {
+      control: "radio",
+      options: Object.values(ButtonSize),
+      description: "The size of the button",
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: ButtonSize.Medium },
+      },
+      labels: {
+        [ButtonSize.XSmall]: "XSmall (20px)",
+        [ButtonSize.Small]: "Small (24px)",
+        [ButtonSize.Medium]: "Medium (32px)",
+        [ButtonSize.Large]: "Large (40px)",
+      },
+    },
     disabled: {
       control: "boolean",
+      description: "Disables the button",
       table: {
+        category: "State",
         defaultValue: { summary: "false" },
       },
     },
     focused: {
       control: "boolean",
+      description: "Sets the focus state of the button",
       table: {
+        category: "State",
         defaultValue: { summary: "false" },
       },
     },
     onClick: {
+      action: "clicked",
+      description: "Optional click handler",
       table: {
-        disable: true,
+        category: "Events",
       },
     },
-    // Removed argTypes for label, rtl, hasLeadingIcon, hasTrailingIcon, leadingIcon, trailingIcon
   },
 } satisfies Meta<IconButtonStoryArgs>;
 
@@ -90,14 +105,26 @@ export default meta;
 
 type Story = StoryObj<IconButtonStoryArgs>;
 
+const renderStory = ({
+  iconName,
+  disabled,
+  focused,
+  ...args
+}: IconButtonStoryArgs) => (
+  <Button
+    {...args}
+    icon={iconMap[iconName]}
+    disabled={disabled}
+    focused={disabled ? false : focused}
+  />
+);
+
 export const Primary: Story = {
   args: {
     type: ButtonType.Primary,
     iconName: "headphones",
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
 export const Secondary: Story = {
@@ -105,9 +132,7 @@ export const Secondary: Story = {
     type: ButtonType.Secondary,
     iconName: "settings",
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
 export const Ghost: Story = {
@@ -115,66 +140,56 @@ export const Ghost: Story = {
     type: ButtonType.Ghost,
     iconName: "language",
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
-export const XSmallIconButton: Story = {
+export const XSmall: Story = {
+  name: "Size XSmall",
   args: {
     size: ButtonSize.XSmall,
     iconName: "add",
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
-export const SmallIconButton: Story = {
+export const Small: Story = {
+  name: "Size Small",
   args: {
     size: ButtonSize.Small,
     iconName: "language",
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
-export const LargeIconButton: Story = {
+export const Large: Story = {
+  name: "Size Large",
   args: {
     size: ButtonSize.Large,
     iconName: "headphones",
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
-export const FocusedButton: Story = {
+export const FocusedState: Story = {
+  name: "State Focused",
   args: {
     focused: true,
     iconName: "settings",
+    disabled: false,
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
-export const DisabledButton: Story = {
+export const DisabledState: Story = {
+  name: "State Disabled",
   args: {
     disabled: true,
     iconName: "language",
-    type: ButtonType.Primary,
+    focused: false,
   },
-  render: ({ iconName, ...args }) => (
-    <Button {...args} icon={iconMap[iconName]} />
-  ),
+  render: renderStory,
 };
 
-/**
- * Interactive example for the documentation
- * This story allows users to modify props in real-time and see the changes
- */
 export const Interactive: Story = {
   args: {
     iconName: "settings",
@@ -187,7 +202,7 @@ export const Interactive: Story = {
     docs: {
       source: {
         code: `<Button 
-  icon={SettingsIcon}
+  icon={<SettingsIcon sx={{ fontSize: "inherit" }} />} 
   type={ButtonType.Primary} 
   size={ButtonSize.Medium}
   onClick={(e) => console.log('Icon button clicked', e)}
@@ -195,10 +210,12 @@ export const Interactive: Story = {
       },
     },
   },
-  render: ({ iconName, ...args }) => (
+  render: ({ iconName, disabled, focused, ...args }) => (
     <Button
       {...args}
       icon={iconMap[iconName]}
+      disabled={disabled}
+      focused={disabled ? false : focused}
       onClick={(e) => console.log("Icon button clicked", e)}
     />
   ),

@@ -1,18 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
-import { Button } from "./Button";
-import { ButtonSize, ButtonType } from "./Button";
+import { Button, ButtonSize, ButtonType } from "./Button";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 
-/**
- * Story args include Button props plus controls for leading/trailing icons
- */
 type ButtonStoryArgs = ComponentProps<typeof Button> & {
   hasLeadingIcon?: boolean;
   hasTrailingIcon?: boolean;
-  disabled?: boolean;
 };
 
 const meta = {
@@ -20,41 +15,59 @@ const meta = {
   component: Button,
   args: {
     label: "Button",
+    type: ButtonType.Primary,
+    size: ButtonSize.Medium,
     hasLeadingIcon: false,
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
+    focused: false,
   },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    size: {
-      control: "radio",
-      options: Object.values(ButtonSize),
-      defaultValue: ButtonSize.Medium,
-      labels: {
-        [ButtonSize.Small]: "Small",
-        [ButtonSize.Medium]: "Medium",
-        [ButtonSize.Large]: "Large",
+    label: {
+      control: "text",
+      description: "The text content of the button",
+      table: {
+        category: "Content",
       },
     },
     type: {
       control: "radio",
       options: Object.values(ButtonType),
-      defaultValue: ButtonType.Primary,
+      description: "The type of the button",
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: ButtonType.Primary },
+      },
       labels: {
         [ButtonType.Primary]: "Primary",
         [ButtonType.Secondary]: "Secondary",
         [ButtonType.Ghost]: "Ghost",
       },
     },
+    size: {
+      control: "radio",
+      options: Object.values(ButtonSize),
+      description: "The size of the button",
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: ButtonSize.Medium },
+      },
+      labels: {
+        [ButtonSize.Small]: "Small",
+        [ButtonSize.Medium]: "Medium",
+        [ButtonSize.Large]: "Large",
+      },
+    },
     rtl: {
       control: "boolean",
       description: "Right to left text direction",
       table: {
-        category: "Content",
+        category: "Appearance",
         defaultValue: { summary: "false" },
       },
     },
@@ -86,13 +99,25 @@ const meta = {
     },
     disabled: {
       control: "boolean",
+      description: "Disables the button",
       table: {
+        category: "State",
+        defaultValue: { summary: "false" },
+      },
+    },
+    focused: {
+      control: "boolean",
+      description: "Sets the focus state of the button",
+      table: {
+        category: "State",
         defaultValue: { summary: "false" },
       },
     },
     onClick: {
+      action: "clicked",
+      description: "Optional click handler",
       table: {
-        disable: true,
+        category: "Events",
       },
     },
   },
@@ -104,89 +129,91 @@ type Story = StoryObj<ButtonStoryArgs>;
 
 const renderIcon = (
   condition: boolean | undefined,
-  Icon: typeof LanguageIcon
+  IconComponent: typeof LanguageIcon
 ) => {
-  return condition ? <Icon sx={{ fontSize: "inherit" }} /> : undefined;
+  return condition ? <IconComponent sx={{ fontSize: "inherit" }} /> : undefined;
 };
+
+const renderStory = ({
+  hasLeadingIcon,
+  hasTrailingIcon,
+  disabled,
+  focused,
+  ...args
+}: ButtonStoryArgs) => (
+  <Button
+    {...args}
+    disabled={disabled}
+    focused={disabled ? false : focused}
+    leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+    trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
+  />
+);
 
 export const Primary: Story = {
   args: {
     type: ButtonType.Primary,
-    size: ButtonSize.Medium,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <Button
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const Secondary: Story = {
   args: {
     type: ButtonType.Secondary,
-    size: ButtonSize.Medium,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <Button
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const Ghost: Story = {
   args: {
     type: ButtonType.Ghost,
-    size: ButtonSize.Medium,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <Button
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const WithLeadingIcon: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "Visit Website",
     hasLeadingIcon: true,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <Button
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const WithTrailingIcon: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "Next Page",
     hasTrailingIcon: true,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <Button
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
-/**
- * Interactive example for the documentation
- * This story allows users to modify props in real-time and see the changes
- */
+export const RTL: Story = {
+  args: {
+    label: "טקסט",
+    rtl: true,
+    hasLeadingIcon: true,
+  },
+  render: renderStory,
+};
+
+export const Focused: Story = {
+  args: {
+    label: "Focused Button",
+    focused: true,
+    disabled: false,
+  },
+  render: renderStory,
+};
+
+export const Disabled: Story = {
+  args: {
+    label: "Disabled Button",
+    disabled: true,
+    focused: false,
+  },
+  render: renderStory,
+};
+
 export const Interactive: Story = {
   args: {
     label: "Interactive Button",
@@ -196,6 +223,7 @@ export const Interactive: Story = {
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
+    focused: false,
   },
   parameters: {
     docs: {
@@ -210,9 +238,11 @@ export const Interactive: Story = {
       },
     },
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
+  render: ({ hasLeadingIcon, hasTrailingIcon, disabled, focused, ...args }) => (
     <Button
       {...args}
+      disabled={disabled}
+      focused={disabled ? false : focused}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
       trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
       onClick={(e) => console.log("Button clicked", e)}

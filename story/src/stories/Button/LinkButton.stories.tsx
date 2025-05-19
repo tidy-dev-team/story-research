@@ -3,15 +3,11 @@ import type { ComponentProps } from "react";
 import React from "react";
 import { LinkButton } from "./LinkButton";
 import LanguageIcon from "@mui/icons-material/Language";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"; // Using a different icon for variety
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-/**
- * Story args include LinkButton props plus controls for leading/trailing icons
- */
 type LinkButtonStoryArgs = ComponentProps<typeof LinkButton> & {
   hasLeadingIcon?: boolean;
   hasTrailingIcon?: boolean;
-  // disabled and focused are part of ComponentProps<typeof LinkButton>
 };
 
 const meta = {
@@ -33,29 +29,21 @@ const meta = {
   argTypes: {
     label: {
       control: "text",
-      description: "The text content of the link button",
+      description: "The text content of the link button.",
       table: {
         category: "Content",
       },
     },
     href: {
       control: "text",
-      description: "The URL the link button points to",
+      description: "The URL that the link button points to.",
       table: {
         category: "Content",
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right to left text direction",
-      table: {
-        category: "Appearance",
-        defaultValue: { summary: "false" },
-      },
-    },
     hasLeadingIcon: {
       control: "boolean",
-      description: "Show leading icon",
+      description: "If true, a leading icon is displayed.",
       table: {
         category: "Content",
         defaultValue: { summary: "false" },
@@ -63,25 +51,57 @@ const meta = {
     },
     hasTrailingIcon: {
       control: "boolean",
-      description: "Show trailing icon",
+      description: "If true, a trailing icon is displayed.",
       table: {
         category: "Content",
         defaultValue: { summary: "false" },
       },
     },
     leadingIcon: {
+      description:
+        "The leading icon element. Used internally when `hasLeadingIcon` is true.",
       table: {
+        category: "Content",
         disable: true,
       },
     },
     trailingIcon: {
+      description:
+        "The trailing icon element. Used internally when `hasTrailingIcon` is true.",
       table: {
+        category: "Content",
         disable: true,
+      },
+    },
+    target: {
+      control: "text",
+      description:
+        'Specifies where to open the linked document (e.g., "_blank").',
+      table: {
+        category: "Behavior",
+      },
+    },
+    rel: {
+      control: "text",
+      description:
+        "Specifies the relationship of the target object to the link object.",
+      table: {
+        category: "Behavior",
+      },
+    },
+    rtl: {
+      control: "boolean",
+      description:
+        "If true, the link button's text direction will be right-to-left.",
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: "false" },
       },
     },
     disabled: {
       control: "boolean",
-      description: "Disables the link button",
+      description:
+        "If true, the link button will be disabled and non-interactive.",
       table: {
         category: "State",
         defaultValue: { summary: "false" },
@@ -89,7 +109,8 @@ const meta = {
     },
     focused: {
       control: "boolean",
-      description: "Sets the focus state of the link button",
+      description:
+        "If true, the link button will be displayed in a focused state.",
       table: {
         category: "State",
         defaultValue: { summary: "false" },
@@ -104,7 +125,7 @@ type Story = StoryObj<LinkButtonStoryArgs>;
 
 const renderIcon = (
   condition: boolean | undefined,
-  IconComponent: typeof LanguageIcon // Type for MUI SvgIconComponent
+  IconComponent: typeof LanguageIcon
 ) => {
   return condition ? <IconComponent sx={{ fontSize: "14px" }} /> : undefined;
 };
@@ -119,7 +140,7 @@ const renderStory = ({
   <LinkButton
     {...args}
     disabled={disabled}
-    focused={disabled ? false : focused} // Ensure focused is false if disabled
+    focused={disabled ? false : focused}
     leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
     trailingIcon={renderIcon(hasTrailingIcon, ArrowForwardIcon)}
   />
@@ -153,7 +174,7 @@ export const WithTrailingIcon: Story = {
 
 export const RTL: Story = {
   args: {
-    label: "קישור", // Example RTL text
+    label: "קישור",
     href: "#",
     rtl: true,
     hasLeadingIcon: true,
@@ -161,30 +182,28 @@ export const RTL: Story = {
   render: renderStory,
 };
 
-export const Focused: Story = {
+export const StateFocused: Story = {
+  name: "State: Focused",
   args: {
     label: "Focused Link",
     href: "#",
     focused: true,
-    disabled: false, // Ensure not disabled for focused story
+    disabled: false,
   },
   render: renderStory,
 };
 
-export const Disabled: Story = {
+export const StateDisabled: Story = {
+  name: "State: Disabled",
   args: {
     label: "Disabled Link",
-    href: "#", // Href is present but link will be non-interactive
+    href: "#",
     disabled: true,
-    focused: false, // Explicitly set focused to false for disabled story
+    focused: false,
   },
   render: renderStory,
 };
 
-/**
- * Interactive example for the documentation
- * This story allows users to modify props in real-time and see the changes
- */
 export const Interactive: Story = {
   args: {
     label: "Interactive Link",
@@ -198,21 +217,14 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<LinkButton 
+        code: `'''<LinkButton
   label="Interactive Link"
   href="https://storybook.js.org"
   leadingIcon={<LanguageIcon sx={{ fontSize: "14px" }} />}
-/>`,
+  target="_blank"
+/>'''`,
       },
     },
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, disabled, focused, ...args }) => (
-    <LinkButton
-      {...args}
-      disabled={disabled}
-      focused={disabled ? false : focused}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, ArrowForwardIcon)}
-    />
-  ),
+  render: renderStory,
 };

@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, Controls } from '@storybook/blocks';
 import * as TextButtonStories from './TextButton.stories';
-import { TextButton, ButtonType } from './TextButton';
+import { TextButton } from './TextButton';
 import LanguageIcon from "@mui/icons-material/Language";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
@@ -13,29 +13,30 @@ The Text Button component is a minimal UI element for triggering secondary actio
 
 ## Features
 
-- Clean, text-only design with a blue color
-- Support for leading and trailing icons
-- RTL (right-to-left) text direction support
-- Accessible focus states
-- Disabled state
+- Clean, text-only design with a blue color.
+- Support for leading and trailing icons.
+- RTL (right-to-left) text direction support.
+- Accessible focus states.
+- Disabled state.
+- Click event handling.
 
 ## Import
 
-```jsx
+```tsx
 import { TextButton } from './path/to/TextButton';
-import LanguageIcon from '@mui/icons-material/Language';
+import LanguageIcon from '@mui/icons-material/Language'; // Example Icon
 ```
 
 ## Basic Usage
 
-```jsx
+```tsx
 // Basic text button
 <TextButton label="Learn more" />
 
 // With click handler
 <TextButton 
   label="Visit FAQ" 
-  onClick={() => navigateToFAQ()} 
+  onClick={() => console.log('Navigate to FAQ')}
 />
 ```
 
@@ -43,17 +44,17 @@ import LanguageIcon from '@mui/icons-material/Language';
 
 Text buttons can include leading and/or trailing icons.
 
-```jsx
+```tsx
 // With leading icon
 <TextButton 
   label="Visit Website" 
-  leadingIcon={<LanguageIcon sx={{ fontSize: "14px" }} />} 
+  leadingIcon={<LanguageIcon sx={{ fontSize: "14px" }} />}
 />
 
 // With trailing icon
 <TextButton 
   label="Next Page" 
-  trailingIcon={<ArrowForwardIcon sx={{ fontSize: "14px" }} />} 
+  trailingIcon={<ArrowForwardIcon sx={{ fontSize: "14px" }} />}
 />
 
 // With both icons
@@ -68,70 +69,86 @@ Text buttons can include leading and/or trailing icons.
 
 ### Disabled
 
-```jsx
-<TextButton label="Disabled" disabled />
+When disabled, the text button is non-interactive and its appearance changes to indicate this state.
+
+```tsx
+<TextButton label="Disabled Action" disabled />
 ```
 
 ### Focus
 
 The text button shows a focus ring when it receives keyboard focus or when the `focused` prop is true.
 
-```jsx
-<TextButton label="Focused" focused />
+```tsx
+<TextButton label="Focused Action" focused />
 ```
 
 ## RTL Support
 
-For right-to-left languages, set the `rtl` prop to `true`.
+For right-to-left languages, set the `rtl` prop to `true`. Icons will also be flipped accordingly if applicable.
 
-```jsx
+```tsx
 <TextButton 
-  label="טקסט" 
+  label="פעולה" // Example RTL text
   rtl={true} 
+  leadingIcon={<LanguageIcon sx={{ fontSize: "14px" }} />}
 />
 ```
 
 ## Event Handling
 
-```jsx
+The `onClick` prop can be used to define the action performed when the button is clicked.
+
+```tsx
 <TextButton 
-  label="Click Me" 
-  onClick={(e) => {
-    console.log('Text button clicked', e);
-    // Handle the click event
-  }} 
+  label="Submit Form" 
+  onClick={(event) => {
+    console.log('Submit button clicked', event);
+    // Perform submission logic here
+  }}
 />
 ```
 
-## Interactive Example
+## Props
 
-Try modifying the properties below to see the text button change in real-time:
+<Controls />
+
+## Stories
+
+### Default
+<Canvas>
+  <Story of={TextButtonStories.Default} />
+</Canvas>
+
+### With Leading Icon
+<Canvas>
+  <Story of={TextButtonStories.WithLeadingIcon} />
+</Canvas>
+
+### With Trailing Icon
+<Canvas>
+  <Story of={TextButtonStories.WithTrailingIcon} />
+</Canvas>
+
+### RTL
+<Canvas>
+  <Story of={TextButtonStories.RTL} />
+</Canvas>
+
+### State: Focused
+<Canvas>
+  <Story of={TextButtonStories.StateFocused} />
+</Canvas>
+
+### State: Disabled
+<Canvas>
+  <Story of={TextButtonStories.StateDisabled} />
+</Canvas>
+
+### Interactive Example
+
+This story allows you to interact with all the props of the TextButton component.
 
 <Canvas>
   <Story of={TextButtonStories.Interactive} />
 </Canvas>
-
-## Component Props
-
-<Controls />
-
-## Accessibility
-
-- Implements standard button behavior with keyboard navigation support
-- Focus states are clearly visible
-- When used with icons, maintains proper contrast and readability
-
-## Design Considerations
-
-- Use Text buttons for secondary actions or navigation links
-- Text buttons take up minimal space and are visually light
-- Use them for actions that don't need to be highlighted
-- Always include clear, concise text labels for better accessibility
-- Consider using TextButton for low-emphasis actions, where standard Button might be too prominent
-  label="Click Me" 
-  onClick={(e) => {
-    console.log('Button clicked', e);
-    // Handle the click event
-  }} 
-/>
-```

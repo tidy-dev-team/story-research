@@ -8,16 +8,18 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 # Link Button Component
 
-The Link Button component is designed for navigation, styled as an underlined text link. It provides a clear visual cue that it will direct the user to another page or resource.
+The Link Button component is designed for navigation, styled as an underlined text link. It provides a clear visual cue that it will direct the user to another page or resource using an HTML `<a>` tag.
 
 ## Features
 
+- Renders as an `<a>` tag, utilizing the `href` prop for navigation.
 - Underlined text for clear affordance as a link.
 - Standard link colors: blue for idle, lighter blue for hover.
 - Support for leading and trailing icons.
 - RTL (right-to-left) text direction support.
 - Accessible focus states (ring).
 - Disabled state (text color changes, underline removed, non-interactive).
+- Supports standard anchor attributes like `target` and `rel`.
 
 ## Import
 
@@ -65,7 +67,7 @@ Link buttons can include leading and/or trailing icons to provide additional con
 
 ### Disabled
 
-When disabled, the link button is non-interactive, its text color changes, and the underline is removed.
+When disabled, the link button is non-interactive, its text color changes, and the underline is removed. The `href` attribute will still be present but the link will not be navigable via click.
 
 ```tsx
 <LinkButton label="Cannot Navigate" href="/restricted" disabled />
@@ -92,43 +94,46 @@ For right-to-left languages, set the `rtl` prop to `true`. Icons will also be fl
 />
 ```
 
-## Event Handling
+## Props
 
-While primarily for navigation via `href`, an `onClick` handler can be provided for additional actions, like analytics tracking. Note that if `disabled` is true, `onClick` will not be triggered and navigation will be prevented.
+<Controls />
 
-```tsx
-<LinkButton 
-  label="Trackable Link"
-  href="/tracked-page"
-  onClick={(e) => {
-    // e.preventDefault(); // Call this if you want to stop navigation and handle it manually
-    console.log('LinkButton clicked, navigating to:', e.currentTarget.href);
-    // trackAnalyticsEvent('link_click', { url: e.currentTarget.href });
-  }} 
-/>
-```
+## Stories
 
-## Interactive Example
+### Default
+<Canvas>
+  <Story of={LinkButtonStories.Default} />
+</Canvas>
 
-Experiment with the LinkButton properties in real-time using the controls below:
+### With Leading Icon
+<Canvas>
+  <Story of={LinkButtonStories.WithLeadingIcon} />
+</Canvas>
+
+### With Trailing Icon
+<Canvas>
+  <Story of={LinkButtonStories.WithTrailingIcon} />
+</Canvas>
+
+### RTL
+<Canvas>
+  <Story of={LinkButtonStories.RTL} />
+</Canvas>
+
+### State: Focused
+<Canvas>
+  <Story of={LinkButtonStories.StateFocused} />
+</Canvas>
+
+### State: Disabled
+<Canvas>
+  <Story of={LinkButtonStories.StateDisabled} />
+</Canvas>
+
+### Interactive Example
+
+This story allows you to interact with all the props of the LinkButton component.
 
 <Canvas>
   <Story of={LinkButtonStories.Interactive} />
 </Canvas>
-
-## Component Props
-
-<Controls />
-
-## Accessibility
-
-- Uses a standard `<a>` tag for semantic correctness.
-- `aria-disabled` is applied when the `disabled` prop is true.
-- Focus states are clearly visible.
-- Underline provides a strong visual cue for its link nature.
-
-## Design Considerations
-
-- Use LinkButtons for navigational purposes where a standard hyperlink appearance is desired.
-- The underline is a key part of its design, differentiating it from TextButton which is for actions.
-- Ensure the `href` prop is always provided for proper link functionality.
