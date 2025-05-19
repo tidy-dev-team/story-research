@@ -63,7 +63,7 @@ const buttonStyles = cva(
           "text-[#CCD1D5]",
           "hover:enabled:bg-white/12",
           "hover:enabled:text-white",
-          "active:bg-white/8",
+          "active:enabled:bg-white/8",
           "disabled:text-white/38",
         ].join(" "),
       },
