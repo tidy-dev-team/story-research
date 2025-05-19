@@ -32,7 +32,7 @@ const buttonStyles = cva(
     "focus:outline-none",
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
-    "font-['Heebo',_sans-serif]", // Add Heebo font
+    "font-['Heebo',_sans-serif]",
   ],
   {
     variants: {
@@ -41,8 +41,8 @@ const buttonStyles = cva(
           "bg-[#0093EE]",
           "text-white",
           "relative",
-          "hover:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
-          "active:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
+          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
+          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
           "disabled:bg-white/12",
           "disabled:text-white/38",
         ].join(" "),
@@ -50,19 +50,19 @@ const buttonStyles = cva(
           "border",
           "border-[#0093EE]",
           "text-[#0093EE]",
-          "hover:bg-[#0093EE]/12",
-          "hover:border-[#2CB3FF]",
-          "hover:text-[#2CB3FF]",
-          "active:bg-[#0093EE]/12",
-          "active:border-[#0093EE]",
-          "active:text-[#0093EE]",
+          "hover:enabled:bg-[#0093EE]/12",
+          "hover:enabled:border-[#2CB3FF]",
+          "hover:enabled:text-[#2CB3FF]",
+          "active:enabled:bg-[#0093EE]/12",
+          "active:enabled:border-[#0093EE]",
+          "active:enabled:text-[#0093EE]",
           "disabled:border-white/38",
           "disabled:text-white/38",
         ].join(" "),
         [ButtonType.Ghost]: [
           "text-[#CCD1D5]",
-          "hover:bg-white/12",
-          "hover:text-white",
+          "hover:enabled:bg-white/12",
+          "hover:enabled:text-white",
           "active:bg-white/8",
           "disabled:text-white/38",
         ].join(" "),
@@ -124,11 +124,19 @@ export const Button = ({
   ...rest
 }: ButtonProps): ReactElement => {
   const content = [
-    leadingIcon && <span key="leadingIcon" className="flex items-center">{leadingIcon}</span>,
+    leadingIcon && (
+      <span key="leadingIcon" className="flex items-center">
+        {leadingIcon}
+      </span>
+    ),
     <span key="label" className="text-sm font-normal leading-none">
       {label}
     </span>,
-    trailingIcon && <span key="trailingIcon" className="flex items-center">{trailingIcon}</span>,
+    trailingIcon && (
+      <span key="trailingIcon" className="flex items-center">
+        {trailingIcon}
+      </span>
+    ),
   ].filter(Boolean);
 
   return (

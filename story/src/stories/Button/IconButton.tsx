@@ -33,8 +33,8 @@ const buttonStyles = cva(
         [ButtonType.Primary]: [
           "bg-[#0093EE]",
           "text-white",
-          "hover:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
-          "active:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
+          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
+          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
           "disabled:bg-white/12",
           "disabled:text-white/38",
         ].join(" "),
@@ -42,20 +42,20 @@ const buttonStyles = cva(
           "border",
           "border-[#0093EE]",
           "text-[#0093EE]",
-          "hover:bg-[#0093EE]/12",
-          "hover:border-[#2CB3FF]",
-          "hover:text-[#2CB3FF]",
-          "active:bg-[#0093EE]/12",
-          "active:border-[#0093EE]",
-          "active:text-[#0093EE]",
+          "hover:enabled:bg-[#0093EE]/12",
+          "hover:enabled:border-[#2CB3FF]",
+          "hover:enabled:text-[#2CB3FF]",
+          "active:enabled:bg-[#0093EE]/12",
+          "active:enabled:border-[#0093EE]",
+          "active:enabled:text-[#0093EE]",
           "disabled:border-white/38",
           "disabled:text-white/38",
         ].join(" "),
         [ButtonType.Ghost]: [
           "text-[#CCD1D5]",
-          "hover:bg-white/12",
-          "hover:text-white",
-          "active:bg-white/8",
+          "hover:enabled:bg-white/12",
+          "hover:enabled:text-white",
+          "active:enabled:bg-white/8",
           "disabled:text-white/38",
         ].join(" "),
       },
@@ -101,12 +101,12 @@ export const Button = ({
   ...rest
 }: IconButtonProps): ReactElement => {
   // Handle both React element and component reference cases
-  const iconElement = React.isValidElement(icon) 
-    ? icon 
-    : React.createElement(icon as React.ComponentType<any>, { 
-        sx: { fontSize: "inherit" } 
+  const iconElement = React.isValidElement(icon)
+    ? icon
+    : React.createElement(icon as React.ComponentType<any>, {
+        sx: { fontSize: "inherit" },
       });
-      
+
   return (
     <button
       className={twMerge(buttonStyles({ type, size, focused }), className)}
@@ -114,9 +114,7 @@ export const Button = ({
       onClick={onClick}
       {...rest}
     >
-      <span className="flex items-center justify-center">
-        {iconElement}
-      </span>
+      <span className="flex items-center justify-center">{iconElement}</span>
     </button>
   );
 };

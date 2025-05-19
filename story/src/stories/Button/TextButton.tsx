@@ -34,8 +34,8 @@ const buttonStyles = cva(
       type: {
         [ButtonType.Primary]: [
           "text-[#0093EE]", // Blue text color per Figma
-          "hover:text-[#2CB3FF]", // Hover state from Figma
-          "active:text-[#0093EE]", // Pressed state from Figma
+          "hover:enabled:text-[#2CB3FF]", // Hover state only when enabled
+          "active:enabled:text-[#0093EE]", // Pressed state only when enabled
           "disabled:text-white/38", // Disabled state from Figma
         ].join(" "),
       },
