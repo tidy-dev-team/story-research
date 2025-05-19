@@ -86,7 +86,8 @@ type BaseButtonProps = Omit<
 interface IconButtonProps
   extends BaseButtonProps,
     VariantProps<typeof buttonStyles> {
-  icon: ReactElement;
+  // Support both ReactElement and component reference
+  icon: ReactElement | React.ComponentType<any>;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -99,6 +100,13 @@ export const Button = ({
   onClick,
   ...rest
 }: IconButtonProps): ReactElement => {
+  // Handle both React element and component reference cases
+  const iconElement = React.isValidElement(icon) 
+    ? icon 
+    : React.createElement(icon as React.ComponentType<any>, { 
+        sx: { fontSize: "inherit" } 
+      });
+      
   return (
     <button
       className={twMerge(buttonStyles({ type, size, focused }), className)}
@@ -106,7 +114,9 @@ export const Button = ({
       onClick={onClick}
       {...rest}
     >
-      {icon}
+      <span className="flex items-center justify-center">
+        {iconElement}
+      </span>
     </button>
   );
 };

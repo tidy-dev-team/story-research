@@ -182,3 +182,40 @@ export const WithTrailingIcon: Story = {
     />
   ),
 };
+
+/**
+ * Interactive example for the documentation
+ * This story allows users to modify props in real-time and see the changes
+ */
+export const Interactive: Story = {
+  args: {
+    label: "Interactive Button",
+    type: ButtonType.Primary,
+    size: ButtonSize.Medium,
+    hasLeadingIcon: true,
+    hasTrailingIcon: false,
+    rtl: false,
+    disabled: false,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `<Button 
+  label="Interactive Button"
+  type={ButtonType.Primary} 
+  size={ButtonSize.Medium}
+  leadingIcon={<LanguageIcon sx={{ fontSize: "inherit" }} />}
+  onClick={(e) => console.log('Button clicked', e)}
+/>`,
+      },
+    },
+  },
+  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
+    <Button
+      {...args}
+      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
+      onClick={(e) => console.log("Button clicked", e)}
+    />
+  ),
+};

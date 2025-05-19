@@ -124,11 +124,11 @@ export const Button = ({
   ...rest
 }: ButtonProps): ReactElement => {
   const content = [
-    leadingIcon,
-    <span key="label" className={["text-sm", "font-normal"].join(" ")}>
+    leadingIcon && <span key="leadingIcon" className="flex items-center">{leadingIcon}</span>,
+    <span key="label" className="text-sm font-normal leading-none">
       {label}
     </span>,
-    trailingIcon,
+    trailingIcon && <span key="trailingIcon" className="flex items-center">{trailingIcon}</span>,
   ].filter(Boolean);
 
   return (

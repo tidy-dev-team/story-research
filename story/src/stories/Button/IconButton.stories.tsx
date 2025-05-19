@@ -170,3 +170,36 @@ export const DisabledButton: Story = {
     <Button {...args} icon={iconMap[iconName]} />
   ),
 };
+
+/**
+ * Interactive example for the documentation
+ * This story allows users to modify props in real-time and see the changes
+ */
+export const Interactive: Story = {
+  args: {
+    iconName: "settings",
+    type: ButtonType.Primary,
+    size: ButtonSize.Medium,
+    disabled: false,
+    focused: false,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `<Button 
+  icon={SettingsIcon}
+  type={ButtonType.Primary} 
+  size={ButtonSize.Medium}
+  onClick={(e) => console.log('Icon button clicked', e)}
+/>`,
+      },
+    },
+  },
+  render: ({ iconName, ...args }) => (
+    <Button
+      {...args}
+      icon={iconMap[iconName]}
+      onClick={(e) => console.log("Icon button clicked", e)}
+    />
+  ),
+};

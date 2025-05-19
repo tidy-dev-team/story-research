@@ -1,0 +1,160 @@
+import { Meta, Story, Canvas, Controls } from '@storybook/blocks';
+import * as ButtonStories from './Button.stories';
+import { Button, ButtonSize, ButtonType } from './Button';
+import LanguageIcon from "@mui/icons-material/Language";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import DownloadIcon from "@mui/icons-material/Download";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+<Meta of={ButtonStories} title="Components/Button/Documentation" />
+
+# Button Component
+
+The Button component is a versatile UI element for triggering actions or navigation in the application.
+
+## Features
+
+- Multiple visual styles: Primary, Secondary, and Ghost
+- Three size options: Small, Medium, and Large
+- Support for leading and trailing icons
+- RTL (right-to-left) text direction support
+- Accessible focus states
+- Disabled state
+
+## Import
+
+```jsx
+import { Button, ButtonSize, ButtonType } from './path/to/Button';
+import LanguageIcon from '@mui/icons-material/Language';
+```
+
+## Basic Usage
+
+```jsx
+// Basic button
+<Button label="Click Me" />
+
+// Primary button (default)
+<Button 
+  label="Submit" 
+  type={ButtonType.Primary}
+  size={ButtonSize.Medium} 
+/>
+
+// Secondary button
+<Button 
+  label="Cancel" 
+  type={ButtonType.Secondary} 
+/>
+
+// Ghost button
+<Button 
+  label="Learn More" 
+  type={ButtonType.Ghost} 
+/>
+```
+
+## With Icons
+
+Buttons can include leading and/or trailing icons.
+
+```jsx
+// With leading icon
+<Button 
+  label="Visit Website" 
+  leadingIcon={<LanguageIcon sx={{ fontSize: "inherit" }} />} 
+/>
+
+// With trailing icon
+<Button 
+  label="Next Page" 
+  trailingIcon={<ArrowForwardIcon sx={{ fontSize: "inherit" }} />} 
+/>
+
+// With both icons
+<Button 
+  label="Download" 
+  leadingIcon={<DownloadIcon sx={{ fontSize: "inherit" }} />}
+  trailingIcon={<ArrowDropDownIcon sx={{ fontSize: "inherit" }} />}
+/>
+```
+
+## Size Variations
+
+```jsx
+// Small
+<Button label="Small" size={ButtonSize.Small} />
+
+// Medium (default)
+<Button label="Medium" size={ButtonSize.Medium} />
+
+// Large
+<Button label="Large" size={ButtonSize.Large} />
+```
+
+## RTL Support
+
+For right-to-left languages, set the `rtl` prop to `true`.
+
+```jsx
+<Button 
+label="כפתור" 
+    rtl={true} 
+    leadingIcon={<ArrowBackIcon sx={{ fontSize: "inherit" }} />}
+/>
+```
+
+## States
+
+### Disabled
+
+```jsx
+<Button label="Disabled" disabled />
+```
+
+### Focus
+
+The button shows a focus ring when it receives keyboard focus or when the `focused` prop is true.
+
+```jsx
+<Button label="Focused" focused />
+```
+
+## Event Handling
+
+```jsx
+<Button 
+  label="Click Me" 
+  onClick={(e) => {
+    console.log('Button clicked', e);
+    // Handle the click event
+  }} 
+/>
+```
+
+## Interactive Example
+
+Try modifying the properties below to see the button change in real-time:
+
+<Canvas>
+  <Story of={ButtonStories.Interactive} />
+</Canvas>
+
+## Component Props
+
+<Controls />
+
+## Accessibility
+
+- Implements standard button behavior with keyboard navigation support
+- Focus states are clearly visible
+- When used with icons, maintains proper contrast and readability
+
+## Design Considerations
+
+- Use Primary buttons for the main action in a view
+- Use Secondary buttons for alternative or less important actions
+- Use Ghost buttons for tertiary actions or in dense UI areas
+- Always include clear, concise text labels for better accessibility
+- Consider the button hierarchy in your UI to guide users appropriately

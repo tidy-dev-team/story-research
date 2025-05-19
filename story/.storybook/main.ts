@@ -8,6 +8,10 @@ const config: StorybookConfig = {
     "@chromatic-com/storybook",
     "@storybook/experimental-addon-test",
   ],
+  docs: {
+    autodocs: true,
+    defaultName: "Documentation",
+  },
   framework: {
     name: "@storybook/nextjs",
     options: {},
