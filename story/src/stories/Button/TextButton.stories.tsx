@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
 import { TextButton } from "./TextButton";
-import { ButtonSize, ButtonType } from "./TextButton";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 
@@ -30,22 +29,6 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    size: {
-      control: "radio",
-      options: Object.values(ButtonSize),
-      defaultValue: ButtonSize.Medium,
-      labels: {
-        [ButtonSize.Small]: "Small",
-        [ButtonSize.Medium]: "Medium",
-        [ButtonSize.Large]: "Large",
-      },
-    },
-    type: {
-      // TextButton only has Primary type
-      control: "radio",
-      options: Object.values(ButtonType),
-      defaultValue: ButtonType.Primary,
-    },
     rtl: {
       control: "boolean",
       description: "Right to left text direction",
@@ -107,8 +90,6 @@ const renderIcon = (
 
 export const Default: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "Text Button",
   },
   render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
@@ -122,8 +103,6 @@ export const Default: Story = {
 
 export const WithLeadingIcon: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "Visit Website",
     hasLeadingIcon: true,
   },
@@ -138,8 +117,6 @@ export const WithLeadingIcon: Story = {
 
 export const WithTrailingIcon: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "Next Page",
     hasTrailingIcon: true,
   },
@@ -154,8 +131,6 @@ export const WithTrailingIcon: Story = {
 
 export const RTL: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "טקסט",
     rtl: true,
     hasLeadingIcon: true,
@@ -171,8 +146,6 @@ export const RTL: Story = {
 
 export const Focused: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "Focused Button",
     focused: true,
   },
@@ -187,8 +160,6 @@ export const Focused: Story = {
 
 export const Disabled: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     label: "Disabled Button",
     disabled: true,
   },
@@ -208,8 +179,6 @@ export const Disabled: Story = {
 export const Interactive: Story = {
   args: {
     label: "Interactive Text Button",
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
     hasLeadingIcon: true,
     hasTrailingIcon: false,
     rtl: false,

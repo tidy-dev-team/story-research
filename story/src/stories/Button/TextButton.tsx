@@ -2,16 +2,7 @@ import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
-export enum ButtonSize {
-  Small = "S",
-  Medium = "M",
-  Large = "L",
-}
-
-// TextButton only has one type - text with blue color
-export enum ButtonType {
-  Primary = "primary",
-}
+// TextButton only has one style - text with blue color
 
 const buttonStyles = cva(
   [
@@ -28,24 +19,14 @@ const buttonStyles = cva(
     "font-normal",
     "leading-[1.46875em]", // Matches Figma text style
     "p-2", // Add some padding for better clickability
+    "text-[#0093EE]", // Blue text color per Figma
+    "hover:enabled:text-[#2CB3FF]", // Hover state only when enabled
+    "active:enabled:text-[#0093EE]", // Pressed state only when enabled
+    "disabled:text-white/38", // Disabled state from Figma
   ],
   {
     variants: {
-      type: {
-        [ButtonType.Primary]: [
-          "text-[#0093EE]", // Blue text color per Figma
-          "hover:enabled:text-[#2CB3FF]", // Hover state only when enabled
-          "active:enabled:text-[#0093EE]", // Pressed state only when enabled
-          "disabled:text-white/38", // Disabled state from Figma
-        ].join(" "),
-      },
-      size: {
-        // TextButton doesn't have different visual sizes in the Figma design,
-        // but we'll keep the API consistent with other button types
-        [ButtonSize.Small]: ["text-sm"].join(" "),
-        [ButtonSize.Medium]: ["text-sm"].join(" "),
-        [ButtonSize.Large]: ["text-sm"].join(" "),
-      },
+      // TextButton doesn't have different visual sizes in the Figma design
       rtl: {
         true: "flex-row-reverse",
         false: "",
@@ -56,8 +37,6 @@ const buttonStyles = cva(
       },
     },
     defaultVariants: {
-      type: ButtonType.Primary,
-      size: ButtonSize.Medium,
       rtl: false,
       focused: false,
     },
@@ -79,8 +58,6 @@ interface ButtonProps
 }
 
 export const TextButton = ({
-  type,
-  size,
   rtl,
   focused,
   label,
@@ -107,7 +84,7 @@ export const TextButton = ({
 
   return (
     <button
-      className={twMerge(buttonStyles({ type, size, rtl, focused }), className)}
+      className={twMerge(buttonStyles({ rtl, focused }), className)}
       type="button"
       onClick={onClick}
       {...rest}
