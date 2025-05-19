@@ -3,6 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
 export enum ButtonSize {
+  XSmall = "XS",
   Small = "S",
   Medium = "M",
   Large = "L",
@@ -16,18 +17,10 @@ export enum ButtonType {
 
 const buttonStyles = cva(
   [
-    "h-6",
-    "min-w-20",
-    "max-h-6",
-    "min-h-6",
-    "px-3",
-    "py-0.5",
-    "bg-systemColors-bg-primary",
-    "rounded",
+    "rounded-[4px]",
     "inline-flex",
     "justify-center",
     "items-center",
-    "gap-2",
     "overflow-hidden",
     "focus:outline-none",
     "focus-visible:ring-2",
@@ -39,7 +32,6 @@ const buttonStyles = cva(
         [ButtonType.Primary]: [
           "bg-[#0093EE]",
           "text-white",
-          "relative",
           "hover:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
           "active:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
           "disabled:bg-white/12",
@@ -67,20 +59,10 @@ const buttonStyles = cva(
         ].join(" "),
       },
       size: {
-        [ButtonSize.Small]: ["px-3", "py-0.5", "h-6", "text-sm"].join(" "),
-        [ButtonSize.Medium]: ["max-h-8", " min-h-8", "px-4 py-1"].join(" "),
-        [ButtonSize.Large]: [
-          "h-10",
-          "min-w-20",
-          "max-h-10",
-          "min-h-10",
-          "px-5",
-          "py-1",
-        ].join(" "),
-      },
-      rtl: {
-        true: "flex-row-reverse",
-        false: "",
+        [ButtonSize.XSmall]: ["w-5", "h-5", "p-0.5", "text-xs"].join(" "),
+        [ButtonSize.Small]: ["w-6", "h-6", "p-1", "text-sm"].join(" "),
+        [ButtonSize.Medium]: ["w-8", "h-8", "p-1.5"].join(" "),
+        [ButtonSize.Large]: ["w-10", "h-10", "p-2"].join(" "),
       },
       focused: {
         true: "ring-2 ring-[#0093EE]/70",
@@ -90,7 +72,6 @@ const buttonStyles = cva(
     defaultVariants: {
       type: ButtonType.Primary,
       size: ButtonSize.Medium,
-      rtl: false,
       focused: false,
     },
   }
@@ -101,43 +82,30 @@ type BaseButtonProps = Omit<
   "type"
 >;
 
-interface ButtonProps
+interface IconButtonProps
   extends BaseButtonProps,
     VariantProps<typeof buttonStyles> {
-  label: string;
-  leadingIcon?: ReactElement;
-  trailingIcon?: ReactElement;
+  icon: ReactElement;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const Button = ({
   type,
   size,
-  rtl,
   focused,
-  label,
-  leadingIcon,
-  trailingIcon,
+  icon,
   className,
   onClick,
   ...rest
-}: ButtonProps): ReactElement => {
-  const content = [
-    leadingIcon,
-    <span key="label" className={["text-sm", "font-normal"].join(" ")}>
-      {label}
-    </span>,
-    trailingIcon,
-  ].filter(Boolean);
-
+}: IconButtonProps): ReactElement => {
   return (
     <button
-      className={twMerge(buttonStyles({ type, size, rtl, focused }), className)}
+      className={twMerge(buttonStyles({ type, size, focused }), className)}
       type="button"
       onClick={onClick}
       {...rest}
     >
-      {content}
+      {icon}
     </button>
   );
 };
