@@ -8,10 +8,14 @@ import HeadphonesIcon from "@mui/icons-material/Headphones";
 /**
  * Story args include Button props plus controls for leading/trailing icons
  */
-type ButtonStoryArgs = ComponentProps<typeof TextButton> & {
+// 'type' was already removed by user, 'size' was removed previously.
+// 'disabled' is now part of VariantProps for TextButton, so it's included.
+// 'focused' is also part of VariantProps.
+type TextButtonStoryArgs = ComponentProps<typeof TextButton> & {
   hasLeadingIcon?: boolean;
   hasTrailingIcon?: boolean;
-  disabled?: boolean;
+  // disabled is now directly part of ComponentProps<typeof TextButton>
+  // focused is now directly part of ComponentProps<typeof TextButton>
 };
 
 const meta = {
@@ -23,12 +27,15 @@ const meta = {
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
+    focused: false, // Add focused to default args
   },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
+    // Remove 'type' from argTypes as it's no longer a prop
+    // Remove 'size' from argTypes as it's no longer a prop
     rtl: {
       control: "boolean",
       description: "Right to left text direction",
@@ -65,7 +72,17 @@ const meta = {
     },
     disabled: {
       control: "boolean",
+      description: "Disables the button", // Add description
       table: {
+        category: "State", // Categorize under State
+        defaultValue: { summary: "false" },
+      },
+    },
+    focused: { // Add focused to argTypes
+      control: "boolean",
+      description: "Sets the focus state of the button",
+      table: {
+        category: "State",
         defaultValue: { summary: "false" },
       },
     },
@@ -75,30 +92,35 @@ const meta = {
       },
     },
   },
-} satisfies Meta<ButtonStoryArgs>;
+} satisfies Meta<TextButtonStoryArgs>;
 
 export default meta;
 
-type Story = StoryObj<ButtonStoryArgs>;
+type Story = StoryObj<TextButtonStoryArgs>;
 
 const renderIcon = (
   condition: boolean | undefined,
-  Icon: typeof LanguageIcon
+  Icon: typeof LanguageIcon // Assuming LanguageIcon is a SvgIconComponent
 ) => {
   return condition ? <Icon sx={{ fontSize: "14px" }} /> : undefined;
 };
+
+// Updated render function for all stories to handle focused and disabled state
+const renderStory = ({ hasLeadingIcon, hasTrailingIcon, disabled, focused, ...args }: TextButtonStoryArgs) => (
+  <TextButton
+    {...args}
+    disabled={disabled} // Pass disabled directly
+    focused={disabled ? false : focused} // Ensure focused is false if disabled
+    leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+    trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
+  />
+);
 
 export const Default: Story = {
   args: {
     label: "Text Button",
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <TextButton
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const WithLeadingIcon: Story = {
@@ -106,13 +128,7 @@ export const WithLeadingIcon: Story = {
     label: "Visit Website",
     hasLeadingIcon: true,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <TextButton
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const WithTrailingIcon: Story = {
@@ -120,13 +136,7 @@ export const WithTrailingIcon: Story = {
     label: "Next Page",
     hasTrailingIcon: true,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <TextButton
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const RTL: Story = {
@@ -135,41 +145,25 @@ export const RTL: Story = {
     rtl: true,
     hasLeadingIcon: true,
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <TextButton
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const Focused: Story = {
   args: {
     label: "Focused Button",
     focused: true,
+    disabled: false, // Ensure not disabled for focused story
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <TextButton
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 export const Disabled: Story = {
   args: {
     label: "Disabled Button",
     disabled: true,
+    focused: false, // Explicitly set focused to false for disabled story
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
-    <TextButton
-      {...args}
-      leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-    />
-  ),
+  render: renderStory,
 };
 
 /**
@@ -196,9 +190,11 @@ export const Interactive: Story = {
       },
     },
   },
-  render: ({ hasLeadingIcon, hasTrailingIcon, ...args }) => (
+  render: ({ hasLeadingIcon, hasTrailingIcon, disabled, focused, ...args }) => (
     <TextButton
       {...args}
+      disabled={disabled}
+      focused={disabled ? false : focused}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
       trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
       onClick={(e) => console.log("Text button clicked", e)}

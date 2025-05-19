@@ -22,11 +22,10 @@ const buttonStyles = cva(
     "text-[#0093EE]", // Blue text color per Figma
     "hover:enabled:text-[#2CB3FF]", // Hover state only when enabled
     "active:enabled:text-[#0093EE]", // Pressed state only when enabled
-    "disabled:text-white/38", // Disabled state from Figma
+    // Disabled state is now handled by a variant
   ],
   {
     variants: {
-      // TextButton doesn't have different visual sizes in the Figma design
       rtl: {
         true: "flex-row-reverse",
         false: "",
@@ -35,38 +34,46 @@ const buttonStyles = cva(
         true: "ring-2 ring-[#0093EE]/70", // Focus ring per Figma
         false: "",
       },
+      disabled: {
+        true: "text-white/38", // Disabled state from Figma
+        false: "",
+      },
     },
     defaultVariants: {
       rtl: false,
       focused: false,
+      disabled: false,
     },
   }
 );
 
-type BaseButtonProps = Omit<
+// Remove "type" from Omit, as the native button "type" attribute is still relevant.
+type BaseTextButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "type"
+  "disabled" // Handled by our props and cva variant
 >;
 
-interface ButtonProps
-  extends BaseButtonProps,
+interface TextButtonProps
+  extends BaseTextButtonProps,
     VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  // focused and disabled props are implicitly handled by VariantProps<typeof buttonStyles>
 }
 
 export const TextButton = ({
   rtl,
   focused,
+  disabled,
   label,
   leadingIcon,
   trailingIcon,
   className,
   onClick,
   ...rest
-}: ButtonProps): ReactElement => {
+}: TextButtonProps): ReactElement => {
   // Create icon wrappers with consistent styling
   const iconWrapper = (icon: ReactElement, key: string) => (
     <span key={key} className="flex items-center text-[14px]">
@@ -84,9 +91,10 @@ export const TextButton = ({
 
   return (
     <button
-      className={twMerge(buttonStyles({ rtl, focused }), className)}
-      type="button"
+      className={twMerge(buttonStyles({ rtl, focused, disabled: !!disabled }), className)}
+      type="button" // Default to "button" type for accessibility unless overridden by ...rest
       onClick={onClick}
+      disabled={!!disabled} // Ensure disabled is a boolean
       {...rest}
     >
       {content}
