@@ -32,6 +32,7 @@ const buttonStyles = cva(
     "focus:outline-none",
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
+    "font-['Heebo',_sans-serif]", // Add Heebo font
   ],
   {
     variants: {

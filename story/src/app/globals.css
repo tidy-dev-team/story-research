@@ -1,10 +1,21 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap");
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 
-  --prisma-light-blue: #0093EE;
+  --prisma-light-blue: #0093ee;
+  --font-family: "Heebo", sans-serif;
+}
+
+/* Set Heebo as the default font */
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Heebo", sans-serif;
 }
 
 /* @theme inline {
