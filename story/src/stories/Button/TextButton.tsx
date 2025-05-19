@@ -91,7 +91,10 @@ export const TextButton = ({
 
   return (
     <button
-      className={twMerge(buttonStyles({ rtl, focused, disabled: !!disabled }), className)}
+      className={twMerge(
+        buttonStyles({ rtl, focused, disabled: !!disabled }),
+        className
+      )}
       type="button" // Default to "button" type for accessibility unless overridden by ...rest
       onClick={onClick}
       disabled={!!disabled} // Ensure disabled is a boolean

@@ -1,46 +1,55 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
-import { TextButton } from "./TextButton";
+import { LinkButton } from "./LinkButton";
 import LanguageIcon from "@mui/icons-material/Language";
-import HeadphonesIcon from "@mui/icons-material/Headphones";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward"; // Using a different icon for variety
 
 /**
- * Story args include Button props plus controls for leading/trailing icons
+ * Story args include LinkButton props plus controls for leading/trailing icons
  */
-// 'type' was already removed by user, 'size' was removed previously.
-// 'disabled' is now part of VariantProps for TextButton, so it's included.
-// 'focused' is also part of VariantProps.
-type TextButtonStoryArgs = ComponentProps<typeof TextButton> & {
+type LinkButtonStoryArgs = ComponentProps<typeof LinkButton> & {
   hasLeadingIcon?: boolean;
   hasTrailingIcon?: boolean;
-  // disabled is now directly part of ComponentProps<typeof TextButton>
-  // focused is now directly part of ComponentProps<typeof TextButton>
+  // disabled and focused are part of ComponentProps<typeof LinkButton>
 };
 
 const meta = {
-  title: "Component/Button/TextButton",
-  component: TextButton,
+  title: "Component/Button/LinkButton",
+  component: LinkButton,
   args: {
-    label: "Text Button",
+    label: "Link Button",
+    href: "https://www.example.com",
     hasLeadingIcon: false,
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
-    focused: false, // Add focused to default args
+    focused: false,
   },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    // Remove 'type' from argTypes as it's no longer a prop
-    // Remove 'size' from argTypes as it's no longer a prop
+    label: {
+      control: "text",
+      description: "The text content of the link button",
+      table: {
+        category: "Content",
+      },
+    },
+    href: {
+      control: "text",
+      description: "The URL the link button points to",
+      table: {
+        category: "Content",
+      },
+    },
     rtl: {
       control: "boolean",
       description: "Right to left text direction",
       table: {
-        category: "Content",
+        category: "Appearance",
         defaultValue: { summary: "false" },
       },
     },
@@ -72,60 +81,54 @@ const meta = {
     },
     disabled: {
       control: "boolean",
-      description: "Disables the button", // Add description
-      table: {
-        category: "State", // Categorize under State
-        defaultValue: { summary: "false" },
-      },
-    },
-    focused: {
-      // Add focused to argTypes
-      control: "boolean",
-      description: "Sets the focus state of the button",
+      description: "Disables the link button",
       table: {
         category: "State",
         defaultValue: { summary: "false" },
       },
     },
-    onClick: {
+    focused: {
+      control: "boolean",
+      description: "Sets the focus state of the link button",
       table: {
-        disable: true,
+        category: "State",
+        defaultValue: { summary: "false" },
       },
     },
   },
-} satisfies Meta<TextButtonStoryArgs>;
+} satisfies Meta<LinkButtonStoryArgs>;
 
 export default meta;
 
-type Story = StoryObj<TextButtonStoryArgs>;
+type Story = StoryObj<LinkButtonStoryArgs>;
 
 const renderIcon = (
   condition: boolean | undefined,
-  Icon: typeof LanguageIcon // Assuming LanguageIcon is a SvgIconComponent
+  IconComponent: typeof LanguageIcon // Type for MUI SvgIconComponent
 ) => {
-  return condition ? <Icon sx={{ fontSize: "14px" }} /> : undefined;
+  return condition ? <IconComponent sx={{ fontSize: "14px" }} /> : undefined;
 };
 
-// Updated render function for all stories to handle focused and disabled state
 const renderStory = ({
   hasLeadingIcon,
   hasTrailingIcon,
   disabled,
   focused,
   ...args
-}: TextButtonStoryArgs) => (
-  <TextButton
+}: LinkButtonStoryArgs) => (
+  <LinkButton
     {...args}
-    disabled={disabled} // Pass disabled directly
+    disabled={disabled}
     focused={disabled ? false : focused} // Ensure focused is false if disabled
     leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-    trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
+    trailingIcon={renderIcon(hasTrailingIcon, ArrowForwardIcon)}
   />
 );
 
 export const Default: Story = {
   args: {
-    label: "Text Button",
+    label: "Link Button",
+    href: "#",
   },
   render: renderStory,
 };
@@ -133,6 +136,7 @@ export const Default: Story = {
 export const WithLeadingIcon: Story = {
   args: {
     label: "Visit Website",
+    href: "#",
     hasLeadingIcon: true,
   },
   render: renderStory,
@@ -140,7 +144,8 @@ export const WithLeadingIcon: Story = {
 
 export const WithTrailingIcon: Story = {
   args: {
-    label: "Next Page",
+    label: "Read More",
+    href: "#",
     hasTrailingIcon: true,
   },
   render: renderStory,
@@ -148,7 +153,8 @@ export const WithTrailingIcon: Story = {
 
 export const RTL: Story = {
   args: {
-    label: "טקסט",
+    label: "קישור", // Example RTL text
+    href: "#",
     rtl: true,
     hasLeadingIcon: true,
   },
@@ -157,7 +163,8 @@ export const RTL: Story = {
 
 export const Focused: Story = {
   args: {
-    label: "Focused Button",
+    label: "Focused Link",
+    href: "#",
     focused: true,
     disabled: false, // Ensure not disabled for focused story
   },
@@ -166,7 +173,8 @@ export const Focused: Story = {
 
 export const Disabled: Story = {
   args: {
-    label: "Disabled Button",
+    label: "Disabled Link",
+    href: "#", // Href is present but link will be non-interactive
     disabled: true,
     focused: false, // Explicitly set focused to false for disabled story
   },
@@ -179,7 +187,8 @@ export const Disabled: Story = {
  */
 export const Interactive: Story = {
   args: {
-    label: "Interactive Text Button",
+    label: "Interactive Link",
+    href: "https://storybook.js.org",
     hasLeadingIcon: true,
     hasTrailingIcon: false,
     rtl: false,
@@ -189,22 +198,21 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<TextButton 
-  label="Interactive Text Button"
+        code: `<LinkButton 
+  label="Interactive Link"
+  href="https://storybook.js.org"
   leadingIcon={<LanguageIcon sx={{ fontSize: "14px" }} />}
-  onClick={(e) => console.log('Text button clicked', e)}
 />`,
       },
     },
   },
   render: ({ hasLeadingIcon, hasTrailingIcon, disabled, focused, ...args }) => (
-    <TextButton
+    <LinkButton
       {...args}
       disabled={disabled}
       focused={disabled ? false : focused}
       leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-      trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-      onClick={(e) => console.log("Text button clicked", e)}
+      trailingIcon={renderIcon(hasTrailingIcon, ArrowForwardIcon)}
     />
   ),
 };
