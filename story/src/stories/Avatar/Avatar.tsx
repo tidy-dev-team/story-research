@@ -13,9 +13,9 @@ const avatarStyles = cva(
   {
     variants: {
       size: {
-        [AvatarSize.Sm]: "h-8 w-8 pb-0.5 text-xs font-medium",
-        [AvatarSize.Md]: "h-14 w-14 pb-1 text-xl font-normal",
-        [AvatarSize.Lg]: "h-24 w-24 pb-2 text-4xl font-normal",
+        [AvatarSize.Sm]: "h-8 w-8 text-xs font-medium",
+        [AvatarSize.Md]: "h-14 w-14 text-xl font-normal",
+        [AvatarSize.Lg]: "h-24 w-24 text-4xl font-normal",
       },
       filled: {
         true: "bg-[var(--prisma-light-blue)]",
