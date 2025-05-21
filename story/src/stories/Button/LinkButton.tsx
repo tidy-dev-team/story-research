@@ -21,6 +21,8 @@ const linkButtonStyles = cva(
     "text-[#0093EE]", // Idle color from Figma
     "hover:not([aria-disabled=true]):text-[#2CB3FF]", // Hover color from Figma
     "active:not([aria-disabled=true]):text-[#0093EE]", // Pressed color from Figma
+    "focus-visible:ring-2",
+    "focus-visible:ring-[#0E75B5]",
   ],
   {
     variants: {

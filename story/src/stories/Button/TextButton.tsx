@@ -22,7 +22,8 @@ const buttonStyles = cva(
     "text-[#0093EE]", // Blue text color per Figma
     "hover:enabled:text-[#2CB3FF]", // Hover state only when enabled
     "active:enabled:text-[#0093EE]", // Pressed state only when enabled
-    // Disabled state is now handled by a variant
+    "focus-visible:ring-2",
+    "focus-visible:ring-[#0E75B5]",
   ],
   {
     variants: {
@@ -55,7 +56,7 @@ type BaseTextButtonProps = Omit<
 
 interface TextButtonProps
   extends BaseTextButtonProps,
-    VariantProps<typeof buttonStyles> {
+  VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;

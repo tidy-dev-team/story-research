@@ -26,6 +26,8 @@ const buttonStyles = cva(
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
     "font-['Heebo',_sans-serif]",
+    "ring-offset-2",
+    "ring-offset-[#22272b]",
   ],
   {
     variants: {
@@ -85,7 +87,7 @@ type BaseButtonProps = Omit<
 
 interface IconButtonProps
   extends BaseButtonProps,
-    VariantProps<typeof buttonStyles> {
+  VariantProps<typeof buttonStyles> {
   // Support both ReactElement and component reference
   icon: ReactElement | React.ComponentType<any>;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -104,8 +106,8 @@ export const Button = ({
   const iconElement = React.isValidElement(icon)
     ? icon
     : React.createElement(icon as React.ComponentType<any>, {
-        sx: { fontSize: "inherit" },
-      });
+      sx: { fontSize: "inherit" },
+    });
 
   return (
     <button
