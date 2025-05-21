@@ -23,6 +23,8 @@ const linkButtonStyles = cva(
     "active:not([aria-disabled=true]):text-[#0093EE]", // Pressed color from Figma
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
+    "ring-offset-2",
+    "ring-offset-[#22272b]",
   ],
   {
     variants: {
@@ -54,7 +56,7 @@ type BaseLinkButtonProps = Omit<
 
 interface LinkButtonProps
   extends BaseLinkButtonProps,
-    VariantProps<typeof linkButtonStyles> {
+  VariantProps<typeof linkButtonStyles> {
   label: string;
   href: string;
   leadingIcon?: ReactElement;

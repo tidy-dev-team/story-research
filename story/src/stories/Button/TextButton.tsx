@@ -18,12 +18,14 @@ const buttonStyles = cva(
     "text-sm",
     "font-normal",
     "leading-[1.46875em]", // Matches Figma text style
-    "p-2", // Add some padding for better clickability
+    "p-1", // Add some padding for better clickability
     "text-[#0093EE]", // Blue text color per Figma
     "hover:enabled:text-[#2CB3FF]", // Hover state only when enabled
     "active:enabled:text-[#0093EE]", // Pressed state only when enabled
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
+    "ring-offset-2",
+    "ring-offset-[#22272b]",
   ],
   {
     variants: {
