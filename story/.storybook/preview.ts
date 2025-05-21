@@ -6,7 +6,7 @@ const preview: Preview = {
     backgrounds: {
       default: "dark",
       values: [
-        { name: "light", value: "#ffffff" },
+        { name: "light", value: "#dedede" },
         { name: "dark", value: "#22272b" },
       ],
     },
