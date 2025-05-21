@@ -28,6 +28,7 @@ const buttonStyles = cva(
     "justify-center",
     "items-center",
     "gap-2",
+    "cursor-pointer",
     "overflow-hidden",
     "focus:outline-none",
     "focus-visible:ring-2",
@@ -104,7 +105,7 @@ type BaseButtonProps = Omit<
 
 interface ButtonProps
   extends BaseButtonProps,
-    VariantProps<typeof buttonStyles> {
+  VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;
