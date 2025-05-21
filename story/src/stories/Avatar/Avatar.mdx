@@ -1,0 +1,89 @@
+import { Meta, Story, Canvas, Controls, Source } from '@storybook/blocks';
+import * as AvatarStories from './Avatar.stories';
+import Avatar, { AvatarSize } from './Avatar';
+
+<Meta of={AvatarStories} title="Components/Avatar/Documentation" />
+
+# Avatar Component
+
+The Avatar component is used to display a user's profile picture or initials as a circular element. It supports different sizes and can display a text label (e.g., initials) or a fallback "N/A" if no label is provided. The background color changes based on whether a label is present.
+
+## Features
+
+- Displays a circular avatar.
+- Supports multiple sizes: Small (`sm`), Medium (`md`), and Large (`lg`).
+- Shows a text `label` (e.g., initials) if provided.
+- Displays "N/A" as a fallback if no `label` is provided.
+- Background color differs for avatars with a label (filled) versus those without (unfilled).
+- Built with Tailwind CSS and class-variance-authority for styling.
+
+## Import
+
+```tsx
+import Avatar, { AvatarSize } from './path/to/Avatar';
+```
+
+## Basic Usage
+
+Provide a `label` for initials and a `size`.
+
+```tsx
+// Small Avatar with initials
+<Avatar label="JD" size={AvatarSize.Sm} />
+
+// Medium Avatar, no label (shows "N/A")
+<Avatar size={AvatarSize.Md} />
+
+// Large Avatar with initials
+<Avatar label="AB" size={AvatarSize.Lg} />
+```
+
+## Props
+
+The props for the Avatar component are listed below. You can interact with them in the Controls panel.
+
+<Controls />
+
+## Stories Preview
+
+Here are some examples of the Avatar component in different configurations.
+
+### Small Size
+
+Displays the avatar in its smallest size.
+
+<Canvas>
+  <Story of={AvatarStories.Small} />
+</Canvas>
+
+### Medium Size (Default)
+
+Displays the avatar in its medium (default) size.
+
+<Canvas>
+  <Story of={AvatarStories.Medium} />
+</Canvas>
+
+### Large Size
+
+Displays the avatar in its largest size.
+
+<Canvas>
+  <Story of={AvatarStories.Large} />
+</Canvas>
+
+### With Label
+
+Demonstrates an avatar with a text label. The background will be filled.
+
+<Canvas>
+  <Story of={AvatarStories.Medium} args={{ label: 'RD', size: AvatarSize.Md }} />
+</Canvas>
+
+### Without Label (Fallback)
+
+Demonstrates an avatar without a text label. It will display "N/A" and have a different background.
+
+<Canvas>
+  <Story of={AvatarStories.Medium} args={{ label: '', size: AvatarSize.Md }} />
+</Canvas>
