@@ -33,6 +33,8 @@ const buttonStyles = cva(
     "focus:outline-none",
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
+    "ring-offset-2",
+    "ring-offset-[#22272b]",
     "font-['Heebo',_sans-serif]",
   ],
   {
