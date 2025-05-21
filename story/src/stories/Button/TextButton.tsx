@@ -17,6 +17,7 @@ const buttonStyles = cva(
     "font-['Heebo',_sans-serif]",
     "text-sm",
     "font-normal",
+    "cursor-pointer",
     "leading-[1.46875em]", // Matches Figma text style
     "p-1", // Add some padding for better clickability
     "text-[#0093EE]", // Blue text color per Figma

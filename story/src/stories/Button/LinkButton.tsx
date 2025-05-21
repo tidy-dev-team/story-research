@@ -12,6 +12,7 @@ const linkButtonStyles = cva(
     "h-6", // 24px height from Figma
     "px-2", // Horizontal padding
     "bg-transparent",
+    "cursor-pointer",
     "focus:outline-none",
     "font-['Heebo',_sans-serif]",
     "text-sm", // 14px font size from Figma

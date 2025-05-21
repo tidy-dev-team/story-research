@@ -22,6 +22,7 @@ const buttonStyles = cva(
     "justify-center",
     "items-center",
     "overflow-hidden",
+    "cursor-pointer",
     "focus:outline-none",
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
