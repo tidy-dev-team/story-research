@@ -23,21 +23,18 @@ const radioButtonStyles = cva(
     "ring-offset-2",
     "ring-offset-[#101010]",
     "bg-transparent",
-    "focus-visible:ring-[#0E75B5]",
+    // "focus-visible:ring-[#0E75B5]",
   ],
   {
     variants: {
       selected: {
         true: [
           "border-[#0093EE]",
-          "hover:enabled:border-[#0081D1]",
-          "active:enabled:border-[#005B94]",
-          "active:shadow-inner",
           "before:content-['']",
           "before:absolute",
           "before:w-2",
           "before:h-2",
-          "before:enabled:bg-[#0093EE]",
+          "before:bg-[#0093EE]",
           "before:rounded-full",
           "before:top-1/2",
           "before:left-1/2",
@@ -46,9 +43,11 @@ const radioButtonStyles = cva(
           "before:-translate-y-1/2",
           "before:scale-100",
           "before:transition-transform",
-          "hover:enabled:before:bg-[#0081D1]",
-          "hover:enabled:before:border-[#0081D1]",
-          "active:enabled:before:bg-[#005B94]",
+          "hover:border-[#0081D1]",
+          "hover:before:bg-[#0081D1]",
+          "active:border-[#005B94]",
+          "active:before:bg-[#005B94]",
+          "active:shadow-inner",
         ].join(" "),
         false: [
           "border-[#A8B0B8]",
@@ -65,7 +64,7 @@ const radioButtonStyles = cva(
         false: "",
       },
       focused: {
-        true: "ring-2 ring-blue-300 ring-offset-2",
+        true: "ring-2 ring-[#0E75B5] ring-offset-2",
         false: "",
       },
     },
@@ -80,6 +79,11 @@ const radioButtonStyles = cva(
         selected: true,
         disabled: true,
         className: "before:bg-white/38",
+      },
+      {
+        disabled: true,
+        className:
+          "hover:border-white/38 hover:before:bg-white/38 active:border-white/38 active:before:bg-white/38 active:shadow-none",
       },
     ],
   }
