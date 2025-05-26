@@ -1,0 +1,121 @@
+import { Meta, Story, Canvas, Controls, Source } from '@storybook/blocks';
+import * as RadioButtonStories from './RadioButton.stories';
+import { RadioButton, RadioButtonType } from './RadioButton';
+
+<Meta of={RadioButtonStories} title="Components/RadioButton/Documentation" />
+
+# RadioButton Component
+
+The RadioButton component provides a customizable radio button input for single-selection scenarios. It supports various visual states, making it suitable for forms and configuration interfaces.
+
+## Features
+
+- Single selection input control
+- Optional text labels
+- Visual feedback for selected, disabled, and focused states
+- Hover and active state animations
+- RTL (right-to-left) text direction support
+- Accessibility support with proper focus states
+- Built with Tailwind CSS and class-variance-authority
+
+## Import
+
+```tsx
+import { RadioButton, RadioButtonType } from './path/to/RadioButton';
+```
+
+## Basic Usage
+
+Provide a `selected` state, `onChange` handler, and optionally a `label`.
+
+```tsx
+const [selected, setSelected] = useState(false);
+
+<RadioButton
+  label="Option 1"
+  selected={selected}
+  onChange={() => setSelected(!selected)}
+/>
+```
+
+## Interactive Example
+
+Here's a working example of a radio button group where only one option can be selected at a time:
+
+export const RadioButtonGroup = () => {
+  const [selectedOption, setSelectedOption] = React.useState('option1');
+  
+  return (
+    <div className="space-y-4 p-4 bg-[#101010] rounded-lg">
+      <h3 className="text-[#ffffff] font-medium mb-3">Choose your preferred option:</h3>
+      <div className="space-y-3">
+        <RadioButton
+          label="First Option"
+          selected={selectedOption === 'option1'}
+          onChange={() => setSelectedOption('option1')}
+        />
+        <RadioButton
+          label="Second Option"
+          selected={selectedOption === 'option2'}
+          onChange={() => setSelectedOption('option2')}
+        />
+        <RadioButton
+          label="Third Option"
+          selected={selectedOption === 'option3'}
+          onChange={() => setSelectedOption('option3')}
+        />
+      </div>
+      <p className="text-[#ffffff] text-sm mt-4">
+        Selected: {selectedOption === 'option1' ? 'First Option' : 
+                   selectedOption === 'option2' ? 'Second Option' : 'Third Option'}
+      </p>
+    </div>
+  );
+};
+
+<RadioButtonGroup />
+
+## Props
+
+The props for the RadioButton component are listed below. You can interact with them in the Controls panel.
+
+<Controls />
+
+## Usage Guidelines
+
+### When to Use
+
+- **Form selections**: Use radio buttons when users need to select exactly one option from a list
+- **Settings and preferences**: For configuration options where only one choice is valid
+- **Survey questions**: For single-answer questions in forms or surveys
+
+### When Not to Use
+
+- **Multiple selections**: Use checkboxes instead when users can select multiple options
+- **Binary choices**: Consider a toggle or switch for simple on/off decisions
+- **Too many options**: Consider a dropdown or select component for lists with many options
+
+### Best Practices
+
+- Always provide clear, descriptive labels
+- Group related radio buttons together
+- Ensure sufficient spacing between options
+- Use consistent sizing within a group
+- Provide visual feedback for all interactive states
+
+## Accessibility
+
+The RadioButton component includes several accessibility features:
+
+- Proper semantic HTML with radio input types
+- Keyboard navigation support
+- Focus indicators for screen readers
+- Appropriate ARIA attributes
+- Color contrast compliant styling
+
+## Technical Notes
+
+- Built using class-variance-authority (CVA) for consistent styling
+- Supports compound variants for complex state combinations
+- Uses Tailwind CSS for responsive and customizable design
+- Hidden native radio input with custom visual styling
