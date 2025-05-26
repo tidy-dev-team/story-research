@@ -5,7 +5,7 @@ import { Checkbox } from "./Checkbox";
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
 
 const meta: Meta<CheckboxStoryArgs> = {
-  title: "Components/Checkbox",
+  title: "Component/Checkbox",
   component: Checkbox,
   parameters: {
     layout: "centered",
@@ -78,6 +78,13 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "md" },
       },
     },
+    onChange: {
+      action: "changed",
+      description: "Callback fired when the checkbox is clicked",
+      table: {
+        category: "Events",
+      },
+    },
   },
 };
 
@@ -85,6 +92,21 @@ export default meta;
 type Story = StoryObj<CheckboxStoryArgs>;
 
 export const Default: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: false,
     indeterminate: false,
@@ -97,6 +119,21 @@ export const Default: Story = {
 };
 
 export const WithoutLabel: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: false,
     indeterminate: false,
@@ -109,6 +146,21 @@ export const WithoutLabel: Story = {
 };
 
 export const Checked: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: true,
     indeterminate: false,
@@ -121,6 +173,21 @@ export const Checked: Story = {
 };
 
 export const Indeterminate: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: false,
     indeterminate: true,
@@ -133,6 +200,21 @@ export const Indeterminate: Story = {
 };
 
 export const Disabled: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: false,
     indeterminate: false,
@@ -145,6 +227,21 @@ export const Disabled: Story = {
 };
 
 export const DisabledChecked: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: true,
     indeterminate: false,
@@ -157,6 +254,21 @@ export const DisabledChecked: Story = {
 };
 
 export const Focused: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: false,
     indeterminate: false,
@@ -169,6 +281,21 @@ export const Focused: Story = {
 };
 
 export const FocusedChecked: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: true,
     indeterminate: false,
@@ -181,6 +308,21 @@ export const FocusedChecked: Story = {
 };
 
 export const SmallLabel: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: false,
     indeterminate: false,
@@ -193,6 +335,21 @@ export const SmallLabel: Story = {
 };
 
 export const LargeLabel: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: false,
     indeterminate: false,
@@ -205,6 +362,21 @@ export const LargeLabel: Story = {
 };
 
 export const RTL: Story = {
+  render: (args) => {
+    const { useState } = require("react");
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
   args: {
     checked: true,
     indeterminate: false,

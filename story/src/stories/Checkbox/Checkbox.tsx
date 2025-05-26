@@ -142,7 +142,7 @@ export const Checkbox = ({
 }: CheckboxProps) => {
   const containerClasses = `flex items-center ${
     rtl ? "flex-row-reverse gap-2" : "gap-2"
-  }`;
+  } ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
 
   const labelSizeClasses = {
     sm: "text-sm",
