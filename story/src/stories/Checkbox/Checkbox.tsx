@@ -124,7 +124,6 @@ interface CheckboxProps
     >,
     VariantProps<typeof checkboxStyles> {
   label?: string;
-  labelSize?: "sm" | "md" | "lg";
   checked?: boolean;
   disabled?: boolean;
 }
@@ -136,19 +135,12 @@ export const Checkbox = ({
   disabled = false,
   focused = false,
   label,
-  labelSize = "md",
   className,
   ...props
 }: CheckboxProps) => {
   const containerClasses = `flex items-center ${
     rtl ? "flex-row-reverse gap-2" : "gap-2"
   } ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
-
-  const labelSizeClasses = {
-    sm: "text-sm",
-    md: "text-base",
-    lg: "text-lg",
-  };
 
   return (
     <label className={containerClasses}>
@@ -172,9 +164,7 @@ export const Checkbox = ({
       {label && (
         <span
           className={labelStyles({
-            className: `${labelSizeClasses[labelSize]} ${
-              disabled ? "text-gray-400 cursor-not-allowed" : ""
-            }`,
+            className: disabled ? "text-gray-400 cursor-not-allowed" : "",
           })}
         >
           {label}

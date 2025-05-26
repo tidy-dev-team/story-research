@@ -18,7 +18,6 @@ const meta: Meta<CheckboxStoryArgs> = {
     focused: false,
     rtl: false,
     label: "Checkbox option",
-    labelSize: "md",
   },
   argTypes: {
     checked: {
@@ -69,15 +68,6 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "undefined" },
       },
     },
-    labelSize: {
-      control: "select",
-      options: ["sm", "md", "lg"],
-      description: "Size of the label text",
-      table: {
-        category: "Appearance",
-        defaultValue: { summary: "md" },
-      },
-    },
     onChange: {
       action: "changed",
       description: "Callback fired when the checkbox is clicked",
@@ -114,7 +104,6 @@ export const Default: Story = {
     focused: false,
     rtl: false,
     label: "Checkbox option",
-    labelSize: "md",
   },
 };
 
@@ -141,7 +130,6 @@ export const WithoutLabel: Story = {
     focused: false,
     rtl: false,
     label: undefined,
-    labelSize: "md",
   },
 };
 
@@ -168,7 +156,6 @@ export const Checked: Story = {
     focused: false,
     rtl: false,
     label: "Checked option",
-    labelSize: "md",
   },
 };
 
@@ -195,7 +182,6 @@ export const Indeterminate: Story = {
     focused: false,
     rtl: false,
     label: "Indeterminate option",
-    labelSize: "md",
   },
 };
 
@@ -222,7 +208,6 @@ export const Disabled: Story = {
     focused: false,
     rtl: false,
     label: "Disabled option",
-    labelSize: "md",
   },
 };
 
@@ -249,7 +234,6 @@ export const DisabledChecked: Story = {
     focused: false,
     rtl: false,
     label: "Disabled checked",
-    labelSize: "md",
   },
 };
 
@@ -276,7 +260,6 @@ export const Focused: Story = {
     focused: true,
     rtl: false,
     label: "Focused option",
-    labelSize: "md",
   },
 };
 
@@ -303,7 +286,6 @@ export const FocusedChecked: Story = {
     focused: true,
     rtl: false,
     label: "Focused checked",
-    labelSize: "md",
   },
 };
 
@@ -330,7 +312,6 @@ export const SmallLabel: Story = {
     focused: false,
     rtl: false,
     label: "Small label",
-    labelSize: "sm",
   },
 };
 
@@ -357,7 +338,6 @@ export const LargeLabel: Story = {
     focused: false,
     rtl: false,
     label: "Large label",
-    labelSize: "lg",
   },
 };
 
@@ -384,6 +364,5 @@ export const RTL: Story = {
     focused: false,
     rtl: true,
     label: "Right-to-left",
-    labelSize: "md",
   },
 };
