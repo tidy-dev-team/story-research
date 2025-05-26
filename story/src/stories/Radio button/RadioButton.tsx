@@ -22,8 +22,7 @@ const radioButtonStyles = cva(
     "focus-visible:ring-2",
     "ring-offset-2",
     "ring-offset-[#101010]",
-    "bg-transparent",
-    // "focus-visible:ring-[#0E75B5]",
+    "focus-visible:ring-[#0E75B5]",
   ],
   {
     variants: {
@@ -96,12 +95,10 @@ const labelStyles = cva(
     "duration-200",
     "cursor-pointer",
     "font-medium",
+    "text-white",
   ],
   {
     variants: {
-      type: {
-        [RadioButtonType.Primary]: ["text-white"].join(" "),
-      },
       disabled: {
         true: "text-gray-400 cursor-not-allowed",
         false: "",
@@ -112,7 +109,6 @@ const labelStyles = cva(
       },
     },
     defaultVariants: {
-      type: RadioButtonType.Primary,
       disabled: false,
       rtl: false,
     },
@@ -141,10 +137,18 @@ export const RadioButton = ({
   );
   const labelClasses = twMerge(labelStyles({ disabled, rtl }));
 
+  const containerClasses = [
+    "flex",
+    "items-center",
+    "gap-2",
+    rtl ? "flex-row-reverse" : "",
+    disabled ? "cursor-not-allowed" : "cursor-pointer",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <label
-      className={`flex items-center gap-2 cursor-pointer ${rtl ? "flex-row-reverse" : ""} ${disabled ? "cursor-not-allowed" : ""}`}
-    >
+    <label className={containerClasses}>
       <input
         type="radio"
         checked={selected}

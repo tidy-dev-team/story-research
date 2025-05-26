@@ -6,12 +6,12 @@ import { RadioButton, RadioButtonType } from './RadioButton';
 
 # RadioButton Component
 
-The RadioButton component provides a customizable radio button input for single-selection scenarios. It supports various visual states and sizes, making it suitable for forms and configuration interfaces.
+The RadioButton component provides a customizable radio button input for single-selection scenarios. It supports various visual states, making it suitable for forms and configuration interfaces.
 
 ## Features
 
 - Single selection input control
-- Optional text labels with size variants
+- Optional text labels
 - Visual feedback for selected, disabled, and focused states
 - Hover and active state animations
 - RTL (right-to-left) text direction support
@@ -46,8 +46,8 @@ export const RadioButtonGroup = () => {
   const [selectedOption, setSelectedOption] = React.useState('option1');
   
   return (
-    <div className="space-y-4 p-4 bg-gray-900 rounded-lg">
-      <h3 className="text-white font-medium mb-3">Choose your preferred option:</h3>
+    <div className="space-y-4 p-4 bg-[#101010] rounded-lg">
+      <h3 className="text-[#ffffff] font-medium mb-3">Choose your preferred option:</h3>
       <div className="space-y-3">
         <RadioButton
           label="First Option"
@@ -65,7 +65,7 @@ export const RadioButtonGroup = () => {
           onChange={() => setSelectedOption('option3')}
         />
       </div>
-      <p className="text-gray-400 text-sm mt-4">
+      <p className="text-[#ffffff] text-sm mt-4">
         Selected: {selectedOption === 'option1' ? 'First Option' : 
                    selectedOption === 'option2' ? 'Second Option' : 'Third Option'}
       </p>
@@ -80,62 +80,6 @@ export const RadioButtonGroup = () => {
 The props for the RadioButton component are listed below. You can interact with them in the Controls panel.
 
 <Controls />
-
-## Stories Preview
-
-Here are examples of the RadioButton component in different configurations.
-
-### Default
-
-Basic radio button with label.
-
-<Canvas>
-  <Story of={RadioButtonStories.Default} />
-</Canvas>
-
-### Without Label
-
-Radio button without a text label.
-
-<Canvas>
-  <Story of={RadioButtonStories.WithoutLabel} />
-</Canvas>
-
-### Label Sizes
-
-Radio buttons with different label sizes.
-
-<Canvas>
-  <Story of={RadioButtonStories.SmallLabel} />
-  <Story of={RadioButtonStories.Default} />
-  <Story of={RadioButtonStories.LargeLabel} />
-</Canvas>
-
-### Selected State
-
-Radio button in selected state.
-
-<Canvas>
-  <Story of={RadioButtonStories.Selected} />
-</Canvas>
-
-### Disabled States
-
-Radio buttons in disabled states, both selected and unselected.
-
-<Canvas>
-  <Story of={RadioButtonStories.Disabled} />
-  <Story of={RadioButtonStories.DisabledSelected} />
-</Canvas>
-
-### Focused States
-
-Radio buttons with focus indicators.
-
-<Canvas>
-  <Story of={RadioButtonStories.Focused} />
-  <Story of={RadioButtonStories.FocusedSelected} />
-</Canvas>
 
 ## Usage Guidelines
 

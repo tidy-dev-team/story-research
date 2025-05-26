@@ -76,28 +76,39 @@ export const Default: Story = {
   args: {
     label: "Default Option",
     selected: false,
+    disabled: false,
+    focused: false,
+    rtl: false,
   },
 };
 
-export const Checked: Story = {
+export const Selected: Story = {
   args: {
-    label: "Checked Option",
+    label: "Selected Option",
     selected: true,
+    disabled: false,
+    focused: false,
+    rtl: false,
   },
 };
 
 export const WithoutLabel: Story = {
   args: {
-    label: "",
+    label: undefined,
     selected: false,
+    disabled: false,
+    focused: false,
+    rtl: false,
   },
 };
 
 export const RTL: Story = {
   args: {
-    label: "خيار",
+    label: "אפשרות",
     selected: false,
     rtl: true,
+    disabled: false,
+    focused: false,
   },
 };
 
@@ -106,6 +117,8 @@ export const Disabled: Story = {
     label: "Disabled Option",
     selected: false,
     disabled: true,
+    focused: false,
+    rtl: false,
   },
 };
 
@@ -114,6 +127,8 @@ export const DisabledSelected: Story = {
     label: "Disabled Selected",
     selected: true,
     disabled: true,
+    focused: false,
+    rtl: false,
   },
 };
 
@@ -122,6 +137,8 @@ export const Focused: Story = {
     label: "Focused Option",
     selected: false,
     focused: true,
+    disabled: false,
+    rtl: false,
   },
 };
 
@@ -130,5 +147,7 @@ export const FocusedSelected: Story = {
     label: "Focused Selected",
     selected: true,
     focused: true,
+    disabled: false,
+    rtl: false,
   },
 };
