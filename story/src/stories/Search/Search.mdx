@@ -1,0 +1,83 @@
+import { Meta, Canvas, ArgTypes } from "@storybook/blocks";
+import * as SearchStories from "./Search.stories";
+
+<Meta of={SearchStories} />
+
+# Search
+
+The Search component provides a text input with search functionality, supporting both left-to-right (LTR) and right-to-left (RTL) layouts. It includes a search icon and an optional clear button when the input contains text.
+
+## Features
+
+- **Multiple States**: idle, hover, active, focused, and disabled
+- **RTL Support**: Full right-to-left layout support for international use
+- **Clear Functionality**: Automatic clear button when input has content
+- **Keyboard Accessible**: Full keyboard navigation and focus management
+- **Material-UI Icons**: Uses MUI Search and Close icons
+- **Focus Ring**: Visual focus indicator for accessibility
+
+## Usage
+
+<Canvas of={SearchStories.Default} />
+
+## States
+
+### Default (Empty)
+The search input in its default empty state.
+
+<Canvas of={SearchStories.Default} />
+
+### Filled
+When the search input contains text, a clear button appears.
+
+<Canvas of={SearchStories.Filled} />
+
+### Focused
+The search input with focus state and blue focus ring.
+
+<Canvas of={SearchStories.Focused} />
+
+### Disabled
+The search input in a disabled state.
+
+<Canvas of={SearchStories.Disabled} />
+
+### Disabled with Content
+A disabled search input that contains text.
+
+<Canvas of={SearchStories.DisabledFilled} />
+
+## RTL Support
+
+### RTL Empty
+Search input with right-to-left layout support.
+
+<Canvas of={SearchStories.RTL} />
+
+### RTL Filled
+RTL search input with content and clear button.
+
+<Canvas of={SearchStories.RTLFilled} />
+
+## Interactive Demo
+
+<Canvas of={SearchStories.Interactive} />
+
+## API
+
+<ArgTypes of={SearchStories} />
+
+## Accessibility
+
+- **Keyboard Navigation**: Full keyboard support with Tab navigation
+- **Focus Management**: Clear visual focus indicators
+- **Screen Reader Support**: Proper labeling and ARIA attributes
+- **RTL Support**: Complete right-to-left layout support
+
+## Design Tokens
+
+- **Background**: `#212426`
+- **Text Colors**: `#A8B0B8` (placeholder), `#FFFFFF` (filled)
+- **Focus Ring**: `#0093EE` with 70% opacity
+- **Border Radius**: `4px`
+- **Hover State**: Background with 12% white overlay
