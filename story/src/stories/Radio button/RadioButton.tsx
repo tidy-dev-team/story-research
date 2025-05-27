@@ -120,7 +120,7 @@ export const RadioButton = ({
   };
 
   return (
-    <label 
+    <label
       className={containerClasses}
       onMouseDown={() => setIsKeyboardFocus(false)}
     >
@@ -134,7 +134,7 @@ export const RadioButton = ({
         onFocus={(e) => {
           setInternalFocused(true);
           // Only show focus ring if focus came from keyboard navigation
-          if (e.target.matches(':focus-visible')) {
+          if (e.target.matches(":focus-visible")) {
             setIsKeyboardFocus(true);
           }
         }}
