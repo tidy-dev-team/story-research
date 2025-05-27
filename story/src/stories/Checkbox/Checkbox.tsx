@@ -1,14 +1,11 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { ComponentProps } from "react";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 
-const checkboxStyles = cva(
+const checkboxIconStyles = cva(
   [
-    "w-4",
-    "h-4",
-    "rounded",
-    "bg-transparent",
-    "border-2",
-    "relative",
     "transition-all",
     "duration-200",
     "cursor-pointer",
@@ -20,61 +17,13 @@ const checkboxStyles = cva(
   ],
   {
     variants: {
-      checked: {
-        true: [
-          "border-[#0093EE]",
-          "bg-[#0093EE]",
-          "before:content-['✓']",
-          "before:absolute",
-          "before:text-white",
-          "before:text-xs",
-          "before:font-bold",
-          "before:top-1/2",
-          "before:left-1/2",
-          "before:transform",
-          "before:-translate-x-1/2",
-          "before:-translate-y-1/2",
-          "before:leading-none",
-          "hover:border-[#0081D1]",
-          "hover:bg-[#0081D1]",
-          "active:border-[#005B94]",
-          "active:bg-[#005B94]",
-          "active:shadow-inner",
-        ].join(" "),
-        false: [
-          "border-[#A8B0B8]",
-          "hover:border-[#0081D1]",
-          "active:border-[#005B94]",
-        ].join(" "),
-      },
-      indeterminate: {
-        true: [
-          "border-[#0093EE]",
-          "bg-[#0093EE]",
-          "before:content-['−']",
-          "before:absolute",
-          "before:text-white",
-          "before:text-sm",
-          "before:font-bold",
-          "before:top-1/2",
-          "before:left-1/2",
-          "before:transform",
-          "before:-translate-x-1/2",
-          "before:-translate-y-1/2",
-          "before:leading-none",
-          "hover:border-[#0081D1]",
-          "hover:bg-[#0081D1]",
-          "active:border-[#005B94]",
-          "active:bg-[#005B94]",
-        ].join(" "),
-        false: "",
-      },
-      rtl: {
-        true: "flex-row-reverse",
-        false: "",
+      state: {
+        unchecked: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
+        checked: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+        indeterminate: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
       },
       disabled: {
-        true: "border-white/38 cursor-not-allowed opacity-50",
+        true: "text-white/38 cursor-not-allowed hover:text-white/38 active:text-white/38",
         false: "",
       },
       focused: {
@@ -83,29 +32,10 @@ const checkboxStyles = cva(
       },
     },
     defaultVariants: {
-      checked: false,
-      indeterminate: false,
-      rtl: false,
+      state: "unchecked",
       disabled: false,
       focused: false,
     },
-    compoundVariants: [
-      {
-        checked: true,
-        disabled: true,
-        className: "bg-white/38 before:text-white/60",
-      },
-      {
-        indeterminate: true,
-        disabled: true,
-        className: "bg-white/38 before:text-white/60",
-      },
-      {
-        disabled: true,
-        className:
-          "hover:border-white/38 hover:bg-white/38 active:border-white/38 active:bg-white/38 active:shadow-none",
-      },
-    ],
   }
 );
 
@@ -122,10 +52,13 @@ interface CheckboxProps
       ComponentProps<"input">,
       "type" | "size" | "checked" | "disabled"
     >,
-    VariantProps<typeof checkboxStyles> {
+    VariantProps<typeof checkboxIconStyles> {
   label?: string;
   checked?: boolean;
   disabled?: boolean;
+  indeterminate?: boolean;
+  rtl?: boolean;
+  focused?: boolean;
 }
 
 export const Checkbox = ({
@@ -142,6 +75,34 @@ export const Checkbox = ({
     rtl ? "flex-row-reverse gap-2" : "gap-2"
   } ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
 
+  const getIconState = () => {
+    if (indeterminate) return "indeterminate";
+    if (checked) return "checked";
+    return "unchecked";
+  };
+
+  const renderIcon = () => {
+    const iconProps = {
+      className: checkboxIconStyles({
+        state: getIconState(),
+        disabled,
+        focused,
+        className,
+      }),
+      fontSize: "small" as const,
+    };
+
+    if (indeterminate) {
+      return <IndeterminateCheckBoxIcon {...iconProps} />;
+    }
+    
+    if (checked) {
+      return <CheckBoxIcon {...iconProps} />;
+    }
+    
+    return <CheckBoxOutlineBlankIcon {...iconProps} />;
+  };
+
   return (
     <label className={containerClasses}>
       <input
@@ -151,16 +112,7 @@ export const Checkbox = ({
         className="sr-only"
         {...props}
       />
-      <div
-        className={checkboxStyles({
-          checked: indeterminate ? false : checked,
-          indeterminate,
-          rtl,
-          disabled,
-          focused,
-          className,
-        })}
-      />
+      {renderIcon()}
       {label && (
         <span
           className={labelStyles({

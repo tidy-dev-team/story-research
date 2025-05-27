@@ -17,7 +17,7 @@ const meta: Meta<CheckboxStoryArgs> = {
     disabled: false,
     focused: false,
     rtl: false,
-    label: "Checkbox option",
+    label: "Checkbox label",
   },
   argTypes: {
     checked: {
@@ -286,58 +286,6 @@ export const FocusedChecked: Story = {
     focused: true,
     rtl: false,
     label: "Focused checked",
-  },
-};
-
-export const SmallLabel: Story = {
-  render: (args) => {
-    const { useState } = require("react");
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
-  args: {
-    checked: false,
-    indeterminate: false,
-    disabled: false,
-    focused: false,
-    rtl: false,
-    label: "Small label",
-  },
-};
-
-export const LargeLabel: Story = {
-  render: (args) => {
-    const { useState } = require("react");
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
-  args: {
-    checked: false,
-    indeterminate: false,
-    disabled: false,
-    focused: false,
-    rtl: false,
-    label: "Large label",
   },
 };
 
