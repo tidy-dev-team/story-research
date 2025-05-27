@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import { RadioButton, RadioButtonType } from "./RadioButton";
+import { useState } from "react";
 
 type RadioButtonStoryArgs = ComponentProps<typeof RadioButton>;
 
@@ -149,5 +150,53 @@ export const FocusedSelected: Story = {
     focused: true,
     disabled: false,
     rtl: false,
+  },
+};
+
+export const KeyboardNavigation: Story = {
+  render: () => {
+    const [selectedOption, setSelectedOption] = useState<string>("option1");
+
+    return (
+      <div className="space-y-4 bg-[#101010] p-6 rounded-lg">
+        <h3 className="text-white text-lg font-medium mb-4">
+          Use Tab to navigate and Space/Enter to select
+        </h3>
+        <div className="space-y-3">
+          <RadioButton
+            label="Option 1"
+            selected={selectedOption === "option1"}
+            onChange={() => setSelectedOption("option1")}
+          />
+          <RadioButton
+            label="Option 2"
+            selected={selectedOption === "option2"}
+            onChange={() => setSelectedOption("option2")}
+          />
+          <RadioButton
+            label="Option 3"
+            selected={selectedOption === "option3"}
+            onChange={() => setSelectedOption("option3")}
+          />
+          <RadioButton
+            label="Disabled Option"
+            selected={selectedOption === "option4"}
+            disabled={true}
+            onChange={() => setSelectedOption("option4")}
+          />
+        </div>
+        <div className="mt-4 text-sm text-gray-400">
+          Selected: {selectedOption}
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates keyboard accessibility. Use Up/Down arrows to navigate between radio buttons. Disabled radio buttons are skipped during keyboard navigation.",
+      },
+    },
   },
 };

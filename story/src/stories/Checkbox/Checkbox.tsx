@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { ComponentProps } from "react";
+import { ComponentProps, useState } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
@@ -41,11 +41,11 @@ const checkboxIconStyles = cva(
 );
 
 const labelStyles = cva([
-  "font-medium",
   "select-none",
   "transition-colors",
   "duration-200",
   "text-white",
+  "font-['Heebo',_sans-serif]",
 ]);
 
 interface CheckboxProps
@@ -70,8 +70,12 @@ export const Checkbox = ({
   focused = false,
   label,
   className,
+  onChange,
   ...props
 }: CheckboxProps) => {
+  const [internalFocused, setInternalFocused] = useState(false);
+  const showFocusRing = focused || internalFocused;
+
   const containerClasses = `flex items-center ${
     rtl ? "flex-row-reverse gap-2" : "gap-2"
   } ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
@@ -87,7 +91,7 @@ export const Checkbox = ({
       className: checkboxIconStyles({
         state: getIconState(),
         disabled,
-        focused,
+        focused: showFocusRing,
         className,
       }),
       fontSize: "small" as const,
@@ -110,7 +114,19 @@ export const Checkbox = ({
         type="checkbox"
         checked={checked}
         disabled={disabled}
-        className="sr-only"
+        className="sr-only focus:outline-none"
+        tabIndex={disabled ? -1 : 0}
+        onFocus={() => setInternalFocused(true)}
+        onBlur={() => setInternalFocused(false)}
+        onKeyDown={(e) => {
+          if (e.key === "Space" || e.key === "Enter") {
+            e.preventDefault();
+            if (!disabled && onChange) {
+              onChange(e as any);
+            }
+          }
+        }}
+        onChange={onChange}
         {...props}
       />
       {renderIcon()}

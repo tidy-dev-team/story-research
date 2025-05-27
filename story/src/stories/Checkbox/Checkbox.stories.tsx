@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
 import { Checkbox } from "./Checkbox";
+import { useState } from "react";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
 
@@ -312,5 +313,84 @@ export const RTL: Story = {
     focused: false,
     rtl: true,
     label: "Right-to-left",
+  },
+};
+
+export const KeyboardNavigation: Story = {
+  render: () => {
+    const [checkboxStates, setCheckboxStates] = useState({
+      checkbox1: false,
+      checkbox2: true,
+      checkbox3: false,
+      checkbox4: false,
+    });
+
+    return (
+      <div className="space-y-4 bg-[#101010] p-6 rounded-lg">
+        <h3 className="text-white text-lg font-medium mb-4">
+          Use Tab to navigate and Space to toggle
+        </h3>
+        <div className="space-y-3">
+          <Checkbox
+            label="Option 1"
+            checked={checkboxStates.checkbox1}
+            onChange={(e) =>
+              setCheckboxStates((prev) => ({
+                ...prev,
+                checkbox1: e.target.checked,
+              }))
+            }
+          />
+          <Checkbox
+            label="Option 2 (initially checked)"
+            checked={checkboxStates.checkbox2}
+            onChange={(e) =>
+              setCheckboxStates((prev) => ({
+                ...prev,
+                checkbox2: e.target.checked,
+              }))
+            }
+          />
+          <Checkbox
+            label="Option 3"
+            checked={checkboxStates.checkbox3}
+            onChange={(e) =>
+              setCheckboxStates((prev) => ({
+                ...prev,
+                checkbox3: e.target.checked,
+              }))
+            }
+          />
+          <Checkbox
+            label="Disabled Option"
+            checked={checkboxStates.checkbox4}
+            disabled={true}
+            onChange={(e) =>
+              setCheckboxStates((prev) => ({
+                ...prev,
+                checkbox4: e.target.checked,
+              }))
+            }
+          />
+        </div>
+        <div className="mt-4 text-sm text-gray-400">
+          <div>
+            Checked:{" "}
+            {Object.entries(checkboxStates)
+              .filter(([_, checked]) => checked)
+              .map(([key]) => key)
+              .join(", ") || "none"}
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates keyboard accessibility. Use Tab to navigate between checkboxes and Space or Enter to toggle them. Disabled checkboxes are skipped during keyboard navigation.",
+      },
+    },
   },
 };

@@ -1,5 +1,5 @@
 // filepath: /Users/dmitridmitriev/Documents/prisma/story-research/story/src/stories/Radio button/RadioButton.tsx
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
@@ -48,8 +48,8 @@ const labelStyles = cva(
     "transition-colors",
     "duration-200",
     "cursor-pointer",
-    "font-medium",
     "text-white",
+    "font-['Heebo',_sans-serif]",
   ],
   {
     variants: {
@@ -87,8 +87,11 @@ export const RadioButton = ({
   disabled,
   focused,
 }: RadioButtonProps): ReactElement => {
+  const [internalFocused, setInternalFocused] = useState(false);
+  const showFocusRing = focused || internalFocused;
+
   const iconClasses = twMerge(
-    radioButtonIconStyles({ selected, disabled, focused })
+    radioButtonIconStyles({ selected, disabled, focused: showFocusRing })
   );
   const labelClasses = twMerge(labelStyles({ disabled, rtl }));
 
@@ -122,7 +125,18 @@ export const RadioButton = ({
         checked={selected}
         onChange={onChange}
         disabled={disabled}
-        className="sr-only"
+        className="sr-only focus:outline-none"
+        tabIndex={disabled ? -1 : 0}
+        onFocus={() => setInternalFocused(true)}
+        onBlur={() => setInternalFocused(false)}
+        onKeyDown={(e) => {
+          if (e.key === "Space" || e.key === "Enter") {
+            e.preventDefault();
+            if (!disabled && !selected) {
+              onChange();
+            }
+          }
+        }}
       />
       {renderIcon()}
       {label && <span className={labelClasses}>{label}</span>}
