@@ -160,7 +160,7 @@ export const KeyboardNavigation: Story = {
     return (
       <div className="space-y-4 bg-[#101010] p-6 rounded-lg">
         <h3 className="text-white text-lg font-medium mb-4">
-          Use Tab to navigate and Space/Enter to select
+          Use Up/Down arrows to select
         </h3>
         <div className="space-y-3">
           <RadioButton
