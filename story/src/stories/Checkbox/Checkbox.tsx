@@ -1,8 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { ComponentProps } from "react";
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 
 const checkboxIconStyles = cva(
   [
@@ -11,7 +11,7 @@ const checkboxIconStyles = cva(
     "cursor-pointer",
     "focus:outline-none",
     "focus-visible:ring-2",
-    "ring-offset-2",
+    "ring-offset-1",
     "ring-offset-[#101010]",
     "focus-visible:ring-[#0E75B5]",
   ],
@@ -20,14 +20,15 @@ const checkboxIconStyles = cva(
       state: {
         unchecked: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
         checked: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
-        indeterminate: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+        indeterminate:
+          "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
       },
       disabled: {
         true: "text-white/38 cursor-not-allowed hover:text-white/38 active:text-white/38",
         false: "",
       },
       focused: {
-        true: "ring-2 ring-[#0E75B5] ring-offset-2",
+        true: "ring-3 ring-offset-1 rounded-xs ring-[#0E75B5]",
         false: "",
       },
     },
@@ -95,11 +96,11 @@ export const Checkbox = ({
     if (indeterminate) {
       return <IndeterminateCheckBoxIcon {...iconProps} />;
     }
-    
+
     if (checked) {
       return <CheckBoxIcon {...iconProps} />;
     }
-    
+
     return <CheckBoxOutlineBlankIcon {...iconProps} />;
   };
 

@@ -2,19 +2,15 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
 export enum RadioButtonType {
   Primary = "primary",
 }
 
-const radioButtonStyles = cva(
+const radioButtonIconStyles = cva(
   [
-    "w-4",
-    "h-4",
-    "rounded-full",
-    "bg-transparent",
-    "border-2",
-    "relative",
     "transition-all",
     "duration-200",
     "cursor-pointer",
@@ -27,67 +23,25 @@ const radioButtonStyles = cva(
   {
     variants: {
       selected: {
-        true: [
-          "border-[#0093EE]",
-          "before:content-['']",
-          "before:absolute",
-          "before:w-2",
-          "before:h-2",
-          "before:bg-[#0093EE]",
-          "before:rounded-full",
-          "before:top-1/2",
-          "before:left-1/2",
-          "before:transform",
-          "before:-translate-x-1/2",
-          "before:-translate-y-1/2",
-          "before:scale-100",
-          "before:transition-transform",
-          "hover:border-[#0081D1]",
-          "hover:before:bg-[#0081D1]",
-          "active:border-[#005B94]",
-          "active:before:bg-[#005B94]",
-          "active:shadow-inner",
-        ].join(" "),
-        false: [
-          "border-[#A8B0B8]",
-          "hover:border-[#0081D1]",
-          "active:border-[#005B94]",
-        ].join(" "),
-      },
-      rtl: {
-        true: "flex-row-reverse",
-        false: "",
+        true: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+        false: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
       },
       disabled: {
-        true: "border-white/38 cursor-not-allowed opacity-50",
+        true: "text-white/38 cursor-not-allowed hover:text-white/38 active:text-white/38",
         false: "",
       },
       focused: {
-        true: "ring-2 ring-[#0E75B5] ring-offset-2",
+        true: "ring-2 ring-[#0E75B5] ring-offset-2 rounded-full",
         false: "",
       },
     },
     defaultVariants: {
       selected: false,
-      rtl: false,
       disabled: false,
       focused: false,
     },
-    compoundVariants: [
-      {
-        selected: true,
-        disabled: true,
-        className: "before:bg-white/38",
-      },
-      {
-        disabled: true,
-        className:
-          "hover:border-white/38 hover:before:bg-white/38 active:border-white/38 active:before:bg-white/38 active:shadow-none",
-      },
-    ],
   }
 );
-
 const labelStyles = cva(
   [
     "select-none",
@@ -116,12 +70,13 @@ const labelStyles = cva(
 );
 
 interface RadioButtonProps
-  extends Omit<VariantProps<typeof radioButtonStyles>, "disabled"> {
+  extends Omit<VariantProps<typeof radioButtonIconStyles>, "disabled"> {
   label?: string;
   selected: boolean;
   onChange: () => void;
   disabled?: boolean;
   focused?: boolean;
+  rtl?: boolean;
 }
 
 export const RadioButton = ({
@@ -132,8 +87,8 @@ export const RadioButton = ({
   disabled,
   focused,
 }: RadioButtonProps): ReactElement => {
-  const radioClasses = twMerge(
-    radioButtonStyles({ selected, rtl, disabled, focused })
+  const iconClasses = twMerge(
+    radioButtonIconStyles({ selected, disabled, focused })
   );
   const labelClasses = twMerge(labelStyles({ disabled, rtl }));
 
@@ -147,6 +102,19 @@ export const RadioButton = ({
     .filter(Boolean)
     .join(" ");
 
+  const renderIcon = () => {
+    const iconProps = {
+      className: iconClasses,
+      fontSize: "small" as const,
+    };
+
+    return selected ? (
+      <RadioButtonCheckedIcon {...iconProps} />
+    ) : (
+      <RadioButtonUncheckedIcon {...iconProps} />
+    );
+  };
+
   return (
     <label className={containerClasses}>
       <input
@@ -154,9 +122,9 @@ export const RadioButton = ({
         checked={selected}
         onChange={onChange}
         disabled={disabled}
-        className="hidden"
+        className="sr-only"
       />
-      <div className={radioClasses}></div>
+      {renderIcon()}
       {label && <span className={labelClasses}>{label}</span>}
     </label>
   );
