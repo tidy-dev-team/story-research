@@ -203,7 +203,7 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {!rtl && <SearchIcon className={searchIconClasses} fontSize="small" />}
+        <SearchIcon className={searchIconClasses} fontSize="small" />
 
         <input
           ref={ref}
@@ -217,8 +217,6 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
           className={inputClasses}
           {...props}
         />
-
-        {rtl && <SearchIcon className={searchIconClasses} fontSize="small" />}
 
         {filled && !disabled && (
           <CloseIcon
