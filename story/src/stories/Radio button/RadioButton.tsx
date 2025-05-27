@@ -88,7 +88,8 @@ export const RadioButton = ({
   focused,
 }: RadioButtonProps): ReactElement => {
   const [internalFocused, setInternalFocused] = useState(false);
-  const showFocusRing = focused || internalFocused;
+  const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
+  const showFocusRing = focused || (internalFocused && isKeyboardFocus);
 
   const iconClasses = twMerge(
     radioButtonIconStyles({ selected, disabled, focused: showFocusRing })
@@ -119,7 +120,10 @@ export const RadioButton = ({
   };
 
   return (
-    <label className={containerClasses}>
+    <label 
+      className={containerClasses}
+      onMouseDown={() => setIsKeyboardFocus(false)}
+    >
       <input
         type="radio"
         checked={selected}
@@ -127,14 +131,27 @@ export const RadioButton = ({
         disabled={disabled}
         className="sr-only focus:outline-none"
         tabIndex={disabled ? -1 : 0}
-        onFocus={() => setInternalFocused(true)}
-        onBlur={() => setInternalFocused(false)}
+        onFocus={(e) => {
+          setInternalFocused(true);
+          // Only show focus ring if focus came from keyboard navigation
+          if (e.target.matches(':focus-visible')) {
+            setIsKeyboardFocus(true);
+          }
+        }}
+        onBlur={() => {
+          setInternalFocused(false);
+          setIsKeyboardFocus(false);
+        }}
         onKeyDown={(e) => {
           if (e.key === "Space" || e.key === "Enter") {
             e.preventDefault();
             if (!disabled && !selected) {
+              setIsKeyboardFocus(true);
               onChange();
             }
+          }
+          if (e.key === "Tab") {
+            setIsKeyboardFocus(true);
           }
         }}
       />

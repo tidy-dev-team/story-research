@@ -74,7 +74,8 @@ export const Checkbox = ({
   ...props
 }: CheckboxProps) => {
   const [internalFocused, setInternalFocused] = useState(false);
-  const showFocusRing = focused || internalFocused;
+  const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
+  const showFocusRing = focused || (internalFocused && isKeyboardFocus);
 
   const containerClasses = `flex items-center ${
     rtl ? "flex-row-reverse gap-2" : "gap-2"
@@ -109,21 +110,37 @@ export const Checkbox = ({
   };
 
   return (
-    <label className={containerClasses}>
+    <label 
+      className={containerClasses}
+      onMouseDown={() => setIsKeyboardFocus(false)}
+    >
       <input
         type="checkbox"
         checked={checked}
         disabled={disabled}
         className="sr-only focus:outline-none"
         tabIndex={disabled ? -1 : 0}
-        onFocus={() => setInternalFocused(true)}
-        onBlur={() => setInternalFocused(false)}
+        onFocus={(e) => {
+          setInternalFocused(true);
+          // Only show focus ring if focus came from keyboard navigation
+          if (e.target.matches(':focus-visible')) {
+            setIsKeyboardFocus(true);
+          }
+        }}
+        onBlur={() => {
+          setInternalFocused(false);
+          setIsKeyboardFocus(false);
+        }}
         onKeyDown={(e) => {
           if (e.key === "Space" || e.key === "Enter") {
             e.preventDefault();
             if (!disabled && onChange) {
+              setIsKeyboardFocus(true);
               onChange(e as any);
             }
+          }
+          if (e.key === "Tab") {
+            setIsKeyboardFocus(true);
           }
         }}
         onChange={onChange}

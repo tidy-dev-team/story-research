@@ -59,7 +59,7 @@ const inputStyles = cva(
     variants: {
       state: {
         idle: "text-[#A8B0B8]",
-        hover: "text-[#A8B0B8]",
+        hover: "text-[#f00f00]",
         active: "text-[#A8B0B8]",
         focused: "text-[#A8B0B8]",
         disabled: "text-[#A8B0B8]/50 cursor-not-allowed",
