@@ -243,7 +243,3 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
 );
 
 Search.displayName = "Search";
-
-export type { SearchProps };
-
-// Search.stories.tsx
