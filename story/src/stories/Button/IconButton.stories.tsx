@@ -69,10 +69,10 @@ const meta = {
         defaultValue: { summary: ButtonSize.Medium },
       },
       labels: {
-        [ButtonSize.XSmall]: "XSmall (20px)",
-        [ButtonSize.Small]: "Small (24px)",
-        [ButtonSize.Medium]: "Medium (32px)",
-        [ButtonSize.Large]: "Large (40px)",
+        [ButtonSize.XSmall]: "xs",
+        [ButtonSize.Small]: "s",
+        [ButtonSize.Medium]: "m",
+        [ButtonSize.Large]: "l",
       },
     },
     disabled: {
@@ -144,7 +144,7 @@ export const Ghost: Story = {
 };
 
 export const XSmall: Story = {
-  name: "Size XSmall",
+  name: "Size xs",
   args: {
     size: ButtonSize.XSmall,
     iconName: "add",
@@ -153,7 +153,7 @@ export const XSmall: Story = {
 };
 
 export const Small: Story = {
-  name: "Size Small",
+  name: "Size s",
   args: {
     size: ButtonSize.Small,
     iconName: "language",
@@ -162,7 +162,7 @@ export const Small: Story = {
 };
 
 export const Large: Story = {
-  name: "Size Large",
+  name: "Size l",
   args: {
     size: ButtonSize.Large,
     iconName: "headphones",

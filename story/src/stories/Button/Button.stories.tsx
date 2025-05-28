@@ -58,9 +58,9 @@ const meta = {
         defaultValue: { summary: ButtonSize.Medium },
       },
       labels: {
-        [ButtonSize.Small]: "Small",
-        [ButtonSize.Medium]: "Medium",
-        [ButtonSize.Large]: "Large",
+        [ButtonSize.Small]: "s",
+        [ButtonSize.Medium]: "m",
+        [ButtonSize.Large]: "l",
       },
     },
     rtl: {
