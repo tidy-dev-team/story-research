@@ -6,10 +6,12 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const searchStyles = cva(
   [
+    "h-8",
     "relative",
     "flex",
     "items-center",
     "bg-[#212426]",
+    "hover:bg-[#3C3E40]",
     "rounded",
     "transition-all",
     "duration-200",
@@ -21,15 +23,22 @@ const searchStyles = cva(
   {
     variants: {
       state: {
-        idle: "hover:bg-[#212426]/[0.88]",
+        idle: "hover:bg-[#212426]",
         hover: "bg-[#212426]/[0.88]",
         active: "border-[#0093EE]",
-        focused:
-          "focus-within:ring-2 focus-within:ring-[#0093EE]/70 focus-within:ring-offset-2 focus-within:ring-offset-[#101010]",
-        disabled: "opacity-50 cursor-not-allowed",
+        focused: "border-[#0093EE]",
+        disabled: "opacity-50",
       },
       filled: {
         true: "",
+        false: "",
+      },
+      focused: {
+        true: "focus-within:ring-2 focus-within:ring-[#0093EE]/70 focus-within:ring-offset-2 focus-within:ring-offset-[#101010]",
+        false: "",
+      },
+      disabled: {
+        true: "opacity-50 cursor-not-allowed",
         false: "",
       },
       rtl: {
@@ -107,7 +116,10 @@ const iconStyles = cva(["transition-colors", "duration-200"], {
 });
 
 interface SearchProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
+  extends Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      "size" | "disabled"
+    >,
     VariantProps<typeof searchStyles> {
   placeholder?: string;
   value?: string;
@@ -213,7 +225,7 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
           onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          disabled={disabled}
+          disabled={disabled || undefined}
           className={inputClasses}
           {...props}
         />
