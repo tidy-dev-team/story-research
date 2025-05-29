@@ -1,0 +1,17 @@
+*,
+*::before,
+*::after,
+*::backdrop,
+*::file-selector-button {
+  box-sizing: content-box;
+}
+
+body {
+  font-family: Heebo, sans-serif;
+  font-weight: 400;
+  color: var(--prisma-white);
+  /* #ffffff; */
+  font-size: 10px;
+  background-color: var(--prisma-charcoal-gray);
+  /* #2c2f33; */
+}

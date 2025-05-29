@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+@import './tailwindOverrideRules.css';
+@config './tailwind.config.js';
+
+/*The following rules are canceling default tailwind utility values, use only pz values*/
+@theme {
+    --color-*: initial;
+    --radius-*: initial;
+    --font-weight-*: initial;
+    --text--*: initial;
+    --shadow-*: initial;
+    --inset-shadow-*: initial;
+    --drop-shadow-*: initial;
+}
