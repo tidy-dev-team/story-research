@@ -19,6 +19,7 @@ const pzDefaultTextStyles = {
 } as const
 
 export const pzTextStyles = {
+  // pz-heading-xl500
   heading: {
     xl500: {
       ...pzDefaultTextStyles,
@@ -123,15 +124,15 @@ export type PzTextStylesAsClassNames = Record<
 const getPzTextStylesAsClassNames = (): PzTextStylesAsClassNames => {
   const result = {} as PzTextStylesAsClassNames
 
-  for(const element in pzTextStyles) {
+  for (const element in pzTextStyles) {
     const elementVariantsOrProperties = pzTextStyles[element as keyof PzTextStyles]
 
     // checks if this object is not nested by fontSize property
-    if('fontSize' in elementVariantsOrProperties) {
+    if ('fontSize' in elementVariantsOrProperties) {
       const className = `.pz-${element}` as TextStyleClassName
       result[className] = elementVariantsOrProperties
     } else {
-      for(const variant in elementVariantsOrProperties) {
+      for (const variant in elementVariantsOrProperties) {
         const variantProperties = elementVariantsOrProperties[variant as keyof typeof elementVariantsOrProperties]
         const className = `.pz-${element}-${variant}` as keyof NestedTextClassName
 

@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
+import { pzColors } from "@/ui-kit/foundations/colors";
 
 export enum AvatarSize {
   Sm = "sm",
@@ -42,6 +43,7 @@ const Avatar = ({ size, label }: AvatarProps): ReactElement => {
 
   // return <div className={classes}>{isFilled ? label : "N/A"}</div>;
 
+  // console.log(pzColors.gray[500])
   return <div className="h-pz-3xl bg-pz-base-white">Hello</div>
 };
 

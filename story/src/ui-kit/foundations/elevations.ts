@@ -5,6 +5,7 @@ const elevationColors = {
 } as const
 
 export const pzElevations = {
+  // shadow-pz-down-level1
   center: {
     "level1": `0px 0px 32px 0px ${elevationColors.level1}`,
     "level2": `0px 2px 2px 0px ${elevationColors.level2}`,

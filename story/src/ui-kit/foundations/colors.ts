@@ -4,6 +4,8 @@ export const pzColors = {
     black: "#000000"
     },
   gray: {
+    // bg-pz-gray-100
+    // text-pz-gray-100
     100: "#e4e7e9",
     200: "#ccd1d5",
     300: "#a8b0b8",

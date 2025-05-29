@@ -10,6 +10,7 @@ import { pzElevationsAsClassUtilities } from './src/ui-kit/foundations/elevation
 module.exports = {
     content: ['../**/*.{js,jsx,ts,tsx}'],
     theme: {
+        // rounded-pz-3xs
         borderRadius: {
             pz: {
                 ...pzRoundings
