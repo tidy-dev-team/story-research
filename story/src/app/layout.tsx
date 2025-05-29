@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import '../../tailwind-base.css'
+
 // import "./globals.css";
 
 // import { Heebo } from 'next/font/google'

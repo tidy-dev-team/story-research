@@ -8,7 +8,7 @@ import { pzTextStylesAsClassNames } from './src/ui-kit/foundations/textStyles'
 import { pzElevationsAsClassUtilities } from './src/ui-kit/foundations/elevations'
 
 module.exports = {
-    content: ['./src/**/*.{js,jsx,ts,tsx}'],
+    content: ['../**/*.{js,jsx,ts,tsx}'],
     theme: {
         borderRadius: {
             pz: {

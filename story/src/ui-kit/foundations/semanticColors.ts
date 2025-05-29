@@ -1,5 +1,5 @@
 import { pzColors } from './colors'
-import {pzComponentsSemanticColors} from '../components/ComponentsSemanticColors'
+// import {pzComponentsSemanticColors} from '../components/ComponentsSemanticColors'
 
 export const pzSystemColors = {
   bg: {
@@ -90,7 +90,7 @@ export const pzSystemColors = {
 
 export const pzSemanticColors = {
   system: pzSystemColors,
-  components: pzComponentsSemanticColors
+  components: {}
 } as const
 
 export type PzSemanticColors = typeof pzSemanticColors
