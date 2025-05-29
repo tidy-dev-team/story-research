@@ -1,6 +1,16 @@
+// import '../../tailwind-base.css'
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+// import "./globals.css";
+
+// import { Heebo } from 'next/font/google'
+
+// export const heeboFont = Heebo({
+//   subsets: ['latin', 'hebrew'],
+//   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+//   variable: '--font-heebo',
+//   display: 'swap'
+// })
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
