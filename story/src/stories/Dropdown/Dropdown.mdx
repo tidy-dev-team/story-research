@@ -1,0 +1,157 @@
+import { Meta, Story, Canvas, ArgTypes } from "@storybook/blocks";
+import * as DropdownStories from "./Dropdown.stories";
+
+<Meta of={DropdownStories} />
+
+# Dropdown
+
+The Dropdown component provides a flexible and accessible way to present a list of options to users. It supports various configurations including multi-selection, icons, severity badges, and RTL layouts.
+
+## Features
+
+- **Multiple Selection Modes**: Single selection (default) or multi-selection with checkboxes
+- **Size Variants**: Small (s), Medium (m), and Large (l) sizes
+- **Rich Content**: Support for icons and severity badges within dropdown items
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **RTL Support**: Right-to-left layout for internationalization
+- **Custom Rendering**: Flexible rendering of selected values
+- **State Management**: Controlled and uncontrolled modes
+
+## Basic Usage
+
+<Canvas of={DropdownStories.Default} />
+
+## With Icons
+
+Add visual context to your dropdown items with icons.
+
+<Canvas of={DropdownStories.WithIcons} />
+
+## With Severity Badges
+
+Perfect for displaying items with different priority levels or statuses.
+
+<Canvas of={DropdownStories.WithSeverityBadges} />
+
+## Multi-Selection
+
+Enable checkbox-based multi-selection for scenarios where users need to choose multiple options.
+
+<Canvas of={DropdownStories.MultiSelect} />
+
+## Size Variants
+
+### Small Size
+<Canvas of={DropdownStories.SmallSize} />
+
+### Large Size
+<Canvas of={DropdownStories.LargeSize} />
+
+## RTL Support
+
+The dropdown supports right-to-left layouts for international applications.
+
+<Canvas of={DropdownStories.RTL} />
+
+## Disabled State
+
+<Canvas of={DropdownStories.Disabled} />
+
+## Custom Rendering
+
+Use the `renderSelectedValue` prop to customize how selected items are displayed.
+
+<Canvas of={DropdownStories.CustomRender} />
+
+## Component API
+
+<ArgTypes of={DropdownStories} />
+
+## Dropdown Item Structure
+
+The `DropdownItem` interface supports the following properties:
+
+```typescript
+interface DropdownItem {
+  id: string;              // Unique identifier
+  label: string;           // Display text
+  value: any;             // Associated value
+  icon?: ReactElement;    // Optional leading icon
+  disabled?: boolean;     // Disable this item
+  selected?: boolean;     // Initial selection state
+  severity?: {            // Optional severity badge
+    level: "low" | "medium" | "high" | "critical";
+    text: string;
+  };
+}
+```
+
+## Severity Levels
+
+When using severity badges, the following levels are supported:
+
+- **Low**: Green background, typically for minor issues
+- **Medium**: Yellow background, for moderate priority items  
+- **High**: Orange background, for important items requiring attention
+- **Critical**: Red background, for urgent items requiring immediate action
+
+## Accessibility
+
+The Dropdown component follows WCAG guidelines and includes:
+
+- Proper ARIA attributes (`role="option"`, `aria-selected`)
+- Keyboard navigation (Arrow keys, Enter, Space, Escape)
+- Focus management and visual focus indicators
+- Screen reader compatible markup
+- High contrast support
+
+## Best Practices
+
+1. **Limit Options**: For lists with many options (>20), consider using a search/filter mechanism
+2. **Clear Labels**: Use descriptive labels that clearly indicate the option's purpose
+3. **Logical Grouping**: When using severity levels, group similar items together
+4. **Consistent Iconography**: Use consistent icon styles and meanings across your application
+5. **Loading States**: For dynamic data, provide appropriate loading indicators
+
+## Performance Considerations
+
+- The component uses React.memo internally for optimal re-rendering
+- Large lists (>100 items) should implement virtualization
+- Icons should be optimized for performance (prefer SVG over images)
+
+## Integration Examples
+
+### With Form Libraries
+
+```typescript
+// With react-hook-form
+const { control } = useForm();
+
+<Controller
+  control={control}
+  name="selectedOption"
+  render={({ field }) => (
+    <Dropdown
+      items={options}
+      selectedValue={field.value}
+      onSelectionChange={(items) => field.onChange(items[0]?.value)}
+    />
+  )}
+/>
+```
+
+### With State Management
+
+```typescript
+// With Redux or Zustand
+const selectedItems = useSelector(state => state.dropdown.selected);
+const dispatch = useDispatch();
+
+<Dropdown
+  items={items}
+  multiSelect
+  onSelectionChange={(items) => 
+    dispatch(setSelectedItems(items.map(item => item.value)))
+  }
+/>
+```
