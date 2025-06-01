@@ -197,7 +197,7 @@ export default meta;
 
 type Story = StoryObj<DropdownStoryArgs>;
 
-const renderStory = ({
+const DropdownWrapper = ({
   hasIcons,
   hasSeverityBadges,
   multiSelect,
@@ -229,6 +229,8 @@ const renderStory = ({
     </div>
   );
 };
+
+const renderStory = (args: DropdownStoryArgs) => <DropdownWrapper {...args} />;
 
 export const Default: Story = {
   render: renderStory,
@@ -289,40 +291,46 @@ export const Disabled: Story = {
   render: renderStory,
 };
 
+const CustomRenderWrapper = ({
+  multiSelect,
+  hasIcons,
+  ...args
+}: DropdownStoryArgs) => {
+  const [selectedItems, setSelectedItems] = useState<DropdownItem[]>([]);
+
+  const items = hasIcons ? itemsWithIcons : basicItems;
+
+  return (
+    <div className="w-64">
+      <Dropdown
+        {...args}
+        items={items}
+        multiSelect={multiSelect}
+        onSelectionChange={setSelectedItems}
+        renderSelectedValue={(selected) => {
+          if (selected.length === 0) return "Nothing selected";
+          if (selected.length === 1) return `Selected: ${selected[0].label}`;
+          return `${selected.length} items selected`;
+        }}
+      />
+      {selectedItems.length > 0 && (
+        <div className="mt-4 p-2 bg-gray-800 rounded text-white text-sm">
+          <strong>Selected items:</strong>
+          <ul className="list-disc list-inside mt-1">
+            {selectedItems.map((item) => (
+              <li key={item.id}>{item.label}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const CustomRender: Story = {
   args: {
     multiSelect: true,
     hasIcons: true,
   },
-  render: ({ multiSelect, hasIcons, ...args }) => {
-    const [selectedItems, setSelectedItems] = useState<DropdownItem[]>([]);
-
-    const items = hasIcons ? itemsWithIcons : basicItems;
-
-    return (
-      <div className="w-64">
-        <Dropdown
-          {...args}
-          items={items}
-          multiSelect={multiSelect}
-          onSelectionChange={setSelectedItems}
-          renderSelectedValue={(selected) => {
-            if (selected.length === 0) return "Nothing selected";
-            if (selected.length === 1) return `Selected: ${selected[0].label}`;
-            return `${selected.length} items selected`;
-          }}
-        />
-        {selectedItems.length > 0 && (
-          <div className="mt-4 p-2 bg-gray-800 rounded text-white text-sm">
-            <strong>Selected items:</strong>
-            <ul className="list-disc list-inside mt-1">
-              {selectedItems.map((item) => (
-                <li key={item.id}>{item.label}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    );
-  },
+  render: (args) => <CustomRenderWrapper {...args} />,
 };

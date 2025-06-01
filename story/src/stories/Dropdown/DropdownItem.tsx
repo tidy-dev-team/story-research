@@ -50,10 +50,10 @@ const dropdownItemStyles = cva(
         [DropdownSize.l]: ["px-4", "py-3", "gap-3", "text-base", "min-h-10"],
       },
       state: {
-        idle: "hover:bg-white/8",
-        hover: "bg-white/8",
-        selected: "bg-[#0093EE]/12 text-[#0093EE]",
-        focused: "bg-white/8 ring-2 ring-[#0E75B5]",
+        idle: "hover:bg-white/8 text-white",
+        hover: "bg-white/8 text-white",
+        selected: "bg-[#0093EE]/12",
+        focused: "bg-white/8 ring-2 ring-[#0E75B5] text-white",
         disabled: [
           "opacity-38",
           "cursor-not-allowed",
@@ -93,7 +93,7 @@ interface DropdownItemComponentProps
   item: DropdownItem;
   isSelected: boolean;
   multiSelect?: boolean;
-  onSelect: () => void;
+  onSelect?: () => void;
   className?: string;
 }
 
@@ -109,7 +109,7 @@ export const DropdownItemComponent = ({
   const state = item.disabled ? "disabled" : isSelected ? "selected" : "idle";
 
   const handleClick = () => {
-    if (!item.disabled) {
+    if (!item.disabled && onSelect) {
       onSelect();
     }
   };
@@ -152,7 +152,11 @@ export const DropdownItemComponent = ({
       {item.icon && <span className="flex items-center">{item.icon}</span>}
 
       {/* Item label */}
-      <span className="flex-1 truncate">{item.label}</span>
+      <span
+        className={`flex-1 truncate ${isSelected && !multiSelect ? "text-[#0093EE]" : "text-white"}`}
+      >
+        {item.label}
+      </span>
 
       {/* Severity badge */}
       {item.severity && (

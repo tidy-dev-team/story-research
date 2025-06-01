@@ -14,6 +14,13 @@ import {
   DropdownItem,
 } from "./DropdownItem";
 
+// Re-export everything that was in index.ts
+export {
+  DropdownSize,
+  type DropdownItem,
+  DropdownItemComponent,
+} from "./DropdownItem";
+
 const dropdownTriggerStyles = cva(
   [
     "relative",
@@ -239,6 +246,3 @@ export const Dropdown = ({
     </div>
   );
 };
-
-// Re-export everything that was in index.ts
-export { DropdownSize, type DropdownItem, DropdownItemComponent } from "./DropdownItem";

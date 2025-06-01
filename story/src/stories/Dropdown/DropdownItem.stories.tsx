@@ -1,11 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
-import {
-  DropdownSize,
-  DropdownItem,
-  DropdownItemComponent,
-} from "./Dropdown";
+import { DropdownSize, DropdownItem, DropdownItemComponent } from "./Dropdown";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import BugReportIcon from "@mui/icons-material/BugReport";
@@ -51,6 +47,7 @@ const meta = {
     multiSelect: false,
     size: DropdownSize.m,
     rtl: false,
+    onSelect: () => {}, // Provide a default empty function
   },
   parameters: {
     layout: "centered",
@@ -199,51 +196,57 @@ export const RTL: Story = {
   },
 };
 
+const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
+  <div className="w-64 bg-[#22272B] border border-[#A8B0B8] rounded-lg py-1 space-y-0">
+    <DropdownItemComponent
+      {...args}
+      onSelect={() => {}}
+      item={{
+        id: "low",
+        label: "Low Priority Issue",
+        value: "low",
+        icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
+        severity: { level: "low", text: "Low" },
+      }}
+    />
+    <DropdownItemComponent
+      {...args}
+      onSelect={() => {}}
+      item={{
+        id: "medium",
+        label: "Medium Priority Issue",
+        value: "medium",
+        icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
+        severity: { level: "medium", text: "Medium" },
+      }}
+    />
+    <DropdownItemComponent
+      {...args}
+      onSelect={() => {}}
+      item={{
+        id: "high",
+        label: "High Priority Issue",
+        value: "high",
+        icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
+        severity: { level: "high", text: "High" },
+      }}
+    />
+    <DropdownItemComponent
+      {...args}
+      onSelect={() => {}}
+      item={{
+        id: "critical",
+        label: "Critical Priority Issue",
+        value: "critical",
+        icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
+        severity: { level: "critical", text: "Critical" },
+      }}
+    />
+  </div>
+);
+
 export const SeverityLevels: Story = {
-  render: (args) => (
-    <div className="w-64 bg-[#22272B] border border-[#A8B0B8] rounded-lg py-1 space-y-0">
-      <DropdownItemComponent
-        {...args}
-        item={{
-          id: "low",
-          label: "Low Priority Issue",
-          value: "low",
-          icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-          severity: { level: "low", text: "Low" },
-        }}
-      />
-      <DropdownItemComponent
-        {...args}
-        item={{
-          id: "medium",
-          label: "Medium Priority Issue",
-          value: "medium",
-          icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-          severity: { level: "medium", text: "Medium" },
-        }}
-      />
-      <DropdownItemComponent
-        {...args}
-        item={{
-          id: "high",
-          label: "High Priority Issue",
-          value: "high",
-          icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-          severity: { level: "high", text: "High" },
-        }}
-      />
-      <DropdownItemComponent
-        {...args}
-        item={{
-          id: "critical",
-          label: "Critical Priority Issue",
-          value: "critical",
-          icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-          severity: { level: "critical", text: "Critical" },
-        }}
-      />
-    </div>
-  ),
+  render: (args) => <SeverityLevelsWrapper {...args} />,
   parameters: {
     controls: { disable: true },
   },
