@@ -48,6 +48,8 @@ const labelStyles = cva([
   "font-['Heebo',_sans-serif]",
 ]);
 
+const severityIndicatorStyles = cva(["w-3", "h-3", "rounded", "bg-[#E03422]"]);
+
 interface CheckboxProps
   extends Omit<
       ComponentProps<"input">,
@@ -60,6 +62,7 @@ interface CheckboxProps
   indeterminate?: boolean;
   rtl?: boolean;
   focused?: boolean;
+  severity?: boolean;
 }
 
 export const Checkbox = ({
@@ -68,6 +71,7 @@ export const Checkbox = ({
   rtl = false,
   disabled = false,
   focused = false,
+  severity = false,
   label,
   className,
   onChange,
@@ -146,7 +150,10 @@ export const Checkbox = ({
         onChange={onChange}
         {...props}
       />
-      {renderIcon()}
+      {!rtl && renderIcon()}
+      {!rtl && severity && <div className={severityIndicatorStyles()} />}
+      {rtl && renderIcon()}
+      {rtl && severity && <div className={severityIndicatorStyles()} />}
       {label && (
         <span
           className={labelStyles({

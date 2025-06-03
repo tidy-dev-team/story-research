@@ -1,8 +1,7 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import { Checkbox } from "../Checkbox/Checkbox";
 
 export enum DropdownSize {
   s = "s",
@@ -133,32 +132,32 @@ export const DropdownItemComponent = ({
     >
       {/* Checkbox for multi-select */}
       {multiSelect && (
-        <span className="flex items-center">
-          {isSelected ? (
-            <CheckBoxIcon
-              className="text-[#0093EE]"
-              sx={{ fontSize: "inherit" }}
-            />
-          ) : (
-            <CheckBoxOutlineBlankIcon
-              className="text-[#A8B0B8]"
-              sx={{ fontSize: "inherit" }}
-            />
-          )}
+        <span
+          className="flex items-center mr-2"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {" "}
+          <Checkbox
+            checked={isSelected}
+            disabled={item.disabled}
+            onChange={(e) => {
+              e.stopPropagation();
+              if (!item.disabled && onSelect) {
+                onSelect();
+              }
+            }}
+          />
         </span>
       )}
 
-      {/* Leading icon */}
       {item.icon && <span className="flex items-center">{item.icon}</span>}
 
-      {/* Item label */}
       <span
         className={`flex-1 truncate ${isSelected && !multiSelect ? "text-[#0093EE]" : "text-white"}`}
       >
         {item.label}
       </span>
 
-      {/* Severity badge */}
       {item.severity && (
         <span className={severityBadgeStyles({ level: item.severity.level })}>
           {item.severity.text}

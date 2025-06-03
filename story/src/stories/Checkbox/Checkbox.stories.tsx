@@ -18,6 +18,7 @@ const meta: Meta<CheckboxStoryArgs> = {
     disabled: false,
     focused: false,
     rtl: false,
+    severity: false,
     label: "Checkbox label",
   },
   argTypes: {
@@ -58,6 +59,14 @@ const meta: Meta<CheckboxStoryArgs> = {
       description: "Whether to use right-to-left layout",
       table: {
         category: "Layout",
+        defaultValue: { summary: "false" },
+      },
+    },
+    severity: {
+      control: "boolean",
+      description: "Whether to show severity indicator (red square)",
+      table: {
+        category: "Appearance",
         defaultValue: { summary: "false" },
       },
     },
@@ -390,6 +399,134 @@ export const KeyboardNavigation: Story = {
       description: {
         story:
           "Demonstrates keyboard accessibility. Use Tab to navigate between checkboxes and Space or Enter to toggle them. Disabled checkboxes are skipped during keyboard navigation.",
+      },
+    },
+  },
+};
+
+// Severity Stories
+export const WithSeverity: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        severity={true}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "Item with severity indicator",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox with severity indicator displayed as a red square.",
+      },
+    },
+  },
+};
+
+export const WithSeverityRTL: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        severity={true}
+        rtl={true}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "פריט עם חומרה",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Checkbox with severity indicator displayed in RTL layout. The severity indicator appears on the left side.",
+      },
+    },
+  },
+};
+
+export const SeverityComparison: Story = {
+  render: () => {
+    const [checkedStates, setCheckedStates] = useState<{
+      normal: boolean;
+      severity: boolean;
+      severityRtl: boolean;
+    }>({
+      normal: false,
+      severity: false,
+      severityRtl: false,
+    });
+
+    return (
+      <div className="space-y-4 p-4">
+        <h3 className="text-white text-lg font-medium mb-4">
+          Severity Indicator Comparison
+        </h3>
+
+        <div className="space-y-3">
+          <Checkbox
+            label="Normal checkbox"
+            checked={checkedStates.normal}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                normal: e.target.checked,
+              }))
+            }
+          />
+
+          <Checkbox
+            label="With severity indicator"
+            severity={true}
+            checked={checkedStates.severity}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                severity: e.target.checked,
+              }))
+            }
+          />
+
+          <Checkbox
+            label="עם חומרה (RTL)"
+            severity={true}
+            rtl={true}
+            checked={checkedStates.severityRtl}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                severityRtl: e.target.checked,
+              }))
+            }
+          />
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          "Comparison of normal checkbox, checkbox with severity indicator, and severity indicator in RTL layout.",
       },
     },
   },
