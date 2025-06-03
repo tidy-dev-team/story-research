@@ -41,7 +41,7 @@ const buttonStyles = cva(
     variants: {
       type: {
         [ButtonType.Primary]: [
-          "bg-[#0093EE]",
+          "bg-pz-blue-500",
           "text-white",
           "relative",
           "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
@@ -51,8 +51,8 @@ const buttonStyles = cva(
         ].join(" "),
         [ButtonType.Secondary]: [
           "border",
-          "border-[#0093EE]",
-          "text-[#0093EE]",
+          "border-pz-blue-500",
+          "text-pz-blue-500",
           "hover:enabled:bg-[#0093EE]/12",
           "hover:enabled:border-[#2CB3FF]",
           "hover:enabled:text-[#2CB3FF]",
@@ -107,7 +107,7 @@ type BaseButtonProps = Omit<
 
 interface ButtonProps
   extends BaseButtonProps,
-  VariantProps<typeof buttonStyles> {
+    VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;
