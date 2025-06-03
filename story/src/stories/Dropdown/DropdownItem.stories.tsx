@@ -27,7 +27,7 @@ const itemWithSeverity: DropdownItem = {
   label: "Critical Issue",
   value: "critical",
   icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-  severity: { level: "critical", text: "Critical" },
+  severity: true,
 };
 
 const disabledItem: DropdownItem = {
@@ -45,6 +45,7 @@ const meta = {
     item: sampleItem,
     isSelected: false,
     multiSelect: false,
+    showCheckboxSeverity: false,
     size: DropdownSize.m,
     rtl: false,
     onSelect: () => {}, // Provide a default empty function
@@ -77,6 +78,15 @@ const meta = {
     multiSelect: {
       control: "boolean",
       description: "Show checkbox for multi-selection",
+      table: {
+        category: "Behavior",
+        defaultValue: { summary: "false" },
+      },
+    },
+    showCheckboxSeverity: {
+      control: "boolean",
+      description:
+        "Show severity indicator on checkbox when multiSelect is enabled",
       table: {
         category: "Behavior",
         defaultValue: { summary: "false" },
@@ -159,6 +169,24 @@ export const MultiSelectSelected: Story = {
   },
 };
 
+export const MultiSelectWithSeverity: Story = {
+  args: {
+    item: itemWithSeverity,
+    multiSelect: true,
+    isSelected: false,
+    showCheckboxSeverity: true,
+  },
+};
+
+export const MultiSelectWithSeveritySelected: Story = {
+  args: {
+    item: itemWithSeverity,
+    multiSelect: true,
+    isSelected: true,
+    showCheckboxSeverity: true,
+  },
+};
+
 export const Selected: Story = {
   args: {
     item: itemWithIcon,
@@ -206,7 +234,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "Low Priority Issue",
         value: "low",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: { level: "low", text: "Low" },
+        severity: true,
       }}
     />
     <DropdownItemComponent
@@ -217,7 +245,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "Medium Priority Issue",
         value: "medium",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: { level: "medium", text: "Medium" },
+        severity: true,
       }}
     />
     <DropdownItemComponent
@@ -228,7 +256,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "High Priority Issue",
         value: "high",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: { level: "high", text: "High" },
+        severity: true,
       }}
     />
     <DropdownItemComponent
@@ -239,7 +267,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "Critical Priority Issue",
         value: "critical",
         icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-        severity: { level: "critical", text: "Critical" },
+        severity: true,
       }}
     />
   </div>

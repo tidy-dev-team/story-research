@@ -15,10 +15,7 @@ export interface DropdownItem {
   value: any;
   icon?: ReactElement;
   disabled?: boolean;
-  severity?: {
-    level: "low" | "medium" | "high" | "critical";
-    text: string;
-  };
+  severity?: boolean;
   selected?: boolean;
 }
 
@@ -92,6 +89,7 @@ interface DropdownItemComponentProps
   item: DropdownItem;
   isSelected: boolean;
   multiSelect?: boolean;
+  showCheckboxSeverity?: boolean;
   onSelect?: () => void;
   className?: string;
 }
@@ -100,6 +98,7 @@ export const DropdownItemComponent = ({
   item,
   isSelected,
   multiSelect = false,
+  showCheckboxSeverity = false,
   size,
   rtl,
   onSelect,
@@ -140,6 +139,7 @@ export const DropdownItemComponent = ({
           <Checkbox
             checked={isSelected}
             disabled={item.disabled}
+            severity={showCheckboxSeverity && !!item.severity}
             onChange={(e) => {
               e.stopPropagation();
               if (!item.disabled && onSelect) {
@@ -157,12 +157,6 @@ export const DropdownItemComponent = ({
       >
         {item.label}
       </span>
-
-      {item.severity && (
-        <span className={severityBadgeStyles({ level: item.severity.level })}>
-          {item.severity.text}
-        </span>
-      )}
     </button>
   );
 };
