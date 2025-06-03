@@ -60,7 +60,7 @@ const dropdownItemStyles = cva(
         ],
       },
       rtl: {
-        true: "flex-row-reverse",
+        true: "",
         false: "",
       },
     },
@@ -116,8 +116,9 @@ export const DropdownItemComponent = ({
       type="button"
       role="option"
       aria-selected={isSelected}
+      style={{ flexDirection: rtl ? "row-reverse" : "row" }}
     >
-      {/* Checkbox for multi-select */}
+      {/* Checkbox for multi-select - always first in DOM order */}
       {multiSelect && (
         <span
           className={`flex items-center ${rtl ? "ml-2" : "mr-2"}`}
@@ -127,6 +128,7 @@ export const DropdownItemComponent = ({
             checked={isSelected}
             disabled={item.disabled}
             severity={showCheckboxSeverity && !!item.severity}
+            rtl={rtl || false}
             onChange={(e) => {
               e.stopPropagation();
               if (!item.disabled && onSelect) {
@@ -137,6 +139,7 @@ export const DropdownItemComponent = ({
         </span>
       )}
 
+      {/* Icon - always second in DOM order */}
       {item.icon && (
         <span className="flex items-center flex-shrink-0">{item.icon}</span>
       )}
