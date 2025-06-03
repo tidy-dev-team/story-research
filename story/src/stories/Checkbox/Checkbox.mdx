@@ -13,6 +13,7 @@ The Checkbox component provides a customizable checkbox input for multi-selectio
 - Multi-selection input control
 - Optional text labels
 - Indeterminate state support for partial selections
+- **Severity indicator support** with visual red indicator
 - Comprehensive state management (checked, disabled, focused)
 - Right-to-left (RTL) layout support
 - Accessible keyboard navigation
@@ -28,6 +29,18 @@ import { Checkbox } from './Checkbox';
 ## Basic Usage
 
 <Canvas of={CheckboxStories.Default} />
+
+## Severity Indicator
+
+The Checkbox component supports an optional severity indicator that displays a red square to highlight important or critical items. This feature is useful for marking high-priority items, errors, or items requiring special attention.
+
+<Canvas of={CheckboxStories.WithSeverity} />
+
+### Severity with RTL Layout
+
+The severity indicator properly adapts to right-to-left layouts, maintaining correct positioning relative to the checkbox icon.
+
+<Canvas of={CheckboxStories.WithSeverityRTL} />
 
 ## Interactive Example
 
@@ -117,6 +130,15 @@ import { Checkbox } from './Checkbox';
 ### Right-to-Left Layout
 <Canvas of={CheckboxStories.RTL} />
 
+### With Severity Indicator
+<Canvas of={CheckboxStories.WithSeverity} />
+
+### Severity Indicator in RTL
+<Canvas of={CheckboxStories.WithSeverityRTL} />
+
+### Severity Comparison
+<Canvas of={CheckboxStories.SeverityComparison} />
+
 ## Usage Guidelines
 
 ### When to Use
@@ -125,11 +147,14 @@ import { Checkbox } from './Checkbox';
 - **Data tables**: Enable bulk actions with row selection
 - **Form inputs**: Capture boolean or multi-choice user preferences
 - **Filter interfaces**: Allow users to apply multiple filters simultaneously
+- **Priority marking**: Use severity indicator for high-priority, critical, or error items
+- **Status indication**: Mark items requiring special attention or immediate action
 
 ### When Not to Use
 - **Single selection**: Use RadioButton component instead
 - **Simple toggles**: Consider Toggle/Switch component for on/off states
 - **Navigation**: Don't use for menu items or navigation elements
+- **Severity levels**: The severity indicator is boolean (on/off) - use dedicated severity components for multiple levels
 
 ## Accessibility
 

@@ -126,7 +126,6 @@ export const Checkbox = ({
         tabIndex={disabled ? -1 : 0}
         onFocus={(e) => {
           setInternalFocused(true);
-          // Only show focus ring if focus came from keyboard navigation
           if (e.target.matches(":focus-visible")) {
             setIsKeyboardFocus(true);
           }
