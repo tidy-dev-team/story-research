@@ -27,9 +27,9 @@ const dropdownItemStyles = cva(
     "transition-all",
     "duration-200",
     "font-['Heebo',_sans-serif]",
-    "text-white",
     "border-none",
     "bg-transparent",
+    "text-pz-base-white",
     "w-full",
     "text-left",
     "focus:outline-none",
@@ -46,15 +46,15 @@ const dropdownItemStyles = cva(
         [DropdownSize.l]: ["px-4", "py-3", "gap-3", "text-base", "min-h-10"],
       },
       state: {
-        idle: "hover:bg-white/8 text-white",
-        hover: "bg-white/8 text-white",
-        selected: "bg-[#0093EE]/12",
-        focused: "bg-white/8 ring-2 ring-[#0E75B5] text-white",
+        idle: "hover:bg-white/8 text-pz-base-white",
+        hover: "bg-white/8 text-pz-base-white",
+        selected: "bg-blue-500/12",
+        focused: "bg-white/8 ring-2 ring-[#0E75B5] text-pz-base-white",
         disabled: [
           "opacity-38",
           "cursor-not-allowed",
           "hover:bg-transparent",
-          "text-white/38",
+          "text-pz-base-white/38",
         ],
       },
       rtl: {
@@ -66,20 +66,6 @@ const dropdownItemStyles = cva(
       size: DropdownSize.m,
       state: "idle",
       rtl: false,
-    },
-  }
-);
-
-const severityBadgeStyles = cva(
-  ["px-2", "py-0.5", "rounded", "text-xs", "font-medium", "whitespace-nowrap"],
-  {
-    variants: {
-      level: {
-        low: "bg-green-600/20 text-green-400",
-        medium: "bg-yellow-600/20 text-yellow-400",
-        high: "bg-orange-600/20 text-orange-400",
-        critical: "bg-red-600/20 text-red-400",
-      },
     },
   }
 );
@@ -153,7 +139,7 @@ export const DropdownItemComponent = ({
       {item.icon && <span className="flex items-center">{item.icon}</span>}
 
       <span
-        className={`flex-1 truncate ${isSelected && !multiSelect ? "text-[#0093EE]" : "text-white"}`}
+        className={`flex-1 truncate ${isSelected && !multiSelect ? "text-[#0093EE]" : "text-pz-base-white"}`}
       >
         {item.label}
       </span>

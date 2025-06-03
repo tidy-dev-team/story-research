@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
 import { DropdownSize, DropdownItem, DropdownItemComponent } from "./Dropdown";
-import PersonIcon from "@mui/icons-material/Person";
+
 import SettingsIcon from "@mui/icons-material/Settings";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import ErrorIcon from "@mui/icons-material/Error";
