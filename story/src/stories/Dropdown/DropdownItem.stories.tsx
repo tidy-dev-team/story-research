@@ -128,7 +128,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="w-64 bg-[#22272B] border border-[#A8B0B8] rounded-lg py-1">
+      <div className="w-64 bg-[#1e3548] rounded-lg p-2">
         <Story />
       </div>
     ),
@@ -224,8 +224,20 @@ export const RTL: Story = {
   },
 };
 
+export const RTLMultiSelectWithSeverity: Story = {
+  args: {
+    item: {
+      ...itemWithSeverity,
+      label: "בעיה קריטית",
+    },
+    multiSelect: true,
+    showCheckboxSeverity: true,
+    rtl: true,
+  },
+};
+
 const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
-  <div className="w-64 bg-[#22272B] border border-[#A8B0B8] rounded-lg py-1 space-y-0">
+  <div className="w-64 bg-[#22272B] rounded-lg py-1 space-y-0">
     <DropdownItemComponent
       {...args}
       onSelect={() => {}}

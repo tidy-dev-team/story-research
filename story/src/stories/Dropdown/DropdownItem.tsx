@@ -30,8 +30,10 @@ const dropdownItemStyles = cva(
     "border-none",
     "bg-transparent",
     "text-pz-base-white",
+    "pz-label-m",
     "w-full",
-    "text-left",
+    "box-border", // Ensures padding is included in width
+    "overflow-hidden",
     "focus:outline-none",
     "focus-visible:ring-2",
     "focus-visible:ring-[#0E75B5]",
@@ -46,7 +48,7 @@ const dropdownItemStyles = cva(
         [DropdownSize.l]: ["px-4", "py-3", "gap-3", "text-base", "min-h-10"],
       },
       state: {
-        idle: "hover:bg-white/8 text-pz-base-white",
+        idle: "hover:enabled:bg-pz-base-white/12",
         hover: "bg-white/8 text-pz-base-white",
         selected: "bg-blue-500/12",
         focused: "bg-white/8 ring-2 ring-[#0E75B5] text-pz-base-white",
@@ -58,7 +60,7 @@ const dropdownItemStyles = cva(
         ],
       },
       rtl: {
-        true: "flex-row-reverse text-right",
+        true: "flex-row-reverse",
         false: "",
       },
     },
@@ -118,10 +120,9 @@ export const DropdownItemComponent = ({
       {/* Checkbox for multi-select */}
       {multiSelect && (
         <span
-          className="flex items-center mr-2"
+          className={`flex items-center ${rtl ? "ml-2" : "mr-2"}`}
           onClick={(e) => e.stopPropagation()}
         >
-          {" "}
           <Checkbox
             checked={isSelected}
             disabled={item.disabled}
@@ -136,10 +137,18 @@ export const DropdownItemComponent = ({
         </span>
       )}
 
-      {item.icon && <span className="flex items-center">{item.icon}</span>}
+      {item.icon && (
+        <span className="flex items-center flex-shrink-0">{item.icon}</span>
+      )}
 
       <span
-        className={`flex-1 truncate ${isSelected && !multiSelect ? "text-[#0093EE]" : "text-pz-base-white"}`}
+        className={`flex-1 truncate min-w-0 ${
+          isSelected && !multiSelect ? "text-[#0093EE]" : "text-pz-base-white"
+        }`}
+        style={{
+          textAlign: rtl ? "right" : "left",
+          direction: rtl ? "rtl" : "ltr",
+        }}
       >
         {item.label}
       </span>
