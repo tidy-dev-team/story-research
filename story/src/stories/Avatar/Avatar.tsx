@@ -3,9 +3,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
 export enum AvatarSize {
-  S = "s",
-  M = "m",
-  L = "l",
+  s = "s",
+  m = "m",
+  l = "l",
 }
 
 export enum AvatarType {
@@ -18,17 +18,17 @@ const avatarStyles = cva(
   {
     variants: {
       size: {
-        [AvatarSize.S]: "h-8 w-8 pz-heading-s500",
-        [AvatarSize.M]: "h-14 w-14 pz-heading-m400",
-        [AvatarSize.L]: "h-24 w-24 pz-heading-xl500",
+        [AvatarSize.s]: "h-8 w-8 pz-heading-s500",
+        [AvatarSize.m]: "h-14 w-14 pz-heading-m400",
+        [AvatarSize.l]: "h-24 w-24 pz-heading-xl500",
       },
       type: {
-        [AvatarType.Default]: "bg-pz-system-bg-primary text-pz-base-black",
-        [AvatarType.Empty]: "bg-pz-system-bg-4 text-pz-base-white",
+        [AvatarType.Default]: "bg-pz-system-bg-primary text-pz-system-fg-black",
+        [AvatarType.Empty]: "bg-pz-system-bg-4 text-pz-system-fg-1",
       },
     },
     defaultVariants: {
-      size: AvatarSize.M,
+      size: AvatarSize.m,
       type: AvatarType.Default,
     },
   }
@@ -41,7 +41,7 @@ interface AvatarProps extends VariantProps<typeof avatarStyles> {
 }
 
 const Avatar = ({
-  size = AvatarSize.M,
+  size = AvatarSize.m,
   type,
   label,
 }: AvatarProps): ReactElement => {

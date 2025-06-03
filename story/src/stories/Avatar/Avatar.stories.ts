@@ -32,14 +32,14 @@ type Story = StoryObj<typeof meta>;
 export const DefaultSmall: Story = {
   args: {
     label: "AA",
-    size: AvatarSize.S,
+    size: AvatarSize.s,
     type: AvatarType.Default,
   },
 };
 
 export const EmptySmall: Story = {
   args: {
-    size: AvatarSize.S,
+    size: AvatarSize.s,
     type: AvatarType.Empty,
   },
 };
@@ -47,14 +47,14 @@ export const EmptySmall: Story = {
 export const DefaultMedium: Story = {
   args: {
     label: "AA",
-    size: AvatarSize.M,
+    size: AvatarSize.m,
     type: AvatarType.Default,
   },
 };
 
 export const EmptyMedium: Story = {
   args: {
-    size: AvatarSize.M,
+    size: AvatarSize.m,
     type: AvatarType.Empty,
   },
 };
@@ -62,14 +62,14 @@ export const EmptyMedium: Story = {
 export const DefaultLarge: Story = {
   args: {
     label: "AA",
-    size: AvatarSize.L,
+    size: AvatarSize.l,
     type: AvatarType.Default,
   },
 };
 
 export const EmptyLarge: Story = {
   args: {
-    size: AvatarSize.L,
+    size: AvatarSize.l,
     type: AvatarType.Empty,
   },
 };
