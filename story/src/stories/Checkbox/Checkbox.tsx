@@ -4,6 +4,12 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 
+export enum SeverityLevel {
+  High = "high",
+  Medium = "medium",
+  Low = "low",
+}
+
 const checkboxIconStyles = cva(
   [
     "transition-all",
@@ -48,7 +54,18 @@ const labelStyles = cva([
   "font-['Heebo',_sans-serif]",
 ]);
 
-const severityIndicatorStyles = cva(["w-3", "h-3", "rounded", "bg-[#E03422]"]);
+const severityIndicatorStyles = cva(["w-3", "h-3", "rounded"], {
+  variants: {
+    level: {
+      [SeverityLevel.High]: "bg-[#E03422]",
+      [SeverityLevel.Medium]: "bg-[#FFC400]",
+      [SeverityLevel.Low]: "bg-white",
+    },
+  },
+  defaultVariants: {
+    level: SeverityLevel.High,
+  },
+});
 
 interface CheckboxProps
   extends Omit<
@@ -62,7 +79,7 @@ interface CheckboxProps
   indeterminate?: boolean;
   rtl?: boolean;
   focused?: boolean;
-  severity?: boolean;
+  severity?: SeverityLevel;
 }
 
 export const Checkbox = ({
@@ -71,7 +88,7 @@ export const Checkbox = ({
   rtl = false,
   disabled = false,
   focused = false,
-  severity = false,
+  severity,
   label,
   className,
   onChange,
@@ -150,9 +167,13 @@ export const Checkbox = ({
         {...props}
       />
       {!rtl && renderIcon()}
-      {!rtl && severity && <div className={severityIndicatorStyles()} />}
+      {!rtl && severity && (
+        <div className={severityIndicatorStyles({ level: severity })} />
+      )}
       {rtl && renderIcon()}
-      {rtl && severity && <div className={severityIndicatorStyles()} />}
+      {rtl && severity && (
+        <div className={severityIndicatorStyles({ level: severity })} />
+      )}
       {label && (
         <span
           className={labelStyles({

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
-import { Checkbox } from "./Checkbox";
+import { Checkbox, SeverityLevel } from "./Checkbox";
 import { useState } from "react";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
@@ -18,7 +18,7 @@ const meta: Meta<CheckboxStoryArgs> = {
     disabled: false,
     focused: false,
     rtl: false,
-    severity: false,
+    severity: undefined,
     label: "Checkbox label",
   },
   argTypes: {
@@ -63,11 +63,12 @@ const meta: Meta<CheckboxStoryArgs> = {
       },
     },
     severity: {
-      control: "boolean",
-      description: "Whether to show severity indicator (red square)",
+      control: "select",
+      options: [undefined, SeverityLevel.High, SeverityLevel.Medium, SeverityLevel.Low],
+      description: "Severity level indicator",
       table: {
         category: "Appearance",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "undefined" },
       },
     },
     label: {
@@ -405,14 +406,14 @@ export const KeyboardNavigation: Story = {
 };
 
 // Severity Stories
-export const WithSeverity: Story = {
+export const WithSeverityHigh: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(args.checked || false);
 
     return (
       <Checkbox
         {...args}
-        severity={true}
+        severity={SeverityLevel.High}
         checked={checked}
         onChange={(e) => {
           setChecked(e.target.checked);
@@ -422,12 +423,68 @@ export const WithSeverity: Story = {
     );
   },
   args: {
-    label: "Item with severity indicator",
+    label: "Item with high severity",
   },
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with severity indicator displayed as a red square.",
+        story: "Checkbox with high severity indicator displayed as a red square.",
+      },
+    },
+  },
+};
+
+export const WithSeverityMedium: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        severity={SeverityLevel.Medium}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "Item with medium severity",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox with medium severity indicator displayed as a yellow square.",
+      },
+    },
+  },
+};
+
+export const WithSeverityLow: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        severity={SeverityLevel.Low}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "Item with low severity",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox with low severity indicator displayed as a white square.",
       },
     },
   },
@@ -440,7 +497,7 @@ export const WithSeverityRTL: Story = {
     return (
       <Checkbox
         {...args}
-        severity={true}
+        severity={SeverityLevel.High}
         rtl={true}
         checked={checked}
         onChange={(e) => {
@@ -457,7 +514,7 @@ export const WithSeverityRTL: Story = {
     docs: {
       description: {
         story:
-          "Checkbox with severity indicator displayed in RTL layout. The severity indicator appears on the left side.",
+          "Checkbox with high severity indicator displayed in RTL layout. The severity indicator appears on the left side.",
       },
     },
   },
@@ -467,11 +524,15 @@ export const SeverityComparison: Story = {
   render: () => {
     const [checkedStates, setCheckedStates] = useState<{
       normal: boolean;
-      severity: boolean;
+      severityHigh: boolean;
+      severityMedium: boolean;
+      severityLow: boolean;
       severityRtl: boolean;
     }>({
       normal: false,
-      severity: false,
+      severityHigh: false,
+      severityMedium: false,
+      severityLow: false,
       severityRtl: false,
     });
 
@@ -494,20 +555,44 @@ export const SeverityComparison: Story = {
           />
 
           <Checkbox
-            label="With severity indicator"
-            severity={true}
-            checked={checkedStates.severity}
+            label="High severity indicator (red)"
+            severity={SeverityLevel.High}
+            checked={checkedStates.severityHigh}
             onChange={(e) =>
               setCheckedStates((prev) => ({
                 ...prev,
-                severity: e.target.checked,
+                severityHigh: e.target.checked,
               }))
             }
           />
 
           <Checkbox
-            label="עם חומרה (RTL)"
-            severity={true}
+            label="Medium severity indicator (yellow)"
+            severity={SeverityLevel.Medium}
+            checked={checkedStates.severityMedium}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                severityMedium: e.target.checked,
+              }))
+            }
+          />
+
+          <Checkbox
+            label="Low severity indicator (white)"
+            severity={SeverityLevel.Low}
+            checked={checkedStates.severityLow}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                severityLow: e.target.checked,
+              }))
+            }
+          />
+
+          <Checkbox
+            label="חומרה גבוהה (RTL)"
+            severity={SeverityLevel.High}
             rtl={true}
             checked={checkedStates.severityRtl}
             onChange={(e) =>
@@ -526,7 +611,7 @@ export const SeverityComparison: Story = {
     docs: {
       description: {
         story:
-          "Comparison of normal checkbox, checkbox with severity indicator, and severity indicator in RTL layout.",
+          "Comparison of normal checkbox and checkboxes with different severity levels (high, medium, low), including RTL layout.",
       },
     },
   },
