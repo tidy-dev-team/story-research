@@ -18,7 +18,7 @@ const avatarStyles = cva(
   {
     variants: {
       size: {
-        [AvatarSize.s]: "h-8 w-8 pz-label-s",
+        [AvatarSize.s]: "h-8 w-8 pz-body-s400",
         [AvatarSize.m]: "h-14 w-14 pz-heading-m400",
         [AvatarSize.l]: "h-24 w-24 pz-heading-xl500",
       },
