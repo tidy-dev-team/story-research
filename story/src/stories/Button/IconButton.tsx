@@ -30,6 +30,8 @@ const buttonStyles = cva(
     "font-['Heebo',_sans-serif]",
     "ring-offset-2",
     "ring-offset-pz-system-bg-3",
+    "disabled:cursor-not-allowed",
+    "disabled:pointer-events-none",
   ],
   {
     variants: {
@@ -37,8 +39,8 @@ const buttonStyles = cva(
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-system-fg-1",
-          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%),var(--pz-system-bg-primary)]",
-          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%),var(--pz-system-bg-primary)]",
+          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
+          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
           "disabled:bg-pz-system-bg-disabled",
           "disabled:text-pz-system-fg-disabled",
         ].join(" "),
@@ -90,7 +92,6 @@ type BaseButtonProps = Omit<
 interface IconButtonProps
   extends BaseButtonProps,
     VariantProps<typeof buttonStyles> {
-  // Support both ReactElement and component reference
   icon: ReactElement | React.ComponentType<any>;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -102,9 +103,9 @@ export const Button = ({
   icon,
   className,
   onClick,
+  disabled,
   ...rest
 }: IconButtonProps): ReactElement => {
-  // Get the appropriate icon size based on button size
   const getIconSize = (buttonSize: ButtonSize) => {
     switch (buttonSize) {
       case ButtonSize.XSmall:
@@ -122,7 +123,6 @@ export const Button = ({
 
   const iconSize = getIconSize(size || ButtonSize.Medium);
 
-  // Handle both React element and component reference cases
   const iconElement = React.isValidElement(icon)
     ? React.cloneElement(icon as React.ReactElement<any>, {
         sx: {
@@ -139,11 +139,21 @@ export const Button = ({
         },
       });
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onClick?.(event);
+  };
+
   return (
     <button
       className={twMerge(buttonStyles({ type, size, focused }), className)}
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
+      disabled={disabled}
       {...rest}
     >
       <span className="flex items-center justify-center">{iconElement}</span>
