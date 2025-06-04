@@ -3,7 +3,7 @@
 *::after,
 *::backdrop,
 *::file-selector-button {
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 body {
