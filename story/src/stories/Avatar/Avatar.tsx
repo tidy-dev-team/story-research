@@ -45,11 +45,19 @@ const Avatar = ({
   type,
   label,
 }: AvatarProps): ReactElement => {
+  // Limit label to first 2 characters before processing
+  const processedLabel = label ? label.substring(0, 2) : label;
+
   const avatarType =
     type ??
-    (label && label.trim().length > 0 ? AvatarType.Default : AvatarType.Empty);
+    (processedLabel && processedLabel.trim().length > 0
+      ? AvatarType.Default
+      : AvatarType.Empty);
 
-  const displayText = avatarType === AvatarType.Default ? label || "AA" : "N/A";
+  const displayText =
+    avatarType === AvatarType.Default
+      ? processedLabel?.toUpperCase() || "AA"
+      : "N/A";
 
   const classes = twMerge(avatarStyles({ size, type: avatarType }));
 

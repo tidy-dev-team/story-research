@@ -11,6 +11,16 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
+    label: {
+      control: {
+        type: "text",
+      },
+      description: "Avatar label (automatically limited to max 2 characters)",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "AA" },
+      },
+    },
     size: {
       control: {
         type: "select", // Use a dropdown control
