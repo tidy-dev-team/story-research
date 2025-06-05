@@ -1,7 +1,10 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
-import { Checkbox } from "../Checkbox/Checkbox";
+import { Checkbox, SeverityLevel, IconName } from "../Checkbox/Checkbox";
+
+// Re-export SeverityLevel and IconName for convenience
+export type { SeverityLevel, IconName } from "../Checkbox/Checkbox";
 
 export enum DropdownSize {
   s = "s",
@@ -13,10 +16,12 @@ export interface DropdownItem {
   id: string;
   label: string;
   value: any;
-  icon?: ReactElement;
+  icon?: ReactElement | IconName;
   disabled?: boolean;
-  severity?: boolean;
+  severity?: SeverityLevel;
   selected?: boolean;
+  count?: number;
+  alwaysShowCount?: boolean;
 }
 
 const dropdownItemStyles = cva(
@@ -77,7 +82,6 @@ interface DropdownItemComponentProps
   item: DropdownItem;
   isSelected: boolean;
   multiSelect?: boolean;
-  showCheckboxSeverity?: boolean;
   onSelect?: () => void;
   className?: string;
 }
@@ -86,7 +90,6 @@ export const DropdownItemComponent = ({
   item,
   isSelected,
   multiSelect = false,
-  showCheckboxSeverity = false,
   size,
   rtl,
   onSelect,
@@ -127,7 +130,14 @@ export const DropdownItemComponent = ({
           <Checkbox
             checked={isSelected}
             disabled={item.disabled}
-            severity={showCheckboxSeverity && !!item.severity}
+            severity={item.severity}
+            icon={
+              typeof item.icon === "string"
+                ? (item.icon as IconName)
+                : undefined
+            }
+            count={item.count}
+            alwaysShowCount={item.alwaysShowCount}
             rtl={rtl || false}
             onChange={(e) => {
               e.stopPropagation();
@@ -139,8 +149,11 @@ export const DropdownItemComponent = ({
         </span>
       )}
 
-      {/* Icon - always second in DOM order */}
-      {item.icon && (
+      {/* Icon - always second in DOM order - only show if not multi-select or icon is ReactElement */}
+      {item.icon && !multiSelect && (
+        <span className="flex items-center flex-shrink-0">{item.icon}</span>
+      )}
+      {item.icon && multiSelect && typeof item.icon !== "string" && (
         <span className="flex items-center flex-shrink-0">{item.icon}</span>
       )}
 

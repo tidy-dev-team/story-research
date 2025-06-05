@@ -6,6 +6,7 @@ import {
   DropdownItem,
   DropdownItemComponent,
 } from "./DropdownItem";
+import { SeverityLevel } from "../Checkbox/Checkbox";
 
 import SettingsIcon from "@mui/icons-material/Settings";
 import BugReportIcon from "@mui/icons-material/BugReport";
@@ -31,7 +32,7 @@ const itemWithSeverity: DropdownItem = {
   label: "Critical Issue",
   value: "critical",
   icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-  severity: true,
+  severity: SeverityLevel.High,
 };
 
 const disabledItem: DropdownItem = {
@@ -49,7 +50,6 @@ const meta = {
     item: sampleItem,
     isSelected: false,
     multiSelect: false,
-    showCheckboxSeverity: false,
     size: DropdownSize.m,
     rtl: false,
     onSelect: () => {}, // Provide a default empty function
@@ -82,15 +82,6 @@ const meta = {
     multiSelect: {
       control: "boolean",
       description: "Show checkbox for multi-selection",
-      table: {
-        category: "Behavior",
-        defaultValue: { summary: "false" },
-      },
-    },
-    showCheckboxSeverity: {
-      control: "boolean",
-      description:
-        "Show severity indicator on checkbox when multiSelect is enabled",
       table: {
         category: "Behavior",
         defaultValue: { summary: "false" },
@@ -178,7 +169,6 @@ export const MultiSelectWithSeverity: Story = {
     item: itemWithSeverity,
     multiSelect: true,
     isSelected: false,
-    showCheckboxSeverity: true,
   },
 };
 
@@ -187,7 +177,6 @@ export const MultiSelectWithSeveritySelected: Story = {
     item: itemWithSeverity,
     multiSelect: true,
     isSelected: true,
-    showCheckboxSeverity: true,
   },
 };
 
@@ -235,7 +224,6 @@ export const RTLMultiSelectWithSeverity: Story = {
       label: "בעיה קריטית",
     },
     multiSelect: true,
-    showCheckboxSeverity: true,
     rtl: true,
   },
 };
@@ -248,7 +236,6 @@ export const RTLMultiSelectWithSeveritySelected: Story = {
     },
     multiSelect: true,
     isSelected: true,
-    showCheckboxSeverity: true,
     rtl: true,
   },
 };
@@ -263,7 +250,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "Low Priority Issue",
         value: "low",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.Low,
       }}
     />
     <DropdownItemComponent
@@ -274,7 +261,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "Medium Priority Issue",
         value: "medium",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.Medium,
       }}
     />
     <DropdownItemComponent
@@ -285,7 +272,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "High Priority Issue",
         value: "high",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.High,
       }}
     />
     <DropdownItemComponent
@@ -296,7 +283,7 @@ const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
         label: "Critical Priority Issue",
         value: "critical",
         icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.High,
       }}
     />
   </div>
@@ -308,56 +295,52 @@ const SeverityLevelsRTLWrapper = (args: DropdownItemStoryArgs) => (
       {...args}
       rtl={true}
       multiSelect={true}
-      showCheckboxSeverity={true}
       onSelect={() => {}}
       item={{
         id: "low",
         label: "בעיה עדיפות נמוכה",
         value: "low",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.Low,
       }}
     />
     <DropdownItemComponent
       {...args}
       rtl={true}
       multiSelect={true}
-      showCheckboxSeverity={true}
       onSelect={() => {}}
       item={{
         id: "medium",
         label: "בעיה עדיפות בינונית",
         value: "medium",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.Medium,
       }}
     />
     <DropdownItemComponent
       {...args}
       rtl={true}
       multiSelect={true}
-      showCheckboxSeverity={true}
       onSelect={() => {}}
       item={{
         id: "high",
         label: "בעיה עדיפות גבוהה",
         value: "high",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.High,
       }}
     />
     <DropdownItemComponent
       {...args}
       rtl={true}
       multiSelect={true}
-      showCheckboxSeverity={true}
       onSelect={() => {}}
       item={{
         id: "critical",
         label: "בעיה קריטית",
         value: "critical",
         icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-        severity: true,
+        severity: SeverityLevel.High,
       }}
     />
   </div>

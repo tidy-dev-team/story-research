@@ -13,28 +13,41 @@ const radioButtonIconStyles = cva(
   [
     "transition-all",
     "duration-200",
-    "cursor-pointer",
     "focus:outline-none",
     "focus-visible:ring-2",
-    "ring-offset-2",
-    "ring-offset-[#101010]",
-    "focus-visible:ring-[#0E75B5]",
+    "ring-offset-1",
+    "ring-offset-pz-gray-1000",
+    "focus-visible:ring-pz-system-border-focused-1",
   ],
   {
     variants: {
       selected: {
-        true: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
-        false: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
-      },
-      disabled: {
-        true: "text-pz-system-fg-1/38 cursor-not-allowed hover:text-pz-system-fg-1/38 active:text-pz-system-fg-1/38",
+        true: "",
         false: "",
       },
+      disabled: {
+        true: "text-pz-system-fg-disabled cursor-not-allowed hover:text-pz-system-fg-disabled active:text-pz-system-fg-disabled",
+        false: "cursor-pointer",
+      },
       focused: {
-        true: "ring-2 ring-[#0E75B5] ring-offset-2 rounded-full",
+        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-full",
         false: "",
       },
     },
+    compoundVariants: [
+      {
+        selected: false,
+        disabled: false,
+        className:
+          "text-pz-gray-300 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
+      },
+      {
+        selected: true,
+        disabled: false,
+        className:
+          "text-pz-blue-500 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
+      },
+    ],
     defaultVariants: {
       selected: false,
       disabled: false,
@@ -47,15 +60,14 @@ const labelStyles = cva(
     "select-none",
     "transition-colors",
     "duration-200",
-    "cursor-pointer",
-    "text-pz-system-fg-1",
     "font-['Heebo',_sans-serif]",
+    "pz-body-m400",
   ],
   {
     variants: {
       disabled: {
-        true: "text-pz-system-fg-4 cursor-not-allowed",
-        false: "",
+        true: "text-pz-system-fg-disabled cursor-not-allowed",
+        false: "text-pz-system-fg-1",
       },
       rtl: {
         true: "mr-2",
@@ -109,7 +121,7 @@ export const RadioButton = ({
   const renderIcon = () => {
     const iconProps = {
       className: iconClasses,
-      fontSize: "small" as const,
+      sx: { fontSize: 20 },
     };
 
     return selected ? (
