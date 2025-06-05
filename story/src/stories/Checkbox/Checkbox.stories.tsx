@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
-import { Checkbox, SeverityLevel } from "./Checkbox";
+import { Checkbox, SeverityLevel, iconMap, IconName } from "./Checkbox";
 import { useState } from "react";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
@@ -19,6 +19,7 @@ const meta: Meta<CheckboxStoryArgs> = {
     focused: false,
     rtl: false,
     severity: undefined,
+    icon: undefined,
     label: "Checkbox label",
   },
   argTypes: {
@@ -64,8 +65,22 @@ const meta: Meta<CheckboxStoryArgs> = {
     },
     severity: {
       control: "select",
-      options: [undefined, SeverityLevel.High, SeverityLevel.Medium, SeverityLevel.Low],
+      options: [
+        undefined,
+        SeverityLevel.High,
+        SeverityLevel.Medium,
+        SeverityLevel.Low,
+      ],
       description: "Severity level indicator",
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    icon: {
+      control: "select",
+      options: [undefined, ...Object.keys(iconMap)],
+      description: "Optional icon to display after severity indicator",
       table: {
         category: "Appearance",
         defaultValue: { summary: "undefined" },
@@ -428,7 +443,8 @@ export const WithSeverityHigh: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with high severity indicator displayed as a red square.",
+        story:
+          "Checkbox with high severity indicator displayed as a red square.",
       },
     },
   },
@@ -456,7 +472,8 @@ export const WithSeverityMedium: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with medium severity indicator displayed as a yellow square.",
+        story:
+          "Checkbox with medium severity indicator displayed as a yellow square.",
       },
     },
   },
@@ -484,7 +501,65 @@ export const WithSeverityLow: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with low severity indicator displayed as a white square.",
+        story:
+          "Checkbox with low severity indicator displayed as a white square.",
+      },
+    },
+  },
+};
+
+export const WithIcon: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        icon="info"
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "Item with info icon",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox with an info icon displayed after the label.",
+      },
+    },
+  },
+};
+
+export const WithSeverityAndIcon: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        severity={SeverityLevel.High}
+        icon="warning"
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "High priority item with warning",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox with both high severity indicator and warning icon.",
       },
     },
   },

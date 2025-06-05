@@ -1,8 +1,12 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useState, ReactElement } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
+import InfoIcon from "@mui/icons-material/Info";
+import WarningIcon from "@mui/icons-material/Warning";
+import ErrorIcon from "@mui/icons-material/Error";
+import StarIcon from "@mui/icons-material/Star";
 
 export enum SeverityLevel {
   High = "high",
@@ -30,11 +34,11 @@ const checkboxIconStyles = cva(
           "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
       },
       disabled: {
-        true: "text-white/38 cursor-not-allowed hover:text-white/38 active:text-white/38",
+        true: "text-pz-system-fg-disabled cursor-not-allowed hover:text-pz-system-fg-disabled active:text-pz-system-fg-disabled",
         false: "",
       },
       focused: {
-        true: "ring-3 ring-offset-1 rounded-xs ring-[#0E75B5]",
+        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-3xs",
         false: "",
       },
     },
@@ -54,7 +58,7 @@ const labelStyles = cva([
   "font-['Heebo',_sans-serif]",
 ]);
 
-const severityIndicatorStyles = cva(["w-3", "h-3", "rounded"], {
+const severityIndicatorStyles = cva(["w-3", "h-3", "rounded-pz-3xs"], {
   variants: {
     level: {
       [SeverityLevel.High]: "bg-pz-system-priority-high-3",
@@ -66,6 +70,30 @@ const severityIndicatorStyles = cva(["w-3", "h-3", "rounded"], {
     level: SeverityLevel.High,
   },
 });
+
+const iconStyles = cva(
+  ["text-pz-system-fg-3", "transition-colors", "duration-200"],
+  {
+    variants: {
+      disabled: {
+        true: "text-pz-system-fg-disabled",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      disabled: false,
+    },
+  }
+);
+
+export const iconMap = {
+  info: <InfoIcon sx={{ fontSize: 16 }} />,
+  warning: <WarningIcon sx={{ fontSize: 16 }} />,
+  error: <ErrorIcon sx={{ fontSize: 16 }} />,
+  star: <StarIcon sx={{ fontSize: 16 }} />,
+} as const;
+
+export type IconName = keyof typeof iconMap;
 
 interface CheckboxProps
   extends Omit<
@@ -80,6 +108,7 @@ interface CheckboxProps
   rtl?: boolean;
   focused?: boolean;
   severity?: SeverityLevel;
+  icon?: IconName;
 }
 
 export const Checkbox = ({
@@ -89,6 +118,7 @@ export const Checkbox = ({
   disabled = false,
   focused = false,
   severity,
+  icon,
   label,
   className,
   onChange,
@@ -128,6 +158,13 @@ export const Checkbox = ({
     }
 
     return <CheckBoxOutlineBlankIcon {...iconProps} />;
+  };
+
+  const renderLabelIcon = () => {
+    if (!icon) return null;
+
+    const iconElement = iconMap[icon];
+    return <span className={iconStyles({ disabled })}>{iconElement}</span>;
   };
 
   return (
@@ -170,10 +207,12 @@ export const Checkbox = ({
       {!rtl && severity && (
         <div className={severityIndicatorStyles({ level: severity })} />
       )}
+      {!rtl && renderLabelIcon()}
       {rtl && renderIcon()}
       {rtl && severity && (
         <div className={severityIndicatorStyles({ level: severity })} />
       )}
+      {rtl && renderLabelIcon()}
       {label && (
         <span
           className={labelStyles({
