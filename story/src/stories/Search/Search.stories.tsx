@@ -99,7 +99,7 @@ export const Default: Story = {
     const [value, setValue] = useState(args.value || "");
 
     return (
-      <div className="bg-[#101010] p-6 rounded-lg">
+      <div>
         <Search
           {...args}
           value={value}
@@ -129,7 +129,7 @@ export const Filled: Story = {
     const [value, setValue] = useState("Search query");
 
     return (
-      <div className="bg-[#101010] p-6 rounded-lg">
+      <div>
         <Search
           {...args}
           value={value}
@@ -158,7 +158,7 @@ export const Focused: Story = {
     const [value, setValue] = useState(args.value || "");
 
     return (
-      <div className="bg-[#101010] p-6 rounded-lg">
+      <div>
         <Search
           {...args}
           value={value}
@@ -189,7 +189,7 @@ export const Disabled: Story = {
     const [value, setValue] = useState(args.value || "");
 
     return (
-      <div className="bg-[#101010] p-6 rounded-lg">
+      <div>
         <Search
           {...args}
           value={value}
@@ -219,7 +219,7 @@ export const DisabledFilled: Story = {
     const [value, setValue] = useState("Disabled search");
 
     return (
-      <div className="bg-[#101010] p-6 rounded-lg">
+      <div>
         <Search
           {...args}
           value={value}
@@ -248,7 +248,7 @@ export const RTL: Story = {
     const [value, setValue] = useState(args.value || "");
 
     return (
-      <div className="bg-[#101010] p-6 rounded-lg">
+      <div>
         <Search
           {...args}
           value={value}
@@ -278,7 +278,7 @@ export const RTLFilled: Story = {
     const [value, setValue] = useState("שאילתת חיפוש");
 
     return (
-      <div className="bg-[#101010] p-6 rounded-lg">
+      <div>
         <Search
           {...args}
           value={value}
