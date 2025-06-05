@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ComponentProps } from "react";
+import { ComponentProps, useState, useEffect } from "react";
 import { Checkbox, SeverityLevel, iconMap, IconName } from "./Checkbox";
-import { useState } from "react";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
 
@@ -127,8 +126,12 @@ type Story = StoryObj<CheckboxStoryArgs>;
 
 export const Default: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    // Update internal state when args change (from Storybook controls)
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -153,8 +156,11 @@ export const Default: Story = {
 
 export const WithoutLabel: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -179,8 +185,11 @@ export const WithoutLabel: Story = {
 
 export const Checked: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -205,8 +214,11 @@ export const Checked: Story = {
 
 export const Indeterminate: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -231,8 +243,11 @@ export const Indeterminate: Story = {
 
 export const Disabled: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -257,8 +272,11 @@ export const Disabled: Story = {
 
 export const DisabledChecked: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -283,8 +301,11 @@ export const DisabledChecked: Story = {
 
 export const Focused: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -309,8 +330,11 @@ export const Focused: Story = {
 
 export const FocusedChecked: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox
@@ -335,8 +359,11 @@ export const FocusedChecked: Story = {
 
 export const RTL: Story = {
   render: (args) => {
-    const { useState } = require("react");
     const [checked, setChecked] = useState(args.checked || false);
+
+    useEffect(() => {
+      setChecked(args.checked || false);
+    }, [args.checked]);
 
     return (
       <Checkbox

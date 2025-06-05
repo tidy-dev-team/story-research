@@ -235,16 +235,10 @@ export const Checkbox = ({
 
   const renderElements = () => {
     if (rtl) {
-      // RTL: icon, severity, checkbox (due to flex-row-reverse, we reverse the order)
-      return [
-        renderIcon(), // checkbox (will appear rightmost)
-        renderSeverityIndicator(), // severity (will appear middle)
-        renderLabelIcon(), // icon (will appear leftmost)
-      ];
+      return [renderIcon(), renderSeverityIndicator(), renderLabelIcon()];
     } else {
-      // LTR: checkbox, severity, icon
       return [
-        renderIcon(), // checkbox (appears leftmost)
+        renderIcon(),
         renderSeverityIndicator(), // severity (appears middle)
         renderLabelIcon(), // icon (appears after severity)
       ];
