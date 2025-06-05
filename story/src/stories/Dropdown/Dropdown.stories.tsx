@@ -221,7 +221,7 @@ const DropdownWrapper = ({
         onSelectionChange={setSelectedItems}
       />
       {selectedItems.length > 0 && (
-        <div className="mt-4 p-2 bg-gray-800 rounded text-white text-sm">
+        <div className="mt-4 p-2 bg-gray-800 rounded text-pz-system-fg-1 text-sm">
           <strong>Selected:</strong>{" "}
           {selectedItems.map((item) => item.label).join(", ")}
         </div>
@@ -314,7 +314,7 @@ const CustomRenderWrapper = ({
         }}
       />
       {selectedItems.length > 0 && (
-        <div className="mt-4 p-2 bg-gray-800 rounded text-white text-sm">
+        <div className="mt-4 p-2 bg-gray-800 rounded text-pz-system-fg-1 text-sm">
           <strong>Selected items:</strong>
           <ul className="list-disc list-inside mt-1">
             {selectedItems.map((item) => (

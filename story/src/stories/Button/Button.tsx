@@ -42,12 +42,12 @@ const buttonStyles = cva(
       type: {
         [ButtonType.Primary]: [
           "bg-pz-blue-500",
-          "text-white",
+          "text-pz-system-fg-1",
           "relative",
           "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
           "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
           "disabled:bg-white/12",
-          "disabled:text-white/38",
+          "disabled:text-pz-system-fg-1/38",
         ].join(" "),
         [ButtonType.Secondary]: [
           "border",
@@ -60,14 +60,14 @@ const buttonStyles = cva(
           "active:enabled:border-[#0093EE]",
           "active:enabled:text-[#0093EE]",
           "disabled:border-white/38",
-          "disabled:text-white/38",
+          "disabled:text-pz-system-fg-1/38",
         ].join(" "),
         [ButtonType.Ghost]: [
           "text-[#CCD1D5]",
           "hover:enabled:bg-white/12",
-          "hover:enabled:text-white",
+          "hover:enabled:text-pz-system-fg-1",
           "active:enabled:bg-white/8",
-          "disabled:text-white/38",
+          "disabled:text-pz-system-fg-1/38",
         ].join(" "),
       },
       size: {

@@ -27,7 +27,7 @@ const radioButtonIconStyles = cva(
         false: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
       },
       disabled: {
-        true: "text-white/38 cursor-not-allowed hover:text-white/38 active:text-white/38",
+        true: "text-pz-system-fg-1/38 cursor-not-allowed hover:text-pz-system-fg-1/38 active:text-pz-system-fg-1/38",
         false: "",
       },
       focused: {
@@ -48,7 +48,7 @@ const labelStyles = cva(
     "transition-colors",
     "duration-200",
     "cursor-pointer",
-    "text-white",
+    "text-pz-system-fg-1",
     "font-['Heebo',_sans-serif]",
   ],
   {

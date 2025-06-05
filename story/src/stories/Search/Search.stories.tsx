@@ -310,13 +310,13 @@ export const Interactive: Story = {
     return (
       <div className="space-y-6 bg-[#101010] p-6 rounded-lg">
         <div className="space-y-4">
-          <h3 className="text-white text-lg font-medium">
+          <h3 className="text-pz-system-fg-1 text-lg font-medium">
             Interactive Search Components
           </h3>
 
           <div className="space-y-3">
             <div>
-              <label className="text-white text-sm font-medium mb-2 block">
+              <label className="text-pz-system-fg-1 text-sm font-medium mb-2 block">
                 Standard Search (LTR)
               </label>
               <Search
@@ -328,7 +328,7 @@ export const Interactive: Story = {
             </div>
 
             <div>
-              <label className="text-white text-sm font-medium mb-2 block">
+              <label className="text-pz-system-fg-1 text-sm font-medium mb-2 block">
                 RTL Search
               </label>
               <Search
@@ -341,7 +341,7 @@ export const Interactive: Story = {
             </div>
 
             <div>
-              <label className="text-white text-sm font-medium mb-2 block">
+              <label className="text-pz-system-fg-1 text-sm font-medium mb-2 block">
                 Disabled Search
               </label>
               <Search

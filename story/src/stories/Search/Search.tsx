@@ -74,7 +74,7 @@ const inputStyles = cva(
         disabled: "text-[#A8B0B8]/50 cursor-not-allowed",
       },
       filled: {
-        true: "text-white",
+        true: "text-pz-system-fg-1",
         false: "text-[#A8B0B8]",
       },
       rtl: {
@@ -104,7 +104,7 @@ const iconStyles = cva(["transition-colors", "duration-200"], {
       disabled: "text-[#A8B0B8]/50",
     },
     filled: {
-      true: "text-white",
+      true: "text-pz-system-fg-1",
       false: "text-[#A8B0B8]",
     },
   },

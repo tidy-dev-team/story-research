@@ -39,7 +39,7 @@ const buttonStyles = cva(
         false: "",
       },
       disabled: {
-        true: "text-white/38", // Disabled state from Figma
+        true: "text-pz-system-fg-1/38", // Disabled state from Figma
         false: "",
       },
     },

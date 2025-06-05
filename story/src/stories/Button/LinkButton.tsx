@@ -38,7 +38,7 @@ const linkButtonStyles = cva(
         false: "",
       },
       disabled: {
-        true: "text-white/38 !cursor-not-allowed no-underline", // Disabled style, remove underline
+        true: "text-pz-system-fg-1/38 !cursor-not-allowed no-underline", // Disabled style, remove underline
         false: "",
       },
     },

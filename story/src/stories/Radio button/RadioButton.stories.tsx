@@ -159,7 +159,7 @@ export const KeyboardNavigation: Story = {
 
     return (
       <div>
-        <h3 className="text-white text-lg font-medium mb-4">
+        <h3 className="text-pz-system-fg-1 text-lg font-medium mb-4">
           Use Up/Down arrows to select
         </h3>
         <div className="space-y-3">
