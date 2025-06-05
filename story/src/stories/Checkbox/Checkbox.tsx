@@ -18,7 +18,6 @@ const checkboxIconStyles = cva(
   [
     "transition-all",
     "duration-200",
-    "cursor-pointer",
     "focus:outline-none",
     "focus-visible:ring-2",
     "ring-offset-1",
@@ -28,20 +27,36 @@ const checkboxIconStyles = cva(
   {
     variants: {
       state: {
-        unchecked: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
-        checked: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
-        indeterminate:
-          "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+        unchecked: "",
+        checked: "",
+        indeterminate: "",
       },
       disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed hover:text-pz-system-fg-disabled active:text-pz-system-fg-disabled",
-        false: "",
+        true: "text-pz-system-fg-disabled cursor-not-allowed hover:text-pz-system-fg-disabled active:text-pz-system-fg-disabled focus:text-pz-system-fg-disabled",
+        false: "cursor-pointer",
       },
       focused: {
         true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-3xs",
         false: "",
       },
     },
+    compoundVariants: [
+      {
+        state: "unchecked",
+        disabled: false,
+        className: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
+      },
+      {
+        state: "checked",
+        disabled: false,
+        className: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+      },
+      {
+        state: "indeterminate",
+        disabled: false,
+        className: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+      },
+    ],
     defaultVariants: {
       state: "unchecked",
       disabled: false,
@@ -76,7 +91,7 @@ const iconStyles = cva(
   {
     variants: {
       disabled: {
-        true: "text-pz-system-fg-disabled",
+        true: "text-pz-system-fg-disabled cursor-not-allowed",
         false: "",
       },
     },
@@ -97,7 +112,7 @@ const countStyles = cva(
   {
     variants: {
       disabled: {
-        true: "text-pz-system-fg-disabled",
+        true: "text-pz-system-fg-disabled cursor-not-allowed",
         false: "text-pz-system-fg-1",
       },
     },
