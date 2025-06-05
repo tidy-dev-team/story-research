@@ -231,8 +231,8 @@ export const KeyboardNavigation: Story = {
     });
 
     return (
-      <div className="space-y-4 bg-[#101010] p-6 rounded-lg">
-        <h3 className="text-white text-lg font-medium mb-4">
+      <div>
+        <h3 className="text-pz-system-fg-1 text-lg font-medium mb-4">
           Use Tab to navigate and Space to toggle
         </h3>
         <div className="space-y-3">
@@ -279,7 +279,7 @@ export const KeyboardNavigation: Story = {
           />
         </div>
         <div className="mt-4 text-sm text-gray-400">
-          <div>
+          <div className="text-pz-system-fg-1">
             Checked:{" "}
             {Object.entries(checkboxStates)
               .filter(([_, checked]) => checked)
@@ -415,7 +415,7 @@ export const SeverityComparison: Story = {
 
     return (
       <div className="space-y-4 p-4">
-        <h3 className="text-white text-lg font-medium mb-4">
+        <h3 className="text-pz-system-fg-1 text-lg font-medium mb-4">
           Severity Indicator Comparison
         </h3>
 
@@ -558,7 +558,7 @@ export const CountComparison: Story = {
     return (
       <div className="flex flex-col gap-4">
         <div className="space-y-2">
-          <h3 className="text-white font-semibold">Count Variations</h3>
+          <h3 className="text-pz-system-fg-1 font-semibold">Count Variations</h3>
           <Checkbox
             label="No count"
             checked={checkedStates.noCount}
