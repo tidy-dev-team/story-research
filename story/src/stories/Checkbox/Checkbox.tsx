@@ -161,7 +161,7 @@ interface CheckboxProps
   focused?: boolean;
   severity?: SeverityLevel;
   icon?: IconName;
-  showCount?: boolean;
+  alwaysShowCount?: boolean;
   count?: number;
 }
 
@@ -174,12 +174,14 @@ export const Checkbox = ({
   severity,
   icon,
   label,
-  showCount = false,
+  alwaysShowCount = false,
   count = 0,
   className,
   onChange,
   ...props
 }: CheckboxProps) => {
+  // Ensure count is never negative
+  const safeCount = Math.max(0, count || 0);
   const [internalFocused, setInternalFocused] = useState(false);
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
   const showFocusRing = focused || (internalFocused && isKeyboardFocus);
@@ -229,8 +231,8 @@ export const Checkbox = ({
   };
 
   const renderCount = () => {
-    if (!showCount && count === 0) return null;
-    return <span className={countStyles({ disabled })}>({count})</span>;
+    if (!alwaysShowCount && safeCount === 0) return null;
+    return <span className={countStyles({ disabled })}>({safeCount})</span>;
   };
 
   const renderElements = () => {
