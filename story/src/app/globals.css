@@ -46,3 +46,7 @@ body {
 .box-border {
   box-sizing: border-box !important;
 }
+
+.docs-story {
+  border-bottom: 1px solid #ededed;
+}
