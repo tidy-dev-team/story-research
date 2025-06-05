@@ -54,7 +54,7 @@ const labelStyles = cva(
   {
     variants: {
       disabled: {
-        true: "text-gray-400 cursor-not-allowed",
+        true: "text-pz-system-fg-4 cursor-not-allowed",
         false: "",
       },
       rtl: {

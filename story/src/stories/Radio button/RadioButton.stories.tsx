@@ -185,7 +185,7 @@ export const KeyboardNavigation: Story = {
             onChange={() => setSelectedOption("option4")}
           />
         </div>
-        <div className="mt-4 text-sm text-gray-400">
+        <div className="mt-4 text-sm text-pz-system-fg-4">
           Selected: {selectedOption}
         </div>
       </div>
