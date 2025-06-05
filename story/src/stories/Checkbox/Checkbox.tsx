@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { ComponentProps, useState, ReactElement } from "react";
+import { ComponentProps, useState } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
@@ -21,8 +21,8 @@ const checkboxIconStyles = cva(
     "focus:outline-none",
     "focus-visible:ring-2",
     "ring-offset-1",
-    "ring-offset-[#101010]",
-    "focus-visible:ring-[#0E75B5]",
+    "ring-offset-pz-gray-1000",
+    "focus-visible:ring-pz-system-border-focused-1",
   ],
   {
     variants: {
@@ -44,17 +44,20 @@ const checkboxIconStyles = cva(
       {
         state: "unchecked",
         disabled: false,
-        className: "text-[#A8B0B8] hover:text-[#0081D1] active:text-[#005B94]",
+        className:
+          "text-pz-gray-300 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
       },
       {
         state: "checked",
         disabled: false,
-        className: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+        className:
+          "text-pz-blue-500 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
       },
       {
         state: "indeterminate",
         disabled: false,
-        className: "text-[#0093EE] hover:text-[#0081D1] active:text-[#005B94]",
+        className:
+          "text-pz-blue-500 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
       },
     ],
     defaultVariants: {
@@ -65,13 +68,26 @@ const checkboxIconStyles = cva(
   }
 );
 
-const labelStyles = cva([
-  "select-none",
-  "transition-colors",
-  "duration-200",
-  "text-white",
-  "font-['Heebo',_sans-serif]",
-]);
+const labelStyles = cva(
+  [
+    "select-none",
+    "transition-colors",
+    "duration-200",
+    "font-['Heebo',_sans-serif]",
+    "pz-body-m400",
+  ],
+  {
+    variants: {
+      disabled: {
+        true: "text-pz-system-fg-disabled cursor-not-allowed",
+        false: "text-pz-system-fg-1",
+      },
+    },
+    defaultVariants: {
+      disabled: false,
+    },
+  }
+);
 
 const severityIndicatorStyles = cva(["w-3", "h-3", "rounded-pz-3xs"], {
   variants: {
@@ -168,9 +184,9 @@ export const Checkbox = ({
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
   const showFocusRing = focused || (internalFocused && isKeyboardFocus);
 
-  const containerClasses = `flex items-center ${
-    rtl ? "flex-row-reverse gap-2" : "gap-2"
-  } ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
+  const containerClasses = `flex items-center ${rtl ? "flex-row-reverse" : ""} gap-2 ${
+    disabled ? "cursor-not-allowed" : "cursor-pointer"
+  }`;
 
   const getIconState = () => {
     if (indeterminate) return "indeterminate";
@@ -207,10 +223,32 @@ export const Checkbox = ({
     return <span className={iconStyles({ disabled })}>{iconElement}</span>;
   };
 
+  const renderSeverityIndicator = () => {
+    if (!severity) return null;
+    return <div className={severityIndicatorStyles({ level: severity })} />;
+  };
+
   const renderCount = () => {
     if (!showCount && count === 0) return null;
-
     return <span className={countStyles({ disabled })}>({count})</span>;
+  };
+
+  const renderElements = () => {
+    if (rtl) {
+      // RTL: icon, severity, checkbox (due to flex-row-reverse, we reverse the order)
+      return [
+        renderIcon(), // checkbox (will appear rightmost)
+        renderSeverityIndicator(), // severity (will appear middle)
+        renderLabelIcon(), // icon (will appear leftmost)
+      ];
+    } else {
+      // LTR: checkbox, severity, icon
+      return [
+        renderIcon(), // checkbox (appears leftmost)
+        renderSeverityIndicator(), // severity (appears middle)
+        renderLabelIcon(), // icon (appears after severity)
+      ];
+    }
   };
 
   return (
@@ -249,27 +287,8 @@ export const Checkbox = ({
         onChange={onChange}
         {...props}
       />
-      {!rtl && renderIcon()}
-      {!rtl && severity && (
-        <div className={severityIndicatorStyles({ level: severity })} />
-      )}
-      {!rtl && renderLabelIcon()}
-      {rtl && renderIcon()}
-      {rtl && severity && (
-        <div className={severityIndicatorStyles({ level: severity })} />
-      )}
-      {rtl && renderLabelIcon()}
-      {label && (
-        <span
-          className={labelStyles({
-            className: disabled
-              ? "text-pz-system-fg-disabled cursor-not-allowed pz-body-m400"
-              : "text-pz-system-fg-1 pz-body-m400",
-          })}
-        >
-          {label}
-        </span>
-      )}
+      {renderElements()}
+      {label && <span className={labelStyles({ disabled })}>{label}</span>}
       {renderCount()}
     </label>
   );
