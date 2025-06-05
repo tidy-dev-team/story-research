@@ -4,6 +4,27 @@ import { Checkbox, SeverityLevel, iconMap, IconName } from "./Checkbox";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
 
+// Common render function to eliminate code duplication
+const renderInteractiveCheckbox = (args: CheckboxStoryArgs) => {
+  const [checked, setChecked] = useState(args.checked || false);
+
+  // Update internal state when args change (from Storybook controls)
+  useEffect(() => {
+    setChecked(args.checked || false);
+  }, [args.checked]);
+
+  return (
+    <Checkbox
+      {...args}
+      checked={checked}
+      onChange={(e) => {
+        setChecked(e.target.checked);
+        args.onChange?.(e);
+      }}
+    />
+  );
+};
+
 const meta: Meta<CheckboxStoryArgs> = {
   title: "Component/Checkbox",
   component: Checkbox,
@@ -125,257 +146,71 @@ export default meta;
 type Story = StoryObj<CheckboxStoryArgs>;
 
 export const Default: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    // Update internal state when args change (from Storybook controls)
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
-    checked: false,
-    indeterminate: false,
-    disabled: false,
-    focused: false,
-    rtl: false,
     label: "Checkbox option",
   },
 };
 
 export const WithoutLabel: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
-    checked: false,
-    indeterminate: false,
-    disabled: false,
-    focused: false,
-    rtl: false,
     label: undefined,
   },
 };
 
 export const Checked: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     checked: true,
-    indeterminate: false,
-    disabled: false,
-    focused: false,
-    rtl: false,
     label: "Checked option",
   },
 };
 
 export const Indeterminate: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
-    checked: false,
     indeterminate: true,
-    disabled: false,
-    focused: false,
-    rtl: false,
     label: "Indeterminate option",
   },
 };
 
 export const Disabled: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
-    checked: false,
-    indeterminate: false,
     disabled: true,
-    focused: false,
-    rtl: false,
     label: "Disabled option",
   },
 };
 
 export const DisabledChecked: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     checked: true,
-    indeterminate: false,
     disabled: true,
-    focused: false,
-    rtl: false,
     label: "Disabled checked",
   },
 };
 
 export const Focused: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
-    checked: false,
-    indeterminate: false,
-    disabled: false,
     focused: true,
-    rtl: false,
     label: "Focused option",
   },
 };
 
 export const FocusedChecked: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     checked: true,
-    indeterminate: false,
-    disabled: false,
     focused: true,
-    rtl: false,
     label: "Focused checked",
   },
 };
 
 export const RTL: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    useEffect(() => {
-      setChecked(args.checked || false);
-    }, [args.checked]);
-
-    return (
-      <Checkbox
-        {...args}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     checked: true,
     indeterminate: false,
@@ -467,23 +302,10 @@ export const KeyboardNavigation: Story = {
 
 // Severity Stories
 export const WithSeverityHigh: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        severity={SeverityLevel.High}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "Item with high severity",
+    severity: SeverityLevel.High,
   },
   parameters: {
     docs: {
@@ -496,23 +318,10 @@ export const WithSeverityHigh: Story = {
 };
 
 export const WithSeverityMedium: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        severity={SeverityLevel.Medium}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "Item with medium severity",
+    severity: SeverityLevel.Medium,
   },
   parameters: {
     docs: {
@@ -525,23 +334,10 @@ export const WithSeverityMedium: Story = {
 };
 
 export const WithSeverityLow: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        severity={SeverityLevel.Low}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "Item with low severity",
+    severity: SeverityLevel.Low,
   },
   parameters: {
     docs: {
@@ -554,23 +350,10 @@ export const WithSeverityLow: Story = {
 };
 
 export const WithIcon: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        icon="info"
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "Item with info icon",
+    icon: "info" as IconName,
   },
   parameters: {
     docs: {
@@ -582,24 +365,11 @@ export const WithIcon: Story = {
 };
 
 export const WithSeverityAndIcon: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        severity={SeverityLevel.High}
-        icon="warning"
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "High priority item with warning",
+    severity: SeverityLevel.High,
+    icon: "warning" as IconName,
   },
   parameters: {
     docs: {
@@ -611,24 +381,11 @@ export const WithSeverityAndIcon: Story = {
 };
 
 export const WithSeverityRTL: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        severity={SeverityLevel.High}
-        rtl={true}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "פריט עם חומרה",
+    severity: SeverityLevel.High,
+    rtl: true,
   },
   parameters: {
     docs: {
@@ -739,24 +496,11 @@ export const SeverityComparison: Story = {
 
 // Count Stories
 export const WithCount: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        showCount={true}
-        count={5}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "Items",
+    showCount: true,
+    count: 5,
   },
   parameters: {
     docs: {
@@ -768,24 +512,11 @@ export const WithCount: Story = {
 };
 
 export const WithCountZero: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        showCount={true}
-        count={0}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "Empty items",
+    showCount: true,
+    count: 0,
   },
   parameters: {
     docs: {
@@ -797,26 +528,13 @@ export const WithCountZero: Story = {
 };
 
 export const WithSeverityIconAndCount: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(args.checked || false);
-
-    return (
-      <Checkbox
-        {...args}
-        severity={SeverityLevel.High}
-        icon="warning"
-        showCount={true}
-        count={12}
-        checked={checked}
-        onChange={(e) => {
-          setChecked(e.target.checked);
-          args.onChange?.(e);
-        }}
-      />
-    );
-  },
+  render: renderInteractiveCheckbox,
   args: {
     label: "Critical issues",
+    severity: SeverityLevel.High,
+    icon: "warning" as IconName,
+    showCount: true,
+    count: 12,
   },
   parameters: {
     docs: {
