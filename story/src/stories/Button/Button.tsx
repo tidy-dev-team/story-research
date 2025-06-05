@@ -107,7 +107,7 @@ type BaseButtonProps = Omit<
 
 interface ButtonProps
   extends BaseButtonProps,
-    VariantProps<typeof buttonStyles> {
+  VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;
