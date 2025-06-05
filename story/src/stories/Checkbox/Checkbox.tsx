@@ -86,6 +86,27 @@ const iconStyles = cva(
   }
 );
 
+const countStyles = cva(
+  [
+    "font-['Heebo',_sans-serif]",
+    "text-sm",
+    "leading-[1.46875em]",
+    "transition-colors",
+    "duration-200",
+  ],
+  {
+    variants: {
+      disabled: {
+        true: "text-pz-system-fg-disabled",
+        false: "text-pz-system-fg-1",
+      },
+    },
+    defaultVariants: {
+      disabled: false,
+    },
+  }
+);
+
 export const iconMap = {
   info: <InfoIcon sx={{ fontSize: 16 }} />,
   warning: <WarningIcon sx={{ fontSize: 16 }} />,
@@ -109,6 +130,8 @@ interface CheckboxProps
   focused?: boolean;
   severity?: SeverityLevel;
   icon?: IconName;
+  showCount?: boolean;
+  count?: number;
 }
 
 export const Checkbox = ({
@@ -120,6 +143,8 @@ export const Checkbox = ({
   severity,
   icon,
   label,
+  showCount = false,
+  count = 0,
   className,
   onChange,
   ...props
@@ -165,6 +190,12 @@ export const Checkbox = ({
 
     const iconElement = iconMap[icon];
     return <span className={iconStyles({ disabled })}>{iconElement}</span>;
+  };
+
+  const renderCount = () => {
+    if (!showCount && count === 0) return null;
+
+    return <span className={countStyles({ disabled })}>({count})</span>;
   };
 
   return (
@@ -224,6 +255,7 @@ export const Checkbox = ({
           {label}
         </span>
       )}
+      {renderCount()}
     </label>
   );
 };

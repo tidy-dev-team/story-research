@@ -21,6 +21,8 @@ const meta: Meta<CheckboxStoryArgs> = {
     severity: undefined,
     icon: undefined,
     label: "Checkbox label",
+    showCount: false,
+    count: 0,
   },
   argTypes: {
     checked: {
@@ -92,6 +94,22 @@ const meta: Meta<CheckboxStoryArgs> = {
       table: {
         category: "Content",
         defaultValue: { summary: "undefined" },
+      },
+    },
+    showCount: {
+      control: "boolean",
+      description: "Whether to show count even when count is 0",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "false" },
+      },
+    },
+    count: {
+      control: "number",
+      description: "Count value to display in brackets after label",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "0" },
       },
     },
     onChange: {
@@ -687,6 +705,170 @@ export const SeverityComparison: Story = {
       description: {
         story:
           "Comparison of normal checkbox and checkboxes with different severity levels (high, medium, low), including RTL layout.",
+      },
+    },
+  },
+};
+
+// Count Stories
+export const WithCount: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        showCount={true}
+        count={5}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "Items",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox with count displayed in brackets after the label.",
+      },
+    },
+  },
+};
+
+export const WithCountZero: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        showCount={true}
+        count={0}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "Empty items",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox with count of 0 displayed when showCount is true.",
+      },
+    },
+  },
+};
+
+export const WithSeverityIconAndCount: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(args.checked || false);
+
+    return (
+      <Checkbox
+        {...args}
+        severity={SeverityLevel.High}
+        icon="warning"
+        showCount={true}
+        count={12}
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          args.onChange?.(e);
+        }}
+      />
+    );
+  },
+  args: {
+    label: "Critical issues",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Checkbox with severity indicator, icon, and count all displayed together.",
+      },
+    },
+  },
+};
+
+export const CountComparison: Story = {
+  render: () => {
+    const [checkedStates, setCheckedStates] = useState({
+      noCount: false,
+      withCount: false,
+      zeroCount: false,
+      largeCount: false,
+    });
+
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="space-y-2">
+          <h3 className="text-white font-semibold">Count Variations</h3>
+          <Checkbox
+            label="No count"
+            checked={checkedStates.noCount}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                noCount: e.target.checked,
+              }))
+            }
+          />
+          <Checkbox
+            label="With count"
+            showCount={true}
+            count={5}
+            checked={checkedStates.withCount}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                withCount: e.target.checked,
+              }))
+            }
+          />
+          <Checkbox
+            label="Zero count (shown)"
+            showCount={true}
+            count={0}
+            checked={checkedStates.zeroCount}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                zeroCount: e.target.checked,
+              }))
+            }
+          />
+          <Checkbox
+            label="Large count"
+            showCount={true}
+            count={999}
+            checked={checkedStates.largeCount}
+            onChange={(e) =>
+              setCheckedStates((prev) => ({
+                ...prev,
+                largeCount: e.target.checked,
+              }))
+            }
+          />
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: "Comparison of checkboxes with different count configurations.",
       },
     },
   },
