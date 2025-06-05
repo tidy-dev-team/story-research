@@ -1,13 +1,9 @@
 // filepath: /Users/dmitridmitriev/Documents/prisma/story-research/story/src/stories/Radio button/RadioButton.tsx
-import React, { ReactElement, useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { ComponentProps, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-
-export enum RadioButtonType {
-  Primary = "primary",
-}
 
 const radioButtonIconStyles = cva(
   [
@@ -69,65 +65,63 @@ const labelStyles = cva(
         true: "text-pz-system-fg-disabled cursor-not-allowed",
         false: "text-pz-system-fg-1",
       },
-      rtl: {
-        true: "mr-2",
-        false: "ml-2",
-      },
     },
     defaultVariants: {
       disabled: false,
-      rtl: false,
     },
   }
 );
 
 interface RadioButtonProps
-  extends Omit<VariantProps<typeof radioButtonIconStyles>, "disabled"> {
+  extends Omit<
+      ComponentProps<"input">,
+      "type" | "size" | "checked" | "disabled"
+    >,
+    VariantProps<typeof radioButtonIconStyles> {
   label?: string;
-  selected: boolean;
-  onChange: () => void;
+  selected?: boolean;
   disabled?: boolean;
-  focused?: boolean;
   rtl?: boolean;
+  focused?: boolean;
+  onChange?: () => void;
 }
 
 export const RadioButton = ({
+  selected = false,
+  rtl = false,
+  disabled = false,
+  focused = false,
   label,
-  selected,
+  className,
   onChange,
-  rtl,
-  disabled,
-  focused,
-}: RadioButtonProps): ReactElement => {
+  ...props
+}: RadioButtonProps) => {
   const [internalFocused, setInternalFocused] = useState(false);
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
   const showFocusRing = focused || (internalFocused && isKeyboardFocus);
 
-  const iconClasses = twMerge(
-    radioButtonIconStyles({ selected, disabled, focused: showFocusRing })
-  );
-  const labelClasses = twMerge(labelStyles({ disabled, rtl }));
+  const iconClasses = radioButtonIconStyles({
+    selected,
+    disabled,
+    focused: showFocusRing,
+    className,
+  });
+  const labelClasses = labelStyles({ disabled });
 
-  const containerClasses = [
-    "flex",
-    "items-center",
-    "gap-2",
-    rtl ? "flex-row-reverse" : "",
-    disabled ? "cursor-not-allowed" : "cursor-pointer",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const containerClasses = `flex items-center ${rtl ? "flex-row-reverse" : ""} gap-2 ${
+    disabled ? "cursor-not-allowed" : "cursor-pointer"
+  }`;
 
   const renderIcon = () => {
     const iconProps = {
       className: iconClasses,
-      sx: { fontSize: 20 },
+      fontSize: "small" as const,
     };
 
     return selected ? (
-      <RadioButtonCheckedIcon {...iconProps} />
+      <RadioButtonCheckedIcon {...iconProps} sx={{ fontSize: 20 }} />
     ) : (
-      <RadioButtonUncheckedIcon {...iconProps} />
+      <RadioButtonUncheckedIcon {...iconProps} sx={{ fontSize: 20 }} />
     );
   };
 
@@ -139,13 +133,11 @@ export const RadioButton = ({
       <input
         type="radio"
         checked={selected}
-        onChange={onChange}
         disabled={disabled}
         className="sr-only focus:outline-none"
         tabIndex={disabled ? -1 : 0}
         onFocus={(e) => {
           setInternalFocused(true);
-          // Only show focus ring if focus came from keyboard navigation
           if (e.target.matches(":focus-visible")) {
             setIsKeyboardFocus(true);
           }
@@ -157,7 +149,7 @@ export const RadioButton = ({
         onKeyDown={(e) => {
           if (e.key === "Space" || e.key === "Enter") {
             e.preventDefault();
-            if (!disabled && !selected) {
+            if (!disabled && !selected && onChange) {
               setIsKeyboardFocus(true);
               onChange();
             }
@@ -166,9 +158,13 @@ export const RadioButton = ({
             setIsKeyboardFocus(true);
           }
         }}
+        onChange={onChange}
+        {...props}
       />
       {renderIcon()}
       {label && <span className={labelClasses}>{label}</span>}
     </label>
   );
 };
+
+export type { RadioButtonProps };
