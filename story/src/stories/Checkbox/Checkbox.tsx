@@ -57,9 +57,9 @@ const labelStyles = cva([
 const severityIndicatorStyles = cva(["w-3", "h-3", "rounded"], {
   variants: {
     level: {
-      [SeverityLevel.High]: "bg-[#E03422]",
-      [SeverityLevel.Medium]: "bg-[#FFC400]",
-      [SeverityLevel.Low]: "bg-white",
+      [SeverityLevel.High]: "bg-pz-system-priority-high-3",
+      [SeverityLevel.Medium]: "bg-pz-system-priority-medium-3",
+      [SeverityLevel.Low]: "bg-pz-system-priority-low-1",
     },
   },
   defaultVariants: {
@@ -177,7 +177,9 @@ export const Checkbox = ({
       {label && (
         <span
           className={labelStyles({
-            className: disabled ? "text-gray-400 cursor-not-allowed" : "",
+            className: disabled
+              ? "text-pz-system-fg-disabled cursor-not-allowed pz-body-m400"
+              : "text-pz-system-fg-1 pz-body-m400",
           })}
         >
           {label}

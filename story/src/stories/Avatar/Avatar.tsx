@@ -45,7 +45,6 @@ const Avatar = ({
   type,
   label,
 }: AvatarProps): ReactElement => {
-  // Limit label to first 2 characters before processing
   const processedLabel = label ? label.substring(0, 2) : label;
 
   const avatarType =
