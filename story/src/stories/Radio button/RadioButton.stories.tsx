@@ -158,7 +158,7 @@ export const KeyboardNavigation: Story = {
     const [selectedOption, setSelectedOption] = useState<string>("option1");
 
     return (
-      <div className="space-y-4 bg-[#101010] p-6 rounded-lg">
+      <div>
         <h3 className="text-white text-lg font-medium mb-4">
           Use Up/Down arrows to select
         </h3>
