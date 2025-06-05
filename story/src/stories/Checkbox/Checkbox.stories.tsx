@@ -41,7 +41,7 @@ const meta: Meta<CheckboxStoryArgs> = {
     severity: undefined,
     icon: undefined,
     label: "Checkbox label",
-    showCount: false,
+    alwaysShowCount: false,
     count: 0,
   },
   argTypes: {
@@ -116,17 +116,17 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "undefined" },
       },
     },
-    showCount: {
+    alwaysShowCount: {
       control: "boolean",
-      description: "Whether to show count even when count is 0",
+      description: "Whether to always show count, even when count is 0",
       table: {
         category: "Content",
         defaultValue: { summary: "false" },
       },
     },
     count: {
-      control: "number",
-      description: "Count value to display in brackets after label",
+      control: { type: "number", min: 0 },
+      description: "Count value to display in brackets after label (minimum 0)",
       table: {
         category: "Content",
         defaultValue: { summary: "0" },
@@ -499,7 +499,7 @@ export const WithCount: Story = {
   render: renderInteractiveCheckbox,
   args: {
     label: "Items",
-    showCount: true,
+    alwaysShowCount: true,
     count: 5,
   },
   parameters: {
@@ -515,13 +515,14 @@ export const WithCountZero: Story = {
   render: renderInteractiveCheckbox,
   args: {
     label: "Empty items",
-    showCount: true,
+    alwaysShowCount: true,
     count: 0,
   },
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with count of 0 displayed when showCount is true.",
+        story:
+          "Checkbox with count of 0 displayed when alwaysShowCount is true.",
       },
     },
   },
@@ -533,7 +534,7 @@ export const WithSeverityIconAndCount: Story = {
     label: "Critical issues",
     severity: SeverityLevel.High,
     icon: "warning" as IconName,
-    showCount: true,
+    alwaysShowCount: true,
     count: 12,
   },
   parameters: {
@@ -571,7 +572,7 @@ export const CountComparison: Story = {
           />
           <Checkbox
             label="With count"
-            showCount={true}
+            alwaysShowCount={true}
             count={5}
             checked={checkedStates.withCount}
             onChange={(e) =>
@@ -583,7 +584,7 @@ export const CountComparison: Story = {
           />
           <Checkbox
             label="Zero count (shown)"
-            showCount={true}
+            alwaysShowCount={true}
             count={0}
             checked={checkedStates.zeroCount}
             onChange={(e) =>
@@ -595,7 +596,7 @@ export const CountComparison: Story = {
           />
           <Checkbox
             label="Large count"
-            showCount={true}
+            alwaysShowCount={true}
             count={999}
             checked={checkedStates.largeCount}
             onChange={(e) =>
