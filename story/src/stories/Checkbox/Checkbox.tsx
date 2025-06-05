@@ -89,7 +89,7 @@ const iconStyles = cva(
 const countStyles = cva(
   [
     "font-['Heebo',_sans-serif]",
-    "text-sm",
+    "pz-body-m400",
     "leading-[1.46875em]",
     "transition-colors",
     "duration-200",
