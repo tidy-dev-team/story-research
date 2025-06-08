@@ -159,56 +159,6 @@ export const WithoutLabel: Story = {
   },
 };
 
-export const Checked: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    checked: true,
-    label: "Checked option",
-  },
-};
-
-export const Indeterminate: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    indeterminate: true,
-    label: "Indeterminate option",
-  },
-};
-
-export const Disabled: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    disabled: true,
-    label: "Disabled option",
-  },
-};
-
-export const DisabledChecked: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    checked: true,
-    disabled: true,
-    label: "Disabled checked",
-  },
-};
-
-export const Focused: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    focused: true,
-    label: "Focused option",
-  },
-};
-
-export const FocusedChecked: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    checked: true,
-    focused: true,
-    label: "Focused checked",
-  },
-};
-
 export const RTL: Story = {
   render: renderInteractiveCheckbox,
   args: {
@@ -317,38 +267,6 @@ export const WithSeverityHigh: Story = {
   },
 };
 
-export const WithSeverityMedium: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    label: "Item with medium severity",
-    severity: SeverityLevel.Medium,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Checkbox with medium severity indicator displayed as a yellow square.",
-      },
-    },
-  },
-};
-
-export const WithSeverityLow: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    label: "Item with low severity",
-    severity: SeverityLevel.Low,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Checkbox with low severity indicator displayed as a white square.",
-      },
-    },
-  },
-};
-
 export const WithIcon: Story = {
   render: renderInteractiveCheckbox,
   args: {
@@ -359,22 +277,6 @@ export const WithIcon: Story = {
     docs: {
       description: {
         story: "Checkbox with an info icon displayed after the label.",
-      },
-    },
-  },
-};
-
-export const WithSeverityAndIcon: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    label: "High priority item with warning",
-    severity: SeverityLevel.High,
-    icon: "warning" as IconName,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Checkbox with both high severity indicator and warning icon.",
       },
     },
   },
@@ -466,19 +368,6 @@ export const SeverityComparison: Story = {
               }))
             }
           />
-
-          <Checkbox
-            label="חומרה גבוהה (RTL)"
-            severity={SeverityLevel.High}
-            rtl={true}
-            checked={checkedStates.severityRtl}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                severityRtl: e.target.checked,
-              }))
-            }
-          />
         </div>
       </div>
     );
@@ -506,42 +395,6 @@ export const WithCount: Story = {
     docs: {
       description: {
         story: "Checkbox with count displayed in brackets after the label.",
-      },
-    },
-  },
-};
-
-export const WithCountZero: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    label: "Empty items",
-    alwaysShowCount: true,
-    count: 0,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Checkbox with count of 0 displayed when alwaysShowCount is true.",
-      },
-    },
-  },
-};
-
-export const WithSeverityIconAndCount: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    label: "Critical issues",
-    severity: SeverityLevel.High,
-    icon: "warning" as IconName,
-    alwaysShowCount: true,
-    count: 12,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Checkbox with severity indicator, icon, and count all displayed together.",
       },
     },
   },
