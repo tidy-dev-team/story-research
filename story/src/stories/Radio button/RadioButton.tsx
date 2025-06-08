@@ -1,7 +1,6 @@
 // filepath: /Users/dmitridmitriev/Documents/prisma/story-research/story/src/stories/Radio button/RadioButton.tsx
 import { cva, type VariantProps } from "class-variance-authority";
 import { ComponentProps, useState } from "react";
-import { twMerge } from "tailwind-merge";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 

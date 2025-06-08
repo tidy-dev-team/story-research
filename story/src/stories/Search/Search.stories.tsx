@@ -308,7 +308,7 @@ export const Interactive: Story = {
     const [rtlValue, setRtlValue] = useState("");
 
     return (
-      <div className="space-y-6 bg-[#101010] p-6 rounded-lg">
+      <div className="space-y-6 bg-pz-system-bg-1 p-6 rounded-lg">
         <div className="space-y-4">
           <h3 className="text-pz-system-fg-1 text-lg font-medium">
             Interactive Search Components

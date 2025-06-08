@@ -22,6 +22,12 @@ const preview: Preview = {
         sourceState: "shown",
       },
     },
+    options: {
+      storySort: {
+        method: "alphabetical",
+        locales: "en-US",
+      },
+    },
   },
 };
 

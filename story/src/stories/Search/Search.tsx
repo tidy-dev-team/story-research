@@ -6,27 +6,27 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const searchStyles = cva(
   [
+    "w-[200px]",
     "h-8",
     "relative",
     "flex",
     "items-center",
-    "bg-[#212426]",
-    "hover:bg-[#3C3E40]",
-    "rounded",
+    "bg-pz-system-bg-3",
+    "rounded-pz-2xs",
     "transition-all",
     "duration-200",
     "font-['Heebo',_sans-serif]",
-    "text-sm",
+    "pz-body-m400",
     "border",
     "border-transparent",
   ],
   {
     variants: {
       state: {
-        idle: "hover:bg-[#212426]",
-        hover: "bg-[#212426]/[0.88]",
-        active: "border-[#0093EE]",
-        focused: "border-[#0093EE]",
+        idle: "",
+        hover: "bg-pz-system-bg-3",
+        active: "border-pz-system-border-primary",
+        focused: "border-pz-system-border-primary",
         disabled: "opacity-50",
       },
       filled: {
@@ -34,7 +34,7 @@ const searchStyles = cva(
         false: "",
       },
       focused: {
-        true: "focus-within:ring-2 focus-within:ring-[#0093EE]/70 focus-within:ring-offset-2 focus-within:ring-offset-[#101010]",
+        true: "focus-within:ring-2 focus-within:ring-pz-system-border-focused-1 focus-within:ring-offset-2 focus-within:ring-offset-pz-system-bg-1",
         false: "",
       },
       disabled: {
@@ -46,6 +46,13 @@ const searchStyles = cva(
         false: "",
       },
     },
+    compoundVariants: [
+      {
+        state: "hover",
+        className:
+          "before:absolute before:inset-0 before:bg-pz-system-bg-overlay-hover before:rounded-pz-2xs before:pointer-events-none",
+      },
+    ],
     defaultVariants: {
       state: "idle",
       filled: false,
@@ -57,25 +64,25 @@ const searchStyles = cva(
 const inputStyles = cva(
   [
     "flex-1",
+    "min-w-0",
     "bg-transparent",
     "outline-none",
     "border-none",
-    "text-sm",
     "font-['Heebo',_sans-serif]",
-    "placeholder:text-[#A8B0B8]",
+    "placeholder:text-pz-system-fg-4",
   ],
   {
     variants: {
       state: {
-        idle: "text-[#A8B0B8]",
-        hover: "text-[#f00f00]",
-        active: "text-[#A8B0B8]",
-        focused: "text-[#A8B0B8]",
-        disabled: "text-[#A8B0B8]/50 cursor-not-allowed",
+        idle: "text-pz-system-fg-4 ",
+        hover: "text-pz-system-fg-4",
+        active: "text-pz-system-fg-4",
+        focused: "text-pz-system-fg-4",
+        disabled: "text-pz-system-fg-disabled cursor-not-allowed",
       },
       filled: {
         true: "text-pz-system-fg-1",
-        false: "text-[#A8B0B8]",
+        false: "text-pz-system-fg-4",
       },
       rtl: {
         true: "text-right",
@@ -90,22 +97,22 @@ const inputStyles = cva(
   }
 );
 
-const iconStyles = cva(["transition-colors", "duration-200"], {
+const iconStyles = cva(["transition-colors", "duration-200", "flex-shrink-0"], {
   variants: {
     type: {
       search: "",
-      close: "cursor-pointer hover:text-[#0081D1]",
+      close: "cursor-pointer hover:text-pz-system-fg-hover",
     },
     state: {
-      idle: "text-[#A8B0B8]",
-      hover: "text-[#A8B0B8]",
-      active: "text-[#A8B0B8]",
-      focused: "text-[#A8B0B8]",
-      disabled: "text-[#A8B0B8]/50",
+      idle: "text-pz-system-fg-4",
+      hover: "text-pz-system-fg-4",
+      active: "text-pz-system-fg-4",
+      focused: "text-pz-system-fg-4",
+      disabled: "text-pz-system-fg-disabled",
     },
     filled: {
       true: "text-pz-system-fg-1",
-      false: "text-[#A8B0B8]",
+      false: "text-pz-system-fg-4",
     },
   },
   defaultVariants: {
@@ -164,7 +171,7 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
         rtl,
         className,
       }),
-      rtl ? "px-2 py-0 gap-2" : "px-2 py-0 gap-2"
+      rtl ? "pl-2 pr-1 py-0 gap-1" : "pl-2 pr-1 py-0 gap-1"
     );
 
     const inputClasses = twMerge(
@@ -232,7 +239,7 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
 
         {filled && !disabled && (
           <CloseIcon
-            className={closeIconClasses}
+            className={`${closeIconClasses} ml-1`}
             fontSize="small"
             onClick={handleClear}
           />
