@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import type { ComponentProps } from "react";
 import React from "react";
 import { Button, ButtonSize, ButtonType } from "./IconButton";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -6,20 +7,15 @@ import HeadphonesIcon from "@mui/icons-material/Headphones";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AddIcon from "@mui/icons-material/Add";
 
-interface IconButtonStoryArgs {
-  type?: ButtonType;
-  size?: ButtonSize;
-  iconName: keyof typeof iconMap;
-  disabled?: boolean;
-  focused?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
+type IconButtonStoryArgs = ComponentProps<typeof Button> & {
+  iconType?: keyof typeof iconMap;
+};
 
 const iconMap = {
-  language: <LanguageIcon sx={{ fontSize: "inherit" }} />,
-  headphones: <HeadphonesIcon sx={{ fontSize: "inherit" }} />,
-  settings: <SettingsIcon sx={{ fontSize: "inherit" }} />,
-  add: <AddIcon sx={{ fontSize: "inherit" }} />,
+  language: LanguageIcon,
+  headphones: HeadphonesIcon,
+  settings: SettingsIcon,
+  add: AddIcon,
 };
 
 const meta = {
@@ -28,7 +24,7 @@ const meta = {
   args: {
     type: ButtonType.Primary,
     size: ButtonSize.Medium,
-    iconName: "language",
+    iconType: "language",
     disabled: false,
     focused: false,
   },
@@ -37,13 +33,24 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    iconName: {
+    iconType: {
       control: "select",
       options: Object.keys(iconMap),
       description: "Select an icon for the button",
       table: {
         category: "Content",
         defaultValue: { summary: "language" },
+      },
+      labels: {
+        language: "Language",
+        headphones: "Headphones",
+        settings: "Settings",
+        add: "Add",
+      },
+    },
+    icon: {
+      table: {
+        disable: true,
       },
     },
     type: {
@@ -105,15 +112,20 @@ export default meta;
 
 type Story = StoryObj<IconButtonStoryArgs>;
 
+const renderIcon = (iconType: keyof typeof iconMap | undefined) => {
+  if (!iconType) return LanguageIcon;
+  return iconMap[iconType];
+};
+
 const renderStory = ({
-  iconName,
+  iconType,
   disabled,
   focused,
   ...args
 }: IconButtonStoryArgs) => (
   <Button
     {...args}
-    icon={iconMap[iconName]}
+    icon={renderIcon(iconType)}
     disabled={disabled}
     focused={disabled ? false : focused}
   />
@@ -122,7 +134,7 @@ const renderStory = ({
 export const Primary: Story = {
   args: {
     type: ButtonType.Primary,
-    iconName: "headphones",
+    iconType: "headphones",
   },
   render: renderStory,
 };
@@ -130,7 +142,7 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     type: ButtonType.Secondary,
-    iconName: "settings",
+    iconType: "settings",
   },
   render: renderStory,
 };
@@ -138,7 +150,7 @@ export const Secondary: Story = {
 export const Ghost: Story = {
   args: {
     type: ButtonType.Ghost,
-    iconName: "language",
+    iconType: "language",
   },
   render: renderStory,
 };
@@ -147,7 +159,7 @@ export const XSmall: Story = {
   name: "Size xs",
   args: {
     size: ButtonSize.XSmall,
-    iconName: "add",
+    iconType: "add",
   },
   render: renderStory,
 };
@@ -156,7 +168,7 @@ export const Small: Story = {
   name: "Size s",
   args: {
     size: ButtonSize.Small,
-    iconName: "language",
+    iconType: "language",
   },
   render: renderStory,
 };
@@ -165,7 +177,7 @@ export const Large: Story = {
   name: "Size l",
   args: {
     size: ButtonSize.Large,
-    iconName: "headphones",
+    iconType: "headphones",
   },
   render: renderStory,
 };
