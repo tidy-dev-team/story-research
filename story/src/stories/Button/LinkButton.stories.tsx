@@ -24,6 +24,11 @@ const meta = {
   },
   parameters: {
     layout: "centered",
+    docs: {
+      source: {
+        state: "open",
+      },
+    },
   },
   tags: ["autodocs"],
   argTypes: {

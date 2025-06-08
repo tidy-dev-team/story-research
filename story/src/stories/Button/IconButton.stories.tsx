@@ -7,16 +7,7 @@ import HeadphonesIcon from "@mui/icons-material/Headphones";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AddIcon from "@mui/icons-material/Add";
 
-type IconButtonStoryArgs = ComponentProps<typeof Button> & {
-  iconType?: keyof typeof iconMap;
-};
-
-const iconMap = {
-  language: LanguageIcon,
-  headphones: HeadphonesIcon,
-  settings: SettingsIcon,
-  add: AddIcon,
-};
+type IconButtonStoryArgs = ComponentProps<typeof Button>;
 
 const meta = {
   title: "Component/Button/IconButton",
@@ -24,30 +15,19 @@ const meta = {
   args: {
     type: ButtonType.Primary,
     size: ButtonSize.Medium,
-    iconType: "language",
     disabled: false,
     focused: false,
   },
   parameters: {
     layout: "centered",
+    docs: {
+      source: {
+        state: "open",
+      },
+    },
   },
   tags: ["autodocs"],
   argTypes: {
-    iconType: {
-      control: "select",
-      options: Object.keys(iconMap),
-      description: "Select an icon for the button",
-      table: {
-        category: "Content",
-        defaultValue: { summary: "language" },
-      },
-      labels: {
-        language: "Language",
-        headphones: "Headphones",
-        settings: "Settings",
-        add: "Add",
-      },
-    },
     icon: {
       table: {
         disable: true,
@@ -112,72 +92,47 @@ export default meta;
 
 type Story = StoryObj<IconButtonStoryArgs>;
 
-const renderIcon = (iconType: keyof typeof iconMap | undefined) => {
-  if (!iconType) return LanguageIcon;
-  return iconMap[iconType];
-};
-
-const renderStory = ({
-  iconType,
-  disabled,
-  focused,
-  ...args
-}: IconButtonStoryArgs) => (
-  <Button
-    {...args}
-    icon={renderIcon(iconType)}
-    disabled={disabled}
-    focused={disabled ? false : focused}
-  />
-);
-
 export const Primary: Story = {
   args: {
     type: ButtonType.Primary,
-    iconType: "headphones",
+    icon: <HeadphonesIcon sx={{ fontSize: "inherit" }} />,
   },
-  render: renderStory,
 };
 
 export const Secondary: Story = {
   args: {
     type: ButtonType.Secondary,
-    iconType: "settings",
+    icon: <SettingsIcon sx={{ fontSize: "inherit" }} />,
   },
-  render: renderStory,
 };
 
 export const Ghost: Story = {
   args: {
     type: ButtonType.Ghost,
-    iconType: "language",
+    icon: <LanguageIcon sx={{ fontSize: "inherit" }} />,
   },
-  render: renderStory,
 };
 
 export const XSmall: Story = {
   name: "Size xs",
   args: {
     size: ButtonSize.XSmall,
-    iconType: "add",
+    icon: <AddIcon sx={{ fontSize: "inherit" }} />,
   },
-  render: renderStory,
 };
 
 export const Small: Story = {
   name: "Size s",
   args: {
     size: ButtonSize.Small,
-    iconType: "language",
+    icon: <LanguageIcon sx={{ fontSize: "inherit" }} />,
   },
-  render: renderStory,
 };
 
 export const Large: Story = {
   name: "Size l",
   args: {
     size: ButtonSize.Large,
-    iconType: "headphones",
+    icon: <HeadphonesIcon sx={{ fontSize: "inherit" }} />,
   },
-  render: renderStory,
 };
