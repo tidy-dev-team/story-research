@@ -31,13 +31,12 @@ const buttonStyles = cva(
     "overflow-hidden",
     "focus:outline-none",
     "focus-visible:ring-2",
-    "focus-visible:ring-pz-system-border-focused",
-    "ring-offset-2",
-    "ring-offset-pz-system-bg-1",
+    "ring-offset-1",
+    "ring-offset-pz-gray-1000",
+    "focus-visible:ring-pz-system-border-focused-1",
     "font-['Heebo',_sans-serif]",
     "disabled:cursor-not-allowed",
     "disabled:pointer-events-none",
-    "pz-label-m",
   ],
   {
     variants: {
@@ -72,8 +71,13 @@ const buttonStyles = cva(
         ].join(" "),
       },
       size: {
-        [ButtonSize.Small]: ["px-3", "py-0.5", "h-6", "text-sm"].join(" "),
-        [ButtonSize.Medium]: ["max-h-8", " min-h-8", "px-4 py-1"].join(" "),
+        [ButtonSize.Small]: ["px-3", "py-0.5", "h-6", "pz-label-m"].join(" "),
+        [ButtonSize.Medium]: [
+          "max-h-8",
+          " min-h-8",
+          "px-4 py-1",
+          "pz-label-l",
+        ].join(" "),
         [ButtonSize.Large]: [
           "h-10",
           "min-w-20",
@@ -81,6 +85,7 @@ const buttonStyles = cva(
           "min-h-10",
           "px-5",
           "py-1",
+          "pz-label-l",
         ].join(" "),
       },
       rtl: {
@@ -88,7 +93,7 @@ const buttonStyles = cva(
         false: "",
       },
       focused: {
-        true: "ring-2 ring-pz-system-border-focused",
+        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-2xs",
         false: "",
       },
     },
