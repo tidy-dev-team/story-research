@@ -22,8 +22,7 @@ const buttonStyles = cva(
     "min-h-6",
     "px-3",
     "py-0.5",
-    "bg-systemColors-bg-primary",
-    "rounded",
+    "rounded-pz-2xs",
     "inline-flex",
     "justify-center",
     "items-center",
@@ -32,42 +31,44 @@ const buttonStyles = cva(
     "overflow-hidden",
     "focus:outline-none",
     "focus-visible:ring-2",
-    "focus-visible:ring-[#0E75B5]",
+    "focus-visible:ring-pz-system-border-focused",
     "ring-offset-2",
-    "ring-offset-[#22272b]",
+    "ring-offset-pz-system-bg-1",
     "font-['Heebo',_sans-serif]",
+    "disabled:cursor-not-allowed",
+    "disabled:pointer-events-none",
+    "pz-label-m",
   ],
   {
     variants: {
       type: {
         [ButtonType.Primary]: [
-          "bg-pz-blue-500",
+          "bg-pz-system-bg-primary",
           "text-pz-system-fg-1",
-          "relative",
           "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
           "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
-          "disabled:bg-white/12",
-          "disabled:text-pz-system-fg-1/38",
+          "disabled:bg-pz-system-bg-disabled",
+          "disabled:text-pz-system-fg-disabled",
         ].join(" "),
         [ButtonType.Secondary]: [
           "border",
-          "border-pz-blue-500",
-          "text-pz-blue-500",
-          "hover:enabled:bg-[#0093EE]/12",
-          "hover:enabled:border-[#2CB3FF]",
-          "hover:enabled:text-[#2CB3FF]",
-          "active:enabled:bg-[#0093EE]/12",
-          "active:enabled:border-[#0093EE]",
-          "active:enabled:text-[#0093EE]",
-          "disabled:border-white/38",
-          "disabled:text-pz-system-fg-1/38",
+          "border-pz-system-border-primary",
+          "text-pz-system-fg-primary",
+          "hover:enabled:bg-pz-system-fg-primary/12",
+          "hover:enabled:border-pz-system-border-hover",
+          "hover:enabled:text-pz-system-fg-hover",
+          "active:enabled:bg-pz-system-fg-primary/12",
+          "active:enabled:border-pz-system-border-pressed",
+          "active:enabled:text-pz-system-fg-pressed",
+          "disabled:border-pz-system-border-disabled",
+          "disabled:text-pz-system-fg-disabled",
         ].join(" "),
         [ButtonType.Ghost]: [
-          "text-[#CCD1D5]",
-          "hover:enabled:bg-white/12",
+          "text-pz-system-fg-2",
+          "hover:enabled:bg-pz-system-fg-1/12",
           "hover:enabled:text-pz-system-fg-1",
-          "active:enabled:bg-white/8",
-          "disabled:text-pz-system-fg-1/38",
+          "active:enabled:bg-pz-system-fg-1/8",
+          "disabled:text-pz-system-fg-disabled",
         ].join(" "),
       },
       size: {
@@ -87,7 +88,7 @@ const buttonStyles = cva(
         false: "",
       },
       focused: {
-        true: "ring-2 ring-[#0093EE]/70",
+        true: "ring-2 ring-pz-system-border-focused",
         false: "",
       },
     },
@@ -107,7 +108,7 @@ type BaseButtonProps = Omit<
 
 interface ButtonProps
   extends BaseButtonProps,
-  VariantProps<typeof buttonStyles> {
+    VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;
@@ -124,6 +125,7 @@ export const Button = ({
   trailingIcon,
   className,
   onClick,
+  disabled,
   ...rest
 }: ButtonProps): ReactElement => {
   const content = [
@@ -142,11 +144,21 @@ export const Button = ({
     ),
   ].filter(Boolean);
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onClick?.(event);
+  };
+
   return (
     <button
       className={twMerge(buttonStyles({ type, size, rtl, focused }), className)}
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
+      disabled={disabled}
       {...rest}
     >
       {content}
