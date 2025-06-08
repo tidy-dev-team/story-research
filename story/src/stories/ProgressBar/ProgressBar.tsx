@@ -25,7 +25,6 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
     },
     ref
   ) => {
-    // Clamp value between min and max
     const clampedValue = Math.max(min, Math.min(max, value));
     const percentage = ((clampedValue - min) / (max - min)) * 100;
 
