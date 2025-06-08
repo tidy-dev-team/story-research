@@ -4,28 +4,27 @@ import { twMerge } from "tailwind-merge";
 
 const linkButtonStyles = cva(
   [
-    "rounded-[4px]",
+    "rounded-pz-2xs",
     "inline-flex",
     "items-center",
     "justify-center",
-    "gap-1", // 4px gap from Figma
-    "h-6", // 24px height from Figma
-    "px-2", // Horizontal padding
+    "gap-1",
+    "h-6",
+    "px-2",
     "bg-transparent",
     "cursor-pointer",
     "focus:outline-none",
-    "font-['Heebo',_sans-serif]",
-    "text-sm", // 14px font size from Figma
-    "font-normal", // 400 weight from Figma
-    "underline", // Ensure text is underlined
-    "transition-colors", // Smooth transition for color changes
-    "text-[#0093EE]", // Idle color from Figma
-    "hover:not([aria-disabled=true]):text-[#2CB3FF]", // Hover color from Figma
-    "active:not([aria-disabled=true]):text-[#0093EE]", // Pressed color from Figma
     "focus-visible:ring-2",
-    "focus-visible:ring-[#0E75B5]",
-    "ring-offset-2",
-    "ring-offset-[#22272b]",
+    "ring-offset-1",
+    "ring-offset-pz-gray-1000",
+    "focus-visible:ring-pz-system-border-focused-1",
+    "font-['Heebo',_sans-serif]",
+    "pz-body-m400",
+    "underline",
+    "transition-colors",
+    "text-pz-system-fg-primary",
+    "hover:not([aria-disabled=true]):text-pz-system-fg-hover",
+    "active:not([aria-disabled=true]):text-pz-system-fg-pressed",
   ],
   {
     variants: {
@@ -34,11 +33,11 @@ const linkButtonStyles = cva(
         false: "",
       },
       focused: {
-        true: "ring-2 ring-[#0093EE]/70", // Focus ring from Figma
+        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-2xs",
         false: "",
       },
       disabled: {
-        true: "text-pz-system-fg-1/38 !cursor-not-allowed no-underline", // Disabled style, remove underline
+        true: "text-pz-system-fg-disabled !cursor-not-allowed no-underline",
         false: "",
       },
     },
@@ -52,12 +51,12 @@ const linkButtonStyles = cva(
 
 type BaseLinkButtonProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href" // Handled by our props
+  "href"
 >;
 
 interface LinkButtonProps
   extends BaseLinkButtonProps,
-  VariantProps<typeof linkButtonStyles> {
+    VariantProps<typeof linkButtonStyles> {
   label: string;
   href: string;
   leadingIcon?: ReactElement;
@@ -73,7 +72,6 @@ export const LinkButton = ({
   leadingIcon,
   trailingIcon,
   className,
-  // onClick is removed from destructuring
   ...rest
 }: LinkButtonProps): ReactElement => {
   const iconWrapper = (icon: ReactElement, key: string) => (
@@ -90,17 +88,14 @@ export const LinkButton = ({
     trailingIcon && iconWrapper(trailingIcon, "trailingIcon"),
   ].filter(Boolean);
 
-  // handleClick function is removed
-
   return (
     <a
       className={twMerge(
         linkButtonStyles({ rtl, focused, disabled }),
         className
       )}
-      href={!disabled ? href : undefined} // Prevent navigation for disabled links
-      // onClick attribute is removed
-      aria-disabled={disabled || false} // Accessibility for disabled links
+      href={!disabled ? href : undefined}
+      aria-disabled={disabled || false}
       {...rest}
     >
       {content}

@@ -2,31 +2,29 @@ import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
-// TextButton only has one style - text with blue color
-
 const buttonStyles = cva(
   [
-    "rounded-[4px]", // Per Figma design
+    "rounded-pz-2xs",
     "inline-flex",
     "justify-center",
     "items-center",
     "gap-2",
     "overflow-hidden",
-    "bg-transparent", // Text button has no background
+    "bg-transparent",
     "focus:outline-none",
-    "font-['Heebo',_sans-serif]",
-    "text-sm",
-    "font-normal",
-    "cursor-pointer",
-    "leading-[1.46875em]", // Matches Figma text style
-    "p-1", // Add some padding for better clickability
-    "text-[#0093EE]", // Blue text color per Figma
-    "hover:enabled:text-[#2CB3FF]", // Hover state only when enabled
-    "active:enabled:text-[#0093EE]", // Pressed state only when enabled
     "focus-visible:ring-2",
-    "focus-visible:ring-[#0E75B5]",
-    "ring-offset-2",
-    "ring-offset-[#22272b]",
+    "ring-offset-1",
+    "ring-offset-pz-gray-1000",
+    "focus-visible:ring-pz-system-border-focused-1",
+    "font-['Heebo',_sans-serif]",
+    "pz-body-m400",
+    "cursor-pointer",
+    "p-1",
+    "text-pz-system-fg-primary",
+    "hover:enabled:text-pz-system-fg-hover",
+    "active:enabled:text-pz-system-fg-pressed",
+    "disabled:cursor-not-allowed",
+    "disabled:pointer-events-none",
   ],
   {
     variants: {
@@ -35,11 +33,11 @@ const buttonStyles = cva(
         false: "",
       },
       focused: {
-        true: "ring-2 ring-[#0093EE]/70", // Focus ring per Figma
+        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-2xs",
         false: "",
       },
       disabled: {
-        true: "text-pz-system-fg-1/38", // Disabled state from Figma
+        true: "text-pz-system-fg-disabled",
         false: "",
       },
     },
@@ -51,20 +49,18 @@ const buttonStyles = cva(
   }
 );
 
-// Remove "type" from Omit, as the native button "type" attribute is still relevant.
 type BaseTextButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "disabled" // Handled by our props and cva variant
+  "disabled"
 >;
 
 interface TextButtonProps
   extends BaseTextButtonProps,
-  VariantProps<typeof buttonStyles> {
+    VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  // focused and disabled props are implicitly handled by VariantProps<typeof buttonStyles>
 }
 
 export const TextButton = ({
@@ -78,7 +74,6 @@ export const TextButton = ({
   onClick,
   ...rest
 }: TextButtonProps): ReactElement => {
-  // Create icon wrappers with consistent styling
   const iconWrapper = (icon: ReactElement, key: string) => (
     <span key={key} className="flex items-center text-[14px]">
       {icon}
@@ -93,15 +88,24 @@ export const TextButton = ({
     trailingIcon && iconWrapper(trailingIcon, "trailingIcon"),
   ].filter(Boolean);
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onClick?.(event);
+  };
+
   return (
     <button
       className={twMerge(
         buttonStyles({ rtl, focused, disabled: !!disabled }),
         className
       )}
-      type="button" // Default to "button" type for accessibility unless overridden by ...rest
-      onClick={onClick}
-      disabled={!!disabled} // Ensure disabled is a boolean
+      type="button"
+      onClick={handleClick}
+      disabled={!!disabled}
       {...rest}
     >
       {content}
