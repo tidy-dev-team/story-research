@@ -86,6 +86,7 @@ const meta = {
       description: "Additional CSS class",
       table: {
         category: "Styling",
+        disable: true,
       },
     },
     "aria-label": {
@@ -134,11 +135,6 @@ export const Default: Story = {
                 (clamped from {originalValue})
               </span>
             )}
-          </div>
-          <div
-            style={{ fontSize: "11px", marginTop: "4px", fontStyle: "italic" }}
-          >
-            💡 Tip: The value slider should adapt to your min/max range
           </div>
         </div>
         <ProgressBar {...args} value={clampedValue} />
