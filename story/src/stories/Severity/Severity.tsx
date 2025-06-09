@@ -6,7 +6,7 @@ import { SeverityBar } from "./SeverityBar";
 const severityVariants = cva("inline-flex items-center", {
   variants: {
     rtl: {
-      true: "flex-row-reverse gap-x-2",
+      true: "flex-row-reverse gap-x-2", // Should reverse item order
       false: "flex-row gap-x-2",
     },
   },
@@ -22,7 +22,6 @@ export interface SeverityProps
   type: "badge" | "bar";
   label: string;
   rtl?: boolean;
-  barExpired?: boolean;
 }
 
 const Severity: React.FC<SeverityProps> = ({
@@ -30,7 +29,6 @@ const Severity: React.FC<SeverityProps> = ({
   type,
   label,
   rtl = false,
-  barExpired = false,
   className,
   ...props
 }) => {
@@ -38,16 +36,11 @@ const Severity: React.FC<SeverityProps> = ({
     type === "badge" ? (
       <SeverityBadge level={level} />
     ) : (
-      <SeverityBar level={level} expired={barExpired} />
+      <SeverityBar level={level} />
     );
 
   return (
-    <div
-      className={cx(severityVariants({ rtl }), className)}
-      {...props}
-      dir={rtl ? "rtl" : "ltr"}
-      data-testid={`severity-${type}-${level}${rtl ? "-rtl" : ""}`}
-    >
+    <div className={cx(severityVariants({ rtl }), className)} {...props}>
       {indicator}
       <div className={rtl ? "text-right" : "text-left"}>
         <span className="text-sm text-pz-system-fg-1 font-normal font-heebo">

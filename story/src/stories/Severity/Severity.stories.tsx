@@ -17,10 +17,6 @@ const meta: Meta<typeof Severity> = {
     rtl: {
       control: "boolean",
     },
-    barExpired: {
-      control: "boolean",
-      if: { arg: "type", eq: "bar" },
-    },
     label: {
       control: "text",
     },
