@@ -18,10 +18,8 @@ const tabStyles = cva(
     "border-none",
     "bg-transparent",
     "whitespace-nowrap",
-    "text-pz-system-fg-3",
+    "text-pz-system-fg-4",
     "hover:enabled:text-pz-system-fg-1",
-    "hover:enabled:bg-pz-system-bg-overlay-hover",
-    "active:enabled:bg-pz-system-bg-overlay-pressed",
     "focus-visible:text-pz-system-fg-3",
     "focus-visible:rounded-pz-2xs",
     "focus-visible:ring-2",
@@ -34,8 +32,8 @@ const tabStyles = cva(
   {
     variants: {
       rtl: {
-        true: "text-right",
-        false: "text-left",
+        true: "text-right flex-row-reverse",
+        false: "text-left flex-row",
       },
     },
     defaultVariants: {
@@ -46,37 +44,31 @@ const tabStyles = cva(
 
 export interface TabProps extends VariantProps<typeof tabStyles> {
   children: React.ReactNode;
-  childrenRtl?: React.ReactNode;
   leadingIcon?: React.ReactElement;
   disabled?: boolean;
-  onClick?: () => void;
   className?: string;
+  tabIndex?: number;
+  onClick?: () => void;
   "aria-selected"?: boolean;
   "aria-controls"?: string;
-  role?: string;
-  tabIndex?: number;
 }
 
 export const Tab: React.FC<TabProps> = ({
   children,
-  childrenRtl,
   leadingIcon,
   rtl = false,
   disabled = false,
   onClick,
   className = "",
+  tabIndex = 0,
   "aria-selected": ariaSelected,
   "aria-controls": ariaControls,
-  role = "tab",
-  tabIndex = 0,
   ...rest
 }) => {
-  const displayContent = rtl && childrenRtl ? childrenRtl : children;
-
   return (
     <button
       className={twMerge(tabStyles({ rtl }), className)}
-      role={role}
+      role="tab"
       aria-selected={ariaSelected}
       aria-controls={ariaControls}
       tabIndex={disabled ? -1 : tabIndex}
@@ -96,7 +88,7 @@ export const Tab: React.FC<TabProps> = ({
           {leadingIcon}
         </span>
       )}
-      <span>{displayContent}</span>
+      <span>{children}</span>
     </button>
   );
 };

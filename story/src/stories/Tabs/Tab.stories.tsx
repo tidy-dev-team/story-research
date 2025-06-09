@@ -11,7 +11,6 @@ const meta = {
   component: Tab,
   args: {
     children: "Dashboard",
-    childrenRtl: "לוח בקרה",
     hasLeadingIcon: false,
     rtl: false,
     disabled: false,
@@ -32,11 +31,6 @@ const meta = {
     children: {
       control: "text",
       description: "The text content of the tab.",
-      table: { category: "Content" },
-    },
-    childrenRtl: {
-      control: "text",
-      description: "The text content for RTL languages.",
       table: { category: "Content" },
     },
     hasLeadingIcon: {
@@ -60,34 +54,23 @@ const meta = {
       table: { category: "State", defaultValue: { summary: "false" } },
     },
     "aria-selected": {
-      control: "boolean",
-      description: "If true, the tab will be displayed in a selected state.",
-      table: { category: "State", defaultValue: { summary: "false" } },
+      table: { disable: true },
     },
     onClick: {
       action: "clicked",
       description: "Optional click handler.",
-      table: { category: "Events" },
+      table: { category: "Events", disable: true },
     },
     className: {
       control: "text",
       description: "Additional CSS classes.",
-      table: { category: "Appearance" },
+      table: { category: "Appearance", disable: true },
     },
     "aria-controls": {
-      control: "text",
-      description: "ARIA controls attribute.",
-      table: { category: "Accessibility" },
-    },
-    role: {
-      control: "text",
-      description: "ARIA role.",
-      table: { category: "Accessibility", disable: true },
+      table: { disable: true },
     },
     tabIndex: {
-      control: "number",
-      description: "Tab index for keyboard navigation.",
-      table: { category: "Accessibility", disable: true },
+      table: { disable: true },
     },
   },
 } satisfies Meta<TabStoryArgs>;
@@ -109,7 +92,7 @@ const renderStory = ({
   <Tab
     {...args}
     disabled={disabled}
-    aria-selected={ariaSelected}
+    // aria-selected={ariaSelected}
     leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
   />
 );
@@ -124,7 +107,6 @@ export const WithLeadingIcon: Story = {
 export const RTL: Story = {
   args: {
     children: "Dashboard",
-    childrenRtl: "לוח בקרה",
     rtl: true,
     hasLeadingIcon: true,
     "aria-controls": "tabpanel-dashboard",
