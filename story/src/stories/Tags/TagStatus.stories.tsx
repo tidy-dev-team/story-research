@@ -54,6 +54,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {},
 };
+export const RTL: Story = {
+  args: {
+    rtl: true,
+  },
+};
 export const RTLExamples: Story = {
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>

@@ -1,73 +1,73 @@
 import React from "react";
-import { pzSemanticColors } from "../../ui-kit/foundations/semantic-colors";
-import { pzRoundings } from "../../ui-kit/foundations/roundings";
+import { cva, type VariantProps } from "class-variance-authority";
 
-export interface TagStatusProps {
-  type: "error" | "warning" | "caution" | "ok" | "loading";
+export interface TagStatusProps extends VariantProps<typeof tagStatusVariants> {
   rtl?: boolean;
   className?: string;
 }
 
-const statusConfig = {
+const statusText = {
   error: {
-    backgroundColor: pzSemanticColors.system.status.danger[3],
-    color: pzSemanticColors.system.fg[1], // white
-    text: {
-      ltr: "Error",
-      rtl: "שגיאה",
-    },
+    ltr: "Error",
+    rtl: "שגיאה",
   },
   warning: {
-    backgroundColor: pzSemanticColors.system.status.warning[2],
-    color: pzSemanticColors.system.fg.black,
-    text: {
-      ltr: "Warning",
-      rtl: "אזהרה",
-    },
+    ltr: "Warning",
+    rtl: "אזהרה",
   },
   caution: {
-    backgroundColor: pzSemanticColors.system.status.caution[2],
-    color: pzSemanticColors.system.fg.black,
-    text: {
-      ltr: "Caution",
-      rtl: "זהירות",
-    },
+    ltr: "Caution",
+    rtl: "זהירות",
   },
   ok: {
-    backgroundColor: pzSemanticColors.system.status.success[2],
-    color: pzSemanticColors.system.fg.black,
-    text: {
-      ltr: "OK",
-      rtl: "תקין",
-    },
+    ltr: "OK",
+    rtl: "תקין",
   },
   loading: {
-    backgroundColor: pzSemanticColors.system.status.loading[2],
-    color: pzSemanticColors.system.fg[1],
-    text: {
-      ltr: "Loading",
-      rtl: "טוען",
-    },
+    ltr: "Loading",
+    rtl: "טוען",
   },
 } as const;
+
+const tagStatusVariants = cva(
+  [
+    "inline-flex",
+    "items-center",
+    "justify-center",
+    "gap-1",
+    "px-4",
+    "py-2",
+    "font-heebo",
+    "pz-label-m",
+    "rounded-pz-2xs",
+    "text-center",
+    "leading-[1.46875em]",
+  ],
+  {
+    variants: {
+      type: {
+        error: "bg-pz-system-status-danger-3 text-pz-system-fg-1",
+        warning: "bg-pz-system-status-warning-2 text-pz-system-fg-black",
+        caution: "bg-pz-system-status-caution-2 text-pz-system-fg-black",
+        ok: "bg-pz-system-status-success-2 text-pz-system-fg-black",
+        loading: "bg-pz-system-status-loading-2 text-pz-system-fg-1",
+      },
+    },
+  }
+);
 
 export const TagStatus: React.FC<TagStatusProps> = ({
   type,
   rtl = false,
-  className = "",
+  className,
 }) => {
-  const config = statusConfig[type];
-  const text = rtl ? config.text.rtl : config.text.ltr;
+  const text = rtl ? statusText[type!].rtl : statusText[type!].ltr;
 
   return (
     <span
-      className={`inline-flex items-center justify-center gap-1 px-4 py-2 font-heebo pz-label-m rounded-pz-2xs ${className}`}
+      className={tagStatusVariants({ type, className })}
       style={{
-        backgroundColor: config.backgroundColor,
-        color: config.color,
         direction: rtl ? "rtl" : "ltr",
-        textAlign: "center",
-        lineHeight: "1.46875em",
       }}
       aria-label={text}
       role="status"

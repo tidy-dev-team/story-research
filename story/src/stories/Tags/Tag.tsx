@@ -1,49 +1,49 @@
 import React from "react";
-import { pzSemanticColors } from "../../ui-kit/foundations/semantic-colors";
+import { cva, type VariantProps } from "class-variance-authority";
 
-export interface TagProps {
-  /**
-   * The numeric value to display (1-999)
-   */
+export interface TagProps extends VariantProps<typeof tagVariants> {
   value: number;
-  /**
-   * The variant type that determines the visual appearance
-   */
-  type?: "default" | "geo";
-  /**
-   * Additional CSS class name
-   */
   className?: string;
 }
 
-const typeConfig = {
-  default: {
-    backgroundColor: pzSemanticColors.system.bg.primary,
-    color: pzSemanticColors.system.fg[1], // white
-  },
-  geo: {
-    backgroundColor: pzSemanticColors.system.bg.geofence,
-    color: pzSemanticColors.system.fg[1], // white
-  },
-} as const;
+const tagVariants = cva(
+  [
+    // Base styles
+    "inline-flex",
+    "items-center",
+    "justify-center",
+    "font-heebo",
+    "text-xs",
+    "font-normal",
+    "rounded-full",
+    "text-center",
+    "leading-[1.46875]",
+    "min-w-[40px]",
+    "h-[26px]",
+    "pz-body-s400",
+    "p-pz-4xs",
+    "text-pz-system-fg-1", // white text for all variants
+  ],
+  {
+    variants: {
+      type: {
+        default: "bg-pz-system-bg-primary",
+        geo: "bg-pz-system-bg-geofence",
+      },
+    },
+    defaultVariants: {
+      type: "default",
+    },
+  }
+);
 
-export const Tag: React.FC<TagProps> = ({
-  value,
-  type = "default",
-  className = "",
-}) => {
-  // Clamp value between 1 and 999
+export const Tag: React.FC<TagProps> = ({ value, type, className }) => {
   const clampedValue = Math.max(1, Math.min(999, Math.round(value)));
   const displayValue = `+${clampedValue}`;
-  const config = typeConfig[type];
 
   return (
     <span
-      className={`inline-flex items-center justify-center font-heebo text-xs font-normal rounded-full text-center leading-[1.46875] min-w-[40px] h-[26px] pz-body-s400 p-pz-4xs${className}`}
-      style={{
-        backgroundColor: config.backgroundColor,
-        color: config.color,
-      }}
+      className={tagVariants({ type, className })}
       aria-label={`${clampedValue} items`}
       role="status"
     >
