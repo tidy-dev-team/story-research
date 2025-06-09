@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import Avatar from "../Avatar/Avatar";
-import { AvatarSize, AvatarType } from "../Avatar/Avatar";
+import { AvatarSize } from "../Avatar/Avatar";
 import { Button } from "../Button/IconButton";
 import { ButtonSize, ButtonType } from "../Button/IconButton";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -20,8 +20,8 @@ const avatarLabelStyles = cva("flex items-center gap-2", {
 });
 
 interface AvatarLabelProps extends VariantProps<typeof avatarLabelStyles> {
-  avatarLabel?: string;
-  avatarType?: AvatarType;
+  firstName?: string | null;
+  lastName?: string | null;
   textLabel: string;
   rtl?: boolean;
   disabled?: boolean;
@@ -30,8 +30,8 @@ interface AvatarLabelProps extends VariantProps<typeof avatarLabelStyles> {
 }
 
 const AvatarLabel = ({
-  avatarLabel,
-  avatarType,
+  firstName,
+  lastName,
   textLabel,
   rtl,
   disabled = false,
@@ -40,10 +40,8 @@ const AvatarLabel = ({
 }: AvatarLabelProps): ReactElement => {
   return (
     <div className={twMerge(avatarLabelStyles({ rtl }), className)}>
-      <Avatar label={avatarLabel} size={AvatarSize.s} type={avatarType} />
-      <span className="text-pz-system-fg-1 font-['Heebo',_sans-serif] pz-body-m400">
-        {textLabel}
-      </span>
+      <Avatar firstName={firstName} lastName={lastName} size={AvatarSize.S} />
+      <span className="text-pz-system-fg-1 pz-body-m400">{textLabel}</span>
       <Button
         icon={<KeyboardArrowDownIcon />}
         size={ButtonSize.XSmall}

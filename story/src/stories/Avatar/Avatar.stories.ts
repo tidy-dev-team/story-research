@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Avatar from "./Avatar";
-import { AvatarSize, AvatarType } from "./Avatar";
+import { AvatarSize } from "./Avatar";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -11,14 +11,24 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    label: {
+    firstName: {
       control: {
         type: "text",
       },
-      description: "Avatar label (automatically limited to max 2 characters)",
+      description: "First name",
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "AA" },
+        type: { summary: "string | null" },
+        defaultValue: { summary: "null" },
+      },
+    },
+    lastName: {
+      control: {
+        type: "text",
+      },
+      description: "Last name",
+      table: {
+        type: { summary: "string | null" },
+        defaultValue: { summary: "null" },
       },
     },
     size: {
@@ -27,59 +37,52 @@ const meta = {
       },
       options: Object.values(AvatarSize),
     },
-    type: {
-      control: {
-        type: "select", // Use a dropdown control
-      },
-      options: Object.values(AvatarType),
-    },
   },
 } satisfies Meta<typeof Avatar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DefaultSmall: Story = {
+export const WithBothNames: Story = {
   args: {
-    label: "AA",
-    size: AvatarSize.s,
-    type: AvatarType.Default,
+    firstName: "John",
+    lastName: "Doe",
+    size: AvatarSize.M,
   },
 };
 
-export const EmptySmall: Story = {
+export const WithFirstNameOnly: Story = {
   args: {
-    size: AvatarSize.s,
-    type: AvatarType.Empty,
+    firstName: "Jane",
+    size: AvatarSize.M,
   },
 };
 
-export const DefaultMedium: Story = {
+export const WithLastNameOnly: Story = {
   args: {
-    label: "AA",
-    size: AvatarSize.m,
-    type: AvatarType.Default,
+    lastName: "Smith",
+    size: AvatarSize.M,
   },
 };
 
-export const EmptyMedium: Story = {
+export const Empty: Story = {
   args: {
-    size: AvatarSize.m,
-    type: AvatarType.Empty,
+    size: AvatarSize.M,
   },
 };
 
-export const DefaultLarge: Story = {
+export const SmallSize: Story = {
   args: {
-    label: "AA",
-    size: AvatarSize.l,
-    type: AvatarType.Default,
+    firstName: "A",
+    lastName: "B",
+    size: AvatarSize.S,
   },
 };
 
-export const EmptyLarge: Story = {
+export const LargeSize: Story = {
   args: {
-    size: AvatarSize.l,
-    type: AvatarType.Empty,
+    firstName: "John",
+    lastName: "Doe",
+    size: AvatarSize.L,
   },
 };

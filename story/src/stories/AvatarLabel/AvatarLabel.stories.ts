@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import AvatarLabel from "./AvatarLabel";
-import { AvatarType } from "../Avatar/Avatar";
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Component/Avatar/AvatarLabel",
   component: AvatarLabel,
@@ -11,22 +9,25 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    avatarLabel: {
+    firstName: {
       control: {
         type: "text",
       },
-      description: "Avatar label (automatically limited to max 2 characters)",
+      description: "First name",
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: "string | null" },
+        defaultValue: { summary: "null" },
       },
     },
-    avatarType: {
+    lastName: {
       control: {
-        type: "select",
+        type: "text",
       },
-      options: Object.values(AvatarType),
-      description: "Avatar type (Default or Empty)",
+      description: "Last name",
+      table: {
+        type: { summary: "string | null" },
+        defaultValue: { summary: "null" },
+      },
     },
     textLabel: {
       control: {
@@ -66,39 +67,44 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultWithUser: Story = {
   args: {
-    avatarLabel: "JS",
-    avatarType: AvatarType.Default,
+    firstName: "John",
+    lastName: "Smith",
     textLabel: "John Smith",
   },
 };
 
 export const EmptyAvatar: Story = {
   args: {
-    avatarType: AvatarType.Empty,
     textLabel: "No User",
   },
 };
 
 export const ShortName: Story = {
   args: {
-    avatarLabel: "AB",
-    avatarType: AvatarType.Default,
+    firstName: "Alex",
+    lastName: "Brown",
     textLabel: "Alex Brown",
   },
 };
 
-export const LongName: Story = {
+export const FirstNameOnly: Story = {
   args: {
-    avatarLabel: "Christopher Williams",
-    avatarType: AvatarType.Default,
-    textLabel: "Christopher Williams",
+    firstName: "Christopher",
+    textLabel: "Christopher",
+  },
+};
+
+export const LastNameOnly: Story = {
+  args: {
+    lastName: "Williams",
+    textLabel: "Williams",
   },
 };
 
 export const RTLLayout: Story = {
   args: {
-    avatarLabel: "דמ",
-    avatarType: AvatarType.Default,
+    firstName: "דוד",
+    lastName: "מלכה",
     textLabel: "דוד מלכה",
     rtl: true,
   },
