@@ -3,11 +3,11 @@ import { cva, VariantProps, cx } from "class-variance-authority";
 import { SeverityBadge } from "./SeverityBadge";
 import { SeverityBar } from "./SeverityBar";
 
-const severityVariants = cva("inline-flex items-center", {
+const severityVariants = cva("inline-flex items-flex-start", {
   variants: {
     rtl: {
-      true: "flex-row-reverse gap-x-2", // Should reverse item order
-      false: "flex-row gap-x-2",
+      true: "flex-row-reverse gap-pz-4xs",
+      false: "flex-row gap-pz-4xs",
     },
   },
   defaultVariants: {
@@ -43,9 +43,7 @@ const Severity: React.FC<SeverityProps> = ({
     <div className={cx(severityVariants({ rtl }), className)} {...props}>
       {indicator}
       <div className={rtl ? "text-right" : "text-left"}>
-        <span className="text-sm text-pz-system-fg-1 font-normal font-heebo">
-          {label}
-        </span>
+        <span className="text-pz-system-fg-1 pz-label-m">{label}</span>
       </div>
     </div>
   );
