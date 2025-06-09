@@ -3,14 +3,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
 export enum AvatarSize {
-  s = "s",
-  m = "m",
-  l = "l",
-}
-
-export enum AvatarType {
-  Default = "default",
-  Empty = "empty",
+  S = "s",
+  M = "m",
+  L = "l",
 }
 
 const avatarStyles = cva(
@@ -18,47 +13,47 @@ const avatarStyles = cva(
   {
     variants: {
       size: {
-        [AvatarSize.s]: "h-8 w-8 pz-body-s400",
-        [AvatarSize.m]: "h-14 w-14 pz-heading-m400",
-        [AvatarSize.l]: "h-24 w-24 pz-heading-xl500",
-      },
-      type: {
-        [AvatarType.Default]: "bg-pz-system-bg-primary text-pz-system-fg-black",
-        [AvatarType.Empty]: "bg-pz-system-bg-4 text-pz-system-fg-1",
+        [AvatarSize.S]: "h-8 w-8 pz-body-s400",
+        [AvatarSize.M]: "h-14 w-14 pz-heading-m400",
+        [AvatarSize.L]: "h-24 w-24 pz-heading-xl500",
       },
     },
     defaultVariants: {
-      size: AvatarSize.m,
-      type: AvatarType.Default,
+      size: AvatarSize.M,
     },
   }
 );
 
-interface AvatarProps extends VariantProps<typeof avatarStyles> {
-  label?: string;
+interface AvatarProps extends Omit<VariantProps<typeof avatarStyles>, "type"> {
+  firstName?: string | null;
+  lastName?: string | null;
   size?: AvatarSize;
-  type?: AvatarType;
 }
 
 const Avatar = ({
-  size = AvatarSize.m,
-  type,
-  label,
+  size = AvatarSize.M,
+  firstName,
+  lastName,
 }: AvatarProps): ReactElement => {
-  const processedLabel = label ? label.substring(0, 2) : label;
+  const isFilled = !!(firstName?.trim() || lastName?.trim());
+  let firstInitial = "";
+  if (firstName && firstName.trim().length > 0) {
+    firstInitial = firstName.trim().charAt(0).toUpperCase();
+  }
+  let lastInitial = "";
+  if (lastName && lastName.trim().length > 0) {
+    lastInitial = lastName.trim().charAt(0).toUpperCase();
+  }
 
-  const avatarType =
-    type ??
-    (processedLabel && processedLabel.trim().length > 0
-      ? AvatarType.Default
-      : AvatarType.Empty);
+  const processedLabel = isFilled ? `${firstInitial}${lastInitial}` : "";
 
-  const displayText =
-    avatarType === AvatarType.Default
-      ? processedLabel?.toUpperCase() || "AA"
-      : "N/A";
+  const displayText = isFilled ? processedLabel : "N/A";
 
-  const classes = twMerge(avatarStyles({ size, type: avatarType }));
+  const typeBasedClasses = isFilled
+    ? "bg-pz-system-bg-primary text-pz-system-fg-black"
+    : "bg-pz-system-bg-4 text-pz-system-fg-1";
+
+  const classes = twMerge(avatarStyles({ size }), typeBasedClasses);
 
   return <div className={classes}>{displayText}</div>;
 };
