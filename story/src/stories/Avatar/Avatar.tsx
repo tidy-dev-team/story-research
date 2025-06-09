@@ -14,7 +14,7 @@ export enum AvatarType {
 }
 
 const avatarStyles = cva(
-  "flex justify-center items-center rounded-full select-none font-['Heebo',_sans-serif]",
+  "flex justify-center items-center rounded-full select-none",
   {
     variants: {
       size: {
