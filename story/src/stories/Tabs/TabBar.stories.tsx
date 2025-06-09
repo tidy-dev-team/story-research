@@ -16,15 +16,6 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    size: {
-      control: { type: "select" },
-      options: ["s", "l"],
-      description: "The size variant of the tab bar",
-      table: {
-        category: "Appearance",
-        defaultValue: { summary: "l" },
-      },
-    },
     rtl: {
       control: { type: "boolean" },
       description: "Whether to use right-to-left layout",
@@ -47,24 +38,14 @@ const meta = {
         disable: true,
       },
     },
-    role: {
-      control: "text",
-      description: "ARIA role attribute",
-      table: {
-        category: "Accessibility",
-        defaultValue: { summary: "tablist" },
-      },
-    },
   },
 } satisfies Meta<typeof TabBar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/// Interactive story managing selected tab state
 export const Interactive: Story = {
   args: {
-    size: "l",
     rtl: false,
   },
   render: (args) => {
@@ -78,6 +59,7 @@ export const Interactive: Story = {
             aria-selected={selected === idx}
             aria-controls={`panel-${idx}`}
             onClick={() => setSelected(idx)}
+            rtl={args.rtl}
           >
             {label}
           </Tab>
