@@ -7,11 +7,9 @@ import { CheckboxState } from "./Checkbox";
 
 type CheckboxSeverityStoryArgs = ComponentProps<typeof CheckboxSeverity>;
 
-// Interactive wrapper component for proper state management
 const InteractiveCheckboxSeverity = (args: CheckboxSeverityStoryArgs) => {
   const [state, setState] = useState(args.state || CheckboxState.Unchecked);
 
-  // Sync internal state with args.state when it changes from controls
   useEffect(() => {
     setState(args.state || CheckboxState.Unchecked);
   }, [args.state]);

@@ -5,7 +5,6 @@ import { twMerge } from "tailwind-merge";
 import { Checkbox, CheckboxState } from "./Checkbox";
 import { Severity } from "../Severity/Severity";
 
-// Shared utility function
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
