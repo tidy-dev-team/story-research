@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
 
 export enum AvatarSize {
   S = "s",
@@ -17,17 +16,21 @@ const avatarStyles = cva(
         [AvatarSize.M]: "h-14 w-14 pz-heading-m400",
         [AvatarSize.L]: "h-24 w-24 pz-heading-xl500",
       },
+      type: {
+        filled: "bg-pz-system-bg-primary text-pz-system-fg-black",
+        empty: "bg-pz-system-bg-4 text-pz-system-fg-1",
+      },
     },
     defaultVariants: {
       size: AvatarSize.M,
+      type: "empty",
     },
   }
 );
 
-interface AvatarProps extends Omit<VariantProps<typeof avatarStyles>, "type"> {
+interface AvatarProps extends VariantProps<typeof avatarStyles> {
   firstName?: string | null;
   lastName?: string | null;
-  size?: AvatarSize;
 }
 
 const Avatar = ({
@@ -35,27 +38,17 @@ const Avatar = ({
   firstName,
   lastName,
 }: AvatarProps): ReactElement => {
-  const isFilled = !!(firstName?.trim() || lastName?.trim());
-  let firstInitial = "";
-  if (firstName && firstName.trim().length > 0) {
-    firstInitial = firstName.trim().charAt(0).toUpperCase();
-  }
-  let lastInitial = "";
-  if (lastName && lastName.trim().length > 0) {
-    lastInitial = lastName.trim().charAt(0).toUpperCase();
-  }
+  const initials = `${firstName?.trim().charAt(0).toUpperCase() || ""}${lastName?.trim().charAt(0).toUpperCase() || ""}`;
+  const isFilled = initials.length > 0;
+  const displayText = isFilled ? initials : "N/A";
 
-  const processedLabel = isFilled ? `${firstInitial}${lastInitial}` : "";
-
-  const displayText = isFilled ? processedLabel : "N/A";
-
-  const typeBasedClasses = isFilled
-    ? "bg-pz-system-bg-primary text-pz-system-fg-black"
-    : "bg-pz-system-bg-4 text-pz-system-fg-1";
-
-  const classes = twMerge(avatarStyles({ size }), typeBasedClasses);
-
-  return <div className={classes}>{displayText}</div>;
+  return (
+    <div
+      className={avatarStyles({ size, type: isFilled ? "filled" : "empty" })}
+    >
+      {displayText}
+    </div>
+  );
 };
 
 export default Avatar;
