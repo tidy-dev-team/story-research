@@ -1,10 +1,7 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
-import { Checkbox, SeverityLevel, IconName } from "../Checkbox/Checkbox";
-
-// Re-export SeverityLevel and IconName for convenience
-export type { SeverityLevel, IconName } from "../Checkbox/Checkbox";
+import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
 
 export enum DropdownSize {
   s = "s",
@@ -16,9 +13,8 @@ export interface DropdownItem {
   id: string;
   label: string;
   value: any;
-  icon?: ReactElement | IconName;
+  icon?: ReactElement;
   disabled?: boolean;
-  severity?: SeverityLevel;
   selected?: boolean;
   count?: number;
   alwaysShowCount?: boolean;
@@ -128,14 +124,9 @@ export const DropdownItemComponent = ({
           onClick={(e) => e.stopPropagation()}
         >
           <Checkbox
-            checked={isSelected}
+            state={isSelected ? CheckboxState.Checked : CheckboxState.Unchecked}
             disabled={item.disabled}
-            severity={item.severity}
-            icon={
-              typeof item.icon === "string"
-                ? (item.icon as IconName)
-                : undefined
-            }
+            icon={typeof item.icon === "object" ? item.icon : undefined}
             count={item.count}
             alwaysShowCount={item.alwaysShowCount}
             rtl={rtl || false}
@@ -153,7 +144,7 @@ export const DropdownItemComponent = ({
       {item.icon && !multiSelect && (
         <span className="flex items-center flex-shrink-0">{item.icon}</span>
       )}
-      {item.icon && multiSelect && typeof item.icon !== "string" && (
+      {item.icon && multiSelect && (
         <span className="flex items-center flex-shrink-0">{item.icon}</span>
       )}
 

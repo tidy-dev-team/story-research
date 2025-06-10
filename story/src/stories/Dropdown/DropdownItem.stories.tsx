@@ -6,7 +6,6 @@ import {
   DropdownItem,
   DropdownItemComponent,
 } from "./DropdownItem";
-import { SeverityLevel } from "../Checkbox/Checkbox";
 
 import SettingsIcon from "@mui/icons-material/Settings";
 import BugReportIcon from "@mui/icons-material/BugReport";
@@ -32,7 +31,6 @@ const itemWithSeverity: DropdownItem = {
   label: "Critical Issue",
   value: "critical",
   icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-  severity: SeverityLevel.High,
 };
 
 const disabledItem: DropdownItem = {
@@ -240,56 +238,42 @@ export const RTLMultiSelectWithSeveritySelected: Story = {
   },
 };
 
-const SeverityLevelsWrapper = (args: DropdownItemStoryArgs) => (
+const IconVariantsWrapper = (args: DropdownItemStoryArgs) => (
   <div className="w-64 bg-[#22272B] rounded-lg py-1 space-y-0">
     <DropdownItemComponent
       {...args}
       onSelect={() => {}}
       item={{
-        id: "low",
-        label: "Low Priority Issue",
-        value: "low",
-        icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.Low,
+        id: "settings",
+        label: "Settings",
+        value: "settings",
+        icon: <SettingsIcon sx={{ fontSize: "inherit" }} />,
       }}
     />
     <DropdownItemComponent
       {...args}
       onSelect={() => {}}
       item={{
-        id: "medium",
-        label: "Medium Priority Issue",
-        value: "medium",
+        id: "bugs",
+        label: "Bug Reports",
+        value: "bugs",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.Medium,
       }}
     />
     <DropdownItemComponent
       {...args}
       onSelect={() => {}}
       item={{
-        id: "high",
-        label: "High Priority Issue",
-        value: "high",
-        icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.High,
-      }}
-    />
-    <DropdownItemComponent
-      {...args}
-      onSelect={() => {}}
-      item={{
-        id: "critical",
-        label: "Critical Priority Issue",
-        value: "critical",
+        id: "errors",
+        label: "Error Logs",
+        value: "errors",
         icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.High,
       }}
     />
   </div>
 );
 
-const SeverityLevelsRTLWrapper = (args: DropdownItemStoryArgs) => (
+const IconVariantsRTLWrapper = (args: DropdownItemStoryArgs) => (
   <div className="w-64 bg-[#22272B] rounded-lg py-1 space-y-0" dir="rtl">
     <DropdownItemComponent
       {...args}
@@ -297,11 +281,10 @@ const SeverityLevelsRTLWrapper = (args: DropdownItemStoryArgs) => (
       multiSelect={true}
       onSelect={() => {}}
       item={{
-        id: "low",
-        label: "בעיה עדיפות נמוכה",
-        value: "low",
-        icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.Low,
+        id: "settings",
+        label: "הגדרות",
+        value: "settings",
+        icon: <SettingsIcon sx={{ fontSize: "inherit" }} />,
       }}
     />
     <DropdownItemComponent
@@ -310,11 +293,10 @@ const SeverityLevelsRTLWrapper = (args: DropdownItemStoryArgs) => (
       multiSelect={true}
       onSelect={() => {}}
       item={{
-        id: "medium",
-        label: "בעיה עדיפות בינונית",
-        value: "medium",
+        id: "bugs",
+        label: "דוחות באגים",
+        value: "bugs",
         icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.Medium,
       }}
     />
     <DropdownItemComponent
@@ -323,38 +305,24 @@ const SeverityLevelsRTLWrapper = (args: DropdownItemStoryArgs) => (
       multiSelect={true}
       onSelect={() => {}}
       item={{
-        id: "high",
-        label: "בעיה עדיפות גבוהה",
-        value: "high",
-        icon: <BugReportIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.High,
-      }}
-    />
-    <DropdownItemComponent
-      {...args}
-      rtl={true}
-      multiSelect={true}
-      onSelect={() => {}}
-      item={{
-        id: "critical",
-        label: "בעיה קריטית",
-        value: "critical",
+        id: "errors",
+        label: "יומני שגיאות",
+        value: "errors",
         icon: <ErrorIcon sx={{ fontSize: "inherit" }} />,
-        severity: SeverityLevel.High,
       }}
     />
   </div>
 );
 
-export const SeverityLevels: Story = {
-  render: (args) => <SeverityLevelsWrapper {...args} />,
+export const IconVariants: Story = {
+  render: (args) => <IconVariantsWrapper {...args} />,
   parameters: {
     controls: { disable: true },
   },
 };
 
-export const SeverityLevelsRTL: Story = {
-  render: (args) => <SeverityLevelsRTLWrapper {...args} />,
+export const IconVariantsRTL: Story = {
+  render: (args) => <IconVariantsRTLWrapper {...args} />,
   parameters: {
     controls: { disable: true },
   },
