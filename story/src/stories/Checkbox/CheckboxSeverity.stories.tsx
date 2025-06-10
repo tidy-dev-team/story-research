@@ -33,7 +33,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     state: {
-      control: "radio",
+      control: "select",
       options: Object.values(CheckboxState),
       description: "The state of the checkbox",
       table: {
@@ -42,7 +42,7 @@ const meta = {
       },
     },
     severityLevel: {
-      control: "radio",
+      control: "select",
       options: ["high", "medium", "low"],
       description: "The severity level",
       table: {
@@ -51,7 +51,7 @@ const meta = {
       },
     },
     severityType: {
-      control: "radio",
+      control: "select",
       options: ["badge", "bar"],
       description: "The type of severity indicator",
       table: {
