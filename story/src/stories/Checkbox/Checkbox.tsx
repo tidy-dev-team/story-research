@@ -1,12 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useState, ReactNode } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
-import InfoIcon from "@mui/icons-material/Info";
-import WarningIcon from "@mui/icons-material/Warning";
-import ErrorIcon from "@mui/icons-material/Error";
-import StarIcon from "@mui/icons-material/Star";
 
 const checkboxIconStyles = cva(
   [
@@ -113,15 +109,6 @@ const countStyles = cva(
   }
 );
 
-export const iconMap = {
-  info: <InfoIcon sx={{ fontSize: 16 }} />,
-  warning: <WarningIcon sx={{ fontSize: 16 }} />,
-  error: <ErrorIcon sx={{ fontSize: 16 }} />,
-  star: <StarIcon sx={{ fontSize: 16 }} />,
-} as const;
-
-export type IconName = keyof typeof iconMap;
-
 interface CheckboxProps
   extends Omit<
       ComponentProps<"input">,
@@ -134,7 +121,7 @@ interface CheckboxProps
   indeterminate?: boolean;
   rtl?: boolean;
   focused?: boolean;
-  icon?: IconName;
+  icon?: ReactNode;
   alwaysShowCount?: boolean;
   count?: number;
 }
@@ -194,8 +181,7 @@ export const Checkbox = ({
   const renderLabelIcon = () => {
     if (!icon) return null;
 
-    const iconElement = iconMap[icon];
-    return <span className={iconStyles({ disabled })}>{iconElement}</span>;
+    return <span className={iconStyles({ disabled })}>{icon}</span>;
   };
 
   const renderCount = () => {

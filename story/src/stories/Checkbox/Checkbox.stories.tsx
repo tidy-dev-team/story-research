@@ -1,6 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState, useEffect } from "react";
-import { Checkbox, iconMap, IconName } from "./Checkbox";
+import { Checkbox } from "./Checkbox";
+import InfoIcon from "@mui/icons-material/Info";
+import WarningIcon from "@mui/icons-material/Warning";
+import ErrorIcon from "@mui/icons-material/Error";
+import StarIcon from "@mui/icons-material/Star";
+
+// Icon map for Storybook demos
+export const iconMap = {
+  info: <InfoIcon sx={{ fontSize: 16 }} />,
+  warning: <WarningIcon sx={{ fontSize: 16 }} />,
+  error: <ErrorIcon sx={{ fontSize: 16 }} />,
+  star: <StarIcon sx={{ fontSize: 16 }} />,
+} as const;
+
+export type IconName = keyof typeof iconMap;
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
 
@@ -91,6 +105,13 @@ const meta: Meta<CheckboxStoryArgs> = {
       table: {
         category: "Appearance",
         defaultValue: { summary: "undefined" },
+      },
+      mapping: {
+        undefined: undefined,
+        info: iconMap.info,
+        warning: iconMap.warning,
+        error: iconMap.error,
+        star: iconMap.star,
       },
     },
     label: {
@@ -239,7 +260,7 @@ export const WithIcon: Story = {
   render: renderInteractiveCheckbox,
   args: {
     label: "Item with info icon",
-    icon: "info" as IconName,
+    icon: iconMap.info,
   },
   parameters: {
     docs: {
