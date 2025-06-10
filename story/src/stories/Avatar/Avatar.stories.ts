@@ -15,27 +15,44 @@ const meta = {
       control: {
         type: "text",
       },
-      description: "First name",
+      description: "First name of the person",
       table: {
         type: { summary: "string | null" },
-        defaultValue: { summary: "null" },
+        defaultValue: { summary: "undefined" },
       },
     },
     lastName: {
       control: {
         type: "text",
       },
-      description: "Last name",
+      description: "Last name of the person",
       table: {
         type: { summary: "string | null" },
-        defaultValue: { summary: "null" },
+        defaultValue: { summary: "undefined" },
       },
     },
     size: {
       control: {
-        type: "select", // Use a dropdown control
+        type: "select",
       },
       options: Object.values(AvatarSize),
+      description: "Size of the avatar",
+      table: {
+        type: { summary: "AvatarSize" },
+        defaultValue: { summary: "AvatarSize.M" },
+      },
+    },
+    filled: {
+      control: {
+        type: "boolean",
+      },
+      description:
+        "Whether the avatar has a filled background (auto-determined based on initials)",
+      table: {
+        disable: true,
+        type: { summary: "boolean" },
+        defaultValue: { summary: "auto" },
+      },
     },
   },
 } satisfies Meta<typeof Avatar>;
@@ -43,46 +60,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const WithBothNames: Story = {
+export const Default: Story = {
   args: {
     firstName: "John",
     lastName: "Doe",
     size: AvatarSize.M,
-  },
-};
-
-export const WithFirstNameOnly: Story = {
-  args: {
-    firstName: "Jane",
-    size: AvatarSize.M,
-  },
-};
-
-export const WithLastNameOnly: Story = {
-  args: {
-    lastName: "Smith",
-    size: AvatarSize.M,
-  },
-};
-
-export const Empty: Story = {
-  args: {
-    size: AvatarSize.M,
-  },
-};
-
-export const SmallSize: Story = {
-  args: {
-    firstName: "A",
-    lastName: "B",
-    size: AvatarSize.S,
-  },
-};
-
-export const LargeSize: Story = {
-  args: {
-    firstName: "John",
-    lastName: "Doe",
-    size: AvatarSize.L,
   },
 };
