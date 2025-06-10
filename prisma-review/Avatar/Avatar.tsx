@@ -16,14 +16,14 @@ const avatarStyles = cva(
         [AvatarSize.M]: "h-14 w-14 pz-heading-m400",
         [AvatarSize.L]: "h-24 w-24 pz-heading-xl500",
       },
-      type: {
-        filled: "bg-pz-system-bg-primary text-pz-system-fg-black",
-        empty: "bg-pz-system-bg-4 text-pz-system-fg-1",
+      filled: {
+        true: "bg-pz-system-bg-primary text-pz-system-fg-black",
+        false: "bg-pz-system-bg-4 text-pz-system-fg-1",
       },
     },
     defaultVariants: {
       size: AvatarSize.M,
-      type: "empty",
+      filled: false,
     },
   }
 );
@@ -43,9 +43,7 @@ const Avatar = ({
   const displayText = isFilled ? initials : "N/A";
 
   return (
-    <div
-      className={avatarStyles({ size, type: isFilled ? "filled" : "empty" })}
-    >
+    <div className={avatarStyles({ size, filled: isFilled })}>
       {displayText}
     </div>
   );
