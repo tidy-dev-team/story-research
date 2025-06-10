@@ -1,18 +1,12 @@
 import React from "react";
-import { cva, VariantProps } from "class-variance-authority";
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cva } from "class-variance-authority";
 
 const severityBadgeVariants = cva("w-3 h-3 rounded-pz-3xs", {
   variants: {
     level: {
-      high: "bg-pz-system-priority-high-3", // This is red
-      medium: "bg-pz-system-priority-medium-3", // This is yellow
-      low: "bg-pz-system-priority-low-1", // This is green
+      high: "bg-pz-system-priority-high-3",
+      medium: "bg-pz-system-priority-medium-3",
+      low: "bg-pz-system-priority-low-1",
     },
   },
   defaultVariants: {
@@ -21,8 +15,7 @@ const severityBadgeVariants = cva("w-3 h-3 rounded-pz-3xs", {
 });
 
 export interface SeverityBadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof severityBadgeVariants> {
+  extends React.HTMLAttributes<HTMLDivElement> {
   level: "high" | "medium" | "low";
 }
 
@@ -32,11 +25,7 @@ const SeverityBadge: React.FC<SeverityBadgeProps> = ({
   ...props
 }) => {
   return (
-    <div
-      className={cn(severityBadgeVariants({ level }), className)}
-      {...props}
-      data-testid={`severity-badge-${level}`}
-    />
+    <div className={severityBadgeVariants({ level, className })} {...props} />
   );
 };
 

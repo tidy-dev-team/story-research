@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
-import { RadioButton, RadioButtonType } from "./RadioButton";
+import { RadioButton } from "./RadioButton";
 import { useState } from "react";
 
 type RadioButtonStoryArgs = ComponentProps<typeof RadioButton>;

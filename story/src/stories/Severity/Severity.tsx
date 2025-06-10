@@ -1,13 +1,19 @@
 import React from "react";
-import { cva, VariantProps, cx } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { SeverityBadge } from "./SeverityBadge";
 import { SeverityBar } from "./SeverityBar";
 
-const severityVariants = cva("inline-flex items-flex-start", {
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+const severityVariants = cva("inline-flex items-start gap-pz-4xs", {
   variants: {
     rtl: {
-      true: "flex-row-reverse gap-pz-4xs",
-      false: "flex-row gap-pz-4xs",
+      true: "flex-row-reverse",
+      false: "flex-row",
     },
   },
   defaultVariants: {
@@ -15,9 +21,7 @@ const severityVariants = cva("inline-flex items-flex-start", {
   },
 });
 
-export interface SeverityProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof severityVariants> {
+export interface SeverityProps extends React.HTMLAttributes<HTMLDivElement> {
   level: "high" | "medium" | "low";
   type: "badge" | "bar";
   label: string;
@@ -40,7 +44,7 @@ const Severity: React.FC<SeverityProps> = ({
     );
 
   return (
-    <div className={cx(severityVariants({ rtl }), className)} {...props}>
+    <div className={cn(severityVariants({ rtl }), className)} {...props}>
       {indicator}
       <div className={rtl ? "text-right" : "text-left"}>
         <span className="text-pz-system-fg-1 pz-label-m">{label}</span>

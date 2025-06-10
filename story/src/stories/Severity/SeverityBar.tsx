@@ -1,11 +1,5 @@
 import React from "react";
-import { cva, VariantProps } from "class-variance-authority";
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cva } from "class-variance-authority";
 
 const severityBarVariants = cva("rounded-full", {
   variants: {
@@ -30,9 +24,7 @@ const severityBarVariants = cva("rounded-full", {
   },
 });
 
-export interface SeverityBarProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof severityBarVariants> {
+export interface SeverityBarProps extends React.HTMLAttributes<HTMLDivElement> {
   level: "high" | "medium" | "low";
   size?: "s" | "m";
   expired?: boolean;
@@ -47,9 +39,8 @@ const SeverityBar: React.FC<SeverityBarProps> = ({
 }) => {
   return (
     <div
-      className={cn(severityBarVariants({ level, size, expired }), className)}
+      className={severityBarVariants({ level, size, expired, className })}
       {...props}
-      data-testid={`severity-bar-${level}-${size}${expired ? "-expired" : ""}`}
     />
   );
 };
