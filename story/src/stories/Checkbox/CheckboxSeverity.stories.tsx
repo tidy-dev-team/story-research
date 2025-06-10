@@ -1,24 +1,44 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { action } from "@storybook/addon-actions";
 import { CheckboxSeverity } from "./CheckboxSeverity";
 import { CheckboxState } from "./Checkbox";
 
 type CheckboxSeverityStoryArgs = ComponentProps<typeof CheckboxSeverity>;
 
+// Interactive wrapper component for proper state management
+const InteractiveCheckboxSeverity = (args: CheckboxSeverityStoryArgs) => {
+  const [state, setState] = useState(args.state || CheckboxState.Unchecked);
+
+  // Sync internal state with args.state when it changes from controls
+  useEffect(() => {
+    setState(args.state || CheckboxState.Unchecked);
+  }, [args.state]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newState = event.target.checked
+      ? CheckboxState.Checked
+      : CheckboxState.Unchecked;
+    setState(newState);
+    action("onChange")(event);
+  };
+
+  return <CheckboxSeverity {...args} state={state} onChange={handleChange} />;
+};
+
 const meta = {
   title: "Component/Checkbox/CheckboxSeverity",
-  component: CheckboxSeverity,
+  component: InteractiveCheckboxSeverity,
   args: {
     state: CheckboxState.Unchecked,
     severityLevel: "medium",
     severityType: "badge",
     severityLabel: "Medium Issue",
-    disabled: false,
     rtl: false,
     alwaysShowCount: false,
     count: 3,
-    onChange: () => {},
+    onChange: action("onChange"),
   },
   parameters: {
     layout: "centered",
@@ -64,14 +84,6 @@ const meta = {
       description: "The label text for the severity",
       table: {
         category: "Severity",
-      },
-    },
-    disabled: {
-      control: "boolean",
-      description: "Whether the component is disabled",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
       },
     },
     rtl: {

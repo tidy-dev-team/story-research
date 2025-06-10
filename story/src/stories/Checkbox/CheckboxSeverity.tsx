@@ -16,29 +16,19 @@ const checkboxSeverityVariants = cva("flex items-center", {
       true: "flex-row-reverse gap-pz-4xs",
       false: "flex-row gap-pz-4xs",
     },
-    disabled: {
-      true: "opacity-50 cursor-not-allowed",
-      false: "",
-    },
   },
   defaultVariants: {
     rtl: false,
-    disabled: false,
   },
 });
 
-const countStyles = cva(
-  ["pz-body-m400", "leading-[1.46875em]", "transition-colors", "duration-200"],
-  {
-    variants: {
-      disabled: {
-        true: "text-pz-system-fg-disabled",
-        false: "text-pz-system-fg-1",
-      },
-    },
-    defaultVariants: { disabled: false },
-  }
-);
+const countStyles = cva([
+  "pz-body-m400",
+  "leading-[1.46875em]",
+  "transition-colors",
+  "duration-200",
+  "text-pz-system-fg-1",
+]);
 
 export interface CheckboxSeverityProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -46,7 +36,6 @@ export interface CheckboxSeverityProps
   severityLevel: "high" | "medium" | "low";
   severityType?: "badge" | "bar";
   severityLabel: string;
-  disabled?: boolean;
   rtl?: boolean;
   alwaysShowCount?: boolean;
   count?: number;
@@ -58,7 +47,6 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   severityLevel,
   severityType = "badge",
   severityLabel,
-  disabled = false,
   rtl = false,
   alwaysShowCount = false,
   count = 0,
@@ -71,25 +59,17 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
 
   return (
     <div
-      className={cn(checkboxSeverityVariants({ rtl, disabled }), className)}
+      className={cn(checkboxSeverityVariants({ rtl }), className)}
       {...props}
     >
-      <Checkbox
-        state={state}
-        disabled={disabled}
-        rtl={false}
-        onChange={onChange}
-      />
+      <Checkbox state={state} rtl={false} onChange={onChange} />
       <Severity
         level={severityLevel}
         type={severityType}
         label={severityLabel}
         rtl={rtl}
-        // className="self-end"
       />
-      {shouldShowCount && (
-        <span className={countStyles({ disabled })}>({safeCount})</span>
-      )}
+      {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
     </div>
   );
 };
