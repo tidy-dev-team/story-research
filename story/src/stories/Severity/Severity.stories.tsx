@@ -34,13 +34,3 @@ export const Default: Story = {
     rtl: false,
   },
 };
-
-export const BarHighSmall: Story = {
-  args: {
-    level: "high",
-    type: "bar",
-    label: "High",
-    rtl: false,
-    barExpired: false,
-  },
-};
