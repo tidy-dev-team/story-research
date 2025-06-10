@@ -20,9 +20,7 @@ const meta: Meta<typeof Severity> = {
     rtl: {
       control: "boolean",
     },
-    label: {
-      control: "text",
-    },
+    // label removed: label is now static and based on level
   },
 };
 
@@ -33,7 +31,7 @@ export const Default: Story = {
   args: {
     level: "medium",
     type: "badge",
-    label: "Medium",
+    // label removed: label is now static and based on level
     rtl: false,
   },
 };

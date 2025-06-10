@@ -24,14 +24,24 @@ const severityVariants = cva("inline-flex items-center gap-pz-4xs", {
 export interface SeverityProps extends React.HTMLAttributes<HTMLDivElement> {
   level: "high" | "medium" | "low";
   type: "badge" | "bar";
-  label: string;
   rtl?: boolean;
 }
+
+const LEVEL_LABELS: Record<"high" | "medium" | "low", string> = {
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+};
+
+const LEVEL_LABELS_HE: Record<"high" | "medium" | "low", string> = {
+  high: "גבוה",
+  medium: "בינוני",
+  low: "נמוך",
+};
 
 const Severity: React.FC<SeverityProps> = ({
   level,
   type,
-  label,
   rtl = false,
   className,
   ...props
@@ -47,7 +57,9 @@ const Severity: React.FC<SeverityProps> = ({
     <div className={cn(severityVariants({ rtl }), className)} {...props}>
       {indicator}
       <div className={rtl ? "text-right mt-1" : "text-left mt-1"}>
-        <span className="text-pz-system-fg-1 pz-label-m">{label}</span>
+        <span className="text-pz-system-fg-1 pz-label-m">
+          {rtl ? LEVEL_LABELS_HE[level] : LEVEL_LABELS[level]}
+        </span>
       </div>
     </div>
   );
