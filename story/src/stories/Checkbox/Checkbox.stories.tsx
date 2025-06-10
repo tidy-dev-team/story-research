@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState, useEffect } from "react";
-import { Checkbox, SeverityLevel, iconMap, IconName } from "./Checkbox";
+import { Checkbox, iconMap, IconName } from "./Checkbox";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
 
@@ -38,7 +38,6 @@ const meta: Meta<CheckboxStoryArgs> = {
     disabled: false,
     focused: false,
     rtl: false,
-    severity: undefined,
     icon: undefined,
     label: "Checkbox label",
     alwaysShowCount: false,
@@ -85,24 +84,10 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "false" },
       },
     },
-    severity: {
-      control: "select",
-      options: [
-        undefined,
-        SeverityLevel.High,
-        SeverityLevel.Medium,
-        SeverityLevel.Low,
-      ],
-      description: "Severity level indicator",
-      table: {
-        category: "Appearance",
-        defaultValue: { summary: "undefined" },
-      },
-    },
     icon: {
       control: "select",
       options: [undefined, ...Object.keys(iconMap)],
-      description: "Optional icon to display after severity indicator",
+      description: "Optional icon to display",
       table: {
         category: "Appearance",
         defaultValue: { summary: "undefined" },
@@ -250,23 +235,6 @@ export const KeyboardNavigation: Story = {
   },
 };
 
-// Severity Stories
-export const WithSeverityHigh: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    label: "Item with high severity",
-    severity: SeverityLevel.High,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Checkbox with high severity indicator displayed as a red square.",
-      },
-    },
-  },
-};
-
 export const WithIcon: Story = {
   render: renderInteractiveCheckbox,
   args: {
@@ -277,107 +245,6 @@ export const WithIcon: Story = {
     docs: {
       description: {
         story: "Checkbox with an info icon displayed after the label.",
-      },
-    },
-  },
-};
-
-export const WithSeverityRTL: Story = {
-  render: renderInteractiveCheckbox,
-  args: {
-    label: "פריט עם חומרה",
-    severity: SeverityLevel.High,
-    rtl: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Checkbox with high severity indicator displayed in RTL layout. The severity indicator appears on the left side.",
-      },
-    },
-  },
-};
-
-export const SeverityComparison: Story = {
-  render: () => {
-    const [checkedStates, setCheckedStates] = useState<{
-      normal: boolean;
-      severityHigh: boolean;
-      severityMedium: boolean;
-      severityLow: boolean;
-      severityRtl: boolean;
-    }>({
-      normal: false,
-      severityHigh: false,
-      severityMedium: false,
-      severityLow: false,
-      severityRtl: false,
-    });
-
-    return (
-      <div className="space-y-4 p-4">
-        <h3 className="text-pz-system-fg-1 text-lg font-medium mb-4">
-          Severity Indicator Comparison
-        </h3>
-
-        <div className="space-y-3">
-          <Checkbox
-            label="Normal checkbox"
-            checked={checkedStates.normal}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                normal: e.target.checked,
-              }))
-            }
-          />
-
-          <Checkbox
-            label="High severity indicator (red)"
-            severity={SeverityLevel.High}
-            checked={checkedStates.severityHigh}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                severityHigh: e.target.checked,
-              }))
-            }
-          />
-
-          <Checkbox
-            label="Medium severity indicator (yellow)"
-            severity={SeverityLevel.Medium}
-            checked={checkedStates.severityMedium}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                severityMedium: e.target.checked,
-              }))
-            }
-          />
-
-          <Checkbox
-            label="Low severity indicator (white)"
-            severity={SeverityLevel.Low}
-            checked={checkedStates.severityLow}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                severityLow: e.target.checked,
-              }))
-            }
-          />
-        </div>
-      </div>
-    );
-  },
-  parameters: {
-    controls: { disable: true },
-    docs: {
-      description: {
-        story:
-          "Comparison of normal checkbox and checkboxes with different severity levels (high, medium, low), including RTL layout.",
       },
     },
   },
@@ -412,7 +279,9 @@ export const CountComparison: Story = {
     return (
       <div className="flex flex-col gap-4">
         <div className="space-y-2">
-          <h3 className="text-pz-system-fg-1 font-semibold">Count Variations</h3>
+          <h3 className="text-pz-system-fg-1 font-semibold">
+            Count Variations
+          </h3>
           <Checkbox
             label="No count"
             checked={checkedStates.noCount}

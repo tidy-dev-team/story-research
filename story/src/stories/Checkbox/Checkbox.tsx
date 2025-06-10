@@ -8,12 +8,6 @@ import WarningIcon from "@mui/icons-material/Warning";
 import ErrorIcon from "@mui/icons-material/Error";
 import StarIcon from "@mui/icons-material/Star";
 
-export enum SeverityLevel {
-  High = "high",
-  Medium = "medium",
-  Low = "low",
-}
-
 const checkboxIconStyles = cva(
   [
     "transition-all",
@@ -69,13 +63,7 @@ const checkboxIconStyles = cva(
 );
 
 const labelStyles = cva(
-  [
-    "select-none",
-    "transition-colors",
-    "duration-200",
-    "font-['Heebo',_sans-serif]",
-    "pz-body-m400",
-  ],
+  ["select-none", "transition-colors", "duration-200", "pz-body-m400"],
   {
     variants: {
       disabled: {
@@ -88,19 +76,6 @@ const labelStyles = cva(
     },
   }
 );
-
-const severityIndicatorStyles = cva(["w-3", "h-3", "rounded-pz-3xs"], {
-  variants: {
-    level: {
-      [SeverityLevel.High]: "bg-pz-system-priority-high-3",
-      [SeverityLevel.Medium]: "bg-pz-system-priority-medium-3",
-      [SeverityLevel.Low]: "bg-pz-system-priority-low-1",
-    },
-  },
-  defaultVariants: {
-    level: SeverityLevel.High,
-  },
-});
 
 const iconStyles = cva(
   ["text-pz-system-fg-3", "transition-colors", "duration-200"],
@@ -159,7 +134,6 @@ interface CheckboxProps
   indeterminate?: boolean;
   rtl?: boolean;
   focused?: boolean;
-  severity?: SeverityLevel;
   icon?: IconName;
   alwaysShowCount?: boolean;
   count?: number;
@@ -171,7 +145,6 @@ export const Checkbox = ({
   rtl = false,
   disabled = false,
   focused = false,
-  severity,
   icon,
   label,
   alwaysShowCount = false,
@@ -225,26 +198,13 @@ export const Checkbox = ({
     return <span className={iconStyles({ disabled })}>{iconElement}</span>;
   };
 
-  const renderSeverityIndicator = () => {
-    if (!severity) return null;
-    return <div className={severityIndicatorStyles({ level: severity })} />;
-  };
-
   const renderCount = () => {
     if (!alwaysShowCount && safeCount === 0) return null;
     return <span className={countStyles({ disabled })}>({safeCount})</span>;
   };
 
   const renderElements = () => {
-    if (rtl) {
-      return [renderIcon(), renderSeverityIndicator(), renderLabelIcon()];
-    } else {
-      return [
-        renderIcon(),
-        renderSeverityIndicator(), // severity (appears middle)
-        renderLabelIcon(), // icon (appears after severity)
-      ];
-    }
+    return [renderIcon(), renderLabelIcon()];
   };
 
   return (
