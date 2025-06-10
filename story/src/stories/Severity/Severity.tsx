@@ -9,7 +9,7 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const severityVariants = cva("inline-flex items-start gap-pz-4xs", {
+const severityVariants = cva("inline-flex items-center gap-pz-4xs", {
   variants: {
     rtl: {
       true: "flex-row-reverse",
@@ -46,7 +46,7 @@ const Severity: React.FC<SeverityProps> = ({
   return (
     <div className={cn(severityVariants({ rtl }), className)} {...props}>
       {indicator}
-      <div className={rtl ? "text-right" : "text-left"}>
+      <div className={rtl ? "text-right mt-1" : "text-left mt-1"}>
         <span className="text-pz-system-fg-1 pz-label-m">{label}</span>
       </div>
     </div>

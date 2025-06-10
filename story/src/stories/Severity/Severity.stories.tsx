@@ -3,6 +3,9 @@ import { Severity } from "./Severity";
 
 const meta: Meta<typeof Severity> = {
   title: "Component/Severity",
+  parameters: {
+    layout: "centered",
+  },
   component: Severity,
   tags: ["autodocs"],
   argTypes: {
