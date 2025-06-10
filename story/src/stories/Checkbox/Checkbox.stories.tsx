@@ -1,38 +1,33 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState, useEffect } from "react";
-import { Checkbox } from "./Checkbox";
-import InfoIcon from "@mui/icons-material/Info";
-import WarningIcon from "@mui/icons-material/Warning";
-import ErrorIcon from "@mui/icons-material/Error";
-import StarIcon from "@mui/icons-material/Star";
+import { Checkbox, CheckboxState } from "./Checkbox";
+import LanguageIcon from "@mui/icons-material/Language";
 
-// Icon map for Storybook demos
-export const iconMap = {
-  info: <InfoIcon sx={{ fontSize: 16 }} />,
-  warning: <WarningIcon sx={{ fontSize: 16 }} />,
-  error: <ErrorIcon sx={{ fontSize: 16 }} />,
-  star: <StarIcon sx={{ fontSize: 16 }} />,
-} as const;
+type CheckboxStoryArgs = ComponentProps<typeof Checkbox> & {
+  showIcon?: boolean;
+};
 
-export type IconName = keyof typeof iconMap;
-
-type CheckboxStoryArgs = ComponentProps<typeof Checkbox>;
-
-// Common render function to eliminate code duplication
-const renderInteractiveCheckbox = (args: CheckboxStoryArgs) => {
-  const [checked, setChecked] = useState(args.checked || false);
+// Interactive component that properly uses hooks
+const InteractiveCheckbox = (args: CheckboxStoryArgs) => {
+  const [state, setState] = useState(args.state || CheckboxState.Unchecked);
 
   // Update internal state when args change (from Storybook controls)
   useEffect(() => {
-    setChecked(args.checked || false);
-  }, [args.checked]);
+    setState(args.state || CheckboxState.Unchecked);
+  }, [args.state]);
+
+  const { showIcon, ...checkboxProps } = args;
 
   return (
     <Checkbox
-      {...args}
-      checked={checked}
+      {...checkboxProps}
+      icon={showIcon ? <LanguageIcon sx={{ fontSize: 16 }} /> : undefined}
+      state={state}
       onChange={(e) => {
-        setChecked(e.target.checked);
+        const newState = e.target.checked
+          ? CheckboxState.Checked
+          : CheckboxState.Unchecked;
+        setState(newState);
         args.onChange?.(e);
       }}
     />
@@ -47,31 +42,23 @@ const meta: Meta<CheckboxStoryArgs> = {
   },
   tags: ["autodocs"],
   args: {
-    checked: false,
-    indeterminate: false,
+    state: CheckboxState.Unchecked,
     disabled: false,
     focused: false,
     rtl: false,
-    icon: undefined,
+    showIcon: false,
     label: "Checkbox label",
     alwaysShowCount: false,
     count: 0,
   },
   argTypes: {
-    checked: {
-      control: "boolean",
-      description: "Whether the checkbox is checked",
+    state: {
+      control: "select",
+      options: Object.values(CheckboxState),
+      description: "The checkbox state",
       table: {
         category: "State",
-        defaultValue: { summary: "false" },
-      },
-    },
-    indeterminate: {
-      control: "boolean",
-      description: "Whether the checkbox is in indeterminate state",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "CheckboxState.Unchecked" },
       },
     },
     disabled: {
@@ -98,20 +85,12 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "false" },
       },
     },
-    icon: {
-      control: "select",
-      options: [undefined, ...Object.keys(iconMap)],
-      description: "Optional icon to display",
+    showIcon: {
+      control: "boolean",
+      description: "Whether to show the language icon",
       table: {
         category: "Appearance",
-        defaultValue: { summary: "undefined" },
-      },
-      mapping: {
-        undefined: undefined,
-        info: iconMap.info,
-        warning: iconMap.warning,
-        error: iconMap.error,
-        star: iconMap.star,
+        defaultValue: { summary: "false" },
       },
     },
     label: {
@@ -138,6 +117,10 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "0" },
       },
     },
+    icon: {
+      table: { disable: true },
+      control: false,
+    },
     onChange: {
       action: "changed",
       description: "Callback fired when the checkbox is clicked",
@@ -152,24 +135,23 @@ export default meta;
 type Story = StoryObj<CheckboxStoryArgs>;
 
 export const Default: Story = {
-  render: renderInteractiveCheckbox,
+  render: InteractiveCheckbox,
   args: {
     label: "Checkbox option",
   },
 };
 
 export const WithoutLabel: Story = {
-  render: renderInteractiveCheckbox,
+  render: InteractiveCheckbox,
   args: {
     label: undefined,
   },
 };
 
 export const RTL: Story = {
-  render: renderInteractiveCheckbox,
+  render: InteractiveCheckbox,
   args: {
-    checked: true,
-    indeterminate: false,
+    state: CheckboxState.Checked,
     disabled: false,
     focused: false,
     rtl: true,
@@ -177,95 +159,16 @@ export const RTL: Story = {
   },
 };
 
-export const KeyboardNavigation: Story = {
-  render: () => {
-    const [checkboxStates, setCheckboxStates] = useState({
-      checkbox1: false,
-      checkbox2: true,
-      checkbox3: false,
-      checkbox4: false,
-    });
-
-    return (
-      <div>
-        <h3 className="text-pz-system-fg-1 text-lg font-medium mb-4">
-          Use Tab to navigate and Space to toggle
-        </h3>
-        <div className="space-y-3">
-          <Checkbox
-            label="Option 1"
-            checked={checkboxStates.checkbox1}
-            onChange={(e) =>
-              setCheckboxStates((prev) => ({
-                ...prev,
-                checkbox1: e.target.checked,
-              }))
-            }
-          />
-          <Checkbox
-            label="Option 2 (initially checked)"
-            checked={checkboxStates.checkbox2}
-            onChange={(e) =>
-              setCheckboxStates((prev) => ({
-                ...prev,
-                checkbox2: e.target.checked,
-              }))
-            }
-          />
-          <Checkbox
-            label="Option 3"
-            checked={checkboxStates.checkbox3}
-            onChange={(e) =>
-              setCheckboxStates((prev) => ({
-                ...prev,
-                checkbox3: e.target.checked,
-              }))
-            }
-          />
-          <Checkbox
-            label="Disabled Option"
-            checked={checkboxStates.checkbox4}
-            disabled={true}
-            onChange={(e) =>
-              setCheckboxStates((prev) => ({
-                ...prev,
-                checkbox4: e.target.checked,
-              }))
-            }
-          />
-        </div>
-        <div className="mt-4 text-sm text-gray-400">
-          <div className="text-pz-system-fg-1">
-            Checked:{" "}
-            {Object.entries(checkboxStates)
-              .filter(([_, checked]) => checked)
-              .map(([key]) => key)
-              .join(", ") || "none"}
-          </div>
-        </div>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Demonstrates keyboard accessibility. Use Tab to navigate between checkboxes and Space or Enter to toggle them. Disabled checkboxes are skipped during keyboard navigation.",
-      },
-    },
-  },
-};
-
-export const WithIcon: Story = {
-  render: renderInteractiveCheckbox,
+export const WithLanguageIcon: Story = {
+  render: InteractiveCheckbox,
   args: {
-    label: "Item with info icon",
-    icon: iconMap.info,
+    label: "Enable multi-language support",
+    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
   },
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with an info icon displayed after the label.",
+        story: "Checkbox with a language icon displayed after the label.",
       },
     },
   },
@@ -273,7 +176,7 @@ export const WithIcon: Story = {
 
 // Count Stories
 export const WithCount: Story = {
-  render: renderInteractiveCheckbox,
+  render: InteractiveCheckbox,
   args: {
     label: "Items",
     alwaysShowCount: true,
@@ -288,71 +191,80 @@ export const WithCount: Story = {
   },
 };
 
-export const CountComparison: Story = {
-  render: () => {
-    const [checkedStates, setCheckedStates] = useState({
-      noCount: false,
-      withCount: false,
-      zeroCount: false,
-      largeCount: false,
-    });
+// Count comparison component
+const CountComparisonDemo = () => {
+  const [checkedStates, setCheckedStates] = useState({
+    noCount: CheckboxState.Unchecked,
+    withCount: CheckboxState.Unchecked,
+    zeroCount: CheckboxState.Unchecked,
+    largeCount: CheckboxState.Unchecked,
+  });
 
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="space-y-2">
-          <h3 className="text-pz-system-fg-1 font-semibold">
-            Count Variations
-          </h3>
-          <Checkbox
-            label="No count"
-            checked={checkedStates.noCount}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                noCount: e.target.checked,
-              }))
-            }
-          />
-          <Checkbox
-            label="With count"
-            alwaysShowCount={true}
-            count={5}
-            checked={checkedStates.withCount}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                withCount: e.target.checked,
-              }))
-            }
-          />
-          <Checkbox
-            label="Zero count (shown)"
-            alwaysShowCount={true}
-            count={0}
-            checked={checkedStates.zeroCount}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                zeroCount: e.target.checked,
-              }))
-            }
-          />
-          <Checkbox
-            label="Large count"
-            alwaysShowCount={true}
-            count={999}
-            checked={checkedStates.largeCount}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                largeCount: e.target.checked,
-              }))
-            }
-          />
-        </div>
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="space-y-2">
+        <h3 className="text-pz-system-fg-1 font-semibold">Count Variations</h3>
+        <Checkbox
+          label="No count"
+          state={checkedStates.noCount}
+          onChange={(e) =>
+            setCheckedStates((prev) => ({
+              ...prev,
+              noCount: e.target.checked
+                ? CheckboxState.Checked
+                : CheckboxState.Unchecked,
+            }))
+          }
+        />
+        <Checkbox
+          label="With count"
+          alwaysShowCount={true}
+          count={5}
+          state={checkedStates.withCount}
+          onChange={(e) =>
+            setCheckedStates((prev) => ({
+              ...prev,
+              withCount: e.target.checked
+                ? CheckboxState.Checked
+                : CheckboxState.Unchecked,
+            }))
+          }
+        />
+        <Checkbox
+          label="Zero count (shown)"
+          alwaysShowCount={true}
+          count={0}
+          state={checkedStates.zeroCount}
+          onChange={(e) =>
+            setCheckedStates((prev) => ({
+              ...prev,
+              zeroCount: e.target.checked
+                ? CheckboxState.Checked
+                : CheckboxState.Unchecked,
+            }))
+          }
+        />
+        <Checkbox
+          label="Large count"
+          alwaysShowCount={true}
+          count={999}
+          state={checkedStates.largeCount}
+          onChange={(e) =>
+            setCheckedStates((prev) => ({
+              ...prev,
+              largeCount: e.target.checked
+                ? CheckboxState.Checked
+                : CheckboxState.Unchecked,
+            }))
+          }
+        />
       </div>
-    );
-  },
+    </div>
+  );
+};
+
+export const CountComparison: Story = {
+  render: CountComparisonDemo,
   parameters: {
     controls: { disable: true },
     docs: {
