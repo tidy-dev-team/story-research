@@ -152,7 +152,10 @@ export const Button = ({
         {leadingIcon}
       </span>
     ),
-    <span key="label" className="text-sm font-normal leading-none">
+    <span
+      key="label"
+      className="text-sm font-normal leading-none translate-y-px"
+    >
       {label}
     </span>,
     trailingIcon && (
