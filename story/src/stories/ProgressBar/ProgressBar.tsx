@@ -1,5 +1,25 @@
 import React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
+
+const progressBarVariants = cva(
+  "relative w-full overflow-hidden bg-pz-system-bg-4 rounded-pz-max h-1.5"
+);
+
+const progressFillVariants = cva(
+  "h-full transition-all duration-300 ease-out rounded-pz-max bg-pz-system-bg-primary",
+  {
+    variants: {
+      rtl: {
+        true: "ml-auto",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      rtl: false,
+    },
+  }
+);
 
 export interface ProgressBarProps {
   value: number;
@@ -26,7 +46,8 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
     ref
   ) => {
     const clampedValue = Math.max(min, Math.min(max, value));
-    const percentage = ((clampedValue - min) / (max - min)) * 100;
+    const range = max - min; // Prevent division by zero when max equals min
+    const percentage = range === 0 ? 0 : ((clampedValue - min) / range) * 100;
 
     return (
       <div
@@ -37,19 +58,11 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
         aria-valuemax={max}
         aria-label={ariaLabel}
         aria-describedby={ariaDescribedby}
-        className={twMerge(
-          "relative w-full overflow-hidden",
-          "bg-pz-system-bg-4 rounded-pz-max h-1.5",
-          className
-        )}
+        className={twMerge(progressBarVariants(), className)}
         {...props}
       >
         <div
-          className={twMerge(
-            "h-full transition-all duration-300 ease-out rounded-pz-max",
-            "bg-pz-system-bg-primary",
-            rtl ? "ml-auto" : ""
-          )}
+          className={progressFillVariants({ rtl })}
           style={{
             width: `${percentage}%`,
           }}
