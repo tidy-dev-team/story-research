@@ -8,13 +8,10 @@ export interface TagProps extends VariantProps<typeof tagVariants> {
 
 const tagVariants = cva(
   [
-    // Base styles
     "inline-flex",
     "items-center",
     "justify-center",
     "font-heebo",
-    "text-xs",
-    "font-normal",
     "rounded-full",
     "text-center",
     "leading-[1.46875]",
@@ -22,7 +19,7 @@ const tagVariants = cva(
     "h-[26px]",
     "pz-body-s400",
     "p-pz-4xs",
-    "text-pz-system-fg-1", // white text for all variants
+    "text-pz-system-fg-1",
   ],
   {
     variants: {
@@ -42,12 +39,12 @@ export const Tag: React.FC<TagProps> = ({ value, type, className }) => {
   const displayValue = `+${clampedValue}`;
 
   return (
-    <span
+    <div
       className={tagVariants({ type, className })}
       aria-label={`${clampedValue} items`}
       role="status"
     >
-      {displayValue}
-    </span>
+      <span className="translate-y-px">{displayValue}</span>
+    </div>
   );
 };
