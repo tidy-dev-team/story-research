@@ -4,6 +4,7 @@ import React from "react";
 import { Button, ButtonSize, ButtonType } from "./Button";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
+import AddIcon from "@mui/icons-material/Add";
 
 type ButtonStoryArgs = ComponentProps<typeof Button> & {
   hasLeadingIcon?: boolean;
@@ -21,7 +22,6 @@ const meta = {
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
-    focused: false,
   },
   parameters: {
     layout: "centered",
@@ -63,9 +63,9 @@ const meta = {
         defaultValue: { summary: ButtonSize.Medium },
       },
       labels: {
-        [ButtonSize.Small]: "s",
-        [ButtonSize.Medium]: "m",
-        [ButtonSize.Large]: "l",
+        [ButtonSize.Small]: "Small",
+        [ButtonSize.Medium]: "Medium",
+        [ButtonSize.Large]: "Large",
       },
     },
     rtl: {
@@ -110,14 +110,6 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
-    focused: {
-      control: "boolean",
-      description: "Sets the focus state of the button",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
-      },
-    },
     onClick: {
       action: "clicked",
       description: "Optional click handler",
@@ -136,20 +128,18 @@ const renderIcon = (
   condition: boolean | undefined,
   IconComponent: typeof LanguageIcon
 ) => {
-  return condition ? <IconComponent sx={{ fontSize: "inherit" }} /> : undefined;
+  return condition ? <IconComponent /> : undefined;
 };
 
 const renderStory = ({
   hasLeadingIcon,
   hasTrailingIcon,
   disabled,
-  focused,
   ...args
 }: ButtonStoryArgs) => (
   <Button
     {...args}
     disabled={disabled}
-    focused={disabled ? false : focused}
     leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
     trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
   />
@@ -158,6 +148,7 @@ const renderStory = ({
 export const Primary: Story = {
   args: {
     type: ButtonType.Primary,
+    label: "Primary Button",
   },
   render: renderStory,
 };
@@ -165,6 +156,7 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     type: ButtonType.Secondary,
+    label: "Secondary Button",
   },
   render: renderStory,
 };
@@ -172,13 +164,15 @@ export const Secondary: Story = {
 export const Ghost: Story = {
   args: {
     type: ButtonType.Ghost,
+    label: "Ghost Button",
   },
   render: renderStory,
 };
 
 export const WithLeadingIcon: Story = {
   args: {
-    label: "Visit Website",
+    type: ButtonType.Primary,
+    label: "With Leading Icon",
     hasLeadingIcon: true,
   },
   render: renderStory,
@@ -186,17 +180,169 @@ export const WithLeadingIcon: Story = {
 
 export const WithTrailingIcon: Story = {
   args: {
-    label: "Next Page",
+    type: ButtonType.Secondary,
+    label: "With Trailing Icon",
     hasTrailingIcon: true,
+  },
+  render: renderStory,
+};
+
+export const WithBothIcons: Story = {
+  args: {
+    type: ButtonType.Ghost,
+    label: "Both Icons",
+    hasLeadingIcon: true,
+    hasTrailingIcon: true,
+  },
+  render: renderStory,
+};
+
+export const SmallSize: Story = {
+  name: "Size Small",
+  args: {
+    size: ButtonSize.Small,
+    label: "Small Button",
+    hasLeadingIcon: true,
+  },
+  render: renderStory,
+};
+
+export const MediumSize: Story = {
+  name: "Size Medium",
+  args: {
+    size: ButtonSize.Medium,
+    label: "Medium Button",
+    hasLeadingIcon: true,
+  },
+  render: renderStory,
+};
+
+export const LargeSize: Story = {
+  name: "Size Large",
+  args: {
+    size: ButtonSize.Large,
+    label: "Large Button",
+    hasLeadingIcon: true,
   },
   render: renderStory,
 };
 
 export const RTL: Story = {
   args: {
-    label: "טקסט",
+    type: ButtonType.Primary,
+    label: "زر عربي",
     rtl: true,
     hasLeadingIcon: true,
+    hasTrailingIcon: true,
   },
   render: renderStory,
+};
+
+export const Disabled: Story = {
+  args: {
+    type: ButtonType.Primary,
+    label: "Disabled Button",
+    disabled: true,
+    hasLeadingIcon: true,
+    hasTrailingIcon: true,
+  },
+  render: renderStory,
+};
+
+// Icon sizing verification story
+export const IconSizingTest: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6 p-4">
+      <h3 className="text-lg font-semibold">Icon Sizing Test</h3>
+
+      <div className="flex flex-col gap-4">
+        <div className="border-b pb-2">
+          <h4 className="font-medium mb-2">
+            Small Buttons (Should be 16px icons)
+          </h4>
+          <div className="flex gap-4 items-center">
+            <Button
+              size={ButtonSize.Small}
+              label="Small"
+              leadingIcon={<AddIcon />}
+            />
+            <Button
+              size={ButtonSize.Small}
+              label="Small"
+              trailingIcon={<AddIcon />}
+            />
+            <Button
+              size={ButtonSize.Small}
+              label="Both"
+              leadingIcon={<AddIcon />}
+              trailingIcon={<AddIcon />}
+            />
+          </div>
+        </div>
+
+        <div className="border-b pb-2">
+          <h4 className="font-medium mb-2">
+            Medium Buttons (Should be 20px icons)
+          </h4>
+          <div className="flex gap-4 items-center">
+            <Button
+              size={ButtonSize.Medium}
+              label="Medium"
+              leadingIcon={<AddIcon />}
+            />
+            <Button
+              size={ButtonSize.Medium}
+              label="Medium"
+              trailingIcon={<AddIcon />}
+            />
+            <Button
+              size={ButtonSize.Medium}
+              label="Both"
+              leadingIcon={<AddIcon />}
+              trailingIcon={<AddIcon />}
+            />
+          </div>
+        </div>
+
+        <div className="border-b pb-2">
+          <h4 className="font-medium mb-2">
+            Large Buttons (Should be 24px icons)
+          </h4>
+          <div className="flex gap-4 items-center">
+            <Button
+              size={ButtonSize.Large}
+              label="Large"
+              leadingIcon={<AddIcon />}
+            />
+            <Button
+              size={ButtonSize.Large}
+              label="Large"
+              trailingIcon={<AddIcon />}
+            />
+            <Button
+              size={ButtonSize.Large}
+              label="Both"
+              leadingIcon={<AddIcon />}
+              trailingIcon={<AddIcon />}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="text-sm text-gray-600 mt-4">
+        <p>
+          <strong>Expected:</strong> Small = 16px, Medium = 20px, Large = 24px
+        </p>
+        <p>Check the browser inspector to verify actual icon sizes.</p>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Test story to verify that icons are properly sized based on button size. Icons should be 16px for Small, 20px for Medium, and 24px for Large buttons.",
+      },
+    },
+  },
 };

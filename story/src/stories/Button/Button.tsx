@@ -17,19 +17,6 @@ export const ButtonType = {
 export type ButtonSizeType = (typeof ButtonSize)[keyof typeof ButtonSize];
 export type ButtonTypeType = (typeof ButtonType)[keyof typeof ButtonType];
 
-const iconStyles = cva("", {
-  variants: {
-    size: {
-      [ButtonSize.Small]: "[&>*]:h-4 [&>*]:w-4",
-      [ButtonSize.Medium]: "[&>*]:h-5 [&>*]:w-5",
-      [ButtonSize.Large]: "[&>*]:h-6 [&>*]:w-6",
-    },
-  },
-  defaultVariants: {
-    size: ButtonSize.Medium,
-  },
-});
-
 const buttonStyles = cva(
   [
     "h-6",
@@ -47,6 +34,10 @@ const buttonStyles = cva(
     "overflow-hidden",
     "disabled:cursor-not-allowed",
     "disabled:pointer-events-none",
+    "focus:outline-none",
+    "focus-visible:ring-2",
+    "focus-visible:ring-pz-system-border-focused-1",
+    "focus-visible:ring-offset-0",
   ],
   {
     variants: {
@@ -102,16 +93,11 @@ const buttonStyles = cva(
         true: "flex-row-reverse",
         false: "",
       },
-      focused: {
-        true: "ring-2 ring-pz-system-border-focused-1 rounded-pz-2xs",
-        false: "",
-      },
     },
     defaultVariants: {
       type: ButtonType.Primary,
       size: ButtonSize.Medium,
       rtl: false,
-      focused: false,
     },
   }
 );
@@ -134,7 +120,6 @@ export const Button = ({
   type,
   size,
   rtl,
-  focused,
   label,
   leadingIcon,
   trailingIcon,
@@ -143,49 +128,53 @@ export const Button = ({
   disabled,
   ...rest
 }: ButtonProps) => {
-  const content = [
-    leadingIcon && (
-      <span
-        key="leadingIcon"
-        className={`flex items-center ${iconStyles({ size })}`}
-      >
-        {leadingIcon}
-      </span>
-    ),
-    <span
-      key="label"
-      className="text-sm font-normal leading-none translate-y-px"
-    >
-      {label}
-    </span>,
-    trailingIcon && (
-      <span
-        key="trailingIcon"
-        className={`flex items-center ${iconStyles({ size })}`}
-      >
-        {trailingIcon}
-      </span>
-    ),
-  ].filter(Boolean);
+  // Get the icon size based on button size
+  const iconSize = {
+    [ButtonSize.Small]: 16,
+    [ButtonSize.Medium]: 20,
+    [ButtonSize.Large]: 24,
+  }[size || ButtonSize.Medium];
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (disabled) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-    onClick?.(event);
-  };
+  // Clone icons with proper sizing
+  const cloneIconWithSize = (icon: React.ReactElement | undefined) =>
+    icon
+      ? React.cloneElement(icon as React.ReactElement<any>, {
+          style: {
+            fontSize: iconSize,
+            width: iconSize,
+            height: iconSize,
+            ...((icon as any)?.props?.style || {}),
+          },
+        })
+      : null;
+
+  const sizedLeadingIcon = cloneIconWithSize(leadingIcon);
+  const sizedTrailingIcon = cloneIconWithSize(trailingIcon);
 
   return (
     <button
-      className={twMerge(buttonStyles({ type, size, rtl, focused }), className)}
+      className={twMerge(buttonStyles({ type, size, rtl }), className)}
       type="button"
-      onClick={handleClick}
+      onClick={onClick}
       disabled={disabled}
       {...rest}
     >
-      {content}
+      {sizedLeadingIcon && (
+        <span key="leadingIcon" className="flex items-center leading-none">
+          {sizedLeadingIcon}
+        </span>
+      )}
+      <span
+        key="label"
+        className="text-sm font-normal leading-none translate-y-px"
+      >
+        {label}
+      </span>
+      {sizedTrailingIcon && (
+        <span key="trailingIcon" className="flex items-center leading-none">
+          {sizedTrailingIcon}
+        </span>
+      )}
     </button>
   );
 };

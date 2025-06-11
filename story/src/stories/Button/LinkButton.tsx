@@ -22,6 +22,12 @@ const linkButtonStyles = cva(
     "underline",
     "transition-colors",
     "text-pz-system-fg-primary",
+    "hover:text-pz-system-fg-hover",
+    "active:text-pz-system-fg-pressed",
+    "aria-disabled:text-pz-system-fg-disabled",
+    "aria-disabled:cursor-not-allowed",
+    "aria-disabled:no-underline",
+    "aria-disabled:pointer-events-none",
   ],
   {
     variants: {
@@ -29,70 +35,42 @@ const linkButtonStyles = cva(
         true: "flex-row-reverse",
         false: "",
       },
-      focused: {
-        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-2xs",
-        false: "",
-      },
-      disabled: {
-        true: "text-pz-system-fg-disabled !cursor-not-allowed no-underline",
-        false: "hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
-      },
     },
     defaultVariants: {
       rtl: false,
-      focused: false,
-      disabled: false,
     },
   }
 );
 
-type BaseLinkButtonProps = Omit<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href"
->;
-
 interface LinkButtonProps
-  extends BaseLinkButtonProps,
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof linkButtonStyles> {
   label: string;
   href: string;
+  disabled?: boolean;
   trailingIcon?: ReactElement;
 }
 
 export const LinkButton = ({
   rtl,
-  focused,
   disabled,
   label,
   href,
   trailingIcon,
   className,
   ...rest
-}: LinkButtonProps): ReactElement => {
-  const iconWrapper = (icon: ReactElement, key: string) => (
-    <span key={key} className="flex items-center h-5 w-5">
-      {icon}
-    </span>
-  );
-
-  const content = [
-    <span key="label" className="font-normal">
-      {label}
-    </span>,
-    trailingIcon && iconWrapper(trailingIcon, "trailingIcon"),
-  ].filter(Boolean);
-
+}: LinkButtonProps) => {
   return (
     <a
-      className={twMerge(
-        linkButtonStyles({ rtl, focused, disabled }),
-        className
-      )}
+      className={twMerge(linkButtonStyles({ rtl }), className)}
       href={!disabled ? href : undefined}
       {...(disabled && { "aria-disabled": true })}
       {...rest}
     >
-      {content}
+      <span>{label}</span>
+      {trailingIcon && (
+        <span className="flex items-center h-5 w-5">{trailingIcon}</span>
+      )}
     </a>
   );
 };

@@ -17,7 +17,6 @@ const meta = {
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
-    focused: false,
   },
   parameters: {
     layout: "centered",
@@ -93,15 +92,6 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
-    focused: {
-      control: "boolean",
-      description:
-        "If true, the link button will be displayed in a focused state.",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
-      },
-    },
   },
 } satisfies Meta<LinkButtonStoryArgs>;
 
@@ -119,13 +109,11 @@ const renderIcon = (
 const renderStory = ({
   hasTrailingIcon,
   disabled,
-  focused,
   ...args
 }: LinkButtonStoryArgs) => (
   <LinkButton
     {...args}
     disabled={disabled}
-    focused={disabled ? false : focused}
     trailingIcon={renderIcon(hasTrailingIcon, ArrowForwardIcon)}
   />
 );

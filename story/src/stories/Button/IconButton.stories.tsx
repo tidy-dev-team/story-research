@@ -1,22 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
-import { Button, ButtonSize, ButtonType } from "./IconButton";
+import { IconButton, ButtonSize, ButtonType } from "./IconButton";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AddIcon from "@mui/icons-material/Add";
 
-type IconButtonStoryArgs = ComponentProps<typeof Button>;
+type IconButtonStoryArgs = ComponentProps<typeof IconButton>;
 
 const meta = {
   title: "Component/Button/IconButton",
-  component: Button,
+  component: IconButton,
   args: {
     type: ButtonType.Primary,
     size: ButtonSize.Medium,
     disabled: false,
-    focused: false,
   },
   parameters: {
     layout: "centered",
@@ -70,18 +69,11 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
-    focused: {
-      control: "boolean",
-      description: "Sets the focus state of the button",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
-      },
-    },
     onClick: {
       action: "clicked",
       description: "Optional click handler",
       table: {
+        disable: true,
         category: "Events",
       },
     },
@@ -95,21 +87,21 @@ type Story = StoryObj<IconButtonStoryArgs>;
 export const Primary: Story = {
   args: {
     type: ButtonType.Primary,
-    icon: <HeadphonesIcon sx={{ fontSize: "inherit" }} />,
+    icon: <HeadphonesIcon />,
   },
 };
 
 export const Secondary: Story = {
   args: {
     type: ButtonType.Secondary,
-    icon: <SettingsIcon sx={{ fontSize: "inherit" }} />,
+    icon: <SettingsIcon />,
   },
 };
 
 export const Ghost: Story = {
   args: {
     type: ButtonType.Ghost,
-    icon: <LanguageIcon sx={{ fontSize: "inherit" }} />,
+    icon: <LanguageIcon />,
   },
 };
 
@@ -117,7 +109,7 @@ export const XSmall: Story = {
   name: "Size xs",
   args: {
     size: ButtonSize.XSmall,
-    icon: <AddIcon sx={{ fontSize: "inherit" }} />,
+    icon: <AddIcon />,
   },
 };
 
@@ -125,7 +117,7 @@ export const Small: Story = {
   name: "Size s",
   args: {
     size: ButtonSize.Small,
-    icon: <LanguageIcon sx={{ fontSize: "inherit" }} />,
+    icon: <LanguageIcon />,
   },
 };
 
@@ -133,6 +125,14 @@ export const Large: Story = {
   name: "Size l",
   args: {
     size: ButtonSize.Large,
-    icon: <HeadphonesIcon sx={{ fontSize: "inherit" }} />,
+    icon: <HeadphonesIcon />,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    type: ButtonType.Primary,
+    icon: <SettingsIcon />,
+    disabled: true,
   },
 };
