@@ -128,14 +128,12 @@ export const Button = ({
   disabled,
   ...rest
 }: ButtonProps) => {
-  // Get the icon size based on button size
   const iconSize = {
     [ButtonSize.Small]: 16,
     [ButtonSize.Medium]: 20,
     [ButtonSize.Large]: 24,
   }[size || ButtonSize.Medium];
 
-  // Clone icons with proper sizing
   const cloneIconWithSize = (icon: React.ReactElement | undefined) =>
     icon
       ? React.cloneElement(icon as React.ReactElement<any>, {
