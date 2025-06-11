@@ -17,6 +17,19 @@ export const ButtonType = {
 export type ButtonSizeType = (typeof ButtonSize)[keyof typeof ButtonSize];
 export type ButtonTypeType = (typeof ButtonType)[keyof typeof ButtonType];
 
+const iconStyles = cva("", {
+  variants: {
+    size: {
+      [ButtonSize.Small]: "[&>*]:h-4 [&>*]:w-4",
+      [ButtonSize.Medium]: "[&>*]:h-5 [&>*]:w-5",
+      [ButtonSize.Large]: "[&>*]:h-6 [&>*]:w-6",
+    },
+  },
+  defaultVariants: {
+    size: ButtonSize.Medium,
+  },
+});
+
 const buttonStyles = cva(
   [
     "h-6",
@@ -71,7 +84,7 @@ const buttonStyles = cva(
         [ButtonSize.Small]: ["px-3", "py-0.5", "h-6", "pz-label-m"].join(" "),
         [ButtonSize.Medium]: [
           "max-h-8",
-          " min-h-8",
+          "min-h-8",
           "px-4 py-1",
           "pz-label-l",
         ].join(" "),
@@ -132,7 +145,10 @@ export const Button = ({
 }: ButtonProps) => {
   const content = [
     leadingIcon && (
-      <span key="leadingIcon" className="flex items-center">
+      <span
+        key="leadingIcon"
+        className={`flex items-center ${iconStyles({ size })}`}
+      >
         {leadingIcon}
       </span>
     ),
@@ -140,7 +156,10 @@ export const Button = ({
       {label}
     </span>,
     trailingIcon && (
-      <span key="trailingIcon" className="flex items-center">
+      <span
+        key="trailingIcon"
+        className={`flex items-center ${iconStyles({ size })}`}
+      >
         {trailingIcon}
       </span>
     ),
