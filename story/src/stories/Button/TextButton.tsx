@@ -16,14 +16,11 @@ const buttonStyles = cva(
     "ring-offset-1",
     "ring-offset-pz-gray-1000",
     "focus-visible:ring-pz-system-border-focused-1",
+    "font-['Heebo',_sans-serif]",
     "pz-body-m400",
     "cursor-pointer",
     "p-1",
     "text-pz-system-fg-primary",
-    "hover:enabled:text-pz-system-fg-hover",
-    "active:enabled:text-pz-system-fg-pressed",
-    "disabled:cursor-not-allowed",
-    "disabled:pointer-events-none",
   ],
   {
     variants: {
@@ -36,8 +33,8 @@ const buttonStyles = cva(
         false: "",
       },
       disabled: {
-        true: "text-pz-system-fg-disabled",
-        false: "",
+        true: "text-pz-system-fg-disabled !cursor-not-allowed pointer-events-none",
+        false: "hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
       },
     },
     defaultVariants: {
