@@ -56,7 +56,7 @@ const Severity: React.FC<SeverityProps> = ({
   return (
     <div className={cn(severityVariants({ rtl }), className)} {...props}>
       {indicator}
-      <div className={rtl ? "text-right mt-0.75" : "text-left mt-0.75"}>
+      <div className={rtl ? "text-right mt-0.5" : "text-left mt-0.5"}>
         <span className="text-pz-system-fg-1 pz-label-m">
           {rtl ? LEVEL_LABELS_HE[level] : LEVEL_LABELS[level]}
         </span>
