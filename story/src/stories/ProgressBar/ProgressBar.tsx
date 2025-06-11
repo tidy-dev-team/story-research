@@ -1,5 +1,5 @@
 import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
 const progressBarVariants = cva(
@@ -12,11 +12,7 @@ const progressFillVariants = cva(
     variants: {
       rtl: {
         true: "ml-auto",
-        false: "",
       },
-    },
-    defaultVariants: {
-      rtl: false,
     },
   }
 );
@@ -32,21 +28,9 @@ export interface ProgressBarProps {
 }
 
 export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
-  (
-    {
-      value,
-      max = 100,
-      min = 0,
-      rtl = false,
-      className,
-      "aria-label": ariaLabel,
-      "aria-describedby": ariaDescribedby,
-      ...props
-    },
-    ref
-  ) => {
+  ({ value, max = 100, min = 0, rtl = false, className, ...props }, ref) => {
     const clampedValue = Math.max(min, Math.min(max, value));
-    const range = max - min; // Prevent division by zero when max equals min
+    const range = max - min;
     const percentage = range === 0 ? 0 : ((clampedValue - min) / range) * 100;
 
     return (
@@ -56,16 +40,12 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
         aria-valuenow={clampedValue}
         aria-valuemin={min}
         aria-valuemax={max}
-        aria-label={ariaLabel}
-        aria-describedby={ariaDescribedby}
         className={twMerge(progressBarVariants(), className)}
         {...props}
       >
         <div
-          className={progressFillVariants({ rtl })}
-          style={{
-            width: `${percentage}%`,
-          }}
+          className={progressFillVariants({ rtl: rtl || undefined })}
+          style={{ width: `${percentage}%` }}
         />
       </div>
     );
