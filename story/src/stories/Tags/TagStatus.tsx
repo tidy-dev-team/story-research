@@ -2,6 +2,7 @@ import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 export interface TagStatusProps extends VariantProps<typeof tagStatusVariants> {
+  type: keyof typeof statusText;
   rtl?: boolean;
   className?: string;
 }
@@ -37,11 +38,11 @@ const tagStatusVariants = cva(
     "gap-1",
     "px-4",
     "py-2",
-    "font-heebo",
     "pz-label-m",
     "rounded-pz-2xs",
     "text-center",
     "leading-[1.46875em]",
+    "h-6",
   ],
   {
     variants: {
@@ -53,6 +54,9 @@ const tagStatusVariants = cva(
         loading: "bg-pz-system-status-loading-2 text-pz-system-fg-1",
       },
     },
+    defaultVariants: {
+      type: "ok",
+    },
   }
 );
 
@@ -61,7 +65,12 @@ export const TagStatus: React.FC<TagStatusProps> = ({
   rtl = false,
   className,
 }) => {
-  const text = rtl ? statusText[type!].rtl : statusText[type!].ltr;
+  const text =
+    type && statusText[type]
+      ? rtl
+        ? statusText[type].rtl
+        : statusText[type].ltr
+      : "";
 
   return (
     <span
