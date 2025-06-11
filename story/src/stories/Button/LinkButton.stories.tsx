@@ -2,11 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
 import { LinkButton } from "./LinkButton";
-import LanguageIcon from "@mui/icons-material/Language";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 type LinkButtonStoryArgs = ComponentProps<typeof LinkButton> & {
-  hasLeadingIcon?: boolean;
   hasTrailingIcon?: boolean;
 };
 
@@ -16,7 +14,6 @@ const meta = {
   args: {
     label: "Link Button",
     href: "https://www.example.com",
-    hasLeadingIcon: false,
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
@@ -46,28 +43,12 @@ const meta = {
         category: "Content",
       },
     },
-    hasLeadingIcon: {
-      control: "boolean",
-      description: "If true, a leading icon is displayed.",
-      table: {
-        category: "Content",
-        defaultValue: { summary: "false" },
-      },
-    },
     hasTrailingIcon: {
       control: "boolean",
       description: "If true, a trailing icon is displayed.",
       table: {
         category: "Content",
         defaultValue: { summary: "false" },
-      },
-    },
-    leadingIcon: {
-      description:
-        "The leading icon element. Used internally when `hasLeadingIcon` is true.",
-      table: {
-        category: "Content",
-        disable: true,
       },
     },
     trailingIcon: {
@@ -130,13 +111,12 @@ type Story = StoryObj<LinkButtonStoryArgs>;
 
 const renderIcon = (
   condition: boolean | undefined,
-  IconComponent: typeof LanguageIcon
+  IconComponent: typeof ArrowForwardIcon
 ) => {
-  return condition ? <IconComponent sx={{ fontSize: "14px" }} /> : undefined;
+  return condition ? <IconComponent sx={{ fontSize: "20px" }} /> : undefined;
 };
 
 const renderStory = ({
-  hasLeadingIcon,
   hasTrailingIcon,
   disabled,
   focused,
@@ -146,7 +126,6 @@ const renderStory = ({
     {...args}
     disabled={disabled}
     focused={disabled ? false : focused}
-    leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
     trailingIcon={renderIcon(hasTrailingIcon, ArrowForwardIcon)}
   />
 );
@@ -159,18 +138,9 @@ export const Default: Story = {
   render: renderStory,
 };
 
-export const WithLeadingIcon: Story = {
-  args: {
-    label: "Visit Website",
-    href: "#",
-    hasLeadingIcon: true,
-  },
-  render: renderStory,
-};
-
 export const WithTrailingIcon: Story = {
   args: {
-    label: "Read More",
+    label: "Visit Website",
     href: "#",
     hasTrailingIcon: true,
   },
@@ -182,7 +152,17 @@ export const RTL: Story = {
     label: "קישור",
     href: "#",
     rtl: true,
-    hasLeadingIcon: true,
+    hasTrailingIcon: true,
+  },
+  render: renderStory,
+};
+
+export const Disabled: Story = {
+  args: {
+    label: "Disabled Link",
+    href: "#",
+    disabled: true,
+    hasTrailingIcon: true,
   },
   render: renderStory,
 };

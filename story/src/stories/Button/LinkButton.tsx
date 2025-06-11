@@ -18,13 +18,10 @@ const linkButtonStyles = cva(
     "ring-offset-1",
     "ring-offset-pz-gray-1000",
     "focus-visible:ring-pz-system-border-focused-1",
-    "font-['Heebo',_sans-serif]",
-    "pz-body-m400",
+    "pz-link400",
     "underline",
     "transition-colors",
     "text-pz-system-fg-primary",
-    "hover:not([aria-disabled=true]):text-pz-system-fg-hover",
-    "active:not([aria-disabled=true]):text-pz-system-fg-pressed",
   ],
   {
     variants: {
@@ -38,7 +35,7 @@ const linkButtonStyles = cva(
       },
       disabled: {
         true: "text-pz-system-fg-disabled !cursor-not-allowed no-underline",
-        false: "",
+        false: "hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
       },
     },
     defaultVariants: {
@@ -59,7 +56,6 @@ interface LinkButtonProps
     VariantProps<typeof linkButtonStyles> {
   label: string;
   href: string;
-  leadingIcon?: ReactElement;
   trailingIcon?: ReactElement;
 }
 
@@ -69,19 +65,17 @@ export const LinkButton = ({
   disabled,
   label,
   href,
-  leadingIcon,
   trailingIcon,
   className,
   ...rest
 }: LinkButtonProps): ReactElement => {
   const iconWrapper = (icon: ReactElement, key: string) => (
-    <span key={key} className="flex items-center text-[14px]">
+    <span key={key} className="flex items-center h-5 w-5">
       {icon}
     </span>
   );
 
   const content = [
-    leadingIcon && iconWrapper(leadingIcon, "leadingIcon"),
     <span key="label" className="font-normal">
       {label}
     </span>,
@@ -95,7 +89,7 @@ export const LinkButton = ({
         className
       )}
       href={!disabled ? href : undefined}
-      aria-disabled={disabled || false}
+      {...(disabled && { "aria-disabled": true })}
       {...rest}
     >
       {content}
