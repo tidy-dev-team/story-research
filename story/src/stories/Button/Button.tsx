@@ -1,18 +1,21 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
-export enum ButtonSize {
-  Small = "S",
-  Medium = "M",
-  Large = "L",
-}
+export const ButtonSize = {
+  Small: "S",
+  Medium: "M",
+  Large: "L",
+} as const;
 
-export enum ButtonType {
-  Primary = "primary",
-  Secondary = "secondary",
-  Ghost = "ghost",
-}
+export const ButtonType = {
+  Primary: "primary",
+  Secondary: "secondary",
+  Ghost: "ghost",
+} as const;
+
+export type ButtonSizeType = (typeof ButtonSize)[keyof typeof ButtonSize];
+export type ButtonTypeType = (typeof ButtonType)[keyof typeof ButtonType];
 
 const buttonStyles = cva(
   [
@@ -29,12 +32,6 @@ const buttonStyles = cva(
     "gap-2",
     "cursor-pointer",
     "overflow-hidden",
-    "focus:outline-none",
-    "focus-visible:ring-2",
-    "ring-offset-1",
-    "ring-offset-pz-gray-1000",
-    "focus-visible:ring-pz-system-border-focused-1",
-    "font-['Heebo',_sans-serif]",
     "disabled:cursor-not-allowed",
     "disabled:pointer-events-none",
   ],
@@ -93,7 +90,7 @@ const buttonStyles = cva(
         false: "",
       },
       focused: {
-        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-2xs",
+        true: "ring-2 ring-pz-system-border-focused-1 rounded-pz-2xs",
         false: "",
       },
     },
@@ -115,8 +112,8 @@ interface ButtonProps
   extends BaseButtonProps,
     VariantProps<typeof buttonStyles> {
   label: string;
-  leadingIcon?: ReactElement;
-  trailingIcon?: ReactElement;
+  leadingIcon?: React.ReactElement;
+  trailingIcon?: React.ReactElement;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -132,7 +129,7 @@ export const Button = ({
   onClick,
   disabled,
   ...rest
-}: ButtonProps): ReactElement => {
+}: ButtonProps) => {
   const content = [
     leadingIcon && (
       <span key="leadingIcon" className="flex items-center">
