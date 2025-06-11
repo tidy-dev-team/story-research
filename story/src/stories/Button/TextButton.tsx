@@ -16,7 +16,6 @@ const buttonStyles = cva(
     "ring-offset-1",
     "ring-offset-pz-gray-1000",
     "focus-visible:ring-pz-system-border-focused-1",
-    "font-['Heebo',_sans-serif]",
     "pz-body-m400",
     "cursor-pointer",
     "p-1",
@@ -75,14 +74,17 @@ export const TextButton = ({
   ...rest
 }: TextButtonProps): ReactElement => {
   const iconWrapper = (icon: ReactElement, key: string) => (
-    <span key={key} className="flex items-center text-[14px]">
+    <span
+      key={key}
+      className="flex items-center justify-center h-4 w-4 [&>*]:w-4 [&>*]:h-4 [&>*]:text-[16px] [&>*]:leading-none"
+    >
       {icon}
     </span>
   );
 
   const content = [
     leadingIcon && iconWrapper(leadingIcon, "leadingIcon"),
-    <span key="label" className="font-normal">
+    <span key="label" className="font-normal translate-y-px">
       {label}
     </span>,
     trailingIcon && iconWrapper(trailingIcon, "trailingIcon"),
