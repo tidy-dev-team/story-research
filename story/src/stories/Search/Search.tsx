@@ -45,7 +45,7 @@ const searchStyles = cva(
         false: "",
       },
       focused: {
-        true: "ring-2 ring-pz-system-border-focused-1 ring-offset-2 ring-offset-pz-system-bg-1",
+        true: "ring-2 ring-pz-system-border-focused-1 ring-offset-0",
         false: "",
       },
     },
