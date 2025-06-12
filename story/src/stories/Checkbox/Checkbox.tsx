@@ -10,6 +10,13 @@ export enum CheckboxState {
   Indeterminate = "indeterminate",
 }
 
+// Icon mapping for cleaner rendering
+const CHECKBOX_ICONS = {
+  [CheckboxState.Indeterminate]: IndeterminateCheckBoxIcon,
+  [CheckboxState.Checked]: CheckBoxIcon,
+  [CheckboxState.Unchecked]: CheckBoxOutlineBlankIcon,
+} as const;
+
 // Common styles for consistent theming
 const DISABLED_STYLES = "text-pz-system-fg-disabled cursor-not-allowed";
 const ENABLED_CURSOR = "cursor-pointer";
@@ -165,20 +172,13 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         className,
       });
 
-      const iconProps = {
-        className: iconClasses,
-        style: { fontSize: 20, width: 20, height: 20 },
-      };
-
-      switch (state) {
-        case CheckboxState.Indeterminate:
-          return <IndeterminateCheckBoxIcon {...iconProps} />;
-        case CheckboxState.Checked:
-          return <CheckBoxIcon {...iconProps} />;
-        case CheckboxState.Unchecked:
-        default:
-          return <CheckBoxOutlineBlankIcon {...iconProps} />;
-      }
+      const IconComponent = CHECKBOX_ICONS[state];
+      return (
+        <IconComponent
+          className={iconClasses}
+          style={{ fontSize: 20, width: 20, height: 20 }}
+        />
+      );
     };
 
     const shouldShowCount = alwaysShowCount || safeCount > 0;
