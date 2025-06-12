@@ -10,11 +10,10 @@ export enum CheckboxState {
   Indeterminate = "indeterminate",
 }
 
-// Common disabled styles
-const disabledVariants = {
-  true: "text-pz-system-fg-disabled cursor-not-allowed",
-  false: "",
-};
+// Common styles for consistent theming
+const DISABLED_STYLES = "text-pz-system-fg-disabled cursor-not-allowed";
+const ENABLED_CURSOR = "cursor-pointer";
+const TRANSITION_STYLES = "transition-colors duration-200";
 
 const checkboxIconStyles = cva(
   ["transition-all", "duration-200", "focus:outline-none"],
@@ -26,8 +25,8 @@ const checkboxIconStyles = cva(
         indeterminate: "",
       },
       disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed",
-        false: "cursor-pointer",
+        true: DISABLED_STYLES,
+        false: ENABLED_CURSOR,
       },
       focused: {
         true: "ring-2 ring-pz-system-border-focused-1 ring-offset-0 rounded-pz-3xs",
@@ -63,8 +62,8 @@ const containerStyles = cva("group flex items-start gap-2", {
       false: "flex-row",
     },
     disabled: {
-      true: "text-pz-system-fg-disabled cursor-not-allowed",
-      false: "cursor-pointer",
+      true: DISABLED_STYLES,
+      false: ENABLED_CURSOR,
     },
   },
   defaultVariants: {
@@ -76,11 +75,11 @@ const containerStyles = cva("group flex items-start gap-2", {
 const labelStyles = cva(
   [
     "select-none",
-    "transition-colors",
-    "duration-200",
+    TRANSITION_STYLES,
     "pz-body-m400",
-    "translate-y-1",
+    "-translate-y-px",
     "max-w-[480px]",
+    "leading-6",
   ],
   {
     variants: {
@@ -94,15 +93,27 @@ const labelStyles = cva(
 );
 
 const iconStyles = cva(
-  ["text-pz-system-fg-3", "transition-colors", "duration-200"],
+  [
+    "text-pz-system-fg-3",
+    TRANSITION_STYLES,
+    "flex",
+    "items-center",
+    "justify-center",
+    "translate-y-0.5",
+  ],
   {
-    variants: { disabled: disabledVariants },
+    variants: {
+      disabled: {
+        true: "text-pz-system-fg-disabled",
+        false: "text-pz-system-fg-3",
+      },
+    },
     defaultVariants: { disabled: false },
   }
 );
 
 const countStyles = cva(
-  ["pz-body-m400", "leading-[1.46875em]", "transition-colors", "duration-200"],
+  ["pz-body-m400", "leading-[1.46875em]", TRANSITION_STYLES],
   {
     variants: {
       disabled: {
@@ -119,7 +130,6 @@ interface CheckboxProps {
   state?: CheckboxState;
   disabled?: boolean;
   rtl?: boolean;
-  focused?: boolean;
   icon?: ReactNode;
   alwaysShowCount?: boolean;
   count?: number;
@@ -133,7 +143,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       state = CheckboxState.Unchecked,
       rtl = false,
       disabled = false,
-      focused = false,
       icon,
       label,
       alwaysShowCount = false,
@@ -143,20 +152,12 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     },
     ref
   ): React.ReactElement => {
-    // Ensure count is never negative
     const safeCount = Math.max(0, count || 0);
     const [internalFocused, setInternalFocused] = useState(false);
     const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
-    const showFocusRing = focused || (internalFocused && isKeyboardFocus);
+    const showFocusRing = internalFocused && isKeyboardFocus;
 
     const renderCheckboxIcon = () => {
-      const iconSize = 20; // Standard size for checkbox icons
-      const iconStyle = {
-        fontSize: iconSize,
-        width: iconSize,
-        height: iconSize,
-      };
-
       const iconClasses = checkboxIconStyles({
         state,
         disabled,
@@ -164,24 +165,19 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         className,
       });
 
+      const iconProps = {
+        className: iconClasses,
+        style: { fontSize: 20, width: 20, height: 20 },
+      };
+
       switch (state) {
         case CheckboxState.Indeterminate:
-          return (
-            <IndeterminateCheckBoxIcon
-              className={iconClasses}
-              style={iconStyle}
-            />
-          );
+          return <IndeterminateCheckBoxIcon {...iconProps} />;
         case CheckboxState.Checked:
-          return <CheckBoxIcon className={iconClasses} style={iconStyle} />;
+          return <CheckBoxIcon {...iconProps} />;
         case CheckboxState.Unchecked:
         default:
-          return (
-            <CheckBoxOutlineBlankIcon
-              className={iconClasses}
-              style={iconStyle}
-            />
-          );
+          return <CheckBoxOutlineBlankIcon {...iconProps} />;
       }
     };
 
@@ -193,6 +189,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         onMouseDown={() => setIsKeyboardFocus(false)}
       >
         <input
+          ref={ref}
           type="checkbox"
           checked={state === CheckboxState.Checked}
           disabled={disabled}
@@ -213,7 +210,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               e.preventDefault();
               if (!disabled && onChange) {
                 setIsKeyboardFocus(true);
-                // Create a synthetic change event with minimal properties
                 const inputElement = e.target as HTMLInputElement;
                 const changeEvent = {
                   target: {

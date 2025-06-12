@@ -44,7 +44,6 @@ const meta: Meta<CheckboxStoryArgs> = {
   args: {
     state: CheckboxState.Unchecked,
     disabled: false,
-    focused: false,
     rtl: false,
     showIcon: false,
     label: "Checkbox label",
@@ -64,14 +63,6 @@ const meta: Meta<CheckboxStoryArgs> = {
     disabled: {
       control: "boolean",
       description: "Whether the checkbox is disabled",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
-      },
-    },
-    focused: {
-      control: "boolean",
-      description: "Whether the checkbox shows focus state",
       table: {
         category: "State",
         defaultValue: { summary: "false" },
@@ -153,26 +144,8 @@ export const RTL: Story = {
   args: {
     state: CheckboxState.Checked,
     disabled: false,
-    focused: false,
     rtl: true,
     label: "Right-to-left",
-  },
-};
-
-export const FocusedState: Story = {
-  render: InteractiveCheckbox,
-  args: {
-    state: CheckboxState.Unchecked,
-    disabled: false,
-    focused: true,
-    label: "Focused checkbox",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Checkbox showing the focused state with visible focus ring.",
-      },
-    },
   },
 };
 
