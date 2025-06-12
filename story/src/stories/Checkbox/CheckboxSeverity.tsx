@@ -2,7 +2,7 @@ import React from "react";
 import { cva } from "class-variance-authority";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Checkbox, CheckboxState } from "./Checkbox";
+import Checkbox, { CheckboxState } from "./Checkbox";
 import { Severity } from "../Severity/Severity";
 
 function cn(...inputs: ClassValue[]) {
@@ -34,7 +34,6 @@ export interface CheckboxSeverityProps
   state?: CheckboxState;
   severityLevel: "high" | "medium" | "low";
   severityType?: "badge" | "bar";
-  severityLabel: string;
   rtl?: boolean;
   alwaysShowCount?: boolean;
   count?: number;
@@ -45,7 +44,6 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   state = CheckboxState.Unchecked,
   severityLevel,
   severityType = "badge",
-  severityLabel,
   rtl = false,
   alwaysShowCount = false,
   count = 0,
@@ -62,12 +60,7 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
       {...props}
     >
       <Checkbox state={state} rtl={false} onChange={onChange} />
-      <Severity
-        level={severityLevel}
-        type={severityType}
-        label={severityLabel}
-        rtl={rtl}
-      />
+      <Severity level={severityLevel} type={severityType} rtl={rtl} />
       {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
     </div>
   );

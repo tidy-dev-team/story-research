@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState, useEffect } from "react";
-import { Checkbox, CheckboxState } from "./Checkbox";
+import Checkbox, { CheckboxState } from "./Checkbox";
 import LanguageIcon from "@mui/icons-material/Language";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox> & {
@@ -23,7 +23,7 @@ const InteractiveCheckbox = (args: CheckboxStoryArgs) => {
       {...checkboxProps}
       icon={showIcon ? <LanguageIcon sx={{ fontSize: 16 }} /> : undefined}
       state={state}
-      onChange={(e) => {
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         const newState = e.target.checked
           ? CheckboxState.Checked
           : CheckboxState.Unchecked;
@@ -207,7 +207,7 @@ const CountComparisonDemo = () => {
         <Checkbox
           label="No count"
           state={checkedStates.noCount}
-          onChange={(e) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setCheckedStates((prev) => ({
               ...prev,
               noCount: e.target.checked
@@ -221,7 +221,7 @@ const CountComparisonDemo = () => {
           alwaysShowCount={true}
           count={5}
           state={checkedStates.withCount}
-          onChange={(e) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setCheckedStates((prev) => ({
               ...prev,
               withCount: e.target.checked
@@ -235,7 +235,7 @@ const CountComparisonDemo = () => {
           alwaysShowCount={true}
           count={0}
           state={checkedStates.zeroCount}
-          onChange={(e) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setCheckedStates((prev) => ({
               ...prev,
               zeroCount: e.target.checked
@@ -249,7 +249,7 @@ const CountComparisonDemo = () => {
           alwaysShowCount={true}
           count={999}
           state={checkedStates.largeCount}
-          onChange={(e) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setCheckedStates((prev) => ({
               ...prev,
               largeCount: e.target.checked

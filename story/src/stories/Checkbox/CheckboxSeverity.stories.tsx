@@ -32,7 +32,6 @@ const meta = {
     state: CheckboxState.Unchecked,
     severityLevel: "medium",
     severityType: "badge",
-    severityLabel: "Medium Issue",
     rtl: false,
     alwaysShowCount: false,
     count: 3,
@@ -77,13 +76,6 @@ const meta = {
         defaultValue: { summary: "badge" },
       },
     },
-    severityLabel: {
-      control: "text",
-      description: "The label text for the severity",
-      table: {
-        category: "Severity",
-      },
-    },
     rtl: {
       control: "boolean",
       description: "Right-to-left layout",
@@ -124,7 +116,44 @@ export const Default: Story = {
     state: CheckboxState.Unchecked,
     severityLevel: "medium",
     severityType: "badge",
-    severityLabel: "Medium Issue",
     count: 3,
+  },
+};
+
+export const HighSeverityBadge: Story = {
+  args: {
+    state: CheckboxState.Checked,
+    severityLevel: "high",
+    severityType: "badge",
+    count: 12,
+  },
+};
+
+export const LowSeverityBar: Story = {
+  args: {
+    state: CheckboxState.Indeterminate,
+    severityLevel: "low",
+    severityType: "bar",
+    count: 2,
+  },
+};
+
+export const RTLLayout: Story = {
+  args: {
+    state: CheckboxState.Checked,
+    severityLevel: "high",
+    severityType: "badge",
+    rtl: true,
+    count: 5,
+  },
+};
+
+export const WithAlwaysShowCount: Story = {
+  args: {
+    state: CheckboxState.Unchecked,
+    severityLevel: "medium",
+    severityType: "badge",
+    alwaysShowCount: true,
+    count: 0,
   },
 };
