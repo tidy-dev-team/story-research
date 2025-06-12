@@ -5,11 +5,7 @@ import { DropdownListItemSeverity } from "./DropdownListItemSeverity";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
 import { DropdownListItemMultiSeverity } from "./DropdownListItemMultiSeverity";
 import { useState } from "react";
-import {
-  Button as IconButton,
-  ButtonSize,
-  ButtonType,
-} from "../Button/IconButton";
+import { IconButton, ButtonSize, ButtonType } from "../Button/IconButton";
 import LanguageIcon from "@mui/icons-material/Language"; // Import LanguageIcon
 
 const meta = {
@@ -175,7 +171,7 @@ export const WithIconButtonToggle: Story = {
     return (
       <div style={{ position: "relative", display: "inline-block" }}>
         <IconButton
-          icon={LanguageIcon} // Use LanguageIcon here
+          icon={<LanguageIcon />}
           type={ButtonType.Ghost}
           size={ButtonSize.Medium}
           onClick={() => setIsOpen((prev) => !prev)}
