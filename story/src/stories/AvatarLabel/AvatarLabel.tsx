@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Avatar from "../Avatar/Avatar";
 import { AvatarSize } from "../Avatar/Avatar";
-import { Button } from "../Button/IconButton";
+import { IconButton } from "../Button/IconButton";
 import { ButtonSize, ButtonType } from "../Button/IconButton";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
@@ -42,9 +42,9 @@ const AvatarLabel = ({
     <div className={twMerge(avatarLabelStyles({ rtl }), className)}>
       <Avatar firstName={firstName} lastName={lastName} size={AvatarSize.S} />
       <span className="text-pz-system-fg-1 pz-body-m400">{textLabel}</span>
-      <Button
+      <IconButton
         icon={<KeyboardArrowDownIcon />}
-        size={ButtonSize.XSmall}
+        size={ButtonSize.Small}
         type={ButtonType.Ghost}
         onClick={onIconClick}
         disabled={disabled}

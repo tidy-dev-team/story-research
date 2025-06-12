@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
@@ -17,7 +17,7 @@ export const ButtonType = {
 
 const buttonStyles = cva(
   [
-    "rounded-[4px]",
+    "rounded-pz-2xs",
     "inline-flex",
     "justify-center",
     "items-center",
@@ -25,9 +25,8 @@ const buttonStyles = cva(
     "cursor-pointer",
     "focus:outline-none",
     "focus-visible:ring-2",
-    "ring-offset-1",
-    "ring-offset-pz-gray-1000",
     "focus-visible:ring-pz-system-border-focused-1",
+    "focus-visible:ring-offset-0",
     "disabled:cursor-not-allowed",
     "disabled:pointer-events-none",
   ],
@@ -37,8 +36,8 @@ const buttonStyles = cva(
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-system-fg-1",
-          "hover:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
-          "active:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
+          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
+          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
           "disabled:bg-pz-system-bg-disabled",
           "disabled:text-pz-system-fg-disabled",
         ].join(" "),
@@ -46,20 +45,20 @@ const buttonStyles = cva(
           "border",
           "border-pz-system-border-primary",
           "text-pz-system-fg-primary",
-          "hover:bg-pz-system-fg-primary/12",
-          "hover:border-pz-system-border-hover",
-          "hover:text-pz-system-fg-hover",
-          "active:bg-pz-system-fg-primary/12",
-          "active:border-pz-system-border-pressed",
-          "active:text-pz-system-fg-pressed",
+          "hover:enabled:bg-pz-system-fg-primary/12",
+          "hover:enabled:border-pz-system-border-hover",
+          "hover:enabled:text-pz-system-fg-hover",
+          "active:enabled:bg-pz-system-fg-primary/12",
+          "active:enabled:border-pz-system-border-pressed",
+          "active:enabled:text-pz-system-fg-pressed",
           "disabled:border-pz-system-border-disabled",
           "disabled:text-pz-system-fg-disabled",
         ].join(" "),
         [ButtonType.Ghost]: [
           "text-pz-system-fg-2",
-          "hover:bg-pz-system-fg-1/12",
-          "hover:text-pz-system-fg-1",
-          "active:bg-pz-system-fg-1/8",
+          "hover:enabled:bg-pz-system-fg-1/12",
+          "hover:enabled:text-pz-system-fg-1",
+          "active:enabled:bg-pz-system-fg-1/8",
           "disabled:text-pz-system-fg-disabled",
         ].join(" "),
       },
@@ -77,37 +76,24 @@ const buttonStyles = cva(
   }
 );
 
-// Icon sizing CVA that uses design system values
-const iconStyles = cva("", {
-  variants: {
-    size: {
-      // Using text-[Xpx] to match the pzIconSizes values exactly
-      [ButtonSize.XSmall]: "[&>*]:!text-[12px] [&>*]:!w-3 [&>*]:!h-3",
-      [ButtonSize.Small]: "[&>*]:!text-[16px] [&>*]:!w-4 [&>*]:!h-4", 
-      [ButtonSize.Medium]: "[&>*]:!text-[20px] [&>*]:!w-5 [&>*]:!h-5",
-      [ButtonSize.Large]: "[&>*]:!text-[24px] [&>*]:!w-6 [&>*]:!h-6",
-    },
-  },
-  defaultVariants: {
-    size: ButtonSize.Medium,
-  },
-});
-
+//Note for code review. We use "type" in component in figma, maybe we can use "variant" or something else instead of "type" in the code to avoid confusion with HTML button type attribute.
 interface IconButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
-    VariantProps<typeof buttonStyles> {
-  icon: ReactElement | React.ComponentType<any>;
+    Omit<VariantProps<typeof buttonStyles>, "type"> {
+  icon: React.ReactElement<any>;
+  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  type?: VariantProps<typeof buttonStyles>["type"];
 }
 
 export const IconButton = ({
-  type,
+  type = ButtonType.Primary,
+  htmlType = "button",
   size,
   icon,
   className,
   disabled,
   ...rest
 }: IconButtonProps) => {
-  // Get the icon size based on button size (in pixels)
   const iconSize = {
     [ButtonSize.XSmall]: 12,
     [ButtonSize.Small]: 16,
@@ -115,28 +101,17 @@ export const IconButton = ({
     [ButtonSize.Large]: 24,
   }[size || ButtonSize.Medium];
 
-  // Clone icons with proper sizing
-  const cloneIconWithSize = (
-    icon: React.ReactElement | React.ComponentType<any>
-  ) => {
-    if (React.isValidElement(icon)) {
-      return React.cloneElement(icon as React.ReactElement<any>, {
-        style: {
-          fontSize: iconSize,
-          width: iconSize,
-          height: iconSize,
-          ...((icon as any)?.props?.style || {}),
-        },
-      });
-    }
-    return React.createElement(icon as React.ComponentType<any>, {
-      style: {
-        fontSize: iconSize,
-        width: iconSize,
-        height: iconSize,
-      },
-    });
-  };
+  const cloneIconWithSize = (icon: React.ReactElement<any> | undefined) =>
+    icon
+      ? React.cloneElement(icon, {
+          style: {
+            fontSize: iconSize,
+            width: iconSize,
+            height: iconSize,
+            ...(icon.props?.style || {}),
+          },
+        })
+      : null;
 
   const iconElement = cloneIconWithSize(icon);
 
@@ -144,11 +119,10 @@ export const IconButton = ({
     <button
       className={twMerge(
         buttonStyles({ type, size }),
-        iconStyles({ size }),
         "leading-none",
         className
       )}
-      type="button"
+      type={htmlType}
       disabled={disabled}
       {...rest}
     >

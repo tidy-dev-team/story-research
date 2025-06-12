@@ -101,23 +101,20 @@ const buttonStyles = cva(
   }
 );
 
-//Note for code review. We use "type" in component in figma, maybe we can use "variant" instead of "type" in the code to avoid confusion with HTML button type attribute.
-type BaseButtonProps = Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "type"
->;
-
+//Note for code review. We use "type" in component in figma, maybe we can use "variant" or something else instead of "type" in the code to avoid confusion with HTML button type attribute.
 interface ButtonProps
-  extends BaseButtonProps,
-    VariantProps<typeof buttonStyles> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
+    Omit<VariantProps<typeof buttonStyles>, "type"> {
   label: string;
-  leadingIcon?: React.ReactElement;
-  trailingIcon?: React.ReactElement;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  leadingIcon?: React.ReactElement<any>;
+  trailingIcon?: React.ReactElement<any>;
+  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  type?: VariantProps<typeof buttonStyles>["type"];
 }
 
 export const Button = ({
-  type,
+  type = ButtonType.Primary,
+  htmlType = "button",
   size,
   rtl,
   label,
@@ -134,14 +131,14 @@ export const Button = ({
     [ButtonSize.Large]: 24,
   }[size || ButtonSize.Medium];
 
-  const cloneIconWithSize = (icon: React.ReactElement | undefined) =>
+  const cloneIconWithSize = (icon: React.ReactElement<any> | undefined) =>
     icon
-      ? React.cloneElement(icon as React.ReactElement<any>, {
+      ? React.cloneElement(icon, {
           style: {
             fontSize: iconSize,
             width: iconSize,
             height: iconSize,
-            ...((icon.props as any)?.style || {}),
+            ...(icon.props?.style || {}),
           },
         })
       : null;
@@ -152,7 +149,7 @@ export const Button = ({
   return (
     <button
       className={twMerge(buttonStyles({ type, size, rtl }), className)}
-      type="button"
+      type={htmlType}
       onClick={onClick}
       disabled={disabled}
       {...rest}
