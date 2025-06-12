@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
-import { pzIconSizes } from "../../ui-kit/foundations/spacings";
 
 export const ButtonSize = {
   XSmall: "XS",
@@ -15,9 +14,6 @@ export const ButtonType = {
   Secondary: "secondary",
   Ghost: "ghost",
 } as const;
-
-type ButtonSizeType = (typeof ButtonSize)[keyof typeof ButtonSize];
-type ButtonTypeType = (typeof ButtonType)[keyof typeof ButtonType];
 
 const buttonStyles = cva(
   [
@@ -81,6 +77,22 @@ const buttonStyles = cva(
   }
 );
 
+// Icon sizing CVA that uses design system values
+const iconStyles = cva("", {
+  variants: {
+    size: {
+      // Using text-[Xpx] to match the pzIconSizes values exactly
+      [ButtonSize.XSmall]: "[&>*]:!text-[12px] [&>*]:!w-3 [&>*]:!h-3",
+      [ButtonSize.Small]: "[&>*]:!text-[16px] [&>*]:!w-4 [&>*]:!h-4", 
+      [ButtonSize.Medium]: "[&>*]:!text-[20px] [&>*]:!w-5 [&>*]:!h-5",
+      [ButtonSize.Large]: "[&>*]:!text-[24px] [&>*]:!w-6 [&>*]:!h-6",
+    },
+  },
+  defaultVariants: {
+    size: ButtonSize.Medium,
+  },
+});
+
 interface IconButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
     VariantProps<typeof buttonStyles> {
@@ -95,42 +107,47 @@ export const IconButton = ({
   disabled,
   ...rest
 }: IconButtonProps) => {
-  const getIconSize = (buttonSize: ButtonSizeType) => {
-    switch (buttonSize) {
-      case ButtonSize.XSmall:
-        return pzIconSizes.s;
-      case ButtonSize.Small:
-        return pzIconSizes.m;
-      case ButtonSize.Medium:
-        return pzIconSizes.l;
-      case ButtonSize.Large:
-        return pzIconSizes.xl;
-      default:
-        return pzIconSizes.l;
-    }
-  };
+  // Get the icon size based on button size (in pixels)
+  const iconSize = {
+    [ButtonSize.XSmall]: 12,
+    [ButtonSize.Small]: 16,
+    [ButtonSize.Medium]: 20,
+    [ButtonSize.Large]: 24,
+  }[size || ButtonSize.Medium];
 
-  const iconSize = getIconSize(size || ButtonSize.Medium);
-
-  const iconElement = React.isValidElement(icon)
-    ? React.cloneElement(icon as React.ReactElement<any>, {
-        sx: {
+  // Clone icons with proper sizing
+  const cloneIconWithSize = (
+    icon: React.ReactElement | React.ComponentType<any>
+  ) => {
+    if (React.isValidElement(icon)) {
+      return React.cloneElement(icon as React.ReactElement<any>, {
+        style: {
+          fontSize: iconSize,
           width: iconSize,
           height: iconSize,
-          fontSize: iconSize,
-        },
-      })
-    : React.createElement(icon as React.ComponentType<any>, {
-        sx: {
-          width: iconSize,
-          height: iconSize,
-          fontSize: iconSize,
+          ...((icon as any)?.props?.style || {}),
         },
       });
+    }
+    return React.createElement(icon as React.ComponentType<any>, {
+      style: {
+        fontSize: iconSize,
+        width: iconSize,
+        height: iconSize,
+      },
+    });
+  };
+
+  const iconElement = cloneIconWithSize(icon);
 
   return (
     <button
-      className={twMerge(buttonStyles({ type, size }), className)}
+      className={twMerge(
+        buttonStyles({ type, size }),
+        iconStyles({ size }),
+        "leading-none",
+        className
+      )}
       type="button"
       disabled={disabled}
       {...rest}
