@@ -208,19 +208,9 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           onKeyDown={(e) => {
             if (e.key === "Space" || e.key === "Enter") {
               e.preventDefault();
-              if (!disabled && onChange) {
+              if (!disabled) {
                 setIsKeyboardFocus(true);
-                const inputElement = e.target as HTMLInputElement;
-                const changeEvent = {
-                  target: {
-                    checked: state !== CheckboxState.Checked,
-                    value: inputElement.value,
-                    name: inputElement.name,
-                    type: inputElement.type,
-                  },
-                  currentTarget: inputElement,
-                } as React.ChangeEvent<HTMLInputElement>;
-                onChange(changeEvent);
+                (e.target as HTMLInputElement).click();
               }
             }
             if (e.key === "Tab") {
