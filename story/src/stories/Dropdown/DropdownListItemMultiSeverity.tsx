@@ -9,6 +9,7 @@ const dropdownListItemMultiSeverityStyles = cva(
     "p-pz-4xs gap-pz-4xs min-h-8",
     "border-none bg-transparent cursor-pointer",
     "text-pz-system-fg-1 pz-label-m",
+    "rounded-pz-2xs",
     "transition-all duration-200",
     "hover:enabled:bg-pz-system-bg-overlay-hover",
     "active:enabled:bg-pz-system-bg-overlay-pressed",
@@ -78,7 +79,6 @@ const DropdownListItemMultiSeverity: React.FC<
           state={checkboxState}
           severityLevel={severityLevel}
           severityType={severityType}
-          severityLabel={severityLabel}
           rtl={rtl || false}
           onChange={handleCheckboxChange}
         />

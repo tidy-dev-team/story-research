@@ -9,20 +9,16 @@ function cn(...inputs: ClassValue[]) {
 
 const dropdownStyles = cva(
   [
-    // Layout and positioning
     "flex flex-col",
     "w-full",
     "overflow-y-auto",
-    "max-h-64", // Allow scrolling for many items
-
-    // Visual styling
-    // "bg-pz-system-bg-primary",
+    "max-h-64",
     "rounded-pz-xs",
-    "shadow-pz-elevation-3",
+    "shadow-pz-down-level3",
     "border border-pz-system-border-1",
-
-    // Animation
+    "bg-pz-system-bg-4",
     "transition-all duration-200",
+    "p-2",
   ],
   {
     variants: {

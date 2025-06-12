@@ -14,6 +14,9 @@ const dropdownListItemSeverityStyles = cva(
     // Typography
     "text-pz-system-fg-1 pz-label-m",
 
+    // Border radius
+    "rounded-pz-2xs",
+
     // Transitions and interactions
     "transition-all duration-200",
     "hover:enabled:bg-pz-system-bg-overlay-hover",
