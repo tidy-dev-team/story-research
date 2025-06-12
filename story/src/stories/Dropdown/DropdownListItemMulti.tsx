@@ -43,6 +43,9 @@ interface DropdownListItemMultiProps
   label: string;
   checked?: boolean;
   indeterminate?: boolean;
+  icon?: React.ReactNode;
+  count?: number;
+  alwaysShowCount?: boolean;
   onSelect?: (isChecked: boolean) => void;
 }
 
@@ -50,6 +53,9 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
   label,
   checked = false,
   indeterminate = false,
+  icon,
+  count,
+  alwaysShowCount = false,
   className,
   rtl = false,
   onClick,
@@ -102,6 +108,9 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
           label={label}
           rtl={rtl || false}
           state={checkboxState}
+          icon={icon}
+          count={count}
+          alwaysShowCount={alwaysShowCount}
           onChange={handleCheckboxChange}
         />
       </span>

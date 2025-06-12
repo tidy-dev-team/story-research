@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
 import { useState } from "react";
+import LanguageIcon from "@mui/icons-material/Language";
 
 const meta = {
   title: "Component/Dropdown/DropdownListItemMulti",
@@ -41,6 +42,27 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
+    count: {
+      control: { type: "number", min: 0 },
+      description: "Count value to display in brackets after label",
+      table: {
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    alwaysShowCount: {
+      control: "boolean",
+      description: "Whether to always show count, even when count is 0",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    icon: {
+      table: { disable: true },
+      control: false,
+      description: "Icon to display after the checkbox label",
+    },
   },
 } satisfies Meta<typeof DropdownListItemMulti>;
 
@@ -79,6 +101,39 @@ export const RTLChecked: Story = {
     label: "Label",
     rtl: true,
     checked: true,
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    label: "Enable multi-language support",
+    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
+  },
+};
+
+export const WithCount: Story = {
+  args: {
+    label: "Items",
+    count: 5,
+    alwaysShowCount: true,
+  },
+};
+
+export const WithCountAndIcon: Story = {
+  args: {
+    label: "Language packs",
+    count: 12,
+    alwaysShowCount: true,
+    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
+    checked: true,
+  },
+};
+
+export const AlwaysShowZeroCount: Story = {
+  args: {
+    label: "Empty items",
+    count: 0,
+    alwaysShowCount: true,
   },
 };
 

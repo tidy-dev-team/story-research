@@ -76,16 +76,16 @@ const DropdownListItem: React.FC<DropdownListItemProps> = ({
 
   return (
     <button
-      {...props}
       className={dropdownListItemStyles({ rtl, className })}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       disabled={disabled}
       type="button"
       role="option"
+      {...props}
     >
       {icon}
-      <span className="flex-1 truncate min-w-0">{label}</span>
+      <span className="flex-1 truncate min-w-0 translate-y-px">{label}</span>
     </button>
   );
 };
