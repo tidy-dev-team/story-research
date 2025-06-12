@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState } from "react";
-import { Search } from "./Search";
+import Search from "./Search";
 
 type SearchStoryArgs = ComponentProps<typeof Search>;
 
@@ -15,7 +15,6 @@ const meta: Meta<SearchStoryArgs> = {
     placeholder: "Search",
     value: "",
     rtl: false,
-    state: "idle",
     disabled: false,
   },
   argTypes: {
@@ -33,15 +32,6 @@ const meta: Meta<SearchStoryArgs> = {
       table: {
         category: "Content",
         defaultValue: { summary: "" },
-      },
-    },
-    state: {
-      control: "select",
-      options: ["idle", "hover", "active", "focused", "disabled"],
-      description: "Visual state of the search input",
-      table: {
-        category: "State",
-        defaultValue: { summary: "idle" },
       },
     },
     disabled: {
@@ -119,7 +109,6 @@ export const Default: Story = {
     placeholder: "Search",
     value: "",
     rtl: false,
-    state: "idle",
     disabled: false,
   },
 };
@@ -148,7 +137,6 @@ export const Filled: Story = {
   args: {
     placeholder: "Search",
     rtl: false,
-    state: "idle",
     disabled: false,
   },
 };
@@ -179,7 +167,6 @@ export const Focused: Story = {
     placeholder: "Search",
     value: "",
     rtl: false,
-    state: "focused",
     disabled: false,
   },
 };
@@ -209,7 +196,6 @@ export const Disabled: Story = {
     placeholder: "Search",
     value: "",
     rtl: false,
-    state: "disabled",
     disabled: true,
   },
 };
@@ -238,7 +224,6 @@ export const DisabledFilled: Story = {
   args: {
     placeholder: "Search",
     rtl: false,
-    state: "disabled",
     disabled: true,
   },
 };
@@ -268,7 +253,6 @@ export const RTL: Story = {
     placeholder: "חיפוש",
     value: "",
     rtl: true,
-    state: "idle",
     disabled: false,
   },
 };
@@ -297,7 +281,6 @@ export const RTLFilled: Story = {
   args: {
     placeholder: "חיפוש",
     rtl: true,
-    state: "idle",
     disabled: false,
   },
 };

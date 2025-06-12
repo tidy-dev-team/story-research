@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, forwardRef } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
@@ -125,115 +125,124 @@ interface CheckboxProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = ({
-  state = CheckboxState.Unchecked,
-  rtl = false,
-  disabled = false,
-  focused = false,
-  icon,
-  label,
-  alwaysShowCount = false,
-  count = 0,
-  className,
-  onChange,
-  ...props
-}: CheckboxProps) => {
-  // Ensure count is never negative
-  const safeCount = Math.max(0, count || 0);
-  const [internalFocused, setInternalFocused] = useState(false);
-  const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
-  const showFocusRing = focused || (internalFocused && isKeyboardFocus);
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  (
+    {
+      state = CheckboxState.Unchecked,
+      rtl = false,
+      disabled = false,
+      focused = false,
+      icon,
+      label,
+      alwaysShowCount = false,
+      count = 0,
+      className,
+      onChange,
+    },
+    ref
+  ): React.ReactElement => {
+    // Ensure count is never negative
+    const safeCount = Math.max(0, count || 0);
+    const [internalFocused, setInternalFocused] = useState(false);
+    const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
+    const showFocusRing = focused || (internalFocused && isKeyboardFocus);
 
-  const renderCheckboxIcon = () => {
-    const iconSize = 20; // Standard size for checkbox icons
-    const iconStyle = {
-      fontSize: iconSize,
-      width: iconSize,
-      height: iconSize,
+    const renderCheckboxIcon = () => {
+      const iconSize = 20; // Standard size for checkbox icons
+      const iconStyle = {
+        fontSize: iconSize,
+        width: iconSize,
+        height: iconSize,
+      };
+
+      const iconClasses = checkboxIconStyles({
+        state,
+        disabled,
+        focused: showFocusRing,
+        className,
+      });
+
+      switch (state) {
+        case CheckboxState.Indeterminate:
+          return (
+            <IndeterminateCheckBoxIcon
+              className={iconClasses}
+              style={iconStyle}
+            />
+          );
+        case CheckboxState.Checked:
+          return <CheckBoxIcon className={iconClasses} style={iconStyle} />;
+        case CheckboxState.Unchecked:
+        default:
+          return (
+            <CheckBoxOutlineBlankIcon
+              className={iconClasses}
+              style={iconStyle}
+            />
+          );
+      }
     };
 
-    const iconClasses = checkboxIconStyles({
-      state,
-      disabled,
-      focused: showFocusRing,
-      className,
-    });
+    const shouldShowCount = alwaysShowCount || safeCount > 0;
 
-    switch (state) {
-      case CheckboxState.Indeterminate:
-        return (
-          <IndeterminateCheckBoxIcon
-            className={iconClasses}
-            style={iconStyle}
-          />
-        );
-      case CheckboxState.Checked:
-        return <CheckBoxIcon className={iconClasses} style={iconStyle} />;
-      case CheckboxState.Unchecked:
-      default:
-        return (
-          <CheckBoxOutlineBlankIcon className={iconClasses} style={iconStyle} />
-        );
-    }
-  };
-
-  const shouldShowCount = alwaysShowCount || safeCount > 0;
-
-  return (
-    <label
-      className={containerStyles({ rtl, disabled })}
-      onMouseDown={() => setIsKeyboardFocus(false)}
-    >
-      <input
-        type="checkbox"
-        checked={state === CheckboxState.Checked}
-        disabled={disabled}
-        className="sr-only focus:outline-none"
-        tabIndex={disabled ? -1 : 0}
-        onFocus={(e) => {
-          setInternalFocused(true);
-          if (e.target.matches(":focus-visible")) {
-            setIsKeyboardFocus(true);
-          }
-        }}
-        onBlur={() => {
-          setInternalFocused(false);
-          setIsKeyboardFocus(false);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Space" || e.key === "Enter") {
-            e.preventDefault();
-            if (!disabled && onChange) {
+    return (
+      <label
+        className={containerStyles({ rtl, disabled })}
+        onMouseDown={() => setIsKeyboardFocus(false)}
+      >
+        <input
+          type="checkbox"
+          checked={state === CheckboxState.Checked}
+          disabled={disabled}
+          className="sr-only focus:outline-none"
+          tabIndex={disabled ? -1 : 0}
+          onFocus={(e) => {
+            setInternalFocused(true);
+            if (e.target.matches(":focus-visible")) {
               setIsKeyboardFocus(true);
-              // Create a synthetic change event with minimal properties
-              const inputElement = e.target as HTMLInputElement;
-              const changeEvent = {
-                target: {
-                  checked: state !== CheckboxState.Checked,
-                  value: inputElement.value,
-                  name: inputElement.name,
-                  type: inputElement.type,
-                },
-                currentTarget: inputElement,
-              } as React.ChangeEvent<HTMLInputElement>;
-              onChange(changeEvent);
             }
-          }
-          if (e.key === "Tab") {
-            setIsKeyboardFocus(true);
-          }
-        }}
-        onChange={onChange}
-        {...props}
-      />
-      {renderCheckboxIcon()}
-      {icon && <span className={iconStyles({ disabled })}>{icon}</span>}
-      {label && <span className={labelStyles({ disabled })}>{label}</span>}
-      {shouldShowCount && (
-        <span className={countStyles({ disabled })}>({safeCount})</span>
-      )}
-    </label>
-  );
-};
+          }}
+          onBlur={() => {
+            setInternalFocused(false);
+            setIsKeyboardFocus(false);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Space" || e.key === "Enter") {
+              e.preventDefault();
+              if (!disabled && onChange) {
+                setIsKeyboardFocus(true);
+                // Create a synthetic change event with minimal properties
+                const inputElement = e.target as HTMLInputElement;
+                const changeEvent = {
+                  target: {
+                    checked: state !== CheckboxState.Checked,
+                    value: inputElement.value,
+                    name: inputElement.name,
+                    type: inputElement.type,
+                  },
+                  currentTarget: inputElement,
+                } as React.ChangeEvent<HTMLInputElement>;
+                onChange(changeEvent);
+              }
+            }
+            if (e.key === "Tab") {
+              setIsKeyboardFocus(true);
+            }
+          }}
+          onChange={onChange}
+        />
+        {renderCheckboxIcon()}
+        {icon && <span className={iconStyles({ disabled })}>{icon}</span>}
+        {label && <span className={labelStyles({ disabled })}>{label}</span>}
+        {shouldShowCount && (
+          <span className={countStyles({ disabled })}>({safeCount})</span>
+        )}
+      </label>
+    );
+  }
+);
 
+Checkbox.displayName = "Checkbox";
+
+export default Checkbox;
 export type { CheckboxProps };

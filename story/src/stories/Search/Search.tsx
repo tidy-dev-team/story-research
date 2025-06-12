@@ -1,8 +1,9 @@
-import React, { useState, forwardRef } from "react";
+import React, { forwardRef, useState, useEffect } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import { IconButton } from "../Button/IconButton";
 
 const searchStyles = cva(
   [
@@ -19,44 +20,38 @@ const searchStyles = cva(
     "pz-body-m400",
     "border",
     "border-transparent",
+    "hover:before:absolute",
+    "hover:before:inset-0",
+    "hover:before:bg-pz-system-bg-overlay-hover",
+    "hover:before:rounded-pz-2xs",
+    "hover:before:pointer-events-none",
+    "disabled:opacity-50",
+    "disabled:cursor-not-allowed",
   ],
   {
     variants: {
-      state: {
-        idle: "",
-        hover: "bg-pz-system-bg-3",
-        active: "border-pz-system-border-primary",
-        focused: "border-pz-system-border-primary",
-        disabled: "opacity-50",
-      },
       filled: {
         true: "",
-        false: "",
-      },
-      focused: {
-        true: "focus-within:ring-2 focus-within:ring-pz-system-border-focused-1 focus-within:ring-offset-2 focus-within:ring-offset-pz-system-bg-1",
-        false: "",
-      },
-      disabled: {
-        true: "opacity-50 cursor-not-allowed",
         false: "",
       },
       rtl: {
         true: "flex-row-reverse",
         false: "",
       },
-    },
-    compoundVariants: [
-      {
-        state: "hover",
-        className:
-          "before:absolute before:inset-0 before:bg-pz-system-bg-overlay-hover before:rounded-pz-2xs before:pointer-events-none",
+      active: {
+        true: "border-pz-system-border-primary bg-pz-system-bg-3",
+        false: "",
       },
-    ],
+      focused: {
+        true: "ring-2 ring-pz-system-border-focused-1 ring-offset-2 ring-offset-pz-system-bg-1",
+        false: "",
+      },
+    },
     defaultVariants: {
-      state: "idle",
       filled: false,
       rtl: false,
+      active: false,
+      focused: false,
     },
   }
 );
@@ -70,16 +65,12 @@ const inputStyles = cva(
     "border-none",
     "font-['Heebo',_sans-serif]",
     "placeholder:text-pz-system-fg-4",
+    "text-pz-system-fg-4",
+    "disabled:text-pz-system-fg-disabled",
+    "disabled:cursor-not-allowed",
   ],
   {
     variants: {
-      state: {
-        idle: "text-pz-system-fg-4 ",
-        hover: "text-pz-system-fg-4",
-        active: "text-pz-system-fg-4",
-        focused: "text-pz-system-fg-4",
-        disabled: "text-pz-system-fg-disabled cursor-not-allowed",
-      },
       filled: {
         true: "text-pz-system-fg-1",
         false: "text-pz-system-fg-4",
@@ -90,7 +81,6 @@ const inputStyles = cva(
       },
     },
     defaultVariants: {
-      state: "idle",
       filled: false,
       rtl: false,
     },
@@ -100,42 +90,38 @@ const inputStyles = cva(
 const iconStyles = cva(["transition-colors", "duration-200", "flex-shrink-0"], {
   variants: {
     type: {
-      search: "",
-      close: "cursor-pointer hover:text-pz-system-fg-hover",
-    },
-    state: {
-      idle: "text-pz-system-fg-4",
-      hover: "text-pz-system-fg-4",
-      active: "text-pz-system-fg-4",
-      focused: "text-pz-system-fg-4",
-      disabled: "text-pz-system-fg-disabled",
+      search: "text-pz-system-fg-4",
     },
     filled: {
       true: "text-pz-system-fg-1",
       false: "text-pz-system-fg-4",
     },
+    disabled: {
+      true: "text-pz-system-fg-disabled",
+      false: "",
+    },
   },
   defaultVariants: {
     type: "search",
-    state: "idle",
     filled: false,
+    disabled: false,
   },
 });
 
-interface SearchProps
-  extends Omit<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      "size" | "disabled"
-    >,
-    VariantProps<typeof searchStyles> {
+interface SearchProps extends VariantProps<typeof searchStyles> {
   placeholder?: string;
   value?: string;
   onClear?: () => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   rtl?: boolean;
-  state?: "idle" | "hover" | "active" | "focused" | "disabled";
+  disabled?: boolean;
+  className?: string;
+  autoFocus?: boolean;
 }
 
-export const Search = forwardRef<HTMLInputElement, SearchProps>(
+const Search = forwardRef<HTMLInputElement, SearchProps>(
   (
     {
       placeholder = "Search",
@@ -145,69 +131,64 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
       onFocus,
       onBlur,
       rtl = false,
-      state = "idle",
       disabled = false,
       className,
-      ...props
+      autoFocus,
     },
     ref
-  ) => {
-    const [internalState, setInternalState] =
-      useState<SearchProps["state"]>(state);
-    const [internalFocused, setInternalFocused] = useState(false);
+  ): React.ReactElement => {
+    const [isFocused, setIsFocused] = useState(false);
+    const [isKeyboardUser, setIsKeyboardUser] = useState(false);
+
+    // Track if user is using keyboard or mouse (focus handling)
+    useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Tab") {
+          setIsKeyboardUser(true);
+        }
+      };
+
+      const handleMouseDown = () => {
+        setIsKeyboardUser(false);
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("mousedown", handleMouseDown);
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("mousedown", handleMouseDown);
+      };
+    }, []);
 
     const filled = Boolean(value && value.length > 0);
-    const currentState = disabled
-      ? "disabled"
-      : internalFocused
-        ? "focused"
-        : internalState;
-    const showFocusRing = internalFocused && !disabled;
 
     const containerClasses = twMerge(
       searchStyles({
-        state: showFocusRing ? "focused" : currentState,
         filled,
         rtl,
+        active: isFocused && !disabled,
+        focused: isFocused && isKeyboardUser && !disabled,
         className,
       }),
-      rtl ? "pl-2 pr-1 py-0 gap-1" : "pl-2 pr-1 py-0 gap-1"
+      rtl ? "pl-2 pr-1 py-0 gap-1" : "pl-2 pr-1 py-0 gap-1",
+      disabled && "opacity-50 cursor-not-allowed"
     );
 
-    const inputClasses = twMerge(
-      inputStyles({ state: currentState, filled, rtl })
-    );
+    const inputClasses = twMerge(inputStyles({ filled, rtl }));
 
     const searchIconClasses = twMerge(
-      iconStyles({ type: "search", state: currentState, filled })
-    );
-
-    const closeIconClasses = twMerge(
-      iconStyles({ type: "close", state: currentState, filled })
+      iconStyles({ type: "search", filled, disabled })
     );
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-      setInternalFocused(true);
-      setInternalState("focused");
+      setIsFocused(true);
       onFocus?.(e);
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      setInternalFocused(false);
-      setInternalState("idle");
+      setIsFocused(false);
       onBlur?.(e);
-    };
-
-    const handleMouseEnter = () => {
-      if (!disabled && !internalFocused) {
-        setInternalState("hover");
-      }
-    };
-
-    const handleMouseLeave = () => {
-      if (!disabled && !internalFocused) {
-        setInternalState("idle");
-      }
     };
 
     const handleClear = () => {
@@ -217,12 +198,11 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
     };
 
     return (
-      <div
-        className={containerClasses}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <SearchIcon className={searchIconClasses} fontSize="small" />
+      <div className={containerClasses}>
+        <SearchIcon
+          className={searchIconClasses}
+          style={{ fontSize: "16px" }}
+        />
 
         <input
           ref={ref}
@@ -233,15 +213,17 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           disabled={disabled || undefined}
+          autoFocus={autoFocus}
           className={inputClasses}
-          {...props}
         />
 
         {filled && !disabled && (
-          <CloseIcon
-            className={`${closeIconClasses} ml-1`}
-            fontSize="small"
+          <IconButton
+            type="ghost"
+            size="S"
+            icon={<CloseIcon />}
             onClick={handleClear}
+            className="ml-1"
           />
         )}
       </div>
@@ -250,3 +232,5 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
 );
 
 Search.displayName = "Search";
+
+export default Search;
