@@ -19,7 +19,6 @@ const meta = {
     hasTrailingIcon: false,
     rtl: false,
     disabled: false,
-    focused: false,
   },
   parameters: {
     layout: "centered",
@@ -87,14 +86,6 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
-    focused: {
-      control: "boolean",
-      description: "If true, the button will be displayed in a focused state.",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
-      },
-    },
     onClick: {
       action: "clicked",
       description: "Optional click handler.",
@@ -113,20 +104,18 @@ const renderIcon = (
   condition: boolean | undefined,
   Icon: typeof LanguageIcon
 ) => {
-  return condition ? <Icon sx={{ fontSize: "14px" }} /> : undefined;
+  return condition ? <Icon /> : undefined;
 };
 
 const renderStory = ({
   hasLeadingIcon,
   hasTrailingIcon,
   disabled,
-  focused,
   ...args
 }: TextButtonStoryArgs) => (
   <TextButton
     {...args}
     disabled={disabled}
-    focused={disabled ? false : focused}
     leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
     trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
   />

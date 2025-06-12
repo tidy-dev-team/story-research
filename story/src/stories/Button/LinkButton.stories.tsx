@@ -103,7 +103,7 @@ const renderIcon = (
   condition: boolean | undefined,
   IconComponent: typeof ArrowForwardIcon
 ) => {
-  return condition ? <IconComponent sx={{ fontSize: "20px" }} /> : undefined;
+  return condition ? <IconComponent /> : undefined;
 };
 
 const renderStory = ({

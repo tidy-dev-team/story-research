@@ -15,9 +15,8 @@ const linkButtonStyles = cva(
     "cursor-pointer",
     "focus:outline-none",
     "focus-visible:ring-2",
-    "ring-offset-1",
-    "ring-offset-pz-gray-1000",
     "focus-visible:ring-pz-system-border-focused-1",
+    "focus-visible:ring-offset-0",
     "pz-link400",
     "underline",
     "transition-colors",
@@ -48,7 +47,7 @@ interface LinkButtonProps
   label: string;
   href: string;
   disabled?: boolean;
-  trailingIcon?: ReactElement;
+  trailingIcon?: React.ReactElement<any>;
 }
 
 export const LinkButton = ({
@@ -60,6 +59,22 @@ export const LinkButton = ({
   className,
   ...rest
 }: LinkButtonProps) => {
+  const iconSize = 20;
+
+  const cloneIconWithSize = (icon: React.ReactElement<any> | undefined) =>
+    icon
+      ? React.cloneElement(icon, {
+          style: {
+            fontSize: iconSize,
+            width: iconSize,
+            height: iconSize,
+            ...(icon.props?.style || {}),
+          },
+        })
+      : null;
+
+  const sizedTrailingIcon = cloneIconWithSize(trailingIcon);
+
   return (
     <a
       className={twMerge(linkButtonStyles({ rtl }), className)}
@@ -68,8 +83,10 @@ export const LinkButton = ({
       {...rest}
     >
       <span>{label}</span>
-      {trailingIcon && (
-        <span className="flex items-center h-5 w-5">{trailingIcon}</span>
+      {sizedTrailingIcon && (
+        <span className="flex items-center leading-none">
+          {sizedTrailingIcon}
+        </span>
       )}
     </a>
   );
