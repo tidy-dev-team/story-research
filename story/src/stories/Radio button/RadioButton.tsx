@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ComponentProps, useState } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
