@@ -20,11 +20,11 @@ const checkboxIconStyles = cva(
   [
     "transition-all",
     "duration-200",
+    "cursor-pointer",
     "focus:outline-none",
     "focus-visible:ring-2",
-    "ring-offset-1",
-    "ring-offset-pz-gray-1000",
     "focus-visible:ring-pz-system-border-focused-1",
+    "focus-visible:ring-offset-0",
   ],
   {
     variants: {
@@ -34,11 +34,11 @@ const checkboxIconStyles = cva(
         indeterminate: "",
       },
       disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed hover:text-pz-system-fg-disabled active:text-pz-system-fg-disabled",
+        true: "text-pz-system-fg-disabled cursor-not-allowed",
         false: "cursor-pointer",
       },
       focused: {
-        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-pz-3xs",
+        true: "ring-2 ring-pz-system-border-focused-1 rounded-pz-3xs",
         false: "",
       },
     },
@@ -47,13 +47,13 @@ const checkboxIconStyles = cva(
         state: "unchecked",
         disabled: false,
         className:
-          "text-pz-gray-300 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
+          "text-pz-gray-300 hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
       },
       {
         state: ["checked", "indeterminate"],
         disabled: false,
         className:
-          "text-pz-blue-500 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
+          "text-pz-blue-500 hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
       },
     ],
     defaultVariants: {
@@ -145,24 +145,35 @@ export const Checkbox = ({
   const showFocusRing = focused || (internalFocused && isKeyboardFocus);
 
   const renderCheckboxIcon = () => {
-    const iconProps = {
-      className: checkboxIconStyles({
-        state,
-        disabled,
-        focused: showFocusRing,
-        className,
-      }),
-      fontSize: "small" as const,
+    const iconSize = 20; // Standard size for checkbox icons
+    const iconStyle = {
+      fontSize: iconSize,
+      width: iconSize,
+      height: iconSize,
     };
+
+    const iconClasses = checkboxIconStyles({
+      state,
+      disabled,
+      focused: showFocusRing,
+      className,
+    });
 
     switch (state) {
       case CheckboxState.Indeterminate:
-        return <IndeterminateCheckBoxIcon {...iconProps} />;
+        return (
+          <IndeterminateCheckBoxIcon
+            className={iconClasses}
+            style={iconStyle}
+          />
+        );
       case CheckboxState.Checked:
-        return <CheckBoxIcon {...iconProps} />;
+        return <CheckBoxIcon className={iconClasses} style={iconStyle} />;
       case CheckboxState.Unchecked:
       default:
-        return <CheckBoxOutlineBlankIcon {...iconProps} />;
+        return (
+          <CheckBoxOutlineBlankIcon className={iconClasses} style={iconStyle} />
+        );
     }
   };
 

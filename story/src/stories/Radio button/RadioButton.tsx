@@ -1,19 +1,12 @@
-// filepath: /Users/dmitridmitriev/Documents/prisma/story-research/story/src/stories/Radio button/RadioButton.tsx
+import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { ComponentProps, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
 const radioButtonIconStyles = cva(
-  [
-    "transition-all",
-    "duration-200",
-    "focus:outline-none",
-    "focus-visible:ring-2",
-    "ring-offset-1",
-    "ring-offset-pz-gray-1000",
-    "focus-visible:ring-pz-system-border-focused-1",
-  ],
+  ["transition-all", "duration-200", "cursor-pointer"],
   {
     variants: {
       selected: {
@@ -21,11 +14,11 @@ const radioButtonIconStyles = cva(
         false: "",
       },
       disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed hover:text-pz-system-fg-disabled active:text-pz-system-fg-disabled",
+        true: "text-pz-system-fg-disabled cursor-not-allowed",
         false: "cursor-pointer",
       },
       focused: {
-        true: "ring-2 ring-offset-1 ring-pz-system-border-focused-1 rounded-full",
+        true: "ring-2 ring-pz-system-border-focused-1 ring-offset-0 rounded-full",
         false: "",
       },
     },
@@ -34,13 +27,13 @@ const radioButtonIconStyles = cva(
         selected: false,
         disabled: false,
         className:
-          "text-pz-gray-300 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
+          "text-pz-system-fg-2 hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
       },
       {
         selected: true,
         disabled: false,
         className:
-          "text-pz-blue-500 hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
+          "text-pz-system-fg-primary hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
       },
     ],
     defaultVariants: {
@@ -57,6 +50,8 @@ const labelStyles = cva(
     "duration-200",
     "font-['Heebo',_sans-serif]",
     "pz-body-m400",
+    "leading-none",
+    "translate-y-px",
   ],
   {
     variants: {
@@ -81,7 +76,6 @@ interface RadioButtonProps
   selected?: boolean;
   disabled?: boolean;
   rtl?: boolean;
-  focused?: boolean;
   onChange?: () => void;
 }
 
@@ -89,7 +83,6 @@ export const RadioButton = ({
   selected = false,
   rtl = false,
   disabled = false,
-  focused = false,
   label,
   className,
   onChange,
@@ -97,7 +90,7 @@ export const RadioButton = ({
 }: RadioButtonProps) => {
   const [internalFocused, setInternalFocused] = useState(false);
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
-  const showFocusRing = focused || (internalFocused && isKeyboardFocus);
+  const showFocusRing = internalFocused && isKeyboardFocus;
 
   const iconClasses = radioButtonIconStyles({
     selected,
@@ -107,21 +100,29 @@ export const RadioButton = ({
   });
   const labelClasses = labelStyles({ disabled });
 
-  const containerClasses = `flex items-center ${rtl ? "flex-row-reverse" : ""} gap-2 ${
+  const containerClasses = twMerge(
+    "flex items-center gap-2",
+    rtl && "flex-row-reverse",
     disabled ? "cursor-not-allowed" : "cursor-pointer"
-  }`;
+  );
 
   const renderIcon = () => {
-    const iconProps = {
-      className: iconClasses,
-      fontSize: "small" as const,
+    const iconSize = 20;
+    const iconStyle = {
+      fontSize: iconSize,
+      width: iconSize,
+      height: iconSize,
     };
 
-    return selected ? (
-      <RadioButtonCheckedIcon {...iconProps} sx={{ fontSize: 20 }} />
-    ) : (
-      <RadioButtonUncheckedIcon {...iconProps} sx={{ fontSize: 20 }} />
-    );
+    if (selected) {
+      return (
+        <RadioButtonCheckedIcon className={iconClasses} style={iconStyle} />
+      );
+    } else {
+      return (
+        <RadioButtonUncheckedIcon className={iconClasses} style={iconStyle} />
+      );
+    }
   };
 
   return (

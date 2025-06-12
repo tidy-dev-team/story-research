@@ -13,7 +13,6 @@ const meta = {
     selected: false,
     rtl: false,
     disabled: false,
-    focused: false,
   },
   parameters: {
     layout: "centered",
@@ -38,14 +37,6 @@ const meta = {
     disabled: {
       control: "boolean",
       description: "Whether the radio button is disabled",
-      table: {
-        category: "State",
-        defaultValue: { summary: "false" },
-      },
-    },
-    focused: {
-      control: "boolean",
-      description: "Whether the radio button shows focus state",
       table: {
         category: "State",
         defaultValue: { summary: "false" },
@@ -78,7 +69,6 @@ export const Default: Story = {
     label: "Default Option",
     selected: false,
     disabled: false,
-    focused: false,
     rtl: false,
   },
 };
@@ -88,7 +78,6 @@ export const Selected: Story = {
     label: "Selected Option",
     selected: true,
     disabled: false,
-    focused: false,
     rtl: false,
   },
 };
@@ -98,7 +87,6 @@ export const WithoutLabel: Story = {
     label: undefined,
     selected: false,
     disabled: false,
-    focused: false,
     rtl: false,
   },
 };
@@ -109,7 +97,6 @@ export const RTL: Story = {
     selected: false,
     rtl: true,
     disabled: false,
-    focused: false,
   },
 };
 
@@ -118,7 +105,6 @@ export const Disabled: Story = {
     label: "Disabled Option",
     selected: false,
     disabled: true,
-    focused: false,
     rtl: false,
   },
 };
@@ -128,27 +114,6 @@ export const DisabledSelected: Story = {
     label: "Disabled Selected",
     selected: true,
     disabled: true,
-    focused: false,
-    rtl: false,
-  },
-};
-
-export const Focused: Story = {
-  args: {
-    label: "Focused Option",
-    selected: false,
-    focused: true,
-    disabled: false,
-    rtl: false,
-  },
-};
-
-export const FocusedSelected: Story = {
-  args: {
-    label: "Focused Selected",
-    selected: true,
-    focused: true,
-    disabled: false,
     rtl: false,
   },
 };
