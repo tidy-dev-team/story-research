@@ -20,6 +20,8 @@ const searchStyles = cva(
     "pz-body-m400",
     "border",
     "border-transparent",
+    "py-0",
+    "gap-1",
     "hover:before:absolute",
     "hover:before:inset-0",
     "hover:before:bg-pz-system-bg-overlay-hover",
@@ -35,8 +37,8 @@ const searchStyles = cva(
         false: "",
       },
       rtl: {
-        true: "flex-row-reverse",
-        false: "",
+        true: "flex-row-reverse pl-1 pr-2",
+        false: "pl-2 pr-1",
       },
       active: {
         true: "border-pz-system-border-primary bg-pz-system-bg-3",
@@ -171,7 +173,6 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
         focused: isFocused && isKeyboardUser && !disabled,
         className,
       }),
-      rtl ? "pl-2 pr-1 py-0 gap-1" : "pl-2 pr-1 py-0 gap-1",
       disabled && "opacity-50 cursor-not-allowed"
     );
 
@@ -223,7 +224,6 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
             size="S"
             icon={<CloseIcon />}
             onClick={handleClear}
-            className="ml-1"
           />
         )}
       </div>
