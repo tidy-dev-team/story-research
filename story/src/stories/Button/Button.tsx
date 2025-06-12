@@ -15,7 +15,6 @@ export const ButtonType = {
 } as const;
 
 export type ButtonSizeType = (typeof ButtonSize)[keyof typeof ButtonSize];
-export type ButtonTypeType = (typeof ButtonType)[keyof typeof ButtonType];
 
 const buttonStyles = cva(
   [
@@ -102,6 +101,7 @@ const buttonStyles = cva(
   }
 );
 
+//Note for code review. We use "type" in component in figma, maybe we can use "variant" instead of "type" in the code to avoid confusion with HTML button type attribute.
 type BaseButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   "type"
@@ -141,7 +141,7 @@ export const Button = ({
             fontSize: iconSize,
             width: iconSize,
             height: iconSize,
-            ...((icon as any)?.props?.style || {}),
+            ...((icon.props as any)?.style || {}),
           },
         })
       : null;
@@ -162,10 +162,7 @@ export const Button = ({
           {sizedLeadingIcon}
         </span>
       )}
-      <span
-        key="label"
-        className="text-sm font-normal leading-none translate-y-px"
-      >
+      <span key="label" className="leading-none translate-y-px">
         {label}
       </span>
       {sizedTrailingIcon && (
