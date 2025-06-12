@@ -1,6 +1,6 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
+import Checkbox, { CheckboxState } from "../Checkbox/Checkbox";
 
 const dropdownListItemMultiStyles = cva(
   [

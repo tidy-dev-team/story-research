@@ -26,11 +26,6 @@ const checkboxIconStyles = cva(
   ["transition-all", "duration-200", "focus:outline-none"],
   {
     variants: {
-      state: {
-        unchecked: "",
-        checked: "",
-        indeterminate: "",
-      },
       disabled: {
         true: DISABLED_STYLES,
         false: ENABLED_CURSOR,
@@ -42,20 +37,12 @@ const checkboxIconStyles = cva(
     },
     compoundVariants: [
       {
-        state: "unchecked",
         disabled: false,
         className:
-          "text-pz-gray-300 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
-      },
-      {
-        state: ["checked", "indeterminate"],
-        disabled: false,
-        className:
-          "text-pz-blue-500 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
+          "group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
     ],
     defaultVariants: {
-      state: "unchecked",
       disabled: false,
       focused: false,
     },
@@ -165,12 +152,19 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const showFocusRing = internalFocused && isKeyboardFocus;
 
     const renderCheckboxIcon = () => {
-      const iconClasses = checkboxIconStyles({
-        state,
+      const baseIconClasses = checkboxIconStyles({
         disabled,
         focused: showFocusRing,
         className,
       });
+
+      // Add state-specific colors
+      const stateColorClass =
+        state === CheckboxState.Unchecked
+          ? "text-pz-gray-300"
+          : "text-pz-blue-500";
+
+      const iconClasses = `${baseIconClasses} ${stateColorClass}`;
 
       const IconComponent = CHECKBOX_ICONS[state];
       return (
@@ -233,5 +227,4 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 Checkbox.displayName = "Checkbox";
 
 export default Checkbox;
-export { Checkbox };
 export type { CheckboxProps };
