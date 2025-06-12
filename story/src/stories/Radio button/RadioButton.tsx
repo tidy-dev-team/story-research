@@ -27,13 +27,13 @@ const radioButtonIconStyles = cva(
         selected: false,
         disabled: false,
         className:
-          "text-pz-system-fg-2 hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
+          "text-pz-system-fg-2 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
       {
         selected: true,
         disabled: false,
         className:
-          "text-pz-system-fg-primary hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
+          "text-pz-system-fg-primary group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
     ],
     defaultVariants: {
@@ -101,7 +101,7 @@ export const RadioButton = ({
   const labelClasses = labelStyles({ disabled });
 
   const containerClasses = twMerge(
-    "flex items-center gap-2",
+    "group flex items-center gap-2",
     rtl && "flex-row-reverse",
     disabled ? "cursor-not-allowed" : "cursor-pointer"
   );
