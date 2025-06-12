@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { ComponentProps, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -48,7 +48,6 @@ const labelStyles = cva(
     "select-none",
     "transition-colors",
     "duration-200",
-    "font-['Heebo',_sans-serif]",
     "pz-body-m400",
     "leading-none",
     "translate-y-px",
@@ -66,20 +65,19 @@ const labelStyles = cva(
   }
 );
 
-interface RadioButtonProps
-  extends Omit<
-      ComponentProps<"input">,
-      "type" | "size" | "checked" | "disabled"
-    >,
-    VariantProps<typeof radioButtonIconStyles> {
-  label?: string;
+interface RadioButtonProps extends VariantProps<typeof radioButtonIconStyles> {
+  label?: string | null;
   selected?: boolean;
   disabled?: boolean;
   rtl?: boolean;
   onChange?: () => void;
+  className?: string;
+  name?: string;
+  value?: string;
+  id?: string;
 }
 
-export const RadioButton = ({
+const RadioButton = ({
   selected = false,
   rtl = false,
   disabled = false,
@@ -87,7 +85,7 @@ export const RadioButton = ({
   className,
   onChange,
   ...props
-}: RadioButtonProps) => {
+}: RadioButtonProps): ReactElement => {
   const [internalFocused, setInternalFocused] = useState(false);
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
   const showFocusRing = internalFocused && isKeyboardFocus;
@@ -167,4 +165,4 @@ export const RadioButton = ({
   );
 };
 
-export type { RadioButtonProps };
+export default RadioButton;
