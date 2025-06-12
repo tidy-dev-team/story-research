@@ -49,8 +49,6 @@ export interface TabProps extends VariantProps<typeof tabStyles> {
   className?: string;
   tabIndex?: number;
   onClick?: () => void;
-  "aria-selected"?: boolean;
-  "aria-controls"?: string;
 }
 
 export const Tab: React.FC<TabProps> = ({
@@ -61,16 +59,12 @@ export const Tab: React.FC<TabProps> = ({
   onClick,
   className = "",
   tabIndex = 0,
-  "aria-selected": ariaSelected,
-  "aria-controls": ariaControls,
   ...rest
 }) => {
   return (
     <button
       className={twMerge(tabStyles({ rtl }), className)}
       role="tab"
-      aria-selected={ariaSelected}
-      aria-controls={ariaControls}
       tabIndex={disabled ? -1 : tabIndex}
       disabled={disabled}
       onClick={onClick}
@@ -84,7 +78,7 @@ export const Tab: React.FC<TabProps> = ({
       {...rest}
     >
       {leadingIcon && (
-        <span className="flex items-center justify-center w-4 h-4 text-[12px] [&>*]:w-3 [&>*]:h-3">
+        <span className="flex items-center justify-center w-4 h-4 text-[16px] [&>*]:w-4 [&>*]:h-4">
           {leadingIcon}
         </span>
       )}
