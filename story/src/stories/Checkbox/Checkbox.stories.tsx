@@ -159,6 +159,23 @@ export const RTL: Story = {
   },
 };
 
+export const FocusedState: Story = {
+  render: InteractiveCheckbox,
+  args: {
+    state: CheckboxState.Unchecked,
+    disabled: false,
+    focused: true,
+    label: "Focused checkbox",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Checkbox showing the focused state with visible focus ring.",
+      },
+    },
+  },
+};
+
 export const WithLanguageIcon: Story = {
   render: InteractiveCheckbox,
   args: {

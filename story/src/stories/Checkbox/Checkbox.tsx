@@ -17,15 +17,7 @@ const disabledVariants = {
 };
 
 const checkboxIconStyles = cva(
-  [
-    "transition-all",
-    "duration-200",
-    "cursor-pointer",
-    "focus:outline-none",
-    "focus-visible:ring-2",
-    "focus-visible:ring-pz-system-border-focused-1",
-    "focus-visible:ring-offset-0",
-  ],
+  ["transition-all", "duration-200", "focus:outline-none"],
   {
     variants: {
       state: {
@@ -38,7 +30,7 @@ const checkboxIconStyles = cva(
         false: "cursor-pointer",
       },
       focused: {
-        true: "ring-2 ring-pz-system-border-focused-1 rounded-pz-3xs",
+        true: "ring-2 ring-pz-system-border-focused-1 ring-offset-0 rounded-pz-3xs",
         false: "",
       },
     },
@@ -47,13 +39,13 @@ const checkboxIconStyles = cva(
         state: "unchecked",
         disabled: false,
         className:
-          "text-pz-gray-300 hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
+          "text-pz-gray-300 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
       {
         state: ["checked", "indeterminate"],
         disabled: false,
         className:
-          "text-pz-blue-500 hover:enabled:text-pz-system-fg-hover active:enabled:text-pz-system-fg-pressed",
+          "text-pz-blue-500 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
     ],
     defaultVariants: {
@@ -64,13 +56,16 @@ const checkboxIconStyles = cva(
   }
 );
 
-const containerStyles = cva("flex items-center gap-2", {
+const containerStyles = cva("group flex items-center gap-2", {
   variants: {
     rtl: {
       true: "flex-row-reverse",
       false: "flex-row",
     },
-    disabled: disabledVariants,
+    disabled: {
+      true: "text-pz-system-fg-disabled cursor-not-allowed",
+      false: "cursor-pointer",
+    },
   },
   defaultVariants: {
     rtl: false,
@@ -79,7 +74,13 @@ const containerStyles = cva("flex items-center gap-2", {
 });
 
 const labelStyles = cva(
-  ["select-none", "transition-colors", "duration-200", "pz-body-m400"],
+  [
+    "select-none",
+    "transition-colors",
+    "duration-200",
+    "pz-body-m400",
+    "translate-y-px",
+  ],
   {
     variants: {
       disabled: {
@@ -100,7 +101,13 @@ const iconStyles = cva(
 );
 
 const countStyles = cva(
-  ["pz-body-m400", "leading-[1.46875em]", "transition-colors", "duration-200"],
+  [
+    "pz-body-m400",
+    "leading-[1.46875em]",
+    "transition-colors",
+    "duration-200",
+    "translate-y-px",
+  ],
   {
     variants: {
       disabled: {

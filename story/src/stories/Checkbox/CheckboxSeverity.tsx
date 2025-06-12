@@ -9,7 +9,7 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const checkboxSeverityVariants = cva("flex items-center", {
+const checkboxSeverityVariants = cva("group flex items-center", {
   variants: {
     rtl: {
       true: "flex-row-reverse gap-pz-4xs",
@@ -59,7 +59,7 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
       className={cn(checkboxSeverityVariants({ rtl }), className)}
       {...props}
     >
-      <Checkbox state={state} rtl={false} onChange={onChange} />
+      <Checkbox state={state} rtl={rtl} onChange={onChange} />
       <Severity level={severityLevel} type={severityType} rtl={rtl} />
       {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
     </div>
