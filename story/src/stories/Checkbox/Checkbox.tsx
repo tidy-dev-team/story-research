@@ -56,7 +56,7 @@ const checkboxIconStyles = cva(
   }
 );
 
-const containerStyles = cva("group flex items-center gap-2", {
+const containerStyles = cva("group flex items-start gap-2", {
   variants: {
     rtl: {
       true: "flex-row-reverse",
@@ -79,7 +79,8 @@ const labelStyles = cva(
     "transition-colors",
     "duration-200",
     "pz-body-m400",
-    "translate-y-px",
+    "translate-y-1",
+    "max-w-[480px]",
   ],
   {
     variants: {
@@ -101,13 +102,7 @@ const iconStyles = cva(
 );
 
 const countStyles = cva(
-  [
-    "pz-body-m400",
-    "leading-[1.46875em]",
-    "transition-colors",
-    "duration-200",
-    "translate-y-px",
-  ],
+  ["pz-body-m400", "leading-[1.46875em]", "transition-colors", "duration-200"],
   {
     variants: {
       disabled: {
