@@ -38,12 +38,6 @@ const tagVariants = cva(
 );
 
 export const Tag: React.FC<TagProps> = ({ value, type }) => {
-  if (typeof value !== "number" || isNaN(value)) {
-    console.warn(
-      `Tag: Invalid value "${value}". Non-numeric values are not supported.`
-    );
-  }
-
   if (value < 1) {
     console.warn(`Tag: Invalid value "${value}"`);
   }
