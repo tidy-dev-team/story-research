@@ -49,7 +49,7 @@ const checkboxIconStyles = cva(
   }
 );
 
-const containerStyles = cva("group flex items-start gap-2", {
+const containerStyles = cva("group flex items-center gap-2", {
   variants: {
     rtl: {
       true: "flex-row-reverse",
@@ -71,9 +71,8 @@ const labelStyles = cva(
     "select-none",
     TRANSITION_STYLES,
     "pz-body-m400",
-    "-translate-y-px",
     "max-w-[480px]",
-    "leading-6",
+    "translate-y-px",
   ],
   {
     variants: {
@@ -93,7 +92,6 @@ const iconStyles = cva(
     "flex",
     "items-center",
     "justify-center",
-    "translate-y-0.5",
   ],
   {
     variants: {

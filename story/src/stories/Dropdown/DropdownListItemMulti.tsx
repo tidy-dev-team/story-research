@@ -106,7 +106,7 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
       role="menuitemcheckbox"
       aria-checked={indeterminate ? "mixed" : checked}
     >
-      <span onClick={(e) => e.stopPropagation()}>
+      <span className="flex items-center" onClick={(e) => e.stopPropagation()}>
         <Checkbox
           label={label}
           rtl={rtl || false}
