@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
-import { Tag } from "./Tag";
+import { Tag, TagType } from "./Tag";
 
 const meta = {
-  title: "Component/Tags/Tag",
+  title: "Components/Tags/Tag",
   component: Tag,
   args: {
-    value: 1,
-    type: "default",
+    value: 42,
+    type: TagType.Default,
   },
   parameters: {
     layout: "centered",
@@ -20,8 +20,9 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     value: {
-      control: { type: "number", min: 1, max: 999, step: 1 },
-      description: "The numeric value to display (1-999)",
+      control: { type: "number", min: 0, max: 2000 },
+      description:
+        "The numeric value to display (will be clamped between 1-999)",
       table: {
         category: "Content",
         defaultValue: { summary: "1" },
@@ -29,18 +30,11 @@ const meta = {
     },
     type: {
       control: { type: "select" },
-      options: ["default", "geo"],
-      description: "The variant type that determines the visual appearance",
+      options: Object.values(TagType),
+      description: "The visual style variant of the tag",
       table: {
         category: "Appearance",
-        defaultValue: { summary: "default" },
-      },
-    },
-    className: {
-      control: "text",
-      description: "Additional CSS class name",
-      table: {
-        disable: true,
+        defaultValue: { summary: "TagType.Default" },
       },
     },
   },
@@ -50,37 +44,105 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    value: 42,
+    type: TagType.Default,
+  },
 };
 
-export const GeoType: Story = {
+export const Geo: Story = {
   args: {
-    value: 3,
-    type: "geo",
+    value: 15,
+    type: TagType.Geo,
+  },
+};
+
+export const SmallValue: Story = {
+  args: {
+    value: 1,
+    type: TagType.Default,
+  },
+};
+
+export const LargeValue: Story = {
+  args: {
+    value: 999,
+    type: TagType.Default,
+  },
+};
+
+export const OverflowValue: Story = {
+  args: {
+    value: 1500,
+    type: TagType.Default,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Values over 999 are clamped to 999",
+      },
+    },
+  },
+};
+
+export const DecimalValue: Story = {
+  args: {
+    value: 42.7,
+    type: TagType.Default,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Decimal values are rounded to the nearest integer",
+      },
+    },
+  },
+};
+
+export const ZeroValue: Story = {
+  args: {
+    value: 0,
+    type: TagType.Default,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Zero values are clamped to 1",
+      },
+    },
+  },
+};
+
+export const NegativeValue: Story = {
+  args: {
+    value: -5,
+    type: TagType.Default,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Negative values are clamped to 1",
+      },
+    },
   },
 };
 
 export const AllVariants: Story = {
+  args: {
+    value: 42,
+    type: TagType.Default,
+  },
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-        <span style={{ fontSize: "12px", color: "#666", minWidth: "80px" }}>
-          Default:
-        </span>
-        <Tag value={1} />
-        <Tag value={10} />
-        <Tag value={100} />
-        <Tag value={999} />
-      </div>
-      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-        <span style={{ fontSize: "12px", color: "#666", minWidth: "80px" }}>
-          Geo:
-        </span>
-        <Tag value={1} type="geo" />
-        <Tag value={10} type="geo" />
-        <Tag value={100} type="geo" />
-        <Tag value={999} type="geo" />
-      </div>
+    <div className="flex gap-4 items-center">
+      <Tag value={42} type={TagType.Default} />
+      <Tag value={15} type={TagType.Geo} />
     </div>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "All available tag variants displayed together",
+      },
+    },
+  },
 };
