@@ -27,7 +27,7 @@ const radioButtonIconStyles = cva(
         selected: false,
         disabled: false,
         className:
-          "text-pz-system-fg-2 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
+          "text-pz-system-border-5 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
       {
         selected: true,
@@ -66,15 +66,14 @@ const labelStyles = cva(
 );
 
 interface RadioButtonProps extends VariantProps<typeof radioButtonIconStyles> {
-  label?: string | null;
-  selected?: boolean;
   disabled?: boolean;
-  rtl?: boolean;
-  onChange?: () => void;
-  className?: string;
-  name?: string;
-  value?: string;
   id?: string;
+  label?: string | null;
+  name?: string;
+  onChange?: () => void;
+  rtl?: boolean;
+  selected?: boolean;
+  value?: string;
 }
 
 const RadioButton = ({
@@ -82,7 +81,6 @@ const RadioButton = ({
   rtl = false,
   disabled = false,
   label,
-  className,
   onChange,
   ...props
 }: RadioButtonProps): ReactElement => {
@@ -94,7 +92,6 @@ const RadioButton = ({
     selected,
     disabled,
     focused: showFocusRing,
-    className,
   });
   const labelClasses = labelStyles({ disabled });
 
