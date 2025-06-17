@@ -127,7 +127,6 @@ interface CheckboxProps {
   icon?: ReactNode;
   alwaysShowCount?: boolean;
   count?: number;
-  className?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -141,7 +140,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       label,
       alwaysShowCount = false,
       count = 0,
-      className,
       onChange,
     },
     ref
@@ -155,7 +153,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       const baseIconClasses = checkboxIconStyles({
         disabled,
         focused: showFocusRing,
-        className,
       });
 
       // Add state-specific colors

@@ -1,13 +1,7 @@
 import React from "react";
 import { cva } from "class-variance-authority";
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import Checkbox, { CheckboxState } from "./Checkbox";
 import { Severity } from "../Severity/Severity";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 const checkboxSeverityVariants = cva("group flex items-center", {
   variants: {
@@ -29,8 +23,7 @@ const countStyles = cva([
   "text-pz-system-fg-1",
 ]);
 
-export interface CheckboxSeverityProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface CheckboxSeverityProps {
   state?: CheckboxState;
   severityLevel: "high" | "medium" | "low";
   severityType?: "badge" | "bar";
@@ -47,18 +40,13 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   rtl = false,
   alwaysShowCount = false,
   count = 0,
-  className,
   onChange,
-  ...props
 }) => {
   const safeCount = Math.max(0, count || 0);
   const shouldShowCount = alwaysShowCount || safeCount > 0;
 
   return (
-    <div
-      className={cn(checkboxSeverityVariants({ rtl }), className)}
-      {...props}
-    >
+    <div className={checkboxSeverityVariants({ rtl })}>
       <Checkbox state={state} rtl={rtl} onChange={onChange} />
       <Severity level={severityLevel} type={severityType} rtl={rtl} />
       {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
