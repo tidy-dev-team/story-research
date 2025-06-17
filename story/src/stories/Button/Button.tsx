@@ -63,7 +63,7 @@ const buttonStyles = cva(
           "disabled:text-pz-system-fg-disabled",
         ].join(" "),
         [ButtonType.Ghost]: [
-          "text-pz-system-fg-2",
+          "text-pz-components-button-fg-ghost-idle",
           "hover:enabled:bg-pz-system-fg-1/12",
           "hover:enabled:text-pz-system-fg-1",
           "active:enabled:bg-pz-system-fg-1/8",

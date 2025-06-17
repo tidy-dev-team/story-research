@@ -165,7 +165,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       return (
         <IconComponent
           className={iconClasses}
-          style={{ fontSize: 20, width: 20, height: 20 }}
+          style={{ fontSize: 20, width: 20, height: 20 }} // check icon props
         />
       );
     };
@@ -219,7 +219,4 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   }
 );
 
-Checkbox.displayName = "Checkbox";
-
 export default Checkbox;
-export type { CheckboxProps };
