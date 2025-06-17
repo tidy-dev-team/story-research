@@ -1,34 +1,18 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-export interface TagStatusProps extends VariantProps<typeof tagStatusVariants> {
-  type: keyof typeof statusText;
-  rtl?: boolean;
-  className?: string;
+export enum TagStatusType {
+  Error = "error",
+  Warning = "warning",
+  Caution = "caution",
+  Ok = "ok",
+  Loading = "loading",
 }
 
-const statusText = {
-  error: {
-    ltr: "Error",
-    rtl: "שגיאה",
-  },
-  warning: {
-    ltr: "Warning",
-    rtl: "אזהרה",
-  },
-  caution: {
-    ltr: "Caution",
-    rtl: "זהירות",
-  },
-  ok: {
-    ltr: "OK",
-    rtl: "תקין",
-  },
-  loading: {
-    ltr: "Loading",
-    rtl: "טוען",
-  },
-} as const;
+export interface TagStatusProps {
+  type: TagStatusType;
+  label: string;
+}
 
 const tagStatusVariants = cva(
   [
@@ -41,47 +25,37 @@ const tagStatusVariants = cva(
     "pz-label-m",
     "rounded-pz-2xs",
     "text-center",
-    "leading-[1.46875em]",
     "h-6",
   ],
   {
     variants: {
       type: {
-        error: "bg-pz-system-status-danger-3 text-pz-system-fg-1",
-        warning: "bg-pz-system-status-warning-2 text-pz-system-fg-black",
-        caution: "bg-pz-system-status-caution-2 text-pz-system-fg-black",
-        ok: "bg-pz-system-status-success-2 text-pz-system-fg-black",
-        loading: "bg-pz-system-status-loading-2 text-pz-system-fg-1",
+        [TagStatusType.Error]:
+          "bg-pz-system-status-danger-3 text-pz-system-fg-1",
+        [TagStatusType.Warning]:
+          "bg-pz-system-status-warning-2 text-pz-system-fg-black",
+        [TagStatusType.Caution]:
+          "bg-pz-system-status-caution-2 text-pz-system-fg-black",
+        [TagStatusType.Ok]:
+          "bg-pz-system-status-success-2 text-pz-system-fg-black",
+        [TagStatusType.Loading]:
+          "bg-pz-system-status-loading-2 text-pz-system-fg-1",
       },
     },
     defaultVariants: {
-      type: "ok",
+      type: TagStatusType.Loading,
     },
   }
 );
 
-export const TagStatus: React.FC<TagStatusProps> = ({
-  type,
-  rtl = false,
-  className,
-}) => {
-  const text =
-    type && statusText[type]
-      ? rtl
-        ? statusText[type].rtl
-        : statusText[type].ltr
-      : "";
-
+export const TagStatus: React.FC<TagStatusProps> = ({ type, label }) => {
   return (
     <span
-      className={tagStatusVariants({ type, className })}
-      style={{
-        direction: rtl ? "rtl" : "ltr",
-      }}
-      aria-label={text}
+      className={tagStatusVariants({ type })}
+      aria-label={label}
       role="status"
     >
-      {text}
+      {label}
     </span>
   );
 };
