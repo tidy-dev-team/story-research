@@ -38,13 +38,30 @@ const tagVariants = cva(
 );
 
 export const Tag: React.FC<TagProps> = ({ value, type }) => {
-  const clampedValue = Math.max(1, Math.min(999, Math.round(value)));
-  const displayValue = `+${clampedValue}`;
+  if (typeof value !== "number" || isNaN(value)) {
+    console.warn(
+      `Tag: Invalid value "${value}". Non-numeric values are not supported.`
+    );
+  }
+
+  if (value < 1) {
+    console.warn(`Tag: Invalid value "${value}"`);
+  }
+
+  if (value > 999) {
+    console.warn(`Tag: Invalid value "${value}"`);
+  }
+
+  if (!Number.isInteger(value)) {
+    console.warn(`Tag: Invalid value "${value}"`);
+  }
+
+  const displayValue = `+${value}`;
 
   return (
     <div
       className={tagVariants({ type })}
-      aria-label={`${clampedValue} items`}
+      aria-label={`${value} items`}
       role="status"
     >
       <span className="translate-y-px">{displayValue}</span>
