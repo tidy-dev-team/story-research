@@ -1,36 +1,21 @@
 import React, { ReactNode, ReactElement } from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import { TextDirection } from "../textDirection";
 
-const tabBarVariants = cva(["flex", "items-center", "gap-1"], {
-  variants: {
-    rtl: {
-      true: "justify-end flex-row-reverse",
-      false: "justify-start flex-row",
-    },
-  },
-  defaultVariants: {
-    rtl: false,
-  },
-});
+const tabBarVariants = cva(["flex", "items-center", "gap-1"]);
 
-export interface TabBarProps extends VariantProps<typeof tabBarVariants> {
+export interface TabBarProps {
   children?: ReactNode;
+  textDirection?: TextDirection;
 }
 
 export const TabBar = ({
   children,
-  rtl = false,
+  textDirection = TextDirection.Ltr,
 }: TabBarProps): ReactElement => {
-  const childrenArray = React.Children.toArray(children);
-  const orderedChildren = rtl ? childrenArray.reverse() : childrenArray;
-
   return (
-    <div
-      role="tablist"
-      dir={rtl ? "rtl" : "ltr"}
-      className={tabBarVariants({ rtl })}
-    >
-      {orderedChildren}
+    <div role="tablist" dir={textDirection} className={tabBarVariants()}>
+      {children}
     </div>
   );
 };
