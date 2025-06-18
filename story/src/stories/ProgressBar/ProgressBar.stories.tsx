@@ -1,25 +1,29 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { ProgressBar } from "./ProgressBar";
+import { TextDirection } from "../textDirection";
 
-const meta = {
+const meta: Meta<typeof ProgressBar> = {
   title: "Component/ProgressBar",
   component: ProgressBar,
+  parameters: {
+    layout: "centered",
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: "300px" }}>
+        <Story />
+      </div>
+    ),
+  ],
+  tags: ["autodocs"],
   args: {
     value: 50,
     max: 100,
     min: 0,
-    rtl: false,
+    size: "small",
+    textDirection: TextDirection.Ltr,
   },
-  parameters: {
-    layout: "centered",
-    docs: {
-      source: {
-        state: "open",
-      },
-    },
-  },
-  tags: ["autodocs"],
   argTypes: {
     value: {
       control: { type: "range", min: 0, max: 100, step: 1 },
@@ -33,7 +37,6 @@ const meta = {
       control: { type: "number", min: 1, step: 1 },
       description: "Maximum value",
       table: {
-        disable: true,
         category: "Content",
         defaultValue: { summary: "100" },
       },
@@ -42,32 +45,32 @@ const meta = {
       control: { type: "number", min: 0, max: 99, step: 1 },
       description: "Minimum value",
       table: {
-        disable: true,
         category: "Content",
         defaultValue: { summary: "0" },
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right-to-left direction",
+    size: {
+      control: "select",
+      options: ["small", "medium", "large"],
+      description: "Size of the progress bar",
       table: {
         category: "Appearance",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "small" },
       },
     },
-    className: {
-      control: "text",
-      description: "Additional CSS class",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "Text direction for RTL/LTR layout",
       table: {
-        disable: true,
-        category: "Styling",
+        category: "Layout",
+        defaultValue: { summary: "ltr" },
       },
     },
     "aria-label": {
       control: "text",
       description: "Accessible label for screen readers",
       table: {
-        disable: true,
         category: "Accessibility",
       },
     },
@@ -75,83 +78,13 @@ const meta = {
       control: "text",
       description: "ID of element that describes the progress bar",
       table: {
-        disable: true,
         category: "Accessibility",
       },
     },
   },
-} satisfies Meta<typeof ProgressBar>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {},
-  render: (args) => (
-    <div style={{ width: "300px" }}>
-      <ProgressBar {...args} />
-    </div>
-  ),
-};
-
-export const Interactive: Story = {
-  render: () => {
-    const [progress, setProgress] = React.useState(0);
-
-    React.useEffect(() => {
-      const timer = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 100);
-
-      return () => clearInterval(timer);
-    }, []);
-
-    return (
-      <div style={{ width: "300px" }}>
-        <div style={{ marginBottom: "8px", fontSize: "14px", color: "#666" }}>
-          Progress: {progress}%
-        </div>
-        <ProgressBar
-          value={progress}
-          aria-label={`Loading progress: ${progress}%`}
-        />
-      </div>
-    );
-  },
-};
-export const DifferentSizes: Story = {
-  render: () => (
-    <div
-      style={{
-        width: "300px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "16px",
-      }}
-    >
-      <div>
-        <div style={{ marginBottom: "4px", fontSize: "12px", color: "#666" }}>
-          Small (default)
-        </div>
-        <ProgressBar value={40} />
-      </div>
-      <div>
-        <div style={{ marginBottom: "4px", fontSize: "12px", color: "#666" }}>
-          Medium
-        </div>
-        <ProgressBar value={60} className="h-2" />
-      </div>
-      <div>
-        <div style={{ marginBottom: "4px", fontSize: "12px", color: "#666" }}>
-          Large
-        </div>
-        <ProgressBar value={80} className="h-3" />
-      </div>
-    </div>
-  ),
-};
+export const Default: Story = {};
