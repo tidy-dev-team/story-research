@@ -59,13 +59,10 @@ const iconStyles = cva(
   }
 );
 
-const countStyles = cva(
-  "pz-body-m400 leading-[1.46875em] transition-colors duration-200",
-  {
-    variants: { disabled: baseTextStyles },
-    defaultVariants: { disabled: false },
-  }
-);
+const countStyles = cva("pz-body-m400 transition-colors duration-200", {
+  variants: { disabled: baseTextStyles },
+  defaultVariants: { disabled: false },
+});
 
 interface CheckboxProps {
   label?: string;
@@ -90,6 +87,7 @@ const Checkbox = ({
 }: CheckboxProps): React.ReactElement => {
   const [internalFocused, setInternalFocused] = useState(false);
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
+
   const showFocusRing = internalFocused && isKeyboardFocus;
   const safeCount = Math.max(0, count || 0);
   const shouldShowCount = alwaysShowCount || safeCount > 0;

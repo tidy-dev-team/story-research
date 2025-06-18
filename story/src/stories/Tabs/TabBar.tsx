@@ -7,24 +7,17 @@ export interface TabBarProps extends VariantProps<typeof tabBarVariants> {
   className?: string;
 }
 
-const tabBarVariants = cva(
-  [
-    "flex",
-    "items-center",
-    "gap-1", // 4px gap between tabs
-  ],
-  {
-    variants: {
-      rtl: {
-        true: "justify-end flex-row-reverse",
-        false: "justify-start flex-row",
-      },
+const tabBarVariants = cva(["flex", "items-center", "gap-1"], {
+  variants: {
+    rtl: {
+      true: "justify-end flex-row-reverse",
+      false: "justify-start flex-row",
     },
-    defaultVariants: {
-      rtl: false,
-    },
-  }
-);
+  },
+  defaultVariants: {
+    rtl: false,
+  },
+});
 
 export const TabBar: React.FC<TabBarProps> = ({
   children,
