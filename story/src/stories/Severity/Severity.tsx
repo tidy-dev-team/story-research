@@ -4,27 +4,18 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { SeverityBadge } from "./SeverityBadge";
 import { SeverityBar } from "./SeverityBar";
+import { TextDirection } from "../textDirection";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const severityVariants = cva("inline-flex items-center gap-pz-4xs", {
-  variants: {
-    rtl: {
-      true: "flex-row-reverse",
-      false: "flex-row",
-    },
-  },
-  defaultVariants: {
-    rtl: false,
-  },
-});
+const severityVariants = cva("inline-flex items-center gap-pz-4xs");
 
 export interface SeverityProps extends React.HTMLAttributes<HTMLDivElement> {
   level: "high" | "medium" | "low";
   type: "badge" | "bar";
-  rtl?: boolean;
+  textDirection?: TextDirection;
 }
 
 const LEVEL_LABELS: Record<"high" | "medium" | "low", string> = {
@@ -42,10 +33,12 @@ const LEVEL_LABELS_HE: Record<"high" | "medium" | "low", string> = {
 const Severity: React.FC<SeverityProps> = ({
   level,
   type,
-  rtl = false,
+  textDirection = TextDirection.Ltr,
   className,
   ...props
 }) => {
+  const isRtl = textDirection === TextDirection.Rtl;
+
   const indicator =
     type === "badge" ? (
       <SeverityBadge level={level} />
@@ -54,11 +47,15 @@ const Severity: React.FC<SeverityProps> = ({
     );
 
   return (
-    <div className={cn(severityVariants({ rtl }), className)} {...props}>
+    <div
+      className={cn(severityVariants(), className)}
+      dir={textDirection}
+      {...props}
+    >
       {indicator}
-      <div className={rtl ? "text-right mt-0.5" : "text-left mt-0.5"}>
+      <div className={isRtl ? "text-right mt-0.5" : "text-left mt-0.5"}>
         <span className="text-pz-system-fg-1 pz-label-m">
-          {rtl ? LEVEL_LABELS_HE[level] : LEVEL_LABELS[level]}
+          {isRtl ? LEVEL_LABELS_HE[level] : LEVEL_LABELS[level]}
         </span>
       </div>
     </div>

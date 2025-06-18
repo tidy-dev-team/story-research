@@ -1,54 +1,30 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import Checkbox, { CheckboxState } from "../Checkbox/Checkbox";
+import { cva } from "class-variance-authority";
+import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
+import { TextDirection } from "../textDirection";
 
-const dropdownListItemMultiStyles = cva(
-  [
-    // Layout
-    "flex items-center w-full box-border overflow-hidden",
-    "p-pz-4xs gap-pz-4xs min-h-8",
-
-    // Reset button styles
-    "border-none bg-transparent cursor-pointer",
-
-    // Typography
-    "text-pz-system-fg-1 pz-label-m",
-
-    // Border radius
-    "rounded-pz-2xs",
-
-    // Transitions and interactions
-    "transition-all duration-200",
-    "hover:enabled:bg-pz-system-bg-overlay-hover",
-    "active:enabled:bg-pz-system-bg-overlay-pressed",
-
-    // Focus styles
-    "focus:outline-none focus-visible:ring-2",
-    "focus-visible:ring-pz-system-border-focused-1",
-    "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
-  ],
-  {
-    variants: {
-      rtl: {
-        true: "flex-row-reverse text-right",
-        false: "flex-row text-left",
-      },
-    },
-    defaultVariants: {
-      rtl: false,
-    },
-  }
-);
+const dropdownListItemMultiStyles = cva([
+  "flex items-center w-full box-border overflow-hidden",
+  "p-pz-4xs gap-pz-4xs min-h-8",
+  "border-none bg-transparent cursor-pointer",
+  "text-pz-system-fg-1 pz-label-m",
+  "rounded-pz-2xs",
+  "transition-all duration-200",
+  "hover:enabled:bg-pz-system-bg-overlay-hover",
+  "active:enabled:bg-pz-system-bg-overlay-pressed",
+  "focus:outline-none focus-visible:ring-2",
+  "focus-visible:ring-pz-system-border-focused-1",
+  "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
+]);
 
 interface DropdownListItemMultiProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect">,
-    VariantProps<typeof dropdownListItemMultiStyles> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect"> {
   label: string;
   checked?: boolean;
   indeterminate?: boolean;
   icon?: React.ReactNode;
   count?: number;
   alwaysShowCount?: boolean;
+  textDirection?: TextDirection;
   onSelect?: (isChecked: boolean) => void;
 }
 
@@ -59,14 +35,12 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
   icon,
   count,
   alwaysShowCount = false,
-  className,
-  rtl = false,
+  textDirection = TextDirection.Ltr,
   onClick,
   onKeyDown,
   onSelect,
   ...props
 }) => {
-  // Determine the checkbox state
   const checkboxState = indeterminate
     ? CheckboxState.Indeterminate
     : checked
@@ -99,27 +73,25 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
   return (
     <button
       {...props}
-      className={dropdownListItemMultiStyles({ rtl, className })}
+      className={dropdownListItemMultiStyles()}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       type="button"
       role="menuitemcheckbox"
       aria-checked={indeterminate ? "mixed" : checked}
+      dir={textDirection}
     >
-      <span className="flex items-center" onClick={(e) => e.stopPropagation()}>
-        <Checkbox
-          label={label}
-          rtl={rtl || false}
-          state={checkboxState}
-          icon={icon}
-          count={count}
-          alwaysShowCount={alwaysShowCount}
-          onChange={handleCheckboxChange}
-        />
-      </span>
+      <Checkbox
+        label={label}
+        textDirection={textDirection}
+        state={checkboxState}
+        icon={icon}
+        count={count}
+        alwaysShowCount={alwaysShowCount}
+        onChange={handleCheckboxChange}
+      />
     </button>
   );
 };
 
 export { DropdownListItemMulti };
-export type { DropdownListItemMultiProps };

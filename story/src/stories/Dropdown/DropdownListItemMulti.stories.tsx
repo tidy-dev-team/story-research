@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
+import { TextDirection } from "../textDirection";
 import { useState } from "react";
 import LanguageIcon from "@mui/icons-material/Language";
 
@@ -34,12 +35,13 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right-to-left layout",
+    textDirection: {
+      control: "select",
+      options: [TextDirection.Ltr, TextDirection.Rtl],
+      description: "Text direction for layout",
       table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
+        type: { summary: "TextDirection" },
+        defaultValue: { summary: "TextDirection.Ltr" },
       },
     },
     count: {
@@ -92,14 +94,14 @@ export const Indeterminate: Story = {
 export const RTL: Story = {
   args: {
     label: "Label",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
   },
 };
 
 export const RTLChecked: Story = {
   args: {
     label: "Label",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     checked: true,
   },
 };
@@ -126,6 +128,26 @@ export const WithCountAndIcon: Story = {
     alwaysShowCount: true,
     icon: <LanguageIcon sx={{ fontSize: 16 }} />,
     checked: true,
+  },
+};
+
+export const RTLWithIcon: Story = {
+  args: {
+    label: "Enable multi-language support",
+    textDirection: TextDirection.Rtl,
+    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
+    checked: true,
+  },
+};
+
+export const RTLWithCountAndIcon: Story = {
+  args: {
+    label: "Language packs",
+    textDirection: TextDirection.Rtl,
+    count: 8,
+    alwaysShowCount: true,
+    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
+    indeterminate: true,
   },
 };
 

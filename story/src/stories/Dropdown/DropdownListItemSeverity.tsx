@@ -78,7 +78,7 @@ const DropdownListItemSeverity: React.FC<DropdownListItemSeverityProps> = ({
       type="button"
       role="option"
     >
-      <Severity level={level} type="badge" rtl={rtl || false} />
+      <Severity level={level} type="badge" />
     </button>
   );
 };

@@ -1,43 +1,33 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import { ChangeEvent } from "react";
 import { CheckboxState } from "../Checkbox/Checkbox";
 import { CheckboxSeverity } from "../Checkbox/CheckboxSeverity";
+import { TextDirection } from "../textDirection";
 
-const dropdownListItemMultiSeverityStyles = cva(
-  [
-    "flex items-center w-full box-border overflow-hidden",
-    "p-pz-4xs gap-pz-4xs min-h-8",
-    "border-none bg-transparent cursor-pointer",
-    "text-pz-system-fg-1 pz-label-m",
-    "rounded-pz-2xs",
-    "transition-all duration-200",
-    "hover:enabled:bg-pz-system-bg-overlay-hover",
-    "active:enabled:bg-pz-system-bg-overlay-pressed",
-    "focus:outline-none focus-visible:ring-2",
-    "focus-visible:ring-pz-system-border-focused-1",
-    "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
-  ],
-  {
-    variants: {
-      rtl: {
-        true: "flex-row-reverse text-right",
-        false: "flex-row text-left",
-      },
-    },
-    defaultVariants: {
-      rtl: false,
-    },
-  }
-);
+const dropdownListItemMultiSeverityStyles = cva([
+  "flex items-center w-full box-border overflow-hidden",
+  "p-pz-4xs gap-pz-4xs min-h-8",
+  "border-none bg-transparent cursor-pointer",
+  "text-pz-system-fg-1 pz-label-m",
+  "rounded-pz-2xs",
+  "transition-all duration-200",
+  "hover:enabled:bg-pz-system-bg-overlay-hover",
+  "active:enabled:bg-pz-system-bg-overlay-pressed",
+  "focus:outline-none focus-visible:ring-2",
+  "focus-visible:ring-pz-system-border-focused-1",
+  "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
+]);
 
 interface DropdownListItemMultiSeverityProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect">,
-    VariantProps<typeof dropdownListItemMultiSeverityStyles> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect"> {
   severityLabel: string;
   severityLevel: "high" | "medium" | "low";
   severityType?: "badge" | "bar";
   checked?: boolean;
   indeterminate?: boolean;
+  textDirection?: TextDirection;
+  count?: number;
+  alwaysShowCount?: boolean;
   onSelect?: (isChecked: boolean) => void;
 }
 
@@ -49,8 +39,9 @@ const DropdownListItemMultiSeverity: React.FC<
   severityType = "badge",
   checked = false,
   indeterminate = false,
-  className,
-  rtl = false,
+  textDirection = TextDirection.Ltr,
+  count,
+  alwaysShowCount = false,
   onClick,
   onKeyDown,
   onSelect,
@@ -69,20 +60,21 @@ const DropdownListItemMultiSeverity: React.FC<
   return (
     <button
       {...props}
-      className={dropdownListItemMultiSeverityStyles({ rtl, className })}
+      className={dropdownListItemMultiSeverityStyles()}
       type="button"
       role="menuitemcheckbox"
       aria-checked={indeterminate ? "mixed" : checked}
+      dir={textDirection}
     >
-      <span onClick={(e) => e.stopPropagation()}>
-        <CheckboxSeverity
-          state={checkboxState}
-          severityLevel={severityLevel}
-          severityType={severityType}
-          rtl={rtl || false}
-          onChange={handleCheckboxChange}
-        />
-      </span>
+      <CheckboxSeverity
+        state={checkboxState}
+        severityLevel={severityLevel}
+        severityType={severityType}
+        textDirection={textDirection}
+        count={count}
+        alwaysShowCount={alwaysShowCount}
+        onChange={handleCheckboxChange}
+      />
     </button>
   );
 };
