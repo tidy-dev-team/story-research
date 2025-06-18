@@ -1,11 +1,5 @@
-import React from "react";
+import React, { ReactNode, ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
-
-export interface TabBarProps extends VariantProps<typeof tabBarVariants> {
-  children?: React.ReactNode;
-  className?: string;
-}
 
 const tabBarVariants = cva(["flex", "items-center", "gap-1"], {
   variants: {
@@ -19,23 +13,22 @@ const tabBarVariants = cva(["flex", "items-center", "gap-1"], {
   },
 });
 
-export const TabBar: React.FC<TabBarProps> = ({
+export interface TabBarProps extends VariantProps<typeof tabBarVariants> {
+  children?: ReactNode;
+}
+
+export const TabBar = ({
   children,
-  rtl,
-  className,
-  ...rest
-}) => {
+  rtl = false,
+}: TabBarProps): ReactElement => {
   const childrenArray = React.Children.toArray(children);
   const orderedChildren = rtl ? childrenArray.reverse() : childrenArray;
 
   return (
     <div
-      className={twMerge(tabBarVariants({ rtl }), className)}
       role="tablist"
-      style={{
-        direction: rtl ? "rtl" : "ltr",
-      }}
-      {...rest}
+      dir={rtl ? "rtl" : "ltr"}
+      className={tabBarVariants({ rtl })}
     >
       {orderedChildren}
     </div>

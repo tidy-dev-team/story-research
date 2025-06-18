@@ -14,7 +14,7 @@ const meta = {
     hasLeadingIcon: false,
     rtl: false,
     disabled: false,
-    "aria-selected": false,
+    selected: false,
   },
   parameters: {
     layout: "centered",
@@ -53,24 +53,15 @@ const meta = {
       description: "If true, the tab will be disabled and non-interactive.",
       table: { category: "State", defaultValue: { summary: "false" } },
     },
-    "aria-selected": {
-      table: { disable: true },
+    selected: {
+      control: "boolean",
+      description: "If true, the tab will be marked as selected.",
+      table: { category: "State", defaultValue: { summary: "false" } },
     },
     onClick: {
       action: "clicked",
       description: "Optional click handler.",
       table: { category: "Events", disable: true },
-    },
-    className: {
-      control: "text",
-      description: "Additional CSS classes.",
-      table: { category: "Appearance", disable: true },
-    },
-    "aria-controls": {
-      table: { disable: true },
-    },
-    tabIndex: {
-      table: { disable: true },
     },
   },
 } satisfies Meta<TabStoryArgs>;
@@ -86,13 +77,13 @@ const renderIcon = (
 const renderStory = ({
   hasLeadingIcon,
   disabled,
-  "aria-selected": ariaSelected,
+  selected,
   ...args
 }: TabStoryArgs) => (
   <Tab
     {...args}
     disabled={disabled}
-    // aria-selected={ariaSelected}
+    selected={selected}
     leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
   />
 );
@@ -109,7 +100,6 @@ export const RTL: Story = {
     children: "Dashboard",
     rtl: true,
     hasLeadingIcon: true,
-    "aria-controls": "tabpanel-dashboard",
   },
   render: renderStory,
 };

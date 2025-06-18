@@ -31,13 +31,6 @@ const meta = {
         category: "Content",
       },
     },
-    className: {
-      control: "text",
-      description: "Additional CSS class name",
-      table: {
-        disable: true,
-      },
-    },
   },
 } satisfies Meta<typeof TabBar>;
 
@@ -56,8 +49,7 @@ export const Interactive: Story = {
         {tabs.map((label, idx) => (
           <Tab
             key={label}
-            aria-selected={selected === idx}
-            aria-controls={`panel-${idx}`}
+            selected={selected === idx}
             onClick={() => setSelected(idx)}
             rtl={args.rtl}
           >

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { ReactNode, ReactElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
 
 const tabStyles = cva(
   [
@@ -43,46 +42,40 @@ const tabStyles = cva(
 );
 
 export interface TabProps extends VariantProps<typeof tabStyles> {
-  children: React.ReactNode;
-  leadingIcon?: React.ReactElement;
+  children: ReactNode;
+  leadingIcon?: ReactElement;
+  selected?: boolean;
   disabled?: boolean;
-  className?: string;
-  tabIndex?: number;
   onClick?: () => void;
 }
 
-export const Tab: React.FC<TabProps> = ({
+export const Tab = ({
   children,
   leadingIcon,
   rtl = false,
+  selected = false,
   disabled = false,
   onClick,
-  className = "",
-  tabIndex = 0,
-  ...rest
-}) => {
-  return (
-    <button
-      className={twMerge(tabStyles({ rtl }), className)}
-      role="tab"
-      tabIndex={disabled ? -1 : tabIndex}
-      disabled={disabled}
-      onClick={onClick}
-      onKeyDown={(event) => {
-        if (!disabled && (event.key === "Enter" || event.key === " ")) {
-          event.preventDefault();
-          onClick?.();
-        }
-      }}
-      type="button"
-      {...rest}
-    >
-      {leadingIcon && (
-        <span className="flex items-center justify-center w-4 h-4 text-[16px] [&>*]:w-4 [&>*]:h-4">
-          {leadingIcon}
-        </span>
-      )}
-      <span>{children}</span>
-    </button>
-  );
-};
+}: TabProps): ReactElement => (
+  <button
+    type="button"
+    role="tab"
+    aria-selected={selected}
+    disabled={disabled}
+    className={tabStyles({ rtl })}
+    onClick={onClick}
+    onKeyDown={(event) => {
+      if (!disabled && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        onClick?.();
+      }
+    }}
+  >
+    {leadingIcon && (
+      <span className="flex items-center justify-center w-4 h-4 text-[16px] [&>*]:w-4 [&>*]:h-4">
+        {leadingIcon}
+      </span>
+    )}
+    <span>{children}</span>
+  </button>
+);
