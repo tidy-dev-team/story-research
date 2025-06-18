@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { action } from "@storybook/addon-actions";
 import { CheckboxSeverity } from "./CheckboxSeverity";
 import { CheckboxState } from "./Checkbox";
+import { TextDirection } from "../textDirection";
 
 type CheckboxSeverityStoryArgs = ComponentProps<typeof CheckboxSeverity>;
 
@@ -32,7 +33,7 @@ const meta = {
     state: CheckboxState.Unchecked,
     severityLevel: "medium",
     severityType: "badge",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     alwaysShowCount: false,
     count: 3,
     onChange: action("onChange"),
@@ -76,12 +77,13 @@ const meta = {
         defaultValue: { summary: "badge" },
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right-to-left layout",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "Text direction for RTL/LTR layout",
       table: {
         category: "Layout",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "ltr" },
       },
     },
     alwaysShowCount: {
@@ -143,7 +145,7 @@ export const RTLLayout: Story = {
     state: CheckboxState.Checked,
     severityLevel: "high",
     severityType: "badge",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     count: 5,
   },
 };

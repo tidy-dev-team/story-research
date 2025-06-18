@@ -1,23 +1,23 @@
 import React from "react";
 import { cva } from "class-variance-authority";
-import Checkbox, { CheckboxState } from "./Checkbox";
+import { Checkbox, CheckboxState } from "./Checkbox";
 import { Severity } from "../Severity/Severity";
+import { TextDirection } from "../textDirection";
 
 const checkboxSeverityVariants = cva("group flex items-center", {
   variants: {
-    rtl: {
-      true: "flex-row-reverse gap-pz-4xs",
-      false: "flex-row gap-pz-4xs",
+    textDirection: {
+      [TextDirection.Rtl]: "flex-row-reverse gap-pz-4xs",
+      [TextDirection.Ltr]: "flex-row gap-pz-4xs",
     },
   },
   defaultVariants: {
-    rtl: false,
+    textDirection: TextDirection.Ltr,
   },
 });
 
 const countStyles = cva([
   "pz-body-m400",
-  "leading-[1.46875em]",
   "transition-colors",
   "duration-200",
   "text-pz-system-fg-1",
@@ -27,7 +27,7 @@ export interface CheckboxSeverityProps {
   state?: CheckboxState;
   severityLevel: "high" | "medium" | "low";
   severityType?: "badge" | "bar";
-  rtl?: boolean;
+  textDirection?: TextDirection;
   alwaysShowCount?: boolean;
   count?: number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -37,7 +37,7 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   state = CheckboxState.Unchecked,
   severityLevel,
   severityType = "badge",
-  rtl = false,
+  textDirection = TextDirection.Ltr,
   alwaysShowCount = false,
   count = 0,
   onChange,
@@ -46,9 +46,20 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   const shouldShowCount = alwaysShowCount || safeCount > 0;
 
   return (
-    <div className={checkboxSeverityVariants({ rtl })}>
-      <Checkbox state={state} rtl={rtl} onChange={onChange} />
-      <Severity level={severityLevel} type={severityType} rtl={rtl} />
+    <div
+      className={checkboxSeverityVariants({ textDirection })}
+      dir={textDirection}
+    >
+      <Checkbox
+        state={state}
+        textDirection={textDirection}
+        onChange={onChange}
+      />
+      <Severity
+        level={severityLevel}
+        type={severityType}
+        rtl={textDirection === TextDirection.Rtl}
+      />
       {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
     </div>
   );
