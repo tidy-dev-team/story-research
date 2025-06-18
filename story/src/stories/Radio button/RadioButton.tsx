@@ -1,12 +1,30 @@
 import React, { ReactElement } from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { useState } from "react";
-import { twMerge } from "tailwind-merge";
+import { cva } from "class-variance-authority";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import { TextDirection } from "../textDirection";
+
+const containerStyles = cva("group flex items-center gap-2", {
+  variants: {
+    disabled: {
+      true: "cursor-not-allowed",
+      false: "cursor-pointer",
+    },
+  },
+  defaultVariants: {
+    disabled: false,
+  },
+});
 
 const radioButtonIconStyles = cva(
-  ["transition-all", "duration-200", "cursor-pointer"],
+  [
+    "transition-all",
+    "duration-200",
+    "peer-focus-visible:ring-2",
+    "peer-focus-visible:ring-pz-system-border-focused-1",
+    "peer-focus-visible:ring-offset-0",
+    "peer-focus-visible:rounded-full",
+  ],
   {
     variants: {
       selected: {
@@ -14,11 +32,7 @@ const radioButtonIconStyles = cva(
         false: "",
       },
       disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed",
-        false: "cursor-pointer",
-      },
-      focused: {
-        true: "ring-2 ring-pz-system-border-focused-1 ring-offset-0 rounded-full",
+        true: "text-pz-system-fg-disabled",
         false: "",
       },
     },
@@ -26,23 +40,23 @@ const radioButtonIconStyles = cva(
       {
         selected: false,
         disabled: false,
-        className:
+        class:
           "text-pz-system-border-5 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
       {
         selected: true,
         disabled: false,
-        className:
+        class:
           "text-pz-system-fg-primary group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
     ],
     defaultVariants: {
       selected: false,
       disabled: false,
-      focused: false,
     },
   }
 );
+
 const labelStyles = cva(
   [
     "select-none",
@@ -55,7 +69,7 @@ const labelStyles = cva(
   {
     variants: {
       disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed",
+        true: "text-pz-system-fg-disabled",
         false: "text-pz-system-fg-1",
       },
     },
@@ -65,99 +79,47 @@ const labelStyles = cva(
   }
 );
 
-interface RadioButtonProps extends VariantProps<typeof radioButtonIconStyles> {
+interface RadioButtonProps {
   disabled?: boolean;
   id?: string;
   label?: string | null;
   name?: string;
   onChange?: () => void;
-  rtl?: boolean;
+  textDirection?: TextDirection;
   selected?: boolean;
   value?: string;
 }
 
 const RadioButton = ({
   selected = false,
-  rtl = false,
+  textDirection = TextDirection.Ltr,
   disabled = false,
   label,
   onChange,
   ...props
 }: RadioButtonProps): ReactElement => {
-  const [internalFocused, setInternalFocused] = useState(false);
-  const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
-  const showFocusRing = internalFocused && isKeyboardFocus;
-
   const iconClasses = radioButtonIconStyles({
     selected,
     disabled,
-    focused: showFocusRing,
   });
-  const labelClasses = labelStyles({ disabled });
+  const textLabelClasses = labelStyles({ disabled });
 
-  const containerClasses = twMerge(
-    "group flex items-center gap-2",
-    rtl && "flex-row-reverse",
-    disabled ? "cursor-not-allowed" : "cursor-pointer"
-  );
-
-  const renderIcon = () => {
-    const iconSize = 20;
-    const iconStyle = {
-      fontSize: iconSize,
-      width: iconSize,
-      height: iconSize,
-    };
-
-    if (selected) {
-      return (
-        <RadioButtonCheckedIcon className={iconClasses} style={iconStyle} />
-      );
-    } else {
-      return (
-        <RadioButtonUncheckedIcon className={iconClasses} style={iconStyle} />
-      );
-    }
-  };
+  const IconComponent = selected
+    ? RadioButtonCheckedIcon
+    : RadioButtonUncheckedIcon;
 
   return (
-    <label
-      className={containerClasses}
-      onMouseDown={() => setIsKeyboardFocus(false)}
-    >
+    <label className={containerStyles({ disabled })} dir={textDirection}>
       <input
         type="radio"
         checked={selected}
         disabled={disabled}
-        className="sr-only focus:outline-none"
-        tabIndex={disabled ? -1 : 0}
-        onFocus={(e) => {
-          setInternalFocused(true);
-          if (e.target.matches(":focus-visible")) {
-            setIsKeyboardFocus(true);
-          }
-        }}
-        onBlur={() => {
-          setInternalFocused(false);
-          setIsKeyboardFocus(false);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Space" || e.key === "Enter") {
-            e.preventDefault();
-            if (!disabled && !selected && onChange) {
-              setIsKeyboardFocus(true);
-              onChange();
-            }
-          }
-          if (e.key === "Tab") {
-            setIsKeyboardFocus(true);
-          }
-        }}
+        className="sr-only peer"
         onChange={onChange}
         {...props}
       />
-      {renderIcon()}
-      {label && <span className={labelClasses}>{label}</span>}
+      <IconComponent className={iconClasses} fontSize="small" />
+      {label && <span className={textLabelClasses}>{label}</span>}
     </label>
   );
 };

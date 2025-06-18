@@ -1,23 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps } from "react";
+import React, { useState } from "react";
 import RadioButton from "./RadioButton";
-import { useState } from "react";
+import { TextDirection } from "../textDirection";
 
-type RadioButtonStoryArgs = ComponentProps<typeof RadioButton>;
-
-const meta = {
+const meta: Meta<typeof RadioButton> = {
   title: "Component/RadioButton",
   component: RadioButton,
-  args: {
-    label: "Option",
-    selected: false,
-    rtl: false,
-    disabled: false,
-  },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
+  args: {
+    label: "Option",
+    selected: false,
+    disabled: false,
+    textDirection: TextDirection.Ltr,
+  },
   argTypes: {
     label: {
       control: "text",
@@ -42,12 +40,13 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right to left text direction",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "Text direction for RTL/LTR layout",
       table: {
-        category: "Appearance",
-        defaultValue: { summary: "false" },
+        category: "Layout",
+        defaultValue: { summary: "ltr" },
       },
     },
     onChange: {
@@ -58,110 +57,44 @@ const meta = {
       },
     },
   },
-} satisfies Meta<RadioButtonStoryArgs>;
+};
 
 export default meta;
-
-type Story = StoryObj<RadioButtonStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     label: "Default Option",
-    selected: false,
-    disabled: false,
-    rtl: false,
   },
 };
 
-export const Selected: Story = {
-  args: {
-    label: "Selected Option",
-    selected: true,
-    disabled: false,
-    rtl: false,
-  },
-};
-
-export const WithoutLabel: Story = {
-  args: {
-    label: undefined,
-    selected: false,
-    disabled: false,
-    rtl: false,
-  },
-};
-
-export const RTL: Story = {
-  args: {
-    label: "אפשרות",
-    selected: false,
-    rtl: true,
-    disabled: false,
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    label: "Disabled Option",
-    selected: false,
-    disabled: true,
-    rtl: false,
-  },
-};
-
-export const DisabledSelected: Story = {
-  args: {
-    label: "Disabled Selected",
-    selected: true,
-    disabled: true,
-    rtl: false,
-  },
-};
-
-export const KeyboardNavigation: Story = {
-  render: () => {
-    const [selectedOption, setSelectedOption] = useState<string>("option1");
+export const Group: Story = {
+  render: (args) => {
+    const [selected, setSelected] = useState("one");
+    const options = ["one", "two", "three"];
 
     return (
-      <div>
-        <h3 className="text-pz-system-fg-1 text-lg font-medium mb-4">
-          Use Up/Down arrows to select
-        </h3>
-        <div className="space-y-3">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+        dir={args.textDirection}
+      >
+        {options.map((option) => (
           <RadioButton
-            label="Option 1"
-            selected={selectedOption === "option1"}
-            onChange={() => setSelectedOption("option1")}
+            {...args}
+            key={option}
+            label={`Option ${option}`}
+            selected={selected === option}
+            onChange={() => setSelected(option)}
+            value={option}
+            name="radio-group"
+            textDirection={args.textDirection} // Pass textDirection to each RadioButton
           />
-          <RadioButton
-            label="Option 2"
-            selected={selectedOption === "option2"}
-            onChange={() => setSelectedOption("option2")}
-          />
-          <RadioButton
-            label="Option 3"
-            selected={selectedOption === "option3"}
-            onChange={() => setSelectedOption("option3")}
-          />
-          <RadioButton
-            label="Disabled Option"
-            selected={selectedOption === "option4"}
-            disabled={true}
-            onChange={() => setSelectedOption("option4")}
-          />
-        </div>
-        <div className="mt-4 text-sm text-pz-system-fg-4">
-          Selected: {selectedOption}
-        </div>
+        ))}
       </div>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Demonstrates keyboard accessibility. Use Up/Down arrows to navigate between radio buttons. Disabled radio buttons are skipped during keyboard navigation.",
-      },
-    },
   },
 };
