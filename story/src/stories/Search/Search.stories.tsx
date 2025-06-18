@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState } from "react";
 import Search from "./Search";
+import { TextDirection } from "../textDirection";
 
 type SearchStoryArgs = ComponentProps<typeof Search>;
 
@@ -14,7 +15,7 @@ const meta: Meta<SearchStoryArgs> = {
   args: {
     placeholder: "Search",
     value: "",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
     autoFocus: false,
   },
@@ -43,12 +44,13 @@ const meta: Meta<SearchStoryArgs> = {
         defaultValue: { summary: "false" },
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Whether to use right-to-left layout",
+    textDirection: {
+      control: "select",
+      options: [TextDirection.Ltr, TextDirection.Rtl],
+      description: "Text direction for the search component",
       table: {
         category: "Layout",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: TextDirection.Ltr },
       },
     },
     onChange: {
@@ -114,7 +116,7 @@ export const Default: Story = {
   args: {
     placeholder: "Search",
     value: "",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
   },
 };
@@ -142,7 +144,7 @@ export const Filled: Story = {
   },
   args: {
     placeholder: "Search",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
   },
 };
@@ -172,7 +174,7 @@ export const Focused: Story = {
   args: {
     placeholder: "Search",
     value: "",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
   },
 };
@@ -201,7 +203,7 @@ export const Disabled: Story = {
   args: {
     placeholder: "Search",
     value: "",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: true,
   },
 };
@@ -229,7 +231,7 @@ export const DisabledFilled: Story = {
   },
   args: {
     placeholder: "Search",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: true,
   },
 };
@@ -258,7 +260,7 @@ export const RTL: Story = {
   args: {
     placeholder: "חיפוש",
     value: "",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     disabled: false,
   },
 };
@@ -286,7 +288,7 @@ export const RTLFilled: Story = {
   },
   args: {
     placeholder: "חיפוש",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     disabled: false,
   },
 };
@@ -325,7 +327,7 @@ export const Interactive: Story = {
                 value={rtlValue}
                 onChange={(e) => setRtlValue(e.target.value)}
                 onClear={() => setRtlValue("")}
-                rtl={true}
+                textDirection={TextDirection.Rtl}
               />
             </div>
 
