@@ -4,17 +4,7 @@ import { Checkbox, CheckboxState } from "./Checkbox";
 import { Severity } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 
-const checkboxSeverityVariants = cva("group flex items-center", {
-  variants: {
-    textDirection: {
-      [TextDirection.Rtl]: "flex-row-reverse gap-pz-4xs",
-      [TextDirection.Ltr]: "flex-row gap-pz-4xs",
-    },
-  },
-  defaultVariants: {
-    textDirection: TextDirection.Ltr,
-  },
-});
+const checkboxSeverityVariants = cva("group flex items-center gap-pz-4xs");
 
 const countStyles = cva([
   "pz-body-m400",
@@ -46,10 +36,7 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   const shouldShowCount = alwaysShowCount || safeCount > 0;
 
   return (
-    <div
-      className={checkboxSeverityVariants({ textDirection })}
-      dir={textDirection}
-    >
+    <div className={checkboxSeverityVariants()} dir={textDirection}>
       <Checkbox
         state={state}
         textDirection={textDirection}
@@ -58,7 +45,7 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
       <Severity
         level={severityLevel}
         type={severityType}
-        rtl={textDirection === TextDirection.Rtl}
+        textDirection={textDirection}
       />
       {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
     </div>
