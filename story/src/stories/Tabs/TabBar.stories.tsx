@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { TabBar } from "./TabBar";
 import { Tab } from "./Tab";
+import { TextDirection } from "../textDirection";
 
 const meta = {
   title: "Component/Tabs/TabBar",
@@ -16,12 +17,13 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    rtl: {
-      control: { type: "boolean" },
-      description: "Whether to use right-to-left layout",
+    textDirection: {
+      control: { type: "select" },
+      options: [TextDirection.Ltr, TextDirection.Rtl],
+      description: "Text direction for the tab bar layout",
       table: {
         category: "Layout",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "TextDirection.Ltr" },
       },
     },
     children: {
@@ -39,7 +41,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Interactive: Story = {
   args: {
-    rtl: false,
+    textDirection: TextDirection.Ltr,
   },
   render: (args) => {
     const [selected, setSelected] = React.useState(0);
@@ -51,7 +53,7 @@ export const Interactive: Story = {
             key={label}
             selected={selected === idx}
             onClick={() => setSelected(idx)}
-            rtl={args.rtl}
+            textDirection={args.textDirection}
           >
             {label}
           </Tab>

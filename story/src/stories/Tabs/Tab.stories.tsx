@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
 import { Tab } from "./Tab";
+import { TextDirection } from "../textDirection";
 import LanguageIcon from "@mui/icons-material/Language";
 
 type TabStoryArgs = ComponentProps<typeof Tab> & { hasLeadingIcon?: boolean };
@@ -12,7 +13,7 @@ const meta = {
   args: {
     children: "Dashboard",
     hasLeadingIcon: false,
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
     selected: false,
   },
@@ -43,10 +44,14 @@ const meta = {
         "The leading icon element. Used internally when `hasLeadingIcon` is true.",
       table: { category: "Content", disable: true },
     },
-    rtl: {
-      control: "boolean",
-      description: "If true, the tab's text direction will be right-to-left.",
-      table: { category: "Appearance", defaultValue: { summary: "false" } },
+    textDirection: {
+      control: { type: "select" },
+      options: [TextDirection.Ltr, TextDirection.Rtl],
+      description: "Text direction for the tab content.",
+      table: {
+        category: "Layout",
+        defaultValue: { summary: "TextDirection.Ltr" },
+      },
     },
     disabled: {
       control: "boolean",
@@ -98,7 +103,7 @@ export const WithLeadingIcon: Story = {
 export const RTL: Story = {
   args: {
     children: "Dashboard",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     hasLeadingIcon: true,
   },
   render: renderStory,

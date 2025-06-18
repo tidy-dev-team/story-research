@@ -16,6 +16,7 @@ const meta: Meta<SearchStoryArgs> = {
     value: "",
     rtl: false,
     disabled: false,
+    autoFocus: false,
   },
   argTypes: {
     placeholder: {
@@ -77,6 +78,11 @@ const meta: Meta<SearchStoryArgs> = {
       table: {
         category: "Events",
       },
+    },
+    autoFocus: {
+      control: "boolean",
+      description: "Whether the input should automatically receive focus",
+      table: { category: "Behavior", defaultValue: { summary: "false" } },
     },
   },
 };
