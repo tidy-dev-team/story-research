@@ -1,8 +1,9 @@
 import { cva } from "class-variance-authority";
-import { useState, ReactNode, ChangeEvent } from "react";
+import { ReactNode, ChangeEvent } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
+import { TextDirection } from "../textDirection";
 
 export enum CheckboxState {
   Unchecked = "unchecked",
@@ -23,23 +24,79 @@ const baseTextStyles = {
 
 const containerStyles = cva("group flex items-center gap-2", {
   variants: {
-    rtl: { true: "flex-row-reverse", false: "flex-row" },
     disabled: baseTextStyles,
   },
-  defaultVariants: { rtl: false, disabled: false },
+  defaultVariants: { disabled: false },
 });
 
 const checkboxIconStyles = cva(
-  "transition-all duration-200 focus:outline-none",
+  [
+    "transition-all",
+    "duration-200",
+    "focus:outline-none",
+    "peer-focus-visible:ring-2",
+    "peer-focus-visible:ring-pz-system-border-focused-1",
+    "peer-focus-visible:ring-offset-0",
+    "peer-focus-visible:rounded-pz-3xs",
+    "relative",
+  ],
   {
     variants: {
-      disabled: baseTextStyles,
-      focused: {
-        true: "ring-2 ring-pz-system-border-focused-1 ring-offset-0 rounded-pz-3xs",
-        false: "",
+      disabled: {
+        true: "text-pz-system-fg-disabled",
+        false: [
+          "hover:before:absolute",
+          "hover:before:inset-0",
+          "hover:before:pointer-events-none",
+          "hover:before:rounded-pz-3xs",
+          "active:before:absolute",
+          "active:before:inset-0",
+          "active:before:pointer-events-none",
+          "active:before:rounded-pz-3xs",
+        ],
+      },
+      state: {
+        unchecked: [],
+        checked: [],
+        indeterminate: [],
       },
     },
-    defaultVariants: { disabled: false, focused: false },
+    compoundVariants: [
+      // Unchecked states
+      {
+        disabled: false,
+        state: "unchecked",
+        class: [
+          "text-pz-system-border-5",
+          "hover:text-pz-system-border-hover",
+          "active:text-pz-system-border-pressed",
+        ],
+      },
+      // Checked states
+      {
+        disabled: false,
+        state: "checked",
+        class: [
+          "text-pz-system-fg-primary",
+          "hover:before:bg-pz-system-bg-overlay-hover-on-primary",
+          "active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+        ],
+      },
+      // Indeterminate states
+      {
+        disabled: false,
+        state: "indeterminate",
+        class: [
+          "text-pz-system-fg-primary",
+          "hover:before:bg-pz-system-bg-overlay-hover-on-primary",
+          "active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+        ],
+      },
+    ],
+    defaultVariants: {
+      disabled: false,
+      state: "unchecked",
+    },
   }
 );
 
@@ -68,16 +125,16 @@ interface CheckboxProps {
   label?: string;
   state?: CheckboxState;
   disabled?: boolean;
-  rtl?: boolean;
+  textDirection?: TextDirection;
   icon?: ReactNode;
   alwaysShowCount?: boolean;
   count?: number;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Checkbox = ({
+export const Checkbox = ({
   state = CheckboxState.Unchecked,
-  rtl = false,
+  textDirection = TextDirection.Ltr,
   disabled = false,
   icon,
   label,
@@ -85,52 +142,22 @@ const Checkbox = ({
   count = 0,
   onChange,
 }: CheckboxProps): React.ReactElement => {
-  const [internalFocused, setInternalFocused] = useState(false);
-  const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
-
-  const showFocusRing = internalFocused && isKeyboardFocus;
   const safeCount = Math.max(0, count || 0);
   const shouldShowCount = alwaysShowCount || safeCount > 0;
 
   const IconComponent = CHECKBOX_ICONS[state];
-  const baseIconClasses = checkboxIconStyles({
+  const iconClasses = checkboxIconStyles({
     disabled,
-    focused: showFocusRing,
+    state: state.toLowerCase() as "unchecked" | "checked" | "indeterminate",
   });
-  const stateColorClass =
-    state === CheckboxState.Unchecked ? "text-pz-gray-300" : "text-pz-blue-500";
-  const iconClasses = `${baseIconClasses} ${stateColorClass}`;
 
   return (
-    <label
-      className={containerStyles({ rtl, disabled })}
-      onMouseDown={() => setIsKeyboardFocus(false)}
-    >
+    <label className={containerStyles({ disabled })} dir={textDirection}>
       <input
         type="checkbox"
         checked={state === CheckboxState.Checked}
         disabled={disabled}
-        className="sr-only focus:outline-none"
-        tabIndex={disabled ? -1 : 0}
-        onFocus={(e) => {
-          setInternalFocused(true);
-          if (e.target.matches(":focus-visible")) setIsKeyboardFocus(true);
-        }}
-        onBlur={() => {
-          setInternalFocused(false);
-          setIsKeyboardFocus(false);
-        }}
-        onKeyDown={(e) => {
-          if (["Space", "Enter"].includes(e.key)) {
-            e.preventDefault();
-            if (!disabled) {
-              setIsKeyboardFocus(true);
-              (e.target as HTMLInputElement).click();
-            }
-          } else if (e.key === "Tab") {
-            setIsKeyboardFocus(true);
-          }
-        }}
+        className="sr-only peer"
         onChange={onChange}
       />
       <IconComponent className={iconClasses} fontSize="small" />
@@ -142,5 +169,3 @@ const Checkbox = ({
     </label>
   );
 };
-
-export default Checkbox;

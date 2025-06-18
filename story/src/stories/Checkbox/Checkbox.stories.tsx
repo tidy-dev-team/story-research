@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState, useEffect } from "react";
-import Checkbox, { CheckboxState } from "./Checkbox";
+import { Checkbox, CheckboxState } from "./Checkbox";
 import LanguageIcon from "@mui/icons-material/Language";
+import { TextDirection } from "../textDirection";
 
 type CheckboxStoryArgs = ComponentProps<typeof Checkbox> & {
   showIcon?: boolean;
@@ -44,7 +45,7 @@ const meta: Meta<CheckboxStoryArgs> = {
   args: {
     state: CheckboxState.Unchecked,
     disabled: false,
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     showIcon: false,
     label: "Checkbox label",
     alwaysShowCount: false,
@@ -68,12 +69,13 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "false" },
       },
     },
-    rtl: {
-      control: "boolean",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
       description: "Whether to use right-to-left layout",
       table: {
         category: "Layout",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "ltr" },
       },
     },
     showIcon: {
@@ -144,7 +146,7 @@ export const RTL: Story = {
   args: {
     state: CheckboxState.Checked,
     disabled: false,
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     label: "Right-to-left",
   },
 };
