@@ -4,7 +4,7 @@ import { AvatarSize } from "./Avatar";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Component/Avatar/Avatar",
+  title: "Components/Avatar/Avatar",
   component: Avatar,
   parameters: {
     layout: "centered",
