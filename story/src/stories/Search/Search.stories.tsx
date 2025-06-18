@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps, useState } from "react";
-import Search from "./Search";
+import { Search } from "./Search";
 import { TextDirection } from "../textDirection";
 
 type SearchStoryArgs = ComponentProps<typeof Search>;
