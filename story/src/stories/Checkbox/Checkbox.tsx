@@ -22,80 +22,37 @@ const disabledTextStyles = {
   false: "text-pz-system-fg-1",
 };
 
-const containerStyles = cva("group flex items-center gap-2", {
+const containerStyles = cva("flex items-center gap-2", {
   variants: {
-    disabled: disabledTextStyles,
+    rtl: { true: "flex-row-reverse", false: "flex-row" },
+    disabled: {
+      true: "opacity-50 cursor-not-allowed",
+      false: "cursor-pointer",
+    },
   },
-  defaultVariants: { disabled: false },
+  defaultVariants: { rtl: false, disabled: false },
 });
 
 const checkboxIconStyles = cva(
-  [
-    "transition-all",
-    "duration-200",
-    "focus:outline-none",
-    "peer-focus-visible:ring-2",
-    "peer-focus-visible:ring-pz-system-border-focused-1",
-    "peer-focus-visible:ring-offset-0",
-    "peer-focus-visible:rounded-pz-3xs",
-    "relative",
-  ],
+  "relative transition-all duration-200 focus:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-pz-system-border-focused-1 peer-focus-visible:ring-offset-0 peer-focus-visible:rounded-pz-3xs",
   {
     variants: {
       disabled: {
         true: "text-pz-system-fg-disabled",
-        false: [
-          "hover:before:absolute",
-          "hover:before:inset-0",
-          "hover:before:pointer-events-none",
-          "hover:before:rounded-pz-3xs",
-          "active:before:absolute",
-          "active:before:inset-0",
-          "active:before:pointer-events-none",
-          "active:before:rounded-pz-3xs",
-        ],
+        false: "",
       },
       state: {
-        unchecked: [],
-        checked: [],
-        indeterminate: [],
+        unchecked:
+          "text-pz-system-border-5 hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
+        checked:
+          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+        indeterminate:
+          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
       },
     },
-    compoundVariants: [
-      // Unchecked states
-      {
-        disabled: false,
-        state: "unchecked",
-        class: [
-          "text-pz-system-border-5",
-          "hover:text-pz-system-border-hover",
-          "active:text-pz-system-border-pressed",
-        ],
-      },
-      // Checked states
-      {
-        disabled: false,
-        state: "checked",
-        class: [
-          "text-pz-system-fg-primary",
-          "hover:before:bg-pz-system-bg-overlay-hover-on-primary",
-          "active:before:bg-pz-system-bg-overlay-pressed-on-primary",
-        ],
-      },
-      // Indeterminate states
-      {
-        disabled: false,
-        state: "indeterminate",
-        class: [
-          "text-pz-system-fg-primary",
-          "hover:before:bg-pz-system-bg-overlay-hover-on-primary",
-          "active:before:bg-pz-system-bg-overlay-pressed-on-primary",
-        ],
-      },
-    ],
     defaultVariants: {
       disabled: false,
-      state: "unchecked",
+      state: CheckboxState.Unchecked,
     },
   }
 );
@@ -122,40 +79,60 @@ const countStyles = cva("pz-body-m400 transition-colors duration-200", {
 });
 
 interface CheckboxProps {
+  state: CheckboxState;
   label?: string;
-  state?: CheckboxState;
-  disabled?: boolean;
+  isDisabled?: boolean;
   textDirection?: TextDirection;
   icon?: ReactNode;
   count?: number | null;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Checkbox = ({
   state = CheckboxState.Unchecked,
   textDirection = TextDirection.Ltr,
-  disabled = false,
-  icon,
+  isDisabled = false,
+  icon: leadingIcon,
   label,
   count = 0,
   onChange,
 }: CheckboxProps): React.ReactElement => {
-  const safeCount = Math.max(0, count || 0);
-  const shouldShowCount = safeCount > 0;
+  if (count !== null && (count < 0 || !Number.isInteger(count))) {
+    console.warn(`Checkbox component: Invalid prop count: "${count}"`);
+  }
 
-  const IconComponent = CHECKBOX_ICONS[state];
+  const CheckboxIconComponent = CHECKBOX_ICONS[state];
   const iconClasses = checkboxIconStyles({
-    disabled,
-    state: state.toLowerCase() as "unchecked" | "checked" | "indeterminate",
+    disabled: isDisabled,
+    state: state,
   });
 
   return (
-    <label className={containerStyles({ disabled })} dir={textDirection}>
-      <IconComponent className={iconClasses} fontSize="small" />
-      {icon && <span className={iconStyles({ disabled })}>{icon}</span>}
-      {label && <span className={labelStyles({ disabled })}>{label}</span>}
-      {shouldShowCount && (
-        <span className={countStyles({ disabled })}>({safeCount})</span>
+    <label
+      className={containerStyles({ disabled: isDisabled })}
+      dir={textDirection}
+    >
+      <input
+        type="checkbox"
+        className="peer sr-only"
+        checked={state === CheckboxState.Checked}
+        onChange={onChange}
+        disabled={isDisabled}
+      />
+
+      <span className={iconClasses}>
+        <CheckboxIconComponent fontSize="small" />
+      </span>
+      {leadingIcon && (
+        <span className={iconStyles({ disabled: isDisabled })}>
+          {leadingIcon}
+        </span>
+      )}
+      {label && (
+        <span className={labelStyles({ disabled: isDisabled })}>{label}</span>
+      )}
+      {!!count && (
+        <span className={countStyles({ disabled: isDisabled })}>({count})</span>
       )}
     </label>
   );

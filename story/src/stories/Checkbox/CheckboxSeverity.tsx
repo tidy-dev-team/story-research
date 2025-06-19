@@ -30,22 +30,30 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   count = 0,
   onChange,
 }) => {
-  const safeCount = Math.max(0, count || 0);
-  const shouldShowCount = safeCount > 0;
+  if (
+    count !== null &&
+    count !== undefined &&
+    (count < 0 || !Number.isInteger(count))
+  ) {
+    console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
+  }
+
+  const shouldShowCount = count > 0;
 
   return (
     <div className={checkboxSeverityVariants()} dir={textDirection}>
       <Checkbox
         state={state}
         textDirection={textDirection}
-        onChange={onChange}
+        onChange={onChange || (() => {})}
+        isDisabled={false}
       />
       <Severity
         level={severityLevel}
         type={severityType}
         textDirection={textDirection}
       />
-      {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
+      {shouldShowCount && <span className={countStyles()}>({count})</span>}
     </div>
   );
 };

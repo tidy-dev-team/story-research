@@ -54,7 +54,7 @@ const meta: Meta<CheckboxStoryArgs> = {
   tags: ["autodocs"],
   args: {
     state: CheckboxState.Unchecked,
-    disabled: false,
+    isDisabled: false,
     textDirection: TextDirection.Ltr,
     showIcon: false,
     label: "Checkbox label",
@@ -70,7 +70,7 @@ const meta: Meta<CheckboxStoryArgs> = {
         defaultValue: { summary: "CheckboxState.Unchecked" },
       },
     },
-    disabled: {
+    isDisabled: {
       control: "boolean",
       description: "Whether the checkbox is disabled",
       table: {
@@ -146,7 +146,7 @@ export const RTL: Story = {
   render: InteractiveCheckbox,
   args: {
     state: CheckboxState.Checked,
-    disabled: false,
+    isDisabled: false,
     textDirection: TextDirection.Rtl,
     label: "Right-to-left",
   },
