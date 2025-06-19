@@ -4,50 +4,60 @@ import { Checkbox, CheckboxState } from "./Checkbox";
 import { Severity } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 
-const checkboxSeverityVariants = cva("group flex items-center gap-pz-4xs");
+export enum SeverityLevel {
+  High = "high",
+  Medium = "medium",
+  Low = "low",
+}
 
-const countStyles = cva([
-  "pz-body-m400",
-  "transition-colors",
-  "duration-200",
-  "text-pz-system-fg-1",
-]);
+export enum SeverityType {
+  Badge = "badge",
+  Bar = "bar",
+}
 
 export interface CheckboxSeverityProps {
   state?: CheckboxState;
-  severityLevel: "high" | "medium" | "low";
-  severityType?: "badge" | "bar";
+  severityLevel: SeverityLevel;
+  severityType?: SeverityType;
   textDirection?: TextDirection;
-  alwaysShowCount?: boolean;
   count?: number;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+const checkboxSeverityStyles = cva("flex items-center gap-pz-4xs");
+
+const countStyles = cva(
+  "pz-body-m400 transition-colors duration-200 text-pz-system-fg-1"
+);
+
 export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
-  state = CheckboxState.Unchecked,
-  severityLevel,
-  severityType = "badge",
-  textDirection = TextDirection.Ltr,
-  alwaysShowCount = false,
   count = 0,
   onChange,
+  severityLevel = SeverityLevel.Medium,
+  severityType = SeverityType.Badge,
+  state = CheckboxState.Unchecked,
+  textDirection = TextDirection.Ltr,
 }) => {
-  const safeCount = Math.max(0, count || 0);
-  const shouldShowCount = alwaysShowCount || safeCount > 0;
+  if (count !== null && (count < 0 || !Number.isInteger(count))) {
+    console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
+  }
+
+  const shouldShowCount = count > 0;
 
   return (
-    <div className={checkboxSeverityVariants()} dir={textDirection}>
+    <div className={checkboxSeverityStyles()} dir={textDirection}>
       <Checkbox
         state={state}
         textDirection={textDirection}
-        onChange={onChange}
+        onChange={onChange || (() => {})}
+        isDisabled={false}
       />
       <Severity
         level={severityLevel}
         type={severityType}
         textDirection={textDirection}
       />
-      {shouldShowCount && <span className={countStyles()}>({safeCount})</span>}
+      {shouldShowCount && <span className={countStyles()}>({count})</span>}
     </div>
   );
 };

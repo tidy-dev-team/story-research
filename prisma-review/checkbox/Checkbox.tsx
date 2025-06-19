@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { ReactNode, ChangeEvent } from "react";
+import { ReactNode } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
@@ -17,85 +17,42 @@ const CHECKBOX_ICONS = {
   [CheckboxState.Unchecked]: CheckBoxOutlineBlankIcon,
 } as const;
 
-const baseTextStyles = {
+const disabledTextStyles = {
   true: "text-pz-system-fg-disabled",
   false: "text-pz-system-fg-1",
 };
 
-const containerStyles = cva("group flex items-center gap-2", {
+const containerStyles = cva("flex items-center gap-2", {
   variants: {
-    disabled: baseTextStyles,
+    rtl: { true: "flex-row-reverse", false: "flex-row" },
+    disabled: {
+      true: "opacity-50 cursor-not-allowed",
+      false: "cursor-pointer",
+    },
   },
-  defaultVariants: { disabled: false },
+  defaultVariants: { rtl: false, disabled: false },
 });
 
 const checkboxIconStyles = cva(
-  [
-    "transition-all",
-    "duration-200",
-    "focus:outline-none",
-    "peer-focus-visible:ring-2",
-    "peer-focus-visible:ring-pz-system-border-focused-1",
-    "peer-focus-visible:ring-offset-0",
-    "peer-focus-visible:rounded-pz-3xs",
-    "relative",
-  ],
+  "relative transition-all duration-200 focus:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-pz-system-border-focused-1 peer-focus-visible:ring-offset-0 peer-focus-visible:rounded-pz-3xs",
   {
     variants: {
       disabled: {
         true: "text-pz-system-fg-disabled",
-        false: [
-          "hover:before:absolute",
-          "hover:before:inset-0",
-          "hover:before:pointer-events-none",
-          "hover:before:rounded-pz-3xs",
-          "active:before:absolute",
-          "active:before:inset-0",
-          "active:before:pointer-events-none",
-          "active:before:rounded-pz-3xs",
-        ],
+        false: "",
       },
       state: {
-        unchecked: [],
-        checked: [],
-        indeterminate: [],
+        unchecked:
+          "text-pz-system-border-5 hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
+        checked:
+          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+        indeterminate:
+          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
       },
     },
-    compoundVariants: [
-      // Unchecked states
-      {
-        disabled: false,
-        state: "unchecked",
-        class: [
-          "text-pz-system-border-5",
-          "hover:text-pz-system-border-hover",
-          "active:text-pz-system-border-pressed",
-        ],
-      },
-      // Checked states
-      {
-        disabled: false,
-        state: "checked",
-        class: [
-          "text-pz-system-fg-primary",
-          "hover:before:bg-pz-system-bg-overlay-hover-on-primary",
-          "active:before:bg-pz-system-bg-overlay-pressed-on-primary",
-        ],
-      },
-      // Indeterminate states
-      {
-        disabled: false,
-        state: "indeterminate",
-        class: [
-          "text-pz-system-fg-primary",
-          "hover:before:bg-pz-system-bg-overlay-hover-on-primary",
-          "active:before:bg-pz-system-bg-overlay-pressed-on-primary",
-        ],
-      },
-    ],
     defaultVariants: {
       disabled: false,
-      state: "unchecked",
+      state: CheckboxState.Unchecked,
     },
   }
 );
@@ -103,7 +60,7 @@ const checkboxIconStyles = cva(
 const labelStyles = cva(
   "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200",
   {
-    variants: { disabled: baseTextStyles },
+    variants: { disabled: disabledTextStyles },
     defaultVariants: { disabled: false },
   }
 );
@@ -111,60 +68,70 @@ const labelStyles = cva(
 const iconStyles = cva(
   "text-pz-system-fg-3 transition-colors duration-200 flex items-center justify-center",
   {
-    variants: { disabled: baseTextStyles },
+    variants: { disabled: disabledTextStyles },
     defaultVariants: { disabled: false },
   }
 );
 
 const countStyles = cva("pz-body-m400 transition-colors duration-200", {
-  variants: { disabled: baseTextStyles },
+  variants: { disabled: disabledTextStyles },
   defaultVariants: { disabled: false },
 });
 
 interface CheckboxProps {
+  state: CheckboxState;
   label?: string;
-  state?: CheckboxState;
-  disabled?: boolean;
+  isDisabled?: boolean;
   textDirection?: TextDirection;
   icon?: ReactNode;
-  alwaysShowCount?: boolean;
-  count?: number;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  count?: number | null;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = ({
+export const Checkbox: React.FC<CheckboxProps> = ({
+  count = 0,
+  icon: leadingIcon,
+  isDisabled = false,
+  label,
+  onChange,
   state = CheckboxState.Unchecked,
   textDirection = TextDirection.Ltr,
-  disabled = false,
-  icon,
-  label,
-  alwaysShowCount = false,
-  count = 0,
-  onChange,
 }: CheckboxProps): React.ReactElement => {
-  const safeCount = Math.max(0, count || 0);
-  const shouldShowCount = alwaysShowCount || safeCount > 0;
+  if (count !== null && (count < 0 || !Number.isInteger(count))) {
+    console.warn(`Checkbox component: Invalid prop count: "${count}"`);
+  }
 
-  const IconComponent = CHECKBOX_ICONS[state];
+  const CheckboxIconComponent = CHECKBOX_ICONS[state];
   const iconClasses = checkboxIconStyles({
-    disabled,
-    state: state.toLowerCase() as "unchecked" | "checked" | "indeterminate",
+    disabled: isDisabled,
+    state: state,
   });
 
   return (
-    <label className={containerStyles({ disabled })} dir={textDirection}>
+    <label
+      className={containerStyles({ disabled: isDisabled })}
+      dir={textDirection}
+    >
       <input
         type="checkbox"
+        className="peer sr-only"
         checked={state === CheckboxState.Checked}
-        disabled={disabled}
-        className="sr-only peer"
         onChange={onChange}
+        disabled={isDisabled}
       />
-      <IconComponent className={iconClasses} fontSize="small" />
-      {icon && <span className={iconStyles({ disabled })}>{icon}</span>}
-      {label && <span className={labelStyles({ disabled })}>{label}</span>}
-      {shouldShowCount && (
-        <span className={countStyles({ disabled })}>({safeCount})</span>
+      <span className={iconClasses}>
+        <CheckboxIconComponent fontSize="small" />
+      </span>
+      {leadingIcon && (
+        <span className={iconStyles({ disabled: isDisabled })}>
+          {leadingIcon}
+        </span>
+      )}
+      {label && (
+        <span className={labelStyles({ disabled: isDisabled })}>{label}</span>
+      )}
+      {!!count && (
+        <span className={countStyles({ disabled: isDisabled })}>({count})</span>
       )}
     </label>
   );
