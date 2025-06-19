@@ -34,7 +34,6 @@ const meta = {
     severityLevel: "medium",
     severityType: "badge",
     textDirection: TextDirection.Ltr,
-    alwaysShowCount: false,
     count: 3,
     onChange: action("onChange"),
   },
@@ -84,14 +83,6 @@ const meta = {
       table: {
         category: "Layout",
         defaultValue: { summary: "ltr" },
-      },
-    },
-    alwaysShowCount: {
-      control: "boolean",
-      description: "Always show count even if 0",
-      table: {
-        category: "Count",
-        defaultValue: { summary: "false" },
       },
     },
     count: {
@@ -147,15 +138,5 @@ export const RTLLayout: Story = {
     severityType: "badge",
     textDirection: TextDirection.Rtl,
     count: 5,
-  },
-};
-
-export const WithAlwaysShowCount: Story = {
-  args: {
-    state: CheckboxState.Unchecked,
-    severityLevel: "medium",
-    severityType: "badge",
-    alwaysShowCount: true,
-    count: 0,
   },
 };

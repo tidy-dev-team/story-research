@@ -17,14 +17,14 @@ const CHECKBOX_ICONS = {
   [CheckboxState.Unchecked]: CheckBoxOutlineBlankIcon,
 } as const;
 
-const baseTextStyles = {
+const disabledTextStyles = {
   true: "text-pz-system-fg-disabled",
   false: "text-pz-system-fg-1",
 };
 
 const containerStyles = cva("group flex items-center gap-2", {
   variants: {
-    disabled: baseTextStyles,
+    disabled: disabledTextStyles,
   },
   defaultVariants: { disabled: false },
 });
@@ -103,7 +103,7 @@ const checkboxIconStyles = cva(
 const labelStyles = cva(
   "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200",
   {
-    variants: { disabled: baseTextStyles },
+    variants: { disabled: disabledTextStyles },
     defaultVariants: { disabled: false },
   }
 );
@@ -111,13 +111,13 @@ const labelStyles = cva(
 const iconStyles = cva(
   "text-pz-system-fg-3 transition-colors duration-200 flex items-center justify-center",
   {
-    variants: { disabled: baseTextStyles },
+    variants: { disabled: disabledTextStyles },
     defaultVariants: { disabled: false },
   }
 );
 
 const countStyles = cva("pz-body-m400 transition-colors duration-200", {
-  variants: { disabled: baseTextStyles },
+  variants: { disabled: disabledTextStyles },
   defaultVariants: { disabled: false },
 });
 
@@ -127,8 +127,7 @@ interface CheckboxProps {
   disabled?: boolean;
   textDirection?: TextDirection;
   icon?: ReactNode;
-  alwaysShowCount?: boolean;
-  count?: number;
+  count?: number | null;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -138,12 +137,11 @@ export const Checkbox = ({
   disabled = false,
   icon,
   label,
-  alwaysShowCount = false,
   count = 0,
   onChange,
 }: CheckboxProps): React.ReactElement => {
   const safeCount = Math.max(0, count || 0);
-  const shouldShowCount = alwaysShowCount || safeCount > 0;
+  const shouldShowCount = safeCount > 0;
 
   const IconComponent = CHECKBOX_ICONS[state];
   const iconClasses = checkboxIconStyles({
@@ -153,13 +151,6 @@ export const Checkbox = ({
 
   return (
     <label className={containerStyles({ disabled })} dir={textDirection}>
-      <input
-        type="checkbox"
-        checked={state === CheckboxState.Checked}
-        disabled={disabled}
-        className="sr-only peer"
-        onChange={onChange}
-      />
       <IconComponent className={iconClasses} fontSize="small" />
       {icon && <span className={iconStyles({ disabled })}>{icon}</span>}
       {label && <span className={labelStyles({ disabled })}>{label}</span>}

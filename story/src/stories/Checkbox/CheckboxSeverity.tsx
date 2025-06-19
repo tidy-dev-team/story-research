@@ -18,7 +18,6 @@ export interface CheckboxSeverityProps {
   severityLevel: "high" | "medium" | "low";
   severityType?: "badge" | "bar";
   textDirection?: TextDirection;
-  alwaysShowCount?: boolean;
   count?: number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -28,12 +27,11 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   severityLevel,
   severityType = "badge",
   textDirection = TextDirection.Ltr,
-  alwaysShowCount = false,
   count = 0,
   onChange,
 }) => {
   const safeCount = Math.max(0, count || 0);
-  const shouldShowCount = alwaysShowCount || safeCount > 0;
+  const shouldShowCount = safeCount > 0;
 
   return (
     <div className={checkboxSeverityVariants()} dir={textDirection}>

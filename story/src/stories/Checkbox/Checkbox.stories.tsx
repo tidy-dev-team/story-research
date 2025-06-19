@@ -25,9 +25,19 @@ const InteractiveCheckbox = (args: CheckboxStoryArgs) => {
       icon={showIcon ? <LanguageIcon sx={{ fontSize: 16 }} /> : undefined}
       state={state}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        const newState = e.target.checked
-          ? CheckboxState.Checked
-          : CheckboxState.Unchecked;
+        // Handle state transitions properly
+        let newState: CheckboxState;
+
+        if (state === CheckboxState.Indeterminate) {
+          // If indeterminate, always go to checked when clicked
+          newState = CheckboxState.Checked;
+        } else {
+          // Normal toggle between checked/unchecked
+          newState = e.target.checked
+            ? CheckboxState.Checked
+            : CheckboxState.Unchecked;
+        }
+
         setState(newState);
         args.onChange?.(e);
       }}
@@ -48,7 +58,6 @@ const meta: Meta<CheckboxStoryArgs> = {
     textDirection: TextDirection.Ltr,
     showIcon: false,
     label: "Checkbox label",
-    alwaysShowCount: false,
     count: 0,
   },
   argTypes: {
@@ -92,14 +101,6 @@ const meta: Meta<CheckboxStoryArgs> = {
       table: {
         category: "Content",
         defaultValue: { summary: "undefined" },
-      },
-    },
-    alwaysShowCount: {
-      control: "boolean",
-      description: "Whether to always show count, even when count is 0",
-      table: {
-        category: "Content",
-        defaultValue: { summary: "false" },
       },
     },
     count: {
@@ -171,7 +172,6 @@ export const WithCount: Story = {
   render: InteractiveCheckbox,
   args: {
     label: "Items",
-    alwaysShowCount: true,
     count: 5,
   },
   parameters: {
@@ -210,7 +210,6 @@ const CountComparisonDemo = () => {
         />
         <Checkbox
           label="With count"
-          alwaysShowCount={true}
           count={5}
           state={checkedStates.withCount}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -223,8 +222,7 @@ const CountComparisonDemo = () => {
           }
         />
         <Checkbox
-          label="Zero count (shown)"
-          alwaysShowCount={true}
+          label="Zero count (hidden)"
           count={0}
           state={checkedStates.zeroCount}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -238,7 +236,6 @@ const CountComparisonDemo = () => {
         />
         <Checkbox
           label="Large count"
-          alwaysShowCount={true}
           count={999}
           state={checkedStates.largeCount}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
