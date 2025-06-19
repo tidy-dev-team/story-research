@@ -24,13 +24,12 @@ const disabledTextStyles = {
 
 const containerStyles = cva("flex items-center gap-2", {
   variants: {
-    rtl: { true: "flex-row-reverse", false: "flex-row" },
     disabled: {
       true: "opacity-50 cursor-not-allowed",
       false: "cursor-pointer",
     },
   },
-  defaultVariants: { rtl: false, disabled: false },
+  defaultVariants: { disabled: false },
 });
 
 const checkboxIconStyles = cva(
