@@ -3,7 +3,6 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 
 const dropdownListItemStyles = cva([
-  // Layout
   "flex items-center w-full box-border overflow-hidden",
   "px-pz-4xs py-pz-2xs gap-pz-4xs min-h-8",
 
