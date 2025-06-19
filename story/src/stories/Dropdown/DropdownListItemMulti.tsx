@@ -19,55 +19,37 @@ const dropdownListItemMultiStyles = cva([
 interface DropdownListItemMultiProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect"> {
   label: string;
-  checked?: boolean;
-  indeterminate?: boolean;
+  checkboxState?: CheckboxState;
   icon?: React.ReactNode;
   count?: number;
-  alwaysShowCount?: boolean;
   textDirection?: TextDirection;
-  onSelect?: (isChecked: boolean) => void;
+  onSelect?: (newState: CheckboxState) => void;
 }
 
 const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
   label,
-  checked = false,
-  indeterminate = false,
+  checkboxState = CheckboxState.Unchecked,
   icon,
   count,
-  alwaysShowCount = false,
   textDirection = TextDirection.Ltr,
   onClick,
   onKeyDown,
   onSelect,
   ...props
 }) => {
-  const checkboxState = indeterminate
-    ? CheckboxState.Indeterminate
-    : checked
-      ? CheckboxState.Checked
-      : CheckboxState.Unchecked;
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
-    if (!event.defaultPrevented) {
-      onSelect?.(!checked);
-    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
-    if (
-      (event.key === "Enter" || event.key === " ") &&
-      !event.defaultPrevented
-    ) {
-      event.preventDefault();
-      onSelect?.(!checked);
-    }
   };
 
-  // Checkbox change handler
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSelect?.(event.target.checked);
+    const nextState = event.target.checked
+      ? CheckboxState.Checked
+      : CheckboxState.Unchecked;
+    onSelect?.(nextState);
   };
 
   return (
@@ -78,7 +60,11 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
       onKeyDown={handleKeyDown}
       type="button"
       role="menuitemcheckbox"
-      aria-checked={indeterminate ? "mixed" : checked}
+      aria-checked={
+        checkboxState === CheckboxState.Indeterminate
+          ? "mixed"
+          : checkboxState === CheckboxState.Checked
+      }
       dir={textDirection}
     >
       <Checkbox
@@ -87,7 +73,6 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
         state={checkboxState}
         icon={icon}
         count={count}
-        alwaysShowCount={alwaysShowCount}
         onChange={handleCheckboxChange}
       />
     </button>

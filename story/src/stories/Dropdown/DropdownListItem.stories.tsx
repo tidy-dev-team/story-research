@@ -6,6 +6,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DropdownListItem } from "./DropdownListItem";
+import { TextDirection } from "../textDirection";
 
 type InteractiveStoryArgs = ComponentProps<typeof DropdownListItem> & {
   showIcon: boolean;
@@ -18,9 +19,7 @@ const InteractiveDropdownListItem = (args: InteractiveStoryArgs) => {
   return (
     <DropdownListItem
       {...componentProps}
-      icon={
-        showIcon ? <SettingsIcon sx={{ fontSize: "inherit" }} /> : undefined
-      }
+      icon={showIcon ? <SettingsIcon sx={{ fontSize: "small" }} /> : undefined}
     />
   );
 };
@@ -30,7 +29,7 @@ const meta = {
   component: DropdownListItem,
   args: {
     label: "Sample List Item",
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
     onSelect: action("onSelect"),
   },
@@ -63,12 +62,13 @@ const meta = {
         defaultValue: { summary: "undefined" },
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right-to-left layout",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "Text direction for RTL/LTR layout",
       table: {
         category: "Layout",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: TextDirection.Ltr },
       },
     },
     disabled: {
@@ -114,7 +114,7 @@ export const Default = {
       <DropdownListItem
         {...componentProps}
         icon={
-          showIcon ? <SettingsIcon sx={{ fontSize: "inherit" }} /> : undefined
+          showIcon ? <SettingsIcon sx={{ fontSize: "small" }} /> : undefined
         }
       />
     );
@@ -122,7 +122,7 @@ export const Default = {
   args: {
     label: "Sample List Item",
     showIcon: false,
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
     onSelect: action("onSelect"),
   },
@@ -201,7 +201,7 @@ export const DisabledWithIcon: Story = {
 export const RTLWithIcon: Story = {
   args: {
     label: "הגדרות", // "Settings" in Hebrew
-    icon: <SettingsIcon sx={{ fontSize: "inherit" }} />,
-    rtl: true,
+    icon: <SettingsIcon sx={{ fontSize: "inherit" }} fontSize="small" />,
+    textDirection: TextDirection.Rtl,
   },
 };
