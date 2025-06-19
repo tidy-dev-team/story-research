@@ -4,6 +4,8 @@ import { DropdownListItem } from "./DropdownListItem";
 import { DropdownListItemSeverity } from "./DropdownListItemSeverity";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
 import { DropdownListItemMultiSeverity } from "./DropdownListItemMultiSeverity";
+import { SeverityLevel } from "../Checkbox/CheckboxSeverity";
+import { CheckboxState } from "../Checkbox/Checkbox";
 import { useState } from "react";
 import { IconButton, ButtonSize, ButtonType } from "../Button/IconButton";
 import LanguageIcon from "@mui/icons-material/Language"; // Import LanguageIcon
@@ -67,18 +69,17 @@ export const WithSeverity: Story = {
 export const WithMultiSelect: Story = {
   render: (args) => {
     const [items, setItems] = useState([
-      { label: "Option 1", checked: false, indeterminate: false },
-      { label: "Option 2", checked: true, indeterminate: false },
-      { label: "Option 3", checked: false, indeterminate: true },
-      { label: "Option 4", checked: false, indeterminate: false },
+      { label: "Option 1", checkboxState: CheckboxState.Unchecked },
+      { label: "Option 2", checkboxState: CheckboxState.Checked },
+      { label: "Option 3", checkboxState: CheckboxState.Indeterminate },
+      { label: "Option 4", checkboxState: CheckboxState.Unchecked },
     ]);
 
-    const handleSelect = (index: number, isChecked: boolean) => {
+    const handleSelect = (index: number, newState: CheckboxState) => {
       const newItems = [...items];
       newItems[index] = {
         ...newItems[index],
-        checked: isChecked,
-        indeterminate: false,
+        checkboxState: newState,
       };
       setItems(newItems);
     };
@@ -89,9 +90,8 @@ export const WithMultiSelect: Story = {
           <DropdownListItemMulti
             key={item.label}
             label={item.label}
-            checked={item.checked}
-            indeterminate={item.indeterminate}
-            onSelect={(isChecked) => handleSelect(index, isChecked)}
+            checkboxState={item.checkboxState}
+            onSelect={(newState) => handleSelect(index, newState)}
           />
         ))}
       </Dropdown>
@@ -109,20 +109,17 @@ export const WithMultiSelectSeverity: Story = {
   render: (args) => {
     const [items, setItems] = useState([
       {
-        severityLabel: "High Severity",
-        severityLevel: "high" as const,
+        severityLevel: SeverityLevel.High,
         checked: false,
         indeterminate: false,
       },
       {
-        severityLabel: "Medium Severity",
-        severityLevel: "medium" as const,
+        severityLevel: SeverityLevel.Medium,
         checked: true,
         indeterminate: false,
       },
       {
-        severityLabel: "Low Severity",
-        severityLevel: "low" as const,
+        severityLevel: SeverityLevel.Low,
         checked: false,
         indeterminate: true,
       },
@@ -142,8 +139,7 @@ export const WithMultiSelectSeverity: Story = {
       <Dropdown {...args}>
         {items.map((item, index) => (
           <DropdownListItemMultiSeverity
-            key={item.severityLabel}
-            severityLabel={item.severityLabel}
+            key={`severity-${item.severityLevel}-${index}`}
             severityLevel={item.severityLevel}
             checked={item.checked}
             indeterminate={item.indeterminate}

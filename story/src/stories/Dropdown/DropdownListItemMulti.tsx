@@ -19,7 +19,7 @@ const dropdownListItemMultiStyles = cva([
 interface DropdownListItemMultiProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect"> {
   label: string;
-  checkboxState?: CheckboxState;
+  checkboxState: CheckboxState;
   icon?: React.ReactNode;
   count?: number;
   textDirection?: TextDirection;
@@ -35,7 +35,6 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
   onClick,
   onKeyDown,
   onSelect,
-  ...props
 }) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
@@ -54,7 +53,6 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
 
   return (
     <button
-      {...props}
       className={dropdownListItemMultiStyles()}
       onClick={handleClick}
       onKeyDown={handleKeyDown}

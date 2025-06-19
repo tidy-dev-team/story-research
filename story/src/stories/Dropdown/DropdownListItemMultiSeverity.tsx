@@ -1,7 +1,10 @@
 import { cva } from "class-variance-authority";
-import { ChangeEvent } from "react";
 import { CheckboxState } from "../Checkbox/Checkbox";
-import { CheckboxSeverity } from "../Checkbox/CheckboxSeverity";
+import {
+  CheckboxSeverity,
+  SeverityLevel,
+  SeverityType,
+} from "../Checkbox/CheckboxSeverity";
 import { TextDirection } from "../textDirection";
 
 const dropdownListItemMultiSeverityStyles = cva([
@@ -20,28 +23,24 @@ const dropdownListItemMultiSeverityStyles = cva([
 
 interface DropdownListItemMultiSeverityProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect"> {
-  severityLabel: string;
-  severityLevel: "high" | "medium" | "low";
-  severityType?: "badge" | "bar";
+  severityLevel: SeverityLevel;
+  severityType?: SeverityType;
   checked?: boolean;
   indeterminate?: boolean;
   textDirection?: TextDirection;
   count?: number;
-  alwaysShowCount?: boolean;
   onSelect?: (isChecked: boolean) => void;
 }
 
 const DropdownListItemMultiSeverity: React.FC<
   DropdownListItemMultiSeverityProps
 > = ({
-  severityLabel,
   severityLevel,
-  severityType = "badge",
+  severityType = SeverityType.Badge,
   checked = false,
   indeterminate = false,
   textDirection = TextDirection.Ltr,
   count,
-  alwaysShowCount = false,
   onClick,
   onKeyDown,
   onSelect,
@@ -72,7 +71,6 @@ const DropdownListItemMultiSeverity: React.FC<
         severityType={severityType}
         textDirection={textDirection}
         count={count}
-        alwaysShowCount={alwaysShowCount}
         onChange={handleCheckboxChange}
       />
     </button>

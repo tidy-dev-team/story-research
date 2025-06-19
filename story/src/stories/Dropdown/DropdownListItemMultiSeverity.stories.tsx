@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DropdownListItemMultiSeverity } from "./DropdownListItemMultiSeverity";
+import { SeverityLevel, SeverityType } from "../Checkbox/CheckboxSeverity";
 import { TextDirection } from "../textDirection";
 import { useState } from "react";
 
@@ -11,24 +12,19 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    severityLabel: {
-      control: "text",
-      description: "Label for the severity",
-      table: { type: { summary: "string" } },
-    },
     severityLevel: {
       control: "select",
-      options: ["high", "medium", "low"],
+      options: Object.values(SeverityLevel),
       description: "Severity level",
-      table: { type: { summary: '"high" | "medium" | "low"' } },
+      table: { type: { summary: "SeverityLevel" } },
     },
     severityType: {
       control: "select",
-      options: ["badge", "bar"],
+      options: Object.values(SeverityType),
       description: "Severity indicator type",
       table: {
-        type: { summary: '"badge" | "bar"' },
-        defaultValue: { summary: '"badge"' },
+        type: { summary: "SeverityType" },
+        defaultValue: { summary: "SeverityType.Badge" },
       },
     },
     checked: {
@@ -64,14 +60,6 @@ const meta = {
         defaultValue: { summary: "undefined" },
       },
     },
-    alwaysShowCount: {
-      control: "boolean",
-      description: "Whether to always show count, even when count is 0",
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
-    },
   },
 } satisfies Meta<typeof DropdownListItemMultiSeverity>;
 
@@ -80,57 +68,50 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    severityLabel: "High Severity",
-    severityLevel: "high",
+    severityLevel: SeverityLevel.High,
   },
 };
 
 export const Checked: Story = {
   args: {
-    severityLabel: "Medium Severity",
-    severityLevel: "medium",
+    severityLevel: SeverityLevel.Medium,
     checked: true,
   },
 };
 
 export const Indeterminate: Story = {
   args: {
-    severityLabel: "Low Severity",
-    severityLevel: "low",
+    severityLevel: SeverityLevel.Low,
     indeterminate: true,
   },
 };
 
 export const BadgeType: Story = {
   args: {
-    severityLabel: "Critical Issue",
-    severityLevel: "high",
-    severityType: "badge",
+    severityLevel: SeverityLevel.High,
+    severityType: SeverityType.Badge,
     checked: true,
   },
 };
 
 export const BarType: Story = {
   args: {
-    severityLabel: "Warning",
-    severityLevel: "medium",
-    severityType: "bar",
+    severityLevel: SeverityLevel.Medium,
+    severityType: SeverityType.Bar,
     checked: true,
   },
 };
 
 export const RTL: Story = {
   args: {
-    severityLabel: "High Severity",
-    severityLevel: "high",
+    severityLevel: SeverityLevel.High,
     textDirection: TextDirection.Rtl,
   },
 };
 
 export const RTLChecked: Story = {
   args: {
-    severityLabel: "Medium Severity",
-    severityLevel: "medium",
+    severityLevel: SeverityLevel.Medium,
     textDirection: TextDirection.Rtl,
     checked: true,
   },
@@ -138,9 +119,8 @@ export const RTLChecked: Story = {
 
 export const RTLBarType: Story = {
   args: {
-    severityLabel: "Critical Alert",
-    severityLevel: "high",
-    severityType: "bar",
+    severityLevel: SeverityLevel.High,
+    severityType: SeverityType.Bar,
     textDirection: TextDirection.Rtl,
     indeterminate: true,
   },
@@ -148,50 +128,41 @@ export const RTLBarType: Story = {
 
 export const WithCount: Story = {
   args: {
-    severityLabel: "Security Issues",
-    severityLevel: "high",
-    severityType: "badge",
+    severityLevel: SeverityLevel.High,
+    severityType: SeverityType.Badge,
     count: 5,
-    alwaysShowCount: true,
     checked: true,
   },
 };
 
 export const WithCountBar: Story = {
   args: {
-    severityLabel: "Warnings",
-    severityLevel: "medium",
-    severityType: "bar",
+    severityLevel: SeverityLevel.Medium,
+    severityType: SeverityType.Bar,
     count: 12,
-    alwaysShowCount: true,
   },
 };
 
 export const RTLWithCount: Story = {
   args: {
-    severityLabel: "Critical Issues",
-    severityLevel: "high",
-    severityType: "badge",
+    severityLevel: SeverityLevel.High,
+    severityType: SeverityType.Badge,
     textDirection: TextDirection.Rtl,
     count: 3,
-    alwaysShowCount: true,
     indeterminate: true,
   },
 };
 
 export const AlwaysShowZeroCount: Story = {
   args: {
-    severityLabel: "Resolved Issues",
-    severityLevel: "low",
+    severityLevel: SeverityLevel.Low,
     count: 0,
-    alwaysShowCount: true,
   },
 };
 
 export const Playground = {
   args: {
-    severityLabel: "Interactive Severity",
-    severityLevel: "medium",
+    severityLevel: SeverityLevel.Medium,
     checked: false,
   },
   render: (args: any) => {

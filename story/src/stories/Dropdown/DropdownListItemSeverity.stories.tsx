@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DropdownListItemSeverity } from "./DropdownListItemSeverity";
+import { TextDirection } from "../textDirection";
 
 const meta = {
   title: "Component/Dropdown/DropdownListItemSeverity",
@@ -18,12 +19,13 @@ const meta = {
         defaultValue: { summary: "medium" },
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right-to-left layout",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "Text direction for RTL/LTR layout",
       table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
+        type: { summary: "TextDirection" },
+        defaultValue: { summary: TextDirection.Ltr },
       },
     },
   },
@@ -41,7 +43,7 @@ export const Default: Story = {
 export const RTL: Story = {
   args: {
     level: "high",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
   },
 };
 
