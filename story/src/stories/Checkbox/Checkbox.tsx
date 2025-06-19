@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { ReactNode, ChangeEvent } from "react";
+import { ReactNode } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
@@ -85,17 +85,17 @@ interface CheckboxProps {
   textDirection?: TextDirection;
   icon?: ReactNode;
   count?: number | null;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = ({
+export const Checkbox: React.FC<CheckboxProps> = ({
+  count = 0,
+  icon: leadingIcon,
+  isDisabled = false,
+  label,
+  onChange,
   state = CheckboxState.Unchecked,
   textDirection = TextDirection.Ltr,
-  isDisabled = false,
-  icon: leadingIcon,
-  label,
-  count = 0,
-  onChange,
 }: CheckboxProps): React.ReactElement => {
   if (count !== null && (count < 0 || !Number.isInteger(count))) {
     console.warn(`Checkbox component: Invalid prop count: "${count}"`);
@@ -119,7 +119,6 @@ export const Checkbox = ({
         onChange={onChange}
         disabled={isDisabled}
       />
-
       <span className={iconClasses}>
         <CheckboxIconComponent fontSize="small" />
       </span>

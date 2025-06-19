@@ -2,7 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React, { useState, useEffect } from "react";
 import { action } from "@storybook/addon-actions";
-import { CheckboxSeverity } from "./CheckboxSeverity";
+import {
+  CheckboxSeverity,
+  SeverityLevel,
+  SeverityType,
+} from "./CheckboxSeverity";
 import { CheckboxState } from "./Checkbox";
 import { TextDirection } from "../textDirection";
 
@@ -31,8 +35,8 @@ const meta = {
   component: InteractiveCheckboxSeverity,
   args: {
     state: CheckboxState.Unchecked,
-    severityLevel: "medium",
-    severityType: "badge",
+    severityLevel: SeverityLevel.Medium,
+    severityType: SeverityType.Badge,
     textDirection: TextDirection.Ltr,
     count: 3,
     onChange: action("onChange"),
@@ -60,20 +64,20 @@ const meta = {
     },
     severityLevel: {
       control: "select",
-      options: ["high", "medium", "low"],
+      options: [SeverityLevel.High, SeverityLevel.Medium, SeverityLevel.Low],
       description: "The severity level",
       table: {
         category: "Severity",
-        defaultValue: { summary: "medium" },
+        defaultValue: { summary: SeverityLevel.Medium },
       },
     },
     severityType: {
       control: "select",
-      options: ["badge", "bar"],
+      options: [SeverityType.Badge, SeverityType.Bar],
       description: "The type of severity indicator",
       table: {
         category: "Severity",
-        defaultValue: { summary: "badge" },
+        defaultValue: { summary: SeverityType.Badge },
       },
     },
     textDirection: {
@@ -107,8 +111,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     state: CheckboxState.Unchecked,
-    severityLevel: "medium",
-    severityType: "badge",
+    severityLevel: SeverityLevel.Medium,
+    severityType: SeverityType.Badge,
     count: 3,
   },
 };
@@ -116,8 +120,8 @@ export const Default: Story = {
 export const HighSeverityBadge: Story = {
   args: {
     state: CheckboxState.Checked,
-    severityLevel: "high",
-    severityType: "badge",
+    severityLevel: SeverityLevel.High,
+    severityType: SeverityType.Badge,
     count: 12,
   },
 };
@@ -125,8 +129,8 @@ export const HighSeverityBadge: Story = {
 export const LowSeverityBar: Story = {
   args: {
     state: CheckboxState.Indeterminate,
-    severityLevel: "low",
-    severityType: "bar",
+    severityLevel: SeverityLevel.Low,
+    severityType: SeverityType.Bar,
     count: 2,
   },
 };
@@ -134,8 +138,8 @@ export const LowSeverityBar: Story = {
 export const RTLLayout: Story = {
   args: {
     state: CheckboxState.Checked,
-    severityLevel: "high",
-    severityType: "badge",
+    severityLevel: SeverityLevel.High,
+    severityType: SeverityType.Badge,
     textDirection: TextDirection.Rtl,
     count: 5,
   },
