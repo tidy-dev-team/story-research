@@ -15,6 +15,12 @@ export enum SeverityType {
   Bar = "bar",
 }
 
+const checkboxSeverityStyles = cva("flex items-center gap-pz-4xs");
+
+const countStyles = cva(
+  "pz-body-m400 transition-colors duration-200 text-pz-system-fg-1"
+);
+
 export interface CheckboxSeverityProps {
   state?: CheckboxState;
   severityLevel: SeverityLevel;
@@ -23,12 +29,6 @@ export interface CheckboxSeverityProps {
   count?: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-const checkboxSeverityStyles = cva("flex items-center gap-pz-4xs");
-
-const countStyles = cva(
-  "pz-body-m400 transition-colors duration-200 text-pz-system-fg-1"
-);
 
 export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   count = 0,
@@ -41,8 +41,6 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   if (count !== null && (count < 0 || !Number.isInteger(count))) {
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
-
-  const shouldShowCount = count > 0;
 
   return (
     <div className={checkboxSeverityStyles()} dir={textDirection}>
@@ -57,7 +55,7 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
         type={severityType}
         textDirection={textDirection}
       />
-      {shouldShowCount && <span className={countStyles()}>({count})</span>}
+      {!!count && <span className={countStyles()}>({count})</span>}
     </div>
   );
 };
