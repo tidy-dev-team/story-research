@@ -89,7 +89,7 @@ interface CheckboxProps {
 
 export const Checkbox: React.FC<CheckboxProps> = ({
   count = 0,
-  icon: leadingIcon,
+  icon,
   isDisabled = false,
   label,
   onChange,
@@ -100,7 +100,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     console.warn(`Checkbox component: Invalid prop count: "${count}"`);
   }
 
-  const CheckboxIconComponent = CHECKBOX_ICONS[state];
+  const CheckboxElement = CHECKBOX_ICONS[state];
+
   const iconClasses = checkboxIconStyles({
     disabled: isDisabled,
     state: state,
@@ -119,12 +120,10 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         disabled={isDisabled}
       />
       <span className={iconClasses}>
-        <CheckboxIconComponent fontSize="small" />
+        <CheckboxElement fontSize="small" />
       </span>
-      {leadingIcon && (
-        <span className={iconStyles({ disabled: isDisabled })}>
-          {leadingIcon}
-        </span>
+      {icon && (
+        <span className={iconStyles({ disabled: isDisabled })}>{icon}</span>
       )}
       {label && (
         <span className={labelStyles({ disabled: isDisabled })}>{label}</span>
