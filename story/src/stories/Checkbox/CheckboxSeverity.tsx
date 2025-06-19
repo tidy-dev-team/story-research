@@ -38,11 +38,7 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
   state = CheckboxState.Unchecked,
   textDirection = TextDirection.Ltr,
 }) => {
-  if (
-    count !== null &&
-    count !== undefined &&
-    (count < 0 || !Number.isInteger(count))
-  ) {
+  if (count !== null && (count < 0 || !Number.isInteger(count))) {
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
 
