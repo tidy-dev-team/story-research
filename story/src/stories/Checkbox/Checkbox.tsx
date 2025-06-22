@@ -25,8 +25,8 @@ const disabledTextStyles = {
 const containerStyles = cva("flex items-center gap-2", {
   variants: {
     disabled: {
-      true: "opacity-50 cursor-not-allowed",
-      false: "cursor-pointer",
+      true: "opacity-50 cursor-not-allowed !text-pz-system-bg-disabled",
+      false: "text-pz-system-fg-primary cursor-pointer",
     },
   },
   defaultVariants: {
@@ -46,9 +46,9 @@ const checkboxIconStyles = cva(
         unchecked:
           "text-pz-system-border-5 hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
         checked:
-          "text-pz-system-fg-primary hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+          "hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
         indeterminate:
-          "text-pz-system-fg-primary hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+          "hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
       },
     },
     defaultVariants: {
