@@ -33,7 +33,7 @@ const containerStyles = cva("flex items-center gap-2", {
 });
 
 const checkboxIconStyles = cva(
-  "relative transition-all duration-200 focus:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-pz-system-border-focused-1 peer-focus-visible:ring-offset-0 peer-focus-visible:rounded-pz-3xs",
+  "relative transition-all duration-200 focus:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-pz-system-border-focused-1 peer-focus-visible:ring-offset-0 peer-focus-visible:rounded-pz-3xs --tw-gradient-stops",
   {
     variants: {
       disabled: {
@@ -44,9 +44,9 @@ const checkboxIconStyles = cva(
         unchecked:
           "text-pz-system-border-5 hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
         checked:
-          "text-pz-system-fg-primary hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
+          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
         indeterminate:
-          "text-pz-system-fg-primary hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
+          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
       },
     },
     defaultVariants: {
