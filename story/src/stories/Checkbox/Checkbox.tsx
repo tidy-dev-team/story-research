@@ -44,9 +44,9 @@ const checkboxIconStyles = cva(
         unchecked:
           "text-pz-system-border-5 hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
         checked:
-          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+          "text-pz-system-fg-primary",
         indeterminate:
-          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+          "text-pz-system-fg-primary",
       },
     },
     defaultVariants: {

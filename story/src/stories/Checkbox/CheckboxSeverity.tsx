@@ -22,7 +22,7 @@ const countStyles = cva(
 );
 
 export interface CheckboxSeverityProps {
-  state?: CheckboxState;
+  state: CheckboxState;
   severityLevel: SeverityLevel;
   severityType?: SeverityType;
   textDirection?: TextDirection;
@@ -42,18 +42,32 @@ export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
 
+  const handleChange = (event: any) => {
+    if (typeof onChange === 'function') {
+      onChange(event);
+    }
+  };
+
+
+
   return (
     <div className={checkboxSeverityStyles()} dir={textDirection}>
       <Checkbox
         state={state}
         textDirection={textDirection}
-        onChange={onChange || (() => {})}
+        onChange={handleChange}
         isDisabled={false}
       />
       <Severity
+        className="cursor-pointer"
         level={severityLevel}
         type={severityType}
         textDirection={textDirection}
+        onClick={() => {
+          const isChecked = state === CheckboxState.Checked;
+          const fakeEvent = { target: { checked: !isChecked } };
+          onChange(fakeEvent as unknown as React.ChangeEvent<HTMLInputElement>);
+        }}
       />
       {!!count && <span className={countStyles()}>({count})</span>}
     </div>
