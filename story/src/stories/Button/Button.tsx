@@ -31,7 +31,7 @@ const buttonStyles = cva(
   ],
   {
     variants: {
-      variant: {
+      type: {
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-component-button-fg-primary-idle",
@@ -60,7 +60,7 @@ const buttonStyles = cva(
       },
     },
     defaultVariants: {
-      variant: ButtonType.Primary,
+      type: ButtonType.Primary,
       size: ButtonSize.Medium,
     },
   }
@@ -69,11 +69,12 @@ const buttonStyles = cva(
 type MUIIcon = ReactElement<SvgIconProps>;
 
 interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
     VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: MUIIcon;
   trailingIcon?: MUIIcon;
+  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   textDirection?: TextDirection;
 }
 
@@ -93,9 +94,9 @@ const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
 };
 
 export const Button = ({
-  variant = ButtonType.Primary,
+  type = ButtonType.Primary,
   size = ButtonSize.Medium,
-  type = "button",
+  htmlType = "button",
   label,
   leadingIcon,
   trailingIcon,
@@ -105,8 +106,8 @@ export const Button = ({
   ...rest
 }: ButtonProps) => (
   <button
-    className={twMerge(buttonStyles({ variant, size }), className)}
-    type={type}
+    className={twMerge(buttonStyles({ type, size }), className)}
+    type={htmlType}
     disabled={disabled}
     dir={textDirection}
     {...rest}

@@ -17,7 +17,7 @@ const meta: Meta<ButtonStoryArgs> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    variant: {
+    type: {
       control: "select",
       options: Object.values(ButtonType),
     },
@@ -32,7 +32,7 @@ const meta: Meta<ButtonStoryArgs> = {
     disabled: {
       control: "boolean",
     },
-    type: {
+    htmlType: {
       control: "select",
       options: ["button", "submit", "reset"],
     },
@@ -57,11 +57,11 @@ type Story = StoryObj<ButtonStoryArgs>;
 export const Default: Story = {
   args: {
     label: "Button",
-    variant: ButtonType.Primary,
+    type: ButtonType.Primary,
     size: ButtonSize.Medium,
     textDirection: TextDirection.Ltr,
     disabled: false,
-    type: "button",
+    htmlType: "button",
     showLeadingIcon: false,
     showTrailingIcon: false,
   },
