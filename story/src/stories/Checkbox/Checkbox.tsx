@@ -44,9 +44,9 @@ const checkboxIconStyles = cva(
         unchecked:
           "text-pz-system-border-5 hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
         checked:
-          "text-pz-system-fg-primary",
+          "text-pz-system-fg-primary hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
         indeterminate:
-          "text-pz-system-fg-primary",
+          "text-pz-system-fg-primary hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
       },
     },
     defaultVariants: {
