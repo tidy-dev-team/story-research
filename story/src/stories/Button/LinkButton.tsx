@@ -1,6 +1,6 @@
 import React, { ReactElement, cloneElement } from "react";
 import { SvgIconProps } from "@mui/material/SvgIcon";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
 
@@ -9,7 +9,6 @@ const ICON_SIZE = 20;
 type MUIIcon = ReactElement<SvgIconProps>;
 
 const linkButtonStyles = cva([
-  "rounded-pz-2xs",
   "inline-flex",
   "items-center",
   "justify-center",

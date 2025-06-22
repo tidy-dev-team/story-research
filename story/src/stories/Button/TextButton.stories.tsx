@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
 import { TextButton } from "./TextButton";
+import { TextDirection } from "../textDirection";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 
@@ -17,7 +18,7 @@ const meta = {
     label: "Text Button",
     hasLeadingIcon: false,
     hasTrailingIcon: false,
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
   },
   parameters: {
@@ -69,13 +70,13 @@ const meta = {
         disable: true,
       },
     },
-    rtl: {
-      control: "boolean",
-      description:
-        "If true, the button's text direction will be right-to-left.",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "The text direction of the button.",
       table: {
         category: "Appearance",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "TextDirection.Ltr" },
       },
     },
     disabled: {
@@ -147,7 +148,7 @@ export const WithTrailingIcon: Story = {
 export const RTL: Story = {
   args: {
     label: "טקסט",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     hasLeadingIcon: true,
   },
   render: renderStory,
