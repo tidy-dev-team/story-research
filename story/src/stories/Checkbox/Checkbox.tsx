@@ -29,7 +29,9 @@ const containerStyles = cva("flex items-center gap-2", {
       false: "cursor-pointer",
     },
   },
-  defaultVariants: { disabled: false },
+  defaultVariants: {
+    disabled: false,
+  },
 });
 
 const checkboxIconStyles = cva(
@@ -59,7 +61,9 @@ const checkboxIconStyles = cva(
 const labelStyles = cva(
   "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200",
   {
-    variants: { disabled: disabledTextStyles },
+    variants: {
+      disabled: disabledTextStyles,
+    },
     defaultVariants: {
       disabled: false,
     },
@@ -69,8 +73,12 @@ const labelStyles = cva(
 const iconStyles = cva(
   "text-pz-system-fg-3 transition-colors duration-200 flex items-center justify-center",
   {
-    variants: { disabled: disabledTextStyles },
-    defaultVariants: { disabled: false },
+    variants: {
+      disabled: disabledTextStyles,
+    },
+    defaultVariants: {
+      disabled: false,
+    },
   }
 );
 
