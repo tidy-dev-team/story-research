@@ -1,6 +1,7 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
+import { TextDirection } from "../textDirection";
 
 export const ButtonSize = {
   Small: "S",
@@ -88,15 +89,10 @@ const buttonStyles = cva(
           "pz-label-l",
         ].join(" "),
       },
-      rtl: {
-        true: "flex-row-reverse",
-        false: "",
-      },
     },
     defaultVariants: {
       type: ButtonType.Primary,
       size: ButtonSize.Medium,
-      rtl: false,
     },
   }
 );
@@ -108,19 +104,20 @@ interface ButtonProps
   leadingIcon?: React.ReactElement<any>;
   trailingIcon?: React.ReactElement<any>;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  textDirection?: TextDirection;
 }
 
 export const Button = ({
   type = ButtonType.Primary,
   htmlType = "button",
   size,
-  rtl,
   label,
   leadingIcon,
   trailingIcon,
   className,
   onClick,
   disabled,
+  textDirection = TextDirection.Ltr,
   ...rest
 }: ButtonProps) => {
   const iconSize = {
@@ -146,10 +143,11 @@ export const Button = ({
 
   return (
     <button
-      className={twMerge(buttonStyles({ type, size, rtl }), className)}
+      className={twMerge(buttonStyles({ type, size }), className)}
       type={htmlType}
       onClick={onClick}
       disabled={disabled}
+      dir={textDirection}
       {...rest}
     >
       {sizedLeadingIcon && (

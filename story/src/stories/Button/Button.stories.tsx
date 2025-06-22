@@ -5,6 +5,7 @@ import { Button, ButtonSize, ButtonType } from "./Button";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import AddIcon from "@mui/icons-material/Add";
+import { TextDirection } from "../textDirection";
 
 type ButtonStoryArgs = ComponentProps<typeof Button> & {
   hasLeadingIcon?: boolean;
@@ -20,7 +21,7 @@ const meta = {
     size: ButtonSize.Medium,
     hasLeadingIcon: false,
     hasTrailingIcon: false,
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
   },
   parameters: {
@@ -68,12 +69,13 @@ const meta = {
         [ButtonSize.Large]: "Large",
       },
     },
-    rtl: {
-      control: "boolean",
-      description: "Right to left text direction",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "Text direction for RTL/LTR layout",
       table: {
         category: "Appearance",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: TextDirection.Ltr },
       },
     },
     hasLeadingIcon: {
@@ -231,7 +233,7 @@ export const RTL: Story = {
   args: {
     type: ButtonType.Primary,
     label: "زر عربي",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     hasLeadingIcon: true,
     hasTrailingIcon: true,
   },
