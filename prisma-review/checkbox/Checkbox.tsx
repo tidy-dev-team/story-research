@@ -29,24 +29,26 @@ const containerStyles = cva("flex items-center gap-2", {
       false: "cursor-pointer",
     },
   },
-  defaultVariants: { disabled: false },
+  defaultVariants: {
+    disabled: false,
+  },
 });
 
 const checkboxIconStyles = cva(
-  "relative transition-all duration-200 focus:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-pz-system-border-focused-1 peer-focus-visible:ring-offset-0 peer-focus-visible:rounded-pz-3xs",
+  "relative transition-all duration-200 focus:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-pz-system-border-focused-1 peer-focus-visible:ring-offset-0 peer-focus-visible:rounded-pz-3xs before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs",
   {
     variants: {
       disabled: {
-        true: "text-pz-system-fg-disabled",
+        true: "text-pz-system-fg-disabled pointer-events-none",
         false: "",
       },
       state: {
         unchecked:
           "text-pz-system-border-5 hover:text-pz-system-border-hover active:text-pz-system-border-pressed",
         checked:
-          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+          "text-pz-system-fg-primary hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
         indeterminate:
-          "text-pz-system-fg-primary before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:rounded-pz-3xs hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
+          "text-pz-system-fg-primary hover:before:bg-pz-system-bg-overlay-hover-on-primary active:before:bg-pz-system-bg-overlay-pressed-on-primary",
       },
     },
     defaultVariants: {
@@ -59,22 +61,34 @@ const checkboxIconStyles = cva(
 const labelStyles = cva(
   "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200",
   {
-    variants: { disabled: disabledTextStyles },
-    defaultVariants: { disabled: false },
+    variants: {
+      disabled: disabledTextStyles,
+    },
+    defaultVariants: {
+      disabled: false,
+    },
   }
 );
 
 const iconStyles = cva(
   "text-pz-system-fg-3 transition-colors duration-200 flex items-center justify-center",
   {
-    variants: { disabled: disabledTextStyles },
-    defaultVariants: { disabled: false },
+    variants: {
+      disabled: disabledTextStyles,
+    },
+    defaultVariants: {
+      disabled: false,
+    },
   }
 );
 
 const countStyles = cva("pz-body-m400 transition-colors duration-200", {
-  variants: { disabled: disabledTextStyles },
-  defaultVariants: { disabled: false },
+  variants: {
+    disabled: disabledTextStyles,
+  },
+  defaultVariants: {
+    disabled: false,
+  },
 });
 
 interface CheckboxProps {
