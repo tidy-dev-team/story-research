@@ -259,9 +259,7 @@ export const IconSizingTest: Story = {
 
       <div className="flex flex-col gap-4">
         <div className="border-b pb-2">
-          <h4 className="font-medium mb-2">
-            Small Buttons (Should be 16px icons)
-          </h4>
+          <h4 className="font-medium mb-2">Small Buttons (16px icons)</h4>
           <div className="flex gap-4 items-center">
             <Button
               size={ButtonSize.Small}
@@ -283,9 +281,7 @@ export const IconSizingTest: Story = {
         </div>
 
         <div className="border-b pb-2">
-          <h4 className="font-medium mb-2">
-            Medium Buttons (Should be 20px icons)
-          </h4>
+          <h4 className="font-medium mb-2">Medium Buttons (20px icons)</h4>
           <div className="flex gap-4 items-center">
             <Button
               size={ButtonSize.Medium}
@@ -307,9 +303,7 @@ export const IconSizingTest: Story = {
         </div>
 
         <div className="border-b pb-2">
-          <h4 className="font-medium mb-2">
-            Large Buttons (Should be 24px icons)
-          </h4>
+          <h4 className="font-medium mb-2">Large Buttons (24px icons)</h4>
           <div className="flex gap-4 items-center">
             <Button
               size={ButtonSize.Large}
@@ -335,7 +329,13 @@ export const IconSizingTest: Story = {
         <p>
           <strong>Expected:</strong> Small = 16px, Medium = 20px, Large = 24px
         </p>
-        <p>Check the browser inspector to verify actual icon sizes.</p>
+        <p>
+          Check the browser inspector to verify actual icon sizes match these
+          values.
+        </p>
+        <p>
+          <em>Note: Using custom style sizing for precise control.</em>
+        </p>
       </div>
     </div>
   ),
