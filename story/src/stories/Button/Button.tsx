@@ -1,9 +1,9 @@
 import React, { ReactElement, cloneElement } from "react";
+import { SvgIconProps } from "@mui/material/SvgIcon";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
 
-// ——— Size & Type enums ———
 export enum ButtonSize {
   Small = "S",
   Medium = "M",
@@ -22,7 +22,6 @@ export const ICON_SIZES = {
   [ButtonSize.Large]: 24,
 } as const;
 
-// ——— CVA Styles ———
 const buttonStyles = cva(
   [
     "inline-flex items-center justify-center gap-2",
@@ -32,7 +31,7 @@ const buttonStyles = cva(
   ],
   {
     variants: {
-      type: {
+      variant: {
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-component-button-fg-primary-idle",
@@ -60,38 +59,43 @@ const buttonStyles = cva(
         [ButtonSize.Large]: ["h-10 min-h-10 max-h-10 px-5 py-1 pz-label-l"],
       },
     },
-    defaultVariants: { type: ButtonType.Primary, size: ButtonSize.Medium },
+    defaultVariants: {
+      variant: ButtonType.Primary,
+      size: ButtonSize.Medium,
+    },
   }
 );
 
-// ——— Props ———
+type MUIIcon = ReactElement<SvgIconProps>;
+
 interface ButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonStyles> {
   label: string;
-  leadingIcon?: ReactElement;
-  trailingIcon?: ReactElement;
-  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  leadingIcon?: MUIIcon;
+  trailingIcon?: MUIIcon;
   textDirection?: TextDirection;
 }
 
-// ——— Icon helper ———
-function withIconSize(icon: ReactElement, size: number) {
-  return cloneElement(icon, {
-    style: {
-      ...(icon.props as any).style,
-      fontSize: size,
-      width: size,
-      height: size,
-    },
-  } as any);
-}
+const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
+  const px = ICON_SIZES[size];
+  const fontSizeProp: SvgIconProps["fontSize"] =
+    size === ButtonSize.Small
+      ? "small"
+      : size === ButtonSize.Medium
+        ? "medium"
+        : "large";
 
-// ——— Button Component ———
-export const Button: React.FC<ButtonProps> = ({
-  type,
-  size,
-  htmlType = "button",
+  return cloneElement(icon, {
+    fontSize: fontSizeProp,
+    sx: { ...(icon.props.sx ?? {}), fontSize: px },
+  });
+};
+
+export const Button = ({
+  variant = ButtonType.Primary,
+  size = ButtonSize.Medium,
+  type = "button",
   label,
   leadingIcon,
   trailingIcon,
@@ -99,20 +103,16 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   textDirection = TextDirection.Ltr,
   ...rest
-}) => {
-  const px = ICON_SIZES[size || ButtonSize.Medium];
-
-  return (
-    <button
-      className={twMerge(buttonStyles({ type, size }), className)}
-      type={htmlType}
-      disabled={disabled}
-      dir={textDirection}
-      {...rest}
-    >
-      {leadingIcon && withIconSize(leadingIcon, px)}
-      <span className="leading-none translate-y-px">{label}</span>
-      {trailingIcon && withIconSize(trailingIcon, px)}
-    </button>
-  );
-};
+}: ButtonProps) => (
+  <button
+    className={twMerge(buttonStyles({ variant, size }), className)}
+    type={type}
+    disabled={disabled}
+    dir={textDirection}
+    {...rest}
+  >
+    {leadingIcon && withIconSize(leadingIcon, size ?? ButtonSize.Medium)}
+    <span className="leading-none translate-y-px">{label}</span>
+    {trailingIcon && withIconSize(trailingIcon, size ?? ButtonSize.Medium)}
+  </button>
+);
