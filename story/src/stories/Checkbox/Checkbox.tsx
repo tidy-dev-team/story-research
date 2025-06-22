@@ -60,7 +60,9 @@ const labelStyles = cva(
   "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200",
   {
     variants: { disabled: disabledTextStyles },
-    defaultVariants: { disabled: false },
+    defaultVariants: {
+      disabled: false,
+    },
   }
 );
 
@@ -73,8 +75,12 @@ const iconStyles = cva(
 );
 
 const countStyles = cva("pz-body-m400 transition-colors duration-200", {
-  variants: { disabled: disabledTextStyles },
-  defaultVariants: { disabled: false },
+  variants: {
+    disabled: disabledTextStyles,
+  },
+  defaultVariants: {
+    disabled: false,
+  },
 });
 
 interface CheckboxProps {
