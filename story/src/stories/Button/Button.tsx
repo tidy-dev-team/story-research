@@ -43,7 +43,7 @@ const buttonStyles = cva(
       type: {
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
-          "text-pz-system-fg-1",
+          "text-pz-components-button-fg-primary-idle",
           "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
           "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
           "disabled:bg-pz-system-bg-disabled",
@@ -53,10 +53,10 @@ const buttonStyles = cva(
           "border",
           "border-pz-system-border-primary",
           "text-pz-system-fg-primary",
-          "hover:enabled:bg-pz-system-fg-primary/12",
+          "hover:enabled:bg-pz-components-button-bg-secondary-hover",
           "hover:enabled:border-pz-system-border-hover",
           "hover:enabled:text-pz-system-fg-hover",
-          "active:enabled:bg-pz-system-fg-primary/12",
+          "active:enabled:bg-pz-components-button-bg-secondary-pressed",
           "active:enabled:border-pz-system-border-pressed",
           "active:enabled:text-pz-system-fg-pressed",
           "disabled:border-pz-system-border-disabled",
@@ -64,9 +64,9 @@ const buttonStyles = cva(
         ].join(" "),
         [ButtonType.Ghost]: [
           "text-pz-components-button-fg-ghost-idle",
-          "hover:enabled:bg-pz-system-fg-1/12",
-          "hover:enabled:text-pz-system-fg-1",
-          "active:enabled:bg-pz-system-fg-1/8",
+          "hover:enabled:bg-pz-components-button-bg-ghost-hover",
+          "hover:enabled:text-pz-components-button-fg-ghost-hover",
+          "active:enabled:bg-pz-components-button-bg-ghost-pressed",
           "disabled:text-pz-system-fg-disabled",
         ].join(" "),
       },
@@ -101,15 +101,13 @@ const buttonStyles = cva(
   }
 );
 
-//Note for code review. We use "type" in component in figma, maybe we can use "variant" or something else instead of "type" in the code to avoid confusion with HTML button type attribute.
 interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
-    Omit<VariantProps<typeof buttonStyles>, "type"> {
+    VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: React.ReactElement<any>;
   trailingIcon?: React.ReactElement<any>;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  type?: VariantProps<typeof buttonStyles>["type"];
 }
 
 export const Button = ({

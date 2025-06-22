@@ -12,6 +12,10 @@ export const pzButtonComponentSemanticColors = {
     },
   },
   bg: {
+    secondary: {
+      hover: pzColors.alpha.blue500["12p"],
+      pressed: pzColors.alpha.blue500["12p"],
+    },
     ghost: {
       hover: pzColors.alpha.white["12p"],
       pressed: pzColors.alpha.white["8p"],
