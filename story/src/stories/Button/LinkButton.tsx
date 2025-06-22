@@ -1,7 +1,12 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, cloneElement } from "react";
+import { SvgIconProps } from "@mui/material/SvgIcon";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
+
+const ICON_SIZE = 20;
+
+type MUIIcon = ReactElement<SvgIconProps>;
 
 const linkButtonStyles = cva([
   "rounded-pz-2xs",
@@ -34,9 +39,16 @@ interface LinkButtonProps
   label: string;
   href: string;
   disabled?: boolean;
-  trailingIcon?: React.ReactElement<any>;
+  trailingIcon?: MUIIcon;
   textDirection?: TextDirection;
 }
+
+const withIconSize = (icon: MUIIcon) => {
+  return cloneElement(icon, {
+    fontSize: "medium",
+    sx: { ...(icon.props.sx ?? {}), fontSize: ICON_SIZE },
+  });
+};
 
 export const LinkButton = ({
   disabled,
@@ -47,22 +59,6 @@ export const LinkButton = ({
   textDirection = TextDirection.Ltr,
   ...rest
 }: LinkButtonProps) => {
-  const iconSize = 20;
-
-  const cloneIconWithSize = (icon: React.ReactElement<any> | undefined) =>
-    icon
-      ? React.cloneElement(icon, {
-          style: {
-            fontSize: iconSize,
-            width: iconSize,
-            height: iconSize,
-            ...(icon.props?.style || {}),
-          },
-        })
-      : null;
-
-  const sizedTrailingIcon = cloneIconWithSize(trailingIcon);
-
   return (
     <a
       className={twMerge(linkButtonStyles(), className)}
@@ -72,9 +68,9 @@ export const LinkButton = ({
       {...rest}
     >
       <span>{label}</span>
-      {sizedTrailingIcon && (
+      {trailingIcon && (
         <span className="flex items-center leading-none">
-          {sizedTrailingIcon}
+          {withIconSize(trailingIcon)}
         </span>
       )}
     </a>
