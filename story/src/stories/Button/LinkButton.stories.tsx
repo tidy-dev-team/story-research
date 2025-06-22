@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ComponentProps } from "react";
 import React from "react";
 import { LinkButton } from "./LinkButton";
+import { TextDirection } from "../textDirection";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 type LinkButtonStoryArgs = ComponentProps<typeof LinkButton> & {
@@ -15,7 +16,7 @@ const meta = {
     label: "Link Button",
     href: "https://www.example.com",
     hasTrailingIcon: false,
-    rtl: false,
+    textDirection: TextDirection.Ltr,
     disabled: false,
   },
   parameters: {
@@ -74,13 +75,13 @@ const meta = {
         category: "Behavior",
       },
     },
-    rtl: {
-      control: "boolean",
-      description:
-        "If true, the link button's text direction will be right-to-left.",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
+      description: "The text direction of the link button.",
       table: {
         category: "Appearance",
-        defaultValue: { summary: "false" },
+        defaultValue: { summary: "TextDirection.Ltr" },
       },
     },
     disabled: {
@@ -139,7 +140,7 @@ export const RTL: Story = {
   args: {
     label: "קישור",
     href: "#",
-    rtl: true,
+    textDirection: TextDirection.Rtl,
     hasTrailingIcon: true,
   },
   render: renderStory,
