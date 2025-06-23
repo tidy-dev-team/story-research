@@ -116,7 +116,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 
   const CheckboxElement = CHECKBOX_ICONS[state];
 
-  const iconClasses = checkboxIconStyles({
+  const checkboxElementClasses = checkboxIconStyles({
     disabled: isDisabled,
     state: state,
   });
@@ -133,7 +133,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         onChange={onChange}
         disabled={isDisabled}
       />
-      <span className={iconClasses}>
+      <span className={checkboxElementClasses}>
         <CheckboxElement fontSize="small" />
       </span>
       {icon && (
