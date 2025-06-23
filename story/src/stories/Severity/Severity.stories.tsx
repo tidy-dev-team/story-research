@@ -1,11 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-  Severity,
-  SEVERITY_LEVELS,
-  SEVERITY_TYPES,
-  SeverityLevel,
-  SeverityType,
-} from "./Severity";
+import { Severity, SeverityLevel, SeverityType } from "./Severity";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof Severity> = {
@@ -18,11 +12,11 @@ const meta: Meta<typeof Severity> = {
   argTypes: {
     level: {
       control: "select",
-      options: SEVERITY_LEVELS,
+      options: Object.values(SeverityLevel),
     },
     type: {
       control: "select",
-      options: SEVERITY_TYPES,
+      options: Object.values(SeverityType),
     },
     textDirection: {
       control: "select",
@@ -36,8 +30,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    level: "medium",
-    type: "badge",
+    level: SeverityLevel.Medium,
+    type: SeverityType.Badge,
     textDirection: TextDirection.Ltr,
   },
 };

@@ -5,7 +5,7 @@ import { TextDirection } from "../textDirection";
 
 export interface CheckboxSeverityProps {
   state: CheckboxState;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (checked: boolean) => void;
   count?: number | null;
   severityLevel: SeverityLevel;
   severityType?: SeverityType;
@@ -17,8 +17,8 @@ export const CheckboxSeverity = ({
   state = CheckboxState.Unchecked,
   onChange,
   count = 0,
-  severityLevel = "medium",
-  severityType = "badge",
+  severityLevel = SeverityLevel.Medium,
+  severityType = SeverityType.Badge,
   textDirection = TextDirection.Ltr,
   disabled = false,
 }: CheckboxSeverityProps): React.ReactElement => {
@@ -26,8 +26,18 @@ export const CheckboxSeverity = ({
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
 
+  const handleToggle = () => {
+    const isChecked = state === CheckboxState.Checked;
+    onChange(!isChecked);
+  };
+
   return (
-    <div className={"flex items-center gap-pz-4xs"} dir={textDirection}>
+    <div
+      className={"flex items-center gap-pz-4xs"}
+      dir={textDirection}
+      onClick={handleToggle}
+      style={{ cursor: "pointer" }}
+    >
       <Checkbox
         state={state}
         textDirection={textDirection}
@@ -39,11 +49,6 @@ export const CheckboxSeverity = ({
         level={severityLevel}
         type={severityType}
         textDirection={textDirection}
-        onClick={() => {
-          const isChecked = state === CheckboxState.Checked;
-          const fakeEvent = { target: { checked: !isChecked } };
-          onChange(fakeEvent as unknown as React.ChangeEvent<HTMLInputElement>);
-        }}
       />
       {count !== null && count !== undefined && (
         <span

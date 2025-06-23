@@ -6,10 +6,15 @@ import { SeverityBadge } from "./SeverityBadge";
 import { SeverityBar } from "./SeverityBar";
 import { TextDirection } from "../textDirection";
 
-export const SEVERITY_LEVELS = ["high", "medium", "low"] as const;
-export type SeverityLevel = (typeof SEVERITY_LEVELS)[number];
-export const SEVERITY_TYPES = ["badge", "bar"] as const;
-export type SeverityType = (typeof SEVERITY_TYPES)[number];
+export enum SeverityLevel {
+  High = "high",
+  Medium = "medium",
+  Low = "low",
+}
+export enum SeverityType {
+  Badge = "badge",
+  Bar = "bar",
+}
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -24,15 +29,15 @@ export interface SeverityProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const LEVEL_LABELS: Record<SeverityLevel, string> = {
-  high: "High",
-  medium: "Medium",
-  low: "Low",
+  [SeverityLevel.High]: "High",
+  [SeverityLevel.Medium]: "Medium",
+  [SeverityLevel.Low]: "Low",
 };
 
 const LEVEL_LABELS_HE: Record<SeverityLevel, string> = {
-  high: "גבוה",
-  medium: "בינוני",
-  low: "נמוך",
+  [SeverityLevel.High]: "גבוה",
+  [SeverityLevel.Medium]: "בינוני",
+  [SeverityLevel.Low]: "נמוך",
 };
 
 const Severity: React.FC<SeverityProps> = ({
@@ -45,7 +50,7 @@ const Severity: React.FC<SeverityProps> = ({
   const isRtl = textDirection === TextDirection.Rtl;
 
   const indicator =
-    type === "badge" ? (
+    type === SeverityType.Badge ? (
       <SeverityBadge level={level} />
     ) : (
       <SeverityBar level={level} />
