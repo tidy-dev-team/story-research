@@ -6,6 +6,11 @@ import { SeverityBadge } from "./SeverityBadge";
 import { SeverityBar } from "./SeverityBar";
 import { TextDirection } from "../textDirection";
 
+export const SEVERITY_LEVELS = ["high", "medium", "low"] as const;
+export type SeverityLevel = (typeof SEVERITY_LEVELS)[number];
+export const SEVERITY_TYPES = ["badge", "bar"] as const;
+export type SeverityType = (typeof SEVERITY_TYPES)[number];
+
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -13,18 +18,18 @@ function cn(...inputs: ClassValue[]) {
 const severityVariants = cva("inline-flex items-center gap-pz-4xs");
 
 export interface SeverityProps extends React.HTMLAttributes<HTMLDivElement> {
-  level: "high" | "medium" | "low";
-  type: "badge" | "bar";
+  level: SeverityLevel;
+  type: SeverityType;
   textDirection?: TextDirection;
 }
 
-const LEVEL_LABELS: Record<"high" | "medium" | "low", string> = {
+const LEVEL_LABELS: Record<SeverityLevel, string> = {
   high: "High",
   medium: "Medium",
   low: "Low",
 };
 
-const LEVEL_LABELS_HE: Record<"high" | "medium" | "low", string> = {
+const LEVEL_LABELS_HE: Record<SeverityLevel, string> = {
   high: "גבוה",
   medium: "בינוני",
   low: "נמוך",

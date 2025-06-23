@@ -4,6 +4,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import { TextDirection } from "../textDirection";
+import { IconFontSize } from "../iconFontSize";
 
 export enum CheckboxState {
   Unchecked = "unchecked",
@@ -17,9 +18,11 @@ const CHECKBOX_ICONS = {
   [CheckboxState.Unchecked]: CheckBoxOutlineBlankIcon,
 } as const;
 
-const disabledTextStyles = {
-  true: "text-pz-system-fg-disabled",
-  false: "text-pz-system-fg-1",
+const disabledVariants = {
+  disabled: {
+    true: "text-pz-system-fg-disabled",
+    false: "text-pz-system-fg-1",
+  },
 };
 
 const containerStyles = cva("flex items-center gap-2", {
@@ -61,57 +64,49 @@ const checkboxIconStyles = cva(
 const labelStyles = cva(
   "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200",
   {
-    variants: {
-      disabled: disabledTextStyles,
-    },
-    defaultVariants: {
-      disabled: false,
-    },
+    variants: disabledVariants,
+    defaultVariants: { disabled: false },
   }
 );
 
 const iconStyles = cva(
   "text-pz-system-fg-3 transition-colors duration-200 flex items-center justify-center",
   {
-    variants: {
-      disabled: disabledTextStyles,
-    },
-    defaultVariants: {
-      disabled: false,
-    },
+    variants: disabledVariants,
+    defaultVariants: { disabled: false },
   }
 );
 
 const countStyles = cva("pz-body-m400 transition-colors duration-200", {
-  variants: {
-    disabled: disabledTextStyles,
-  },
-  defaultVariants: {
-    disabled: false,
-  },
+  variants: disabledVariants,
+  defaultVariants: { disabled: false },
 });
 
 interface CheckboxProps {
   state: CheckboxState;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
-  isDisabled?: boolean;
-  textDirection?: TextDirection;
   icon?: ReactNode;
   count?: number | null;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  textDirection?: TextDirection;
+  isDisabled?: boolean;
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
-  count = 0,
-  icon,
-  isDisabled = false,
-  label,
-  onChange,
   state = CheckboxState.Unchecked,
+  onChange,
+  label,
+  icon,
+  count = 0,
   textDirection = TextDirection.Ltr,
+  isDisabled = false,
 }: CheckboxProps): React.ReactElement => {
   if (count !== null && (count < 0 || !Number.isInteger(count))) {
     console.warn(`Checkbox component: Invalid prop count: "${count}"`);
+  }
+
+  if (typeof label === "string" && label.trim() === "") {
+    console.warn("Checkbox component: label prop is an empty string.");
   }
 
   const CheckboxElement = CHECKBOX_ICONS[state];
@@ -134,7 +129,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         disabled={isDisabled}
       />
       <span className={checkboxElementClasses}>
-        <CheckboxElement fontSize="small" />
+        <CheckboxElement fontSize={IconFontSize.Small} />
       </span>
       {icon && (
         <span className={iconStyles({ disabled: isDisabled })}>{icon}</span>
@@ -142,7 +137,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       {label && (
         <span className={labelStyles({ disabled: isDisabled })}>{label}</span>
       )}
-      {!!count && (
+      {count !== null && count !== undefined && (
         <span className={countStyles({ disabled: isDisabled })}>({count})</span>
       )}
     </label>

@@ -1,5 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Severity } from "./Severity";
+import {
+  Severity,
+  SEVERITY_LEVELS,
+  SEVERITY_TYPES,
+  SeverityLevel,
+  SeverityType,
+} from "./Severity";
+import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof Severity> = {
   title: "Component/Severity",
@@ -11,16 +18,16 @@ const meta: Meta<typeof Severity> = {
   argTypes: {
     level: {
       control: "select",
-      options: ["high", "medium", "low"],
+      options: SEVERITY_LEVELS,
     },
     type: {
       control: "select",
-      options: ["badge", "bar"],
+      options: SEVERITY_TYPES,
     },
-    rtl: {
-      control: "boolean",
+    textDirection: {
+      control: "select",
+      options: Object.values(TextDirection),
     },
-    // label removed: label is now static and based on level
   },
 };
 
@@ -31,7 +38,6 @@ export const Default: Story = {
   args: {
     level: "medium",
     type: "badge",
-    // label removed: label is now static and based on level
-    rtl: false,
+    textDirection: TextDirection.Ltr,
   },
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { cva } from "class-variance-authority";
+import { SeverityLevel } from "./Severity";
 
 const severityBarVariants = cva("rounded-full", {
   variants: {
@@ -25,7 +26,7 @@ const severityBarVariants = cva("rounded-full", {
 });
 
 export interface SeverityBarProps extends React.HTMLAttributes<HTMLDivElement> {
-  level: "high" | "medium" | "low";
+  level: SeverityLevel;
   size?: "s" | "m";
   expired?: boolean;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { cva } from "class-variance-authority";
+import { SeverityLevel } from "./Severity";
 
 const severityBadgeVariants = cva("w-3 h-3 rounded-pz-3xs", {
   variants: {
@@ -16,7 +17,7 @@ const severityBadgeVariants = cva("w-3 h-3 rounded-pz-3xs", {
 
 export interface SeverityBadgeProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  level: "high" | "medium" | "low";
+  level: SeverityLevel;
 }
 
 const SeverityBadge: React.FC<SeverityBadgeProps> = ({
