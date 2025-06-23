@@ -5,36 +5,34 @@ import { TextDirection } from "../textDirection";
 
 export interface CheckboxSeverityProps {
   state: CheckboxState;
-  count?: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  count?: number | null;
   severityLevel: SeverityLevel;
   severityType?: SeverityType;
   textDirection?: TextDirection;
+  disabled?: boolean;
 }
 
-export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
+export const CheckboxSeverity = ({
   state = CheckboxState.Unchecked,
-  count = 0,
   onChange,
+  count = 0,
   severityLevel = "medium",
   severityType = "badge",
   textDirection = TextDirection.Ltr,
-}) => {
+  disabled = false,
+}: CheckboxSeverityProps): React.ReactElement => {
   if (count !== null && (count < 0 || !Number.isInteger(count))) {
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange?.(event);
-  };
 
   return (
     <div className={"flex items-center gap-pz-4xs"} dir={textDirection}>
       <Checkbox
         state={state}
         textDirection={textDirection}
-        onChange={handleChange}
-        isDisabled={false}
+        onChange={onChange}
+        isDisabled={disabled}
       />
       <Severity
         className="cursor-pointer"

@@ -85,19 +85,19 @@ const countStyles = cva("pz-body-m400 transition-colors duration-200", {
 interface CheckboxProps {
   state: CheckboxState;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  count?: number | null;
   label?: string;
   icon?: ReactNode;
-  count?: number | null;
   textDirection?: TextDirection;
   isDisabled?: boolean;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({
+export const Checkbox = ({
   state = CheckboxState.Unchecked,
   onChange,
+  count = 0,
   label,
   icon,
-  count = 0,
   textDirection = TextDirection.Ltr,
   isDisabled = false,
 }: CheckboxProps): React.ReactElement => {
