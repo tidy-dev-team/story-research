@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import { clsx } from "clsx";
 import { ReactNode } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -61,30 +62,24 @@ const checkboxIconStyles = cva(
   }
 );
 
-const labelStyles = cva(
-  "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200",
-  {
-    variants: disabledVariants,
-    defaultVariants: { disabled: false },
-  }
-);
-
-const iconStyles = cva(
-  "text-pz-system-fg-3 transition-colors duration-200 flex items-center justify-center",
-  {
-    variants: disabledVariants,
-    defaultVariants: { disabled: false },
-  }
-);
-
-const countStyles = cva("pz-body-m400 transition-colors duration-200", {
-  variants: disabledVariants,
-  defaultVariants: { disabled: false },
+const labelElementsStyles = cva("", {
+  variants: {
+    disabled: {
+      true: "text-pz-system-fg-disabled",
+      false: "text-pz-system-fg-1",
+    },
+  },
 });
+
+const labelStyles =
+  "select-none pz-body-m400 max-w-[480px] translate-y-px transition-colors duration-200";
+const iconStyles =
+  "text-pz-system-fg-3 transition-colors duration-200 flex items-center justify-center";
+const countStyles = "pz-body-m400 transition-colors duration-200";
 
 interface CheckboxProps {
   state: CheckboxState;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (checked: boolean) => void;
   count?: number | null;
   label?: string;
   icon?: ReactNode;
@@ -105,7 +100,7 @@ export const Checkbox = ({
     console.warn(`Checkbox component: Invalid prop count: "${count}"`);
   }
 
-  if (typeof label === "string" && label.trim() === "") {
+  if (label !== undefined && label.trim() === "") {
     console.warn("Checkbox component: label prop is an empty string.");
   }
 
@@ -125,20 +120,41 @@ export const Checkbox = ({
         type="checkbox"
         className="peer sr-only"
         checked={state === CheckboxState.Checked}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.checked)}
         disabled={isDisabled}
       />
       <span className={checkboxElementClasses}>
         <CheckboxElement fontSize={IconFontSize.Small} />
       </span>
       {icon && (
-        <span className={iconStyles({ disabled: isDisabled })}>{icon}</span>
+        <span
+          className={clsx(
+            iconStyles,
+            labelElementsStyles({ disabled: isDisabled })
+          )}
+        >
+          {icon}
+        </span>
       )}
       {label && (
-        <span className={labelStyles({ disabled: isDisabled })}>{label}</span>
+        <span
+          className={clsx(
+            labelStyles,
+            labelElementsStyles({ disabled: isDisabled })
+          )}
+        >
+          {label}
+        </span>
       )}
       {count !== null && count !== undefined && (
-        <span className={countStyles({ disabled: isDisabled })}>({count})</span>
+        <span
+          className={clsx(
+            countStyles,
+            labelElementsStyles({ disabled: isDisabled })
+          )}
+        >
+          ({count})
+        </span>
       )}
     </label>
   );
