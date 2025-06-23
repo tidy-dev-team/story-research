@@ -1,61 +1,59 @@
 import React from "react";
-import { cva } from "class-variance-authority";
 import { Checkbox, CheckboxState } from "./Checkbox";
-import { Severity } from "../Severity/Severity";
+import { Severity, SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 
-export enum SeverityLevel {
-  High = "high",
-  Medium = "medium",
-  Low = "low",
-}
-
-export enum SeverityType {
-  Badge = "badge",
-  Bar = "bar",
-}
-
-const checkboxSeverityStyles = cva("flex items-center gap-pz-4xs");
-
-const countStyles = cva(
-  "pz-body-m400 transition-colors duration-200 text-pz-system-fg-1"
-);
-
 export interface CheckboxSeverityProps {
-  state?: CheckboxState;
+  state: CheckboxState;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  count?: number | null;
   severityLevel: SeverityLevel;
   severityType?: SeverityType;
   textDirection?: TextDirection;
-  count?: number;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
-export const CheckboxSeverity: React.FC<CheckboxSeverityProps> = ({
-  count = 0,
-  onChange,
-  severityLevel = SeverityLevel.Medium,
-  severityType = SeverityType.Badge,
+export const CheckboxSeverity = ({
   state = CheckboxState.Unchecked,
+  onChange,
+  count = 0,
+  severityLevel = "medium",
+  severityType = "badge",
   textDirection = TextDirection.Ltr,
-}) => {
+  disabled = false,
+}: CheckboxSeverityProps): React.ReactElement => {
   if (count !== null && (count < 0 || !Number.isInteger(count))) {
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
 
   return (
-    <div className={checkboxSeverityStyles()} dir={textDirection}>
+    <div className={"flex items-center gap-pz-4xs"} dir={textDirection}>
       <Checkbox
         state={state}
         textDirection={textDirection}
-        onChange={onChange || (() => {})}
-        isDisabled={false}
+        onChange={onChange}
+        isDisabled={disabled}
       />
       <Severity
+        className="cursor-pointer"
         level={severityLevel}
         type={severityType}
         textDirection={textDirection}
+        onClick={() => {
+          const isChecked = state === CheckboxState.Checked;
+          const fakeEvent = { target: { checked: !isChecked } };
+          onChange(fakeEvent as unknown as React.ChangeEvent<HTMLInputElement>);
+        }}
       />
-      {!!count && <span className={countStyles()}>({count})</span>}
+      {count !== null && count !== undefined && (
+        <span
+          className={
+            "pz-body-m400 transition-colors duration-200 text-pz-system-fg-1"
+          }
+        >
+          ({count})
+        </span>
+      )}
     </div>
   );
 };
