@@ -1,5 +1,5 @@
-import { cva } from "class-variance-authority";
-import { clsx } from "clsx";
+import { cva, cx } from "class-variance-authority";
+// import { clsx } from "clsx";
 import { ReactNode } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -128,7 +128,7 @@ export const Checkbox = ({
       </span>
       {icon && (
         <span
-          className={clsx(
+          className={cx(
             iconStyles,
             labelElementsStyles({ disabled: isDisabled })
           )}
@@ -138,7 +138,7 @@ export const Checkbox = ({
       )}
       {label && (
         <span
-          className={clsx(
+          className={cx(
             labelStyles,
             labelElementsStyles({ disabled: isDisabled })
           )}
@@ -148,7 +148,7 @@ export const Checkbox = ({
       )}
       {count !== null && count !== undefined && (
         <span
-          className={clsx(
+          className={cx(
             countStyles,
             labelElementsStyles({ disabled: isDisabled })
           )}
