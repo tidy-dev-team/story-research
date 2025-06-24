@@ -1,10 +1,7 @@
 import { cva } from "class-variance-authority";
 import { CheckboxState } from "../Checkbox/Checkbox";
-import {
-  CheckboxSeverity,
-  SeverityLevel,
-  SeverityType,
-} from "../Checkbox/CheckboxSeverity";
+import { CheckboxSeverity } from "../Checkbox/CheckboxSeverity";
+import { SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 
 const dropdownListItemMultiSeverityStyles = cva([
@@ -52,8 +49,8 @@ const DropdownListItemMultiSeverity: React.FC<
       ? CheckboxState.Checked
       : CheckboxState.Unchecked;
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSelect?.(event.target.checked);
+  const handleCheckboxChange = (checked: boolean) => {
+    onSelect?.(checked);
   };
 
   return (
@@ -68,7 +65,6 @@ const DropdownListItemMultiSeverity: React.FC<
       <CheckboxSeverity
         state={checkboxState}
         severityLevel={severityLevel}
-        severityType={severityType}
         textDirection={textDirection}
         count={count}
         onChange={handleCheckboxChange}

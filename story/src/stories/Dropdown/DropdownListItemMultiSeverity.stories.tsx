@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DropdownListItemMultiSeverity } from "./DropdownListItemMultiSeverity";
-import { SeverityLevel, SeverityType } from "../Checkbox/CheckboxSeverity";
+import { SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 import { useState } from "react";
 

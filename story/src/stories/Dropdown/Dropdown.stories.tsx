@@ -4,7 +4,7 @@ import { DropdownListItem } from "./DropdownListItem";
 import { DropdownListItemSeverity } from "./DropdownListItemSeverity";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
 import { DropdownListItemMultiSeverity } from "./DropdownListItemMultiSeverity";
-import { SeverityLevel } from "../Checkbox/CheckboxSeverity";
+import { SeverityLevel } from "../Severity/Severity";
 import { CheckboxState } from "../Checkbox/Checkbox";
 import { useState } from "react";
 import { IconButton, ButtonSize, ButtonType } from "../Button/IconButton";
