@@ -31,7 +31,6 @@ const meta = {
   args: {
     state: CheckboxState.Unchecked,
     severityLevel: SeverityLevel.Medium,
-    severityType: SeverityType.Badge,
     textDirection: TextDirection.Ltr,
     count: 3,
     onChange: action("onChange"),
@@ -66,15 +65,6 @@ const meta = {
         defaultValue: { summary: "SeverityLevel.Medium" },
       },
     },
-    severityType: {
-      control: "select",
-      options: Object.values(SeverityType),
-      description: "The type of severity indicator",
-      table: {
-        category: "Severity",
-        defaultValue: { summary: "SeverityType.Badge" },
-      },
-    },
     textDirection: {
       control: "select",
       options: Object.values(TextDirection),
@@ -107,7 +97,6 @@ export const Default: Story = {
   args: {
     state: CheckboxState.Unchecked,
     severityLevel: SeverityLevel.Medium,
-    severityType: SeverityType.Badge,
     count: 3,
   },
 };
@@ -116,16 +105,14 @@ export const HighSeverityBadge: Story = {
   args: {
     state: CheckboxState.Checked,
     severityLevel: SeverityLevel.High,
-    severityType: SeverityType.Badge,
     count: 12,
   },
 };
 
-export const LowSeverityBar: Story = {
+export const LowSeverity: Story = {
   args: {
     state: CheckboxState.Indeterminate,
     severityLevel: SeverityLevel.Low,
-    severityType: SeverityType.Bar,
     count: 2,
   },
 };
@@ -134,7 +121,6 @@ export const RTLLayout: Story = {
   args: {
     state: CheckboxState.Checked,
     severityLevel: SeverityLevel.High,
-    severityType: SeverityType.Badge,
     textDirection: TextDirection.Rtl,
     count: 5,
   },

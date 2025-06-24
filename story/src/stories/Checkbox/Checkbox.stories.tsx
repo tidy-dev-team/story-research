@@ -24,7 +24,7 @@ const InteractiveCheckbox = (args: CheckboxStoryArgs) => {
       {...checkboxProps}
       icon={showIcon ? <LanguageIcon sx={{ fontSize: 16 }} /> : undefined}
       state={state}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange={(checked: boolean) => {
         // Handle state transitions properly
         let newState: CheckboxState;
 
@@ -33,13 +33,11 @@ const InteractiveCheckbox = (args: CheckboxStoryArgs) => {
           newState = CheckboxState.Checked;
         } else {
           // Normal toggle between checked/unchecked
-          newState = e.target.checked
-            ? CheckboxState.Checked
-            : CheckboxState.Unchecked;
+          newState = checked ? CheckboxState.Checked : CheckboxState.Unchecked;
         }
 
         setState(newState);
-        args.onChange?.(e);
+        args.onChange?.(checked);
       }}
     />
   );
@@ -199,10 +197,10 @@ const CountComparisonDemo = () => {
         <Checkbox
           label="No count"
           state={checkedStates.noCount}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(checked: boolean) =>
             setCheckedStates((prev) => ({
               ...prev,
-              noCount: e.target.checked
+              noCount: checked
                 ? CheckboxState.Checked
                 : CheckboxState.Unchecked,
             }))
@@ -212,10 +210,10 @@ const CountComparisonDemo = () => {
           label="With count"
           count={5}
           state={checkedStates.withCount}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(checked: boolean) =>
             setCheckedStates((prev) => ({
               ...prev,
-              withCount: e.target.checked
+              withCount: checked
                 ? CheckboxState.Checked
                 : CheckboxState.Unchecked,
             }))
@@ -225,10 +223,10 @@ const CountComparisonDemo = () => {
           label="Zero count (hidden)"
           count={0}
           state={checkedStates.zeroCount}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(checked: boolean) =>
             setCheckedStates((prev) => ({
               ...prev,
-              zeroCount: e.target.checked
+              zeroCount: checked
                 ? CheckboxState.Checked
                 : CheckboxState.Unchecked,
             }))
@@ -238,10 +236,10 @@ const CountComparisonDemo = () => {
           label="Large count"
           count={999}
           state={checkedStates.largeCount}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(checked: boolean) =>
             setCheckedStates((prev) => ({
               ...prev,
-              largeCount: e.target.checked
+              largeCount: checked
                 ? CheckboxState.Checked
                 : CheckboxState.Unchecked,
             }))

@@ -79,7 +79,7 @@ const countStyles = "pz-body-m400 transition-colors duration-200";
 
 interface CheckboxProps {
   state: CheckboxState;
-  onChange: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
   count?: number | null;
   label?: string;
   icon?: ReactNode;
@@ -104,6 +104,14 @@ export const Checkbox = ({
     console.warn("Checkbox component: label prop is an empty string.");
   }
 
+  const handleChange = (checked: boolean) => {
+    if (!onChange) {
+      console.warn("Checkbox component: onChange prop is not provided.");
+      return;
+    }
+    onChange(checked);
+  };
+
   const CheckboxElement = CHECKBOX_ICONS[state];
 
   const checkboxElementClasses = checkboxIconStyles({
@@ -120,7 +128,7 @@ export const Checkbox = ({
         type="checkbox"
         className="peer sr-only"
         checked={state === CheckboxState.Checked}
-        onChange={(e) => onChange(e.target.checked)}
+        onChange={(e) => handleChange(e.target.checked)}
         disabled={isDisabled}
       />
       <span className={checkboxElementClasses}>

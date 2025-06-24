@@ -5,20 +5,18 @@ import { TextDirection } from "../textDirection";
 
 export interface CheckboxSeverityProps {
   state: CheckboxState;
-  onChange: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
   count?: number | null;
   severityLevel: SeverityLevel;
-  severityType?: SeverityType;
   textDirection?: TextDirection;
   disabled?: boolean;
 }
 
 export const CheckboxSeverity = ({
   state = CheckboxState.Unchecked,
-  onChange,
+  onChange = () => {},
   count = 0,
   severityLevel = SeverityLevel.Medium,
-  severityType = SeverityType.Badge,
   textDirection = TextDirection.Ltr,
   disabled = false,
 }: CheckboxSeverityProps): React.ReactElement => {
@@ -47,7 +45,7 @@ export const CheckboxSeverity = ({
       <Severity
         className="cursor-pointer"
         level={severityLevel}
-        type={severityType}
+        type={SeverityType.Badge}
         textDirection={textDirection}
       />
       {count !== null && count !== undefined && (
