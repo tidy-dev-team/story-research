@@ -41,6 +41,7 @@ export const CheckboxSeverity = ({
         textDirection={textDirection}
         onChange={onChange}
         isDisabled={disabled}
+        count={null}
       />
       <Severity
         className="cursor-pointer"
