@@ -38,14 +38,15 @@ export const CheckboxSeverity = ({
     <div
       className={"flex items-center gap-pz-4xs cursor-pointer"}
       dir={textDirection}
-      onClick={handleToggle}
+      onClickCapture={handleToggle}
     >
-      <Checkbox
-        state={state}
-        textDirection={textDirection}
-        onChange={onChange}
-        isDisabled={disabled}
-      />
+      <span className="pointer-events-none">
+        <Checkbox
+          state={state}
+          textDirection={textDirection}
+          isDisabled={disabled}
+        />
+      </span>
       <Severity
         className="cursor-pointer"
         level={severityLevel}
