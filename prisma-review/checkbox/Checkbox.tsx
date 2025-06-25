@@ -1,5 +1,4 @@
 import { cva, cx } from "class-variance-authority";
-// import { clsx } from "clsx";
 import { ReactNode } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -104,12 +103,12 @@ export const Checkbox = ({
     console.warn("Checkbox component: label prop is an empty string.");
   }
 
-  const handleChange = (checked: boolean) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!onChange) {
       console.warn("Checkbox component: onChange prop is not provided.");
       return;
     }
-    onChange(checked);
+    onChange(e.target.checked);
   };
 
   const CheckboxElement = CHECKBOX_ICONS[state];
@@ -128,7 +127,7 @@ export const Checkbox = ({
         type="checkbox"
         className="peer sr-only"
         checked={state === CheckboxState.Checked}
-        onChange={(e) => handleChange(e.target.checked)}
+        onChange={handleChange}
         disabled={isDisabled}
       />
       <span className={checkboxElementClasses}>

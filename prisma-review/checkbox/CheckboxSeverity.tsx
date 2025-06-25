@@ -5,7 +5,7 @@ import { TextDirection } from "../textDirection";
 
 export interface CheckboxSeverityProps {
   state: CheckboxState;
-  onChange?: (checked: boolean) => void;
+  onChange: (checked: boolean) => void;
   count?: number | null;
   severityLevel: SeverityLevel;
   textDirection?: TextDirection;
@@ -14,7 +14,7 @@ export interface CheckboxSeverityProps {
 
 export const CheckboxSeverity = ({
   state = CheckboxState.Unchecked,
-  onChange = () => {},
+  onChange,
   count = 0,
   severityLevel = SeverityLevel.Medium,
   textDirection = TextDirection.Ltr,
@@ -25,24 +25,28 @@ export const CheckboxSeverity = ({
   }
 
   const handleToggle = () => {
-    const isChecked = state === CheckboxState.Checked;
-    onChange(!isChecked);
+    let nextChecked: boolean;
+    if (state === CheckboxState.Indeterminate) {
+      nextChecked = true;
+    } else {
+      nextChecked = state === CheckboxState.Checked ? false : true;
+    }
+    onChange(nextChecked);
   };
 
   return (
     <div
-      className={"flex items-center gap-pz-4xs"}
+      className={"flex items-center gap-pz-4xs cursor-pointer"}
       dir={textDirection}
-      onClick={handleToggle}
-      style={{ cursor: "pointer" }}
+      onClickCapture={handleToggle}
     >
-      <Checkbox
-        state={state}
-        textDirection={textDirection}
-        onChange={onChange}
-        isDisabled={disabled}
-        count={null}
-      />
+      <span className="pointer-events-none">
+        <Checkbox
+          state={state}
+          textDirection={textDirection}
+          isDisabled={disabled}
+        />
+      </span>
       <Severity
         className="cursor-pointer"
         level={severityLevel}
