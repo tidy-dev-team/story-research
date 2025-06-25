@@ -25,8 +25,13 @@ export const CheckboxSeverity = ({
   }
 
   const handleToggle = () => {
-    const isChecked = state === CheckboxState.Checked;
-    onChange(!isChecked);
+    let nextChecked: boolean;
+    if (state === CheckboxState.Indeterminate) {
+      nextChecked = true;
+    } else {
+      nextChecked = state === CheckboxState.Checked ? false : true;
+    }
+    onChange(nextChecked);
   };
 
   return (
@@ -41,7 +46,6 @@ export const CheckboxSeverity = ({
         textDirection={textDirection}
         onChange={onChange}
         isDisabled={disabled}
-        count={null}
       />
       <Severity
         className="cursor-pointer"
