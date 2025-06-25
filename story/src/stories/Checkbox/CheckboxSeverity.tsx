@@ -36,10 +36,9 @@ export const CheckboxSeverity = ({
 
   return (
     <div
-      className={"flex items-center gap-pz-4xs"}
+      className={"flex items-center gap-pz-4xs cursor-pointer"}
       dir={textDirection}
       onClick={handleToggle}
-      style={{ cursor: "pointer" }}
     >
       <Checkbox
         state={state}
