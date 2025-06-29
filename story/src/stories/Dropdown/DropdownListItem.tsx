@@ -23,7 +23,6 @@ const dropdownListItemStyles = cva([
   // Focus styles
   "focus:outline-none focus-visible:ring-2",
   "focus-visible:ring-pz-system-border-focused-1",
-  "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
 
   // Disabled styles
   "disabled:text-pz-system-fg-disabled disabled:cursor-not-allowed",
