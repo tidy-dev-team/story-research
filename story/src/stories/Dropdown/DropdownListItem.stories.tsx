@@ -160,7 +160,7 @@ export const Default = {
 export const WithSettingsIcon: Story = {
   args: {
     label: "Settings",
-    icon: <SettingsIcon sx={{ fontSize: "inherit" }} />,
+    icon: <SettingsIcon />,
   },
 };
 
@@ -170,7 +170,7 @@ export const WithSettingsIcon: Story = {
 export const WithAccountIcon: Story = {
   args: {
     label: "Account",
-    icon: <AccountCircleIcon sx={{ fontSize: "inherit" }} />,
+    icon: <AccountCircleIcon />,
   },
 };
 
@@ -180,7 +180,7 @@ export const WithAccountIcon: Story = {
 export const WithDeleteIcon: Story = {
   args: {
     label: "Delete Item",
-    icon: <DeleteIcon sx={{ fontSize: "inherit", color: "#ef4444" }} />,
+    icon: <DeleteIcon sx={{color: "#ef4444" }} />,
   },
 };
 
@@ -190,7 +190,7 @@ export const WithDeleteIcon: Story = {
 export const DisabledWithIcon: Story = {
   args: {
     label: "Disabled Option",
-    icon: <SettingsIcon sx={{ fontSize: "inherit" }} />,
+    icon: <SettingsIcon />,
     disabled: true,
   },
 };
@@ -201,7 +201,7 @@ export const DisabledWithIcon: Story = {
 export const RTLWithIcon: Story = {
   args: {
     label: "הגדרות", // "Settings" in Hebrew
-    icon: <SettingsIcon sx={{ fontSize: "inherit" }} fontSize="small" />,
+    icon: <SettingsIcon fontSize="small" />,
     textDirection: TextDirection.Rtl,
   },
 };

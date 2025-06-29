@@ -73,7 +73,7 @@ const DropdownListItem: React.FC<DropdownListItemProps> = ({
       role="option"
       dir={textDirection}
     >
-      <span className="scale-[1.143]">{icon}</span>
+      <span className="scale-[.6667]">{icon}</span>
       <span className="flex-1 truncate min-w-0 translate-y-px">{label}</span>
     </button>
   );
