@@ -17,7 +17,7 @@ const tagVariants = cva(
     "inline-flex",
     "items-center",
     "justify-center",
-    "min-w-[40px]",
+    "min-w-pz-2xl",
     "p-pz-4xs",
     "pz-body-s400",
     "rounded-full",

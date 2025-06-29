@@ -71,34 +71,6 @@ export const LargeValue: Story = {
   },
 };
 
-export const OverflowValue: Story = {
-  args: {
-    value: 1500,
-    type: TagType.Default,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Values over 999 are clamped to 999",
-      },
-    },
-  },
-};
-
-export const DecimalValue: Story = {
-  args: {
-    value: 42.7,
-    type: TagType.Default,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Decimal values are rounded to the nearest integer",
-      },
-    },
-  },
-};
-
 export const ZeroValue: Story = {
   args: {
     value: 0,
@@ -108,20 +80,6 @@ export const ZeroValue: Story = {
     docs: {
       description: {
         story: "Zero values are clamped to 1",
-      },
-    },
-  },
-};
-
-export const NegativeValue: Story = {
-  args: {
-    value: -5,
-    type: TagType.Default,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Negative values are clamped to 1",
       },
     },
   },
