@@ -37,6 +37,7 @@ export const CheckboxSeverity = ({
           state={state}
           textDirection={textDirection}
           isDisabled={disabled}
+          count={null}
         />
       </span>
       <Severity
