@@ -89,7 +89,7 @@ interface CheckboxProps {
 export const Checkbox = ({
   state = CheckboxState.Unchecked,
   onChange,
-  count = null,
+  count = 0,
   label,
   icon,
   textDirection = TextDirection.Ltr,
