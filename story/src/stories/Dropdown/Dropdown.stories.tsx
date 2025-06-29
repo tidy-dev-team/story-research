@@ -89,6 +89,7 @@ export const WithMultiSelect: Story = {
         {items.map((item, index) => (
           <DropdownListItemMulti
             key={item.label}
+            count={null}
             label={item.label}
             checkboxState={item.checkboxState}
             onSelect={(newState) => handleSelect(index, newState)}

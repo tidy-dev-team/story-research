@@ -21,7 +21,7 @@ interface DropdownListItemMultiProps
   label: string;
   checkboxState: CheckboxState;
   icon?: React.ReactNode;
-  count?: number;
+  count?: number | null;
   textDirection?: TextDirection;
   onSelect?: (newState: CheckboxState) => void;
 }
@@ -71,7 +71,7 @@ const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
         state={checkboxState}
         icon={icon}
         count={count}
-        onChange={handleCheckboxChange}
+        onChange={handleCheckboxChange as any}
       />
     </button>
   );
