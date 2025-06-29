@@ -14,7 +14,7 @@ const avatarStyles = cva(
       size: {
         [AvatarSize.S]: "h-8 w-8 pt-1 pb-[2px] pz-body-s400",
         [AvatarSize.M]: "h-14 w-14 pt-1 pb-[2px] pz-heading-m400",
-        [AvatarSize.L]: "h-24 w-24 pt-1 pb-[2px] pz-heading-xl500",
+        [AvatarSize.L]: "h-24 w-24 pt-[6px] pb-[2px] pz-heading-xl500",
       },
       filled: {
         true: "bg-pz-system-bg-primary text-pz-system-fg-black",
