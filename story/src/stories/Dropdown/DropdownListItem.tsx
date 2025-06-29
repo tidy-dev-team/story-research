@@ -4,7 +4,7 @@ import { TextDirection } from "../textDirection";
 
 const dropdownListItemStyles = cva([
   "flex items-center w-full box-border overflow-hidden",
-  "px-pz-4xs py-pz-3xs gap-pz-4xs min-h-[32px] max-h-[32px]",
+  "px-pz-4xs py-pz-3xs gap-pz-4xs h-8",
 
   // Reset button styles
   "border-none bg-transparent cursor-pointer",
