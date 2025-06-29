@@ -35,7 +35,7 @@ const dropdownStyles = cva(
 
 export interface DropdownProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof dropdownStyles> {
+  VariantProps<typeof dropdownStyles> {
   children: React.ReactNode;
   isOpen?: boolean;
 }
