@@ -102,7 +102,7 @@ export const WithLeadingIcon: Story = {
 };
 export const RTL: Story = {
   args: {
-    children: "Dashboard",
+    children: "כותרת",
     textDirection: TextDirection.Rtl,
     hasLeadingIcon: true,
   },

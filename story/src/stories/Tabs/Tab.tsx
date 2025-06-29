@@ -62,7 +62,7 @@ export const Tab = ({
     }}
   >
     {leadingIcon && (
-      <span className="flex items-center justify-center scale-[1.3334]">
+      <span className="flex items-center justify-center h-[16px] w-[16px] scale-[0.6667] text-[16px]">
         {leadingIcon}
       </span>
     )}

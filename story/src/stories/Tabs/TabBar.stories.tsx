@@ -3,6 +3,10 @@ import React from "react";
 import { TabBar } from "./TabBar";
 import { Tab } from "./Tab";
 import { TextDirection } from "../textDirection";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MailIcon from "@mui/icons-material/Mail";
+import HomeIcon from "@mui/icons-material/Home";
 
 const meta = {
   title: "Component/Tabs/TabBar",
@@ -54,6 +58,32 @@ export const Interactive: Story = {
             selected={selected === idx}
             onClick={() => setSelected(idx)}
             textDirection={args.textDirection}
+          >
+            {label}
+          </Tab>
+        ))}
+      </TabBar>
+    );
+  },
+};
+
+export const TabBarWithIcons: Story = {
+  args: {
+    textDirection: TextDirection.Ltr,
+  },
+  render: (args) => {
+    const [selected, setSelected] = React.useState(0);
+    const tabs = ["Home", "About", "Services", "Contact"];
+    const icons = [<HomeIcon />, <AccountCircleIcon />, <SettingsIcon />, <MailIcon />];
+    return (
+      <TabBar {...args}>
+        {tabs.map((label, idx) => (
+          <Tab
+            key={label}
+            selected={selected === idx}
+            onClick={() => setSelected(idx)}
+            textDirection={args.textDirection}
+            leadingIcon={icons[idx]}
           >
             {label}
           </Tab>
