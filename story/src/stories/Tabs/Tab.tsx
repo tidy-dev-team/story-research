@@ -14,7 +14,6 @@ const tabStyles = cva([
   "flex",
   "focus-visible:ring-2",
   "focus-visible:ring-pz-system-border-focused-1",
-  "focus-visible:rounded-pz-2xs",
   "focus-visible:text-pz-system-fg-3",
   "focus:outline-none",
   "gap-2",
