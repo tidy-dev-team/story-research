@@ -19,7 +19,7 @@ const InteractiveDropdownListItem = (args: InteractiveStoryArgs) => {
   return (
     <DropdownListItem
       {...componentProps}
-      icon={showIcon ? <SettingsIcon sx={{ fontSize: "small" }} /> : undefined}
+      icon={showIcon ? <SettingsIcon /> : undefined}
     />
   );
 };
@@ -91,20 +91,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/**
- * Basic dropdown list item with icon toggle.
- *
- * Example usage:
- * ```tsx
- * import SettingsIcon from "@mui/icons-material/Settings";
- *
- * <DropdownListItem
- *   label="Sample List Item"
- *   icon={<SettingsIcon sx={{ fontSize: "inherit" }} />}
- *   onSelect={() => console.log("Item clicked")}
- * />
- * ```
- */
 export const Default = {
   render: (args: any) => {
     const showIcon = args.showIcon;
@@ -114,7 +100,7 @@ export const Default = {
       <DropdownListItem
         {...componentProps}
         icon={
-          showIcon ? <SettingsIcon sx={{ fontSize: "small" }} /> : undefined
+          showIcon ? <SettingsIcon /> : undefined
         }
       />
     );
@@ -143,20 +129,6 @@ export const Default = {
   },
 };
 
-/**
- * Dropdown list item with a settings icon.
- *
- * Example usage:
- * ```tsx
- * import SettingsIcon from "@mui/icons-material/Settings";
- *
- * <DropdownListItem
- *   label="Settings"
- *   icon={<SettingsIcon sx={{ fontSize: "inherit" }} />}
- *   onSelect={() => console.log("Settings clicked")}
- * />
- * ```
- */
 export const WithSettingsIcon: Story = {
   args: {
     label: "Settings",
@@ -201,7 +173,7 @@ export const DisabledWithIcon: Story = {
 export const RTLWithIcon: Story = {
   args: {
     label: "הגדרות", // "Settings" in Hebrew
-    icon: <SettingsIcon fontSize="small" />,
+    icon: <SettingsIcon />,
     textDirection: TextDirection.Rtl,
   },
 };
