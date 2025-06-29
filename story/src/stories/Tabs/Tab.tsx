@@ -17,7 +17,7 @@ const tabStyles = cva([
   "focus-visible:rounded-pz-2xs",
   "focus-visible:text-pz-system-fg-3",
   "focus:outline-none",
-  "gap-1",
+  "gap-2",
   "hover:enabled:text-pz-system-fg-1",
   "items-center",
   "justify-center",
@@ -62,7 +62,7 @@ export const Tab = ({
     }}
   >
     {leadingIcon && (
-      <span className="flex items-center justify-center w-4 h-4 text-[16px] [&>*]:w-4 [&>*]:h-4">
+      <span className="flex items-center justify-center scale-[1.3334]">
         {leadingIcon}
       </span>
     )}
