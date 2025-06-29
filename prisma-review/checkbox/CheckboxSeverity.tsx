@@ -24,15 +24,7 @@ export const CheckboxSeverity = ({
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
 
-  const handleToggle = () => {
-    let nextChecked: boolean;
-    if (state === CheckboxState.Indeterminate) {
-      nextChecked = true;
-    } else {
-      nextChecked = state === CheckboxState.Checked ? false : true;
-    }
-    onChange(nextChecked);
-  };
+  const handleToggle = () => onChange(state !== CheckboxState.Checked);
 
   return (
     <div
