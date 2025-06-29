@@ -77,7 +77,7 @@ const renderIcon = (
   condition: boolean | undefined,
   Icon: typeof LanguageIcon
 ) => {
-  return condition ? <Icon sx={{ fontSize: "12px" }} /> : undefined;
+  return condition ? <Icon /> : undefined;
 };
 const renderStory = ({
   hasLeadingIcon,
