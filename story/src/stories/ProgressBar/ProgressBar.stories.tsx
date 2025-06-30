@@ -20,12 +20,11 @@ const meta: Meta<typeof ProgressBar> = {
   args: {
     value: 50,
     max: 100,
-    min: 0,
     textDirection: TextDirection.Ltr,
   },
   argTypes: {
     value: {
-      control: { type: "range", min: 0, max: 100, step: 1 },
+      control: { type: "range", max: 100, step: 1 },
       description:
         "Current progress value (will be clamped to fit min/max range)",
       table: {
@@ -33,19 +32,11 @@ const meta: Meta<typeof ProgressBar> = {
       },
     },
     max: {
-      control: { type: "number", min: 1, step: 1 },
+      control: { type: "number", step: 1 },
       description: "Maximum value",
       table: {
         category: "Content",
         defaultValue: { summary: "100" },
-      },
-    },
-    min: {
-      control: { type: "number", min: 0, max: 99, step: 1 },
-      description: "Minimum value",
-      table: {
-        category: "Content",
-        defaultValue: { summary: "0" },
       },
     },
     textDirection: {
@@ -55,20 +46,6 @@ const meta: Meta<typeof ProgressBar> = {
       table: {
         category: "Layout",
         defaultValue: { summary: "ltr" },
-      },
-    },
-    "aria-label": {
-      control: "text",
-      description: "Accessible label for screen readers",
-      table: {
-        category: "Accessibility",
-      },
-    },
-    "aria-describedby": {
-      control: "text",
-      description: "ID of element that describes the progress bar",
-      table: {
-        category: "Accessibility",
       },
     },
   },

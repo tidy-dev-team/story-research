@@ -5,7 +5,6 @@ import { TextDirection } from "../textDirection";
 export interface ProgressBarProps {
   value: number;
   max?: number;
-  min?: number;
   textDirection?: TextDirection;
   "aria-label"?: string;
   "aria-describedby"?: string;
@@ -49,11 +48,10 @@ const progressFillVariants = cva(
 export const ProgressBar = ({
   value = 50,
   max = 100,
-  min = 0,
   textDirection = TextDirection.Ltr,
 }): React.ReactElement => {
-  const clampedValue = Math.max(min, Math.min(max, value));
-  const range = max - min;
+  const clampedValue = Math.max(0, Math.min(max, value));
+  const range = max - 0;
 
   return (
     <progress
