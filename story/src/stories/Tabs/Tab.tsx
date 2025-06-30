@@ -61,7 +61,7 @@ export const Tab = ({
     }}
   >
     {leadingIcon && (
-      <span className="flex items-center justify-center h-pz-2xs w-pz-2xs scale-[0.6667] text-pz-2xs">
+      <span className="flex items-center justify-center">
         {leadingIcon}
       </span>
     )}
