@@ -32,17 +32,6 @@ const progressFillVariants = cva(
     "rounded-pz-max",
     "bg-pz-system-bg-primary",
   ],
-  {
-    variants: {
-      textDirection: {
-        [TextDirection.Rtl]: "ml-auto",
-        [TextDirection.Ltr]: "",
-      },
-    },
-    defaultVariants: {
-      textDirection: TextDirection.Ltr,
-    },
-  }
 );
 
 export const ProgressBar = ({
