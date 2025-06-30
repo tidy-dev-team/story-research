@@ -19,6 +19,7 @@ const progressBarVariants = cva(
     "h-1.5",
     // Slider progress styles
     "[&::-webkit-progress-bar]:bg-pz-system-bg-4",
+    "[&::-webkit-progress-value]:duration-150",
     "[&::-webkit-progress-value]:bg-pz-system-bg-primary",
   ],
 );
@@ -40,7 +41,6 @@ export const ProgressBar = ({
   textDirection = TextDirection.Ltr,
 }): React.ReactElement => {
   const clampedValue = Math.max(0, Math.min(max, value));
-  const range = max - 0;
 
   return (
     <progress
