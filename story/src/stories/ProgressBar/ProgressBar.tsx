@@ -16,9 +16,11 @@ const progressBarVariants = cva(
     "relative",
     "w-full",
     "overflow-hidden",
-    "bg-pz-system-bg-4",
     "rounded-pz-max",
     "h-1.5",
+    // Slider progress styles
+    "[&::-webkit-progress-bar]:bg-pz-system-bg-4",
+    "[&::-webkit-progress-value]:bg-pz-system-bg-primary",
   ],
 );
 
@@ -30,7 +32,6 @@ const progressFillVariants = cva(
     "ease-out",
     "rounded-pz-max",
     "bg-pz-system-bg-primary",
-    // `w-[${percentage}%]`,
   ],
   {
     variants: {
@@ -53,31 +54,15 @@ export const ProgressBar = ({
 }): React.ReactElement => {
   const clampedValue = Math.max(min, Math.min(max, value));
   const range = max - min;
-  const percentage = range === 0 ? 0 : ((clampedValue - min) / range) * 100;
 
   return (
-    <input type='range'
+    <progress
       className={progressBarVariants()}
       aria-valuenow={clampedValue}
       value={clampedValue}
       dir={textDirection}
-      aria-valuemin={min}
       aria-valuemax={max}
-      min={min}
       max={max}
-    ></input>
-    // <div
-    //   role="progressbar"
-    //   aria-valuenow={clampedValue}
-    //   aria-valuemin={min}
-    //   aria-valuemax={max}
-    //   className={progressBarVariants()}
-    //   dir={textDirection}
-    // >
-    //   <div
-    //     className={progressFillVariants({ textDirection })}
-    //     style={{ width: `${percentage}%` }}
-    //   />
-    // </div>
+    ></progress>
   );
 };
