@@ -11,7 +11,6 @@ const meta = {
   title: "Component/Tabs/Tab",
   component: Tab,
   args: {
-    children: "Dashboard",
     hasLeadingIcon: false,
     textDirection: TextDirection.Ltr,
     disabled: false,
@@ -29,11 +28,6 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    children: {
-      control: "text",
-      description: "The text content of the tab.",
-      table: { category: "Content" },
-    },
     hasLeadingIcon: {
       control: "boolean",
       description: "If true, a leading icon is displayed.",
@@ -93,16 +87,16 @@ const renderStory = ({
   />
 );
 export const Default: Story = {
-  args: { children: "Dashboard" },
+  args: { label: "Dashboard" },
   render: renderStory,
 };
 export const WithLeadingIcon: Story = {
-  args: { children: "Analytics", hasLeadingIcon: true },
+  args: { label: "Analytics", hasLeadingIcon: true },
   render: renderStory,
 };
 export const RTL: Story = {
   args: {
-    children: "כותרת",
+    label: "כותרת",
     textDirection: TextDirection.Rtl,
     hasLeadingIcon: true,
   },

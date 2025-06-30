@@ -30,13 +30,6 @@ const meta = {
         defaultValue: { summary: "TextDirection.Ltr" },
       },
     },
-    children: {
-      control: false,
-      description: "Tab components to render inside the tab bar",
-      table: {
-        category: "Content",
-      },
-    },
   },
 } satisfies Meta<typeof TabBar>;
 
@@ -54,13 +47,12 @@ export const Interactive: Story = {
       <TabBar {...args}>
         {tabs.map((label, idx) => (
           <Tab
+            label={label}
             key={label}
             selected={selected === idx}
             onClick={() => setSelected(idx)}
             textDirection={args.textDirection}
-          >
-            {label}
-          </Tab>
+          />
         ))}
       </TabBar>
     );
@@ -79,14 +71,13 @@ export const TabBarWithIcons: Story = {
       <TabBar {...args}>
         {tabs.map((label, idx) => (
           <Tab
+            label={label}
             key={label}
             selected={selected === idx}
             onClick={() => setSelected(idx)}
             textDirection={args.textDirection}
             leadingIcon={icons[idx]}
-          >
-            {label}
-          </Tab>
+          />
         ))}
       </TabBar>
     );

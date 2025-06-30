@@ -30,6 +30,7 @@ const progressFillVariants = cva(
     "ease-out",
     "rounded-pz-max",
     "bg-pz-system-bg-primary",
+    // `w-[${percentage}%]`,
   ],
   {
     variants: {
@@ -49,24 +50,34 @@ export const ProgressBar = ({
   max = 100,
   min = 0,
   textDirection = TextDirection.Ltr,
-}):React.ReactElement => {
+}): React.ReactElement => {
   const clampedValue = Math.max(min, Math.min(max, value));
   const range = max - min;
   const percentage = range === 0 ? 0 : ((clampedValue - min) / range) * 100;
 
   return (
-    <div
-      role="progressbar"
+    <input type='range'
+      className={progressBarVariants()}
       aria-valuenow={clampedValue}
+      value={clampedValue}
+      dir={textDirection}
       aria-valuemin={min}
       aria-valuemax={max}
-      className={progressBarVariants()}
-      dir={textDirection}
-    >
-      <div
-        className={progressFillVariants({ textDirection })}
-        style={{ width: `${percentage}%` }}
-      />
-    </div>
+      min={min}
+      max={max}
+    ></input>
+    // <div
+    //   role="progressbar"
+    //   aria-valuenow={clampedValue}
+    //   aria-valuemin={min}
+    //   aria-valuemax={max}
+    //   className={progressBarVariants()}
+    //   dir={textDirection}
+    // >
+    //   <div
+    //     className={progressFillVariants({ textDirection })}
+    //     style={{ width: `${percentage}%` }}
+    //   />
+    // </div>
   );
 };
