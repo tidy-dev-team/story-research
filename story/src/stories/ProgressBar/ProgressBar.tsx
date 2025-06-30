@@ -1,55 +1,55 @@
 import React from "react";
 import { cva } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
-
-const progressBarVariants = cva(
-  "relative w-full overflow-hidden bg-pz-system-bg-4 rounded-pz-max h-1.5"
-);
-
-const progressFillVariants = cva(
-  "h-full transition-all duration-300 ease-out rounded-pz-max bg-pz-system-bg-primary",
-  {
-    variants: {
-      rtl: {
-        true: "ml-auto",
-      },
-    },
-  }
-);
+import { TextDirection } from "../textDirection";
 
 export interface ProgressBarProps {
   value: number;
   max?: number;
-  min?: number;
-  rtl?: boolean;
-  className?: string;
+  textDirection?: TextDirection;
   "aria-label"?: string;
   "aria-describedby"?: string;
 }
 
-export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
-  ({ value, max = 100, min = 0, rtl = false, className, ...props }, ref) => {
-    const clampedValue = Math.max(min, Math.min(max, value));
-    const range = max - min;
-    const percentage = range === 0 ? 0 : ((clampedValue - min) / range) * 100;
-
-    return (
-      <div
-        ref={ref}
-        role="progressbar"
-        aria-valuenow={clampedValue}
-        aria-valuemin={min}
-        aria-valuemax={max}
-        className={twMerge(progressBarVariants(), className)}
-        {...props}
-      >
-        <div
-          className={progressFillVariants({ rtl: rtl || undefined })}
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
-    );
-  }
+const progressBarVariants = cva(
+  [
+    "relative",
+    "w-full",
+    "overflow-hidden",
+    "rounded-pz-max",
+    "h-1.5",
+    // Slider progress styles
+    "[&::-webkit-progress-bar]:bg-pz-system-bg-4",
+    "[&::-webkit-progress-value]:duration-150",
+    "[&::-webkit-progress-value]:bg-pz-system-bg-primary",
+  ],
 );
 
-ProgressBar.displayName = "ProgressBar";
+const progressFillVariants = cva(
+  [
+    "h-full",
+    "transition-all",
+    "duration-300",
+    "ease-out",
+    "rounded-pz-max",
+    "bg-pz-system-bg-primary",
+  ],
+);
+
+export const ProgressBar = ({
+  value = 50,
+  max = 100,
+  textDirection = TextDirection.Ltr,
+}): React.ReactElement => {
+  const clampedValue = Math.max(0, Math.min(max, value));
+
+  return (
+    <progress
+      className={progressBarVariants()}
+      aria-valuenow={clampedValue}
+      value={clampedValue}
+      dir={textDirection}
+      aria-valuemax={max}
+      max={max}
+    ></progress>
+  );
+};
