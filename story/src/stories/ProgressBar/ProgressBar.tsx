@@ -6,7 +6,6 @@ export interface ProgressBarProps {
   value: number;
   max?: number;
   min?: number;
-  size?: "small" | "medium" | "large";
   textDirection?: TextDirection;
   "aria-label"?: string;
   "aria-describedby"?: string;
@@ -19,19 +18,8 @@ const progressBarVariants = cva(
     "overflow-hidden",
     "bg-pz-system-bg-4",
     "rounded-pz-max",
+    "h-1.5",
   ],
-  {
-    variants: {
-      size: {
-        small: "h-1.5",
-        medium: "h-2",
-        large: "h-3",
-      },
-    },
-    defaultVariants: {
-      size: "small",
-    },
-  }
 );
 
 const progressFillVariants = cva(
@@ -56,14 +44,12 @@ const progressFillVariants = cva(
   }
 );
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({
-  value,
+export const ProgressBar = ({
+  value = 50,
   max = 100,
   min = 0,
-  size = "small",
   textDirection = TextDirection.Ltr,
-  ...props
-}) => {
+}):React.ReactElement => {
   const clampedValue = Math.max(min, Math.min(max, value));
   const range = max - min;
   const percentage = range === 0 ? 0 : ((clampedValue - min) / range) * 100;
@@ -74,9 +60,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       aria-valuenow={clampedValue}
       aria-valuemin={min}
       aria-valuemax={max}
-      className={progressBarVariants({ size })}
+      className={progressBarVariants()}
       dir={textDirection}
-      {...props}
     >
       <div
         className={progressFillVariants({ textDirection })}

@@ -21,7 +21,6 @@ const meta: Meta<typeof ProgressBar> = {
     value: 50,
     max: 100,
     min: 0,
-    size: "small",
     textDirection: TextDirection.Ltr,
   },
   argTypes: {
@@ -47,15 +46,6 @@ const meta: Meta<typeof ProgressBar> = {
       table: {
         category: "Content",
         defaultValue: { summary: "0" },
-      },
-    },
-    size: {
-      control: "select",
-      options: ["small", "medium", "large"],
-      description: "Size of the progress bar",
-      table: {
-        category: "Appearance",
-        defaultValue: { summary: "small" },
       },
     },
     textDirection: {
