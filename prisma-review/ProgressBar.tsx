@@ -5,8 +5,6 @@ import { TextDirection } from "../textDirection";
 export interface ProgressBarProps {
   value: number;
   max?: number;
-  min?: number;
-  size?: "small" | "medium" | "large";
   textDirection?: TextDirection;
   "aria-label"?: string;
   "aria-describedby"?: string;
@@ -17,21 +15,13 @@ const progressBarVariants = cva(
     "relative",
     "w-full",
     "overflow-hidden",
-    "bg-pz-system-bg-4",
     "rounded-pz-max",
+    "h-1.5",
+    // Slider progress styles
+    "[&::-webkit-progress-bar]:bg-pz-system-bg-4",
+    "[&::-webkit-progress-value]:duration-150",
+    "[&::-webkit-progress-value]:bg-pz-system-bg-primary",
   ],
-  {
-    variants: {
-      size: {
-        small: "h-1.5",
-        medium: "h-2",
-        large: "h-3",
-      },
-    },
-    defaultVariants: {
-      size: "small",
-    },
-  }
 );
 
 const progressFillVariants = cva(
@@ -43,45 +33,23 @@ const progressFillVariants = cva(
     "rounded-pz-max",
     "bg-pz-system-bg-primary",
   ],
-  {
-    variants: {
-      textDirection: {
-        [TextDirection.Rtl]: "ml-auto",
-        [TextDirection.Ltr]: "",
-      },
-    },
-    defaultVariants: {
-      textDirection: TextDirection.Ltr,
-    },
-  }
 );
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({
-  value,
+export const ProgressBar = ({
+  value = 50,
   max = 100,
-  min = 0,
-  size = "small",
   textDirection = TextDirection.Ltr,
-  ...props
-}) => {
-  const clampedValue = Math.max(min, Math.min(max, value));
-  const range = max - min;
-  const percentage = range === 0 ? 0 : ((clampedValue - min) / range) * 100;
+}): React.ReactElement => {
+  const clampedValue = Math.max(0, Math.min(max, value));
 
   return (
-    <div
-      role="progressbar"
+    <progress
+      className={progressBarVariants()}
       aria-valuenow={clampedValue}
-      aria-valuemin={min}
-      aria-valuemax={max}
-      className={progressBarVariants({ size })}
+      value={clampedValue}
       dir={textDirection}
-      {...props}
-    >
-      <div
-        className={progressFillVariants({ textDirection })}
-        style={{ width: `${percentage}%` }}
-      />
-    </div>
+      aria-valuemax={max}
+      max={max}
+    ></progress>
   );
 };
