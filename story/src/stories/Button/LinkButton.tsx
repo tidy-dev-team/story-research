@@ -1,5 +1,4 @@
 import React, { ReactElement, cloneElement } from "react";
-import { SvgIconProps } from "@mui/material/SvgIcon";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { cva } from "class-variance-authority";
@@ -7,8 +6,6 @@ import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
 
 const ICON_SIZE = 20;
-
-type MUIIcon = ReactElement<SvgIconProps>;
 
 const linkButtonStyles = cva([
   "inline-flex",
