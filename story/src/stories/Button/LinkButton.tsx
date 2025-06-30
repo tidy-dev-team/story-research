@@ -1,5 +1,7 @@
 import React, { ReactElement, cloneElement } from "react";
 import { SvgIconProps } from "@mui/material/SvgIcon";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { cva } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
@@ -68,8 +70,12 @@ export const LinkButton = ({
     >
       <span>{label}</span>
       {trailingIcon && (
-        <span className="flex items-center leading-none">
-          {withIconSize(trailingIcon)}
+        <span className="flex items-center leading-none h-pz-xs w-pz-xs text-pz-xs">
+          {textDirection === TextDirection.Rtl ? (
+            <ArrowBackIcon className="scale-[0.8333]" />
+          ) : (
+            <ArrowForwardIcon className="scale-[0.8333]" />
+          )}
         </span>
       )}
     </a>
