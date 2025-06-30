@@ -1,12 +1,10 @@
-import React, { ReactElement, cloneElement } from "react";
+import React, { ReactNode } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { SvgIconProps } from "@mui/material/SvgIcon";
 import { cva } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
 
-type MUIIcon = ReactElement<SvgIconProps>;
 
 const linkButtonStyles = cva([
   "inline-flex",
@@ -38,7 +36,7 @@ interface LinkButtonProps
   label: string;
   href: string;
   disabled?: boolean;
-  trailingIcon?: MUIIcon;
+  trailingIcon?: ReactNode;
   textDirection?: TextDirection;
 }
 
