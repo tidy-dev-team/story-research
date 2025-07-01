@@ -1,0 +1,28 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
+import { List } from "./List"; // adjust if your filename is different
+
+const meta: Meta<typeof List> = {
+  title: "Component/List",
+  component: List,
+  parameters: {
+    layout: "centered",
+  },
+  argTypes: {
+    items: {
+      control: { type: "object" },
+      description: "Array of checkbox labels",
+      defaultValue: ["Option 1", "Option 2", "Option 3"],
+    },
+  },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof List>;
+
+export const Default: Story = {
+  args: {
+    items: ["Option 1", "Option 2", "Option 3"],
+  },
+};
