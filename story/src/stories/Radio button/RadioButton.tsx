@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import { TextDirection } from "../textDirection";
+import { IconFontSize } from "../iconFontSize";
 
 const containerStyles = cva("group flex items-center gap-2", {
   variants: {
@@ -28,28 +29,15 @@ const radioButtonIconStyles = cva(
   {
     variants: {
       selected: {
-        true: "",
-        false: "",
+        true: "text-pz-system-fg-primary group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
+        false:
+          "text-pz-system-border-5 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
       },
       disabled: {
         true: "text-pz-system-fg-disabled",
         false: "",
       },
     },
-    compoundVariants: [
-      {
-        selected: false,
-        disabled: false,
-        class:
-          "text-pz-system-border-5 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
-      },
-      {
-        selected: true,
-        disabled: false,
-        class:
-          "text-pz-system-fg-primary group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
-      },
-    ],
     defaultVariants: {
       selected: false,
       disabled: false,
@@ -80,23 +68,19 @@ const labelStyles = cva(
 );
 
 interface RadioButtonProps {
+  selected: boolean;
   disabled?: boolean;
-  id?: string;
-  label?: string | null;
-  name?: string;
-  onChange?: () => void;
   textDirection?: TextDirection;
-  selected?: boolean;
-  value?: string;
+  label?: string | null;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RadioButton = ({
   selected = false,
-  textDirection = TextDirection.Ltr,
   disabled = false,
+  textDirection = TextDirection.Ltr,
   label,
   onChange,
-  ...props
 }: RadioButtonProps): ReactElement => {
   const iconClasses = radioButtonIconStyles({
     selected,
@@ -116,9 +100,8 @@ const RadioButton = ({
         disabled={disabled}
         className="sr-only peer"
         onChange={onChange}
-        {...props}
       />
-      <IconComponent className={iconClasses} fontSize="small" />
+      <IconComponent className={iconClasses} fontSize={IconFontSize.Small} />
       {label && <span className={textLabelClasses}>{label}</span>}
     </label>
   );
