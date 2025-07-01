@@ -29,7 +29,7 @@ export const ProgressBar = ({
   max = 100,
   textDirection = TextDirection.Ltr,
 }: ProgressBarProps): React.ReactElement => {
-  
+
   const clampedValue = Math.max(0, Math.min(max, value));
 
   return (
