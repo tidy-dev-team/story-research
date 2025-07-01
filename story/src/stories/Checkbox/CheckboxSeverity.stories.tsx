@@ -26,7 +26,7 @@ const InteractiveCheckboxSeverity = (args: CheckboxSeverityStoryArgs) => {
 };
 
 const meta = {
-  title: "Component/Checkbox/CheckboxSeverity",
+  title: "Components/Checkbox/CheckboxSeverity",
   component: InteractiveCheckboxSeverity,
   args: {
     state: CheckboxState.Unchecked,

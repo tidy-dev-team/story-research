@@ -44,7 +44,7 @@ const InteractiveCheckbox = (args: CheckboxStoryArgs) => {
 };
 
 const meta: Meta<CheckboxStoryArgs> = {
-  title: "Component/Checkbox/Checkbox",
+  title: "Components/Checkbox/Checkbox",
   component: Checkbox,
   parameters: {
     layout: "centered",
