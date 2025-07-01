@@ -17,10 +17,12 @@ const progressBarVariants = cva(
     "overflow-hidden",
     "rounded-pz-max",
     "h-1.5",
+    "bg-pz-system-bg-4",
     // Slider progress styles
     "[&::-webkit-progress-bar]:bg-pz-system-bg-4",
     "[&::-webkit-progress-value]:duration-150",
     "[&::-webkit-progress-value]:bg-pz-system-bg-primary",
+    "[&::-moz-progress-bar]:bg-pz-system-bg-primary",
   ],
 );
 
