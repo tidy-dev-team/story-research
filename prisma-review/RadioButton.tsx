@@ -76,7 +76,7 @@ interface RadioButtonProps {
 }
 
 const RadioButton = ({
-  selected = false,
+  selected,
   disabled = false,
   textDirection = TextDirection.Ltr,
   label,
