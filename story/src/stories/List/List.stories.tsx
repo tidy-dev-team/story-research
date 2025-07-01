@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
-import { List } from "./List"; // adjust if your filename is different
+import { List } from "./List";
+import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof List> = {
     title: "Component/List",
@@ -14,6 +15,14 @@ const meta: Meta<typeof List> = {
             description: "Array of checkbox labels",
             defaultValue: ["Option 1", "Option 2", "Option 3"],
         },
+        flow: {
+            control: { type: "radio" },
+            options: ["vertical", "horizontal"],
+        },
+        textDirection: {
+            control: { type: "radio" },
+            options: [TextDirection.Ltr, TextDirection.Rtl],
+        },
     },
 };
 
@@ -25,6 +34,7 @@ export const Vertical: Story = {
     args: {
         items: ["Option 1", "Option 2", "Option 3"],
         flow: "vertical",
+        textDirection: TextDirection.Ltr,
     },
 };
 
@@ -32,5 +42,6 @@ export const Horizontal: Story = {
     args: {
         items: ["Option 1", "Option 2", "Option 3"],
         flow: "horizontal",
+        textDirection: TextDirection.Ltr,
     },
 };

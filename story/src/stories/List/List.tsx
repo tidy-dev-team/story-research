@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { cva } from "class-variance-authority";
 import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
+import { TextDirection } from "../textDirection";
 
 export interface ListProps {
     items: string[];
     flow?: "vertical" | "horizontal";
+    textDirection?: TextDirection;
 }
 
 const ListStyles = cva("flex", {
@@ -19,7 +21,11 @@ const ListStyles = cva("flex", {
     },
 });
 
-export const List = ({ items, flow = "vertical" }: ListProps) => {
+export const List = ({
+    items,
+    flow = "vertical",
+    textDirection = TextDirection.Ltr,
+}: ListProps) => {
     const [states, setStates] = useState<CheckboxState[]>(
         () => items.map(() => CheckboxState.Unchecked)
     );
@@ -37,7 +43,7 @@ export const List = ({ items, flow = "vertical" }: ListProps) => {
     };
 
     return (
-        <ul className={ListStyles({ flow })}>
+        <ul className={ListStyles({ flow })} dir={textDirection}>
             {items.map((label, idx) => (
                 <li key={idx}>
                     <Checkbox
@@ -45,6 +51,7 @@ export const List = ({ items, flow = "vertical" }: ListProps) => {
                         state={states[idx]}
                         onChange={() => handleToggle(idx)}
                         count={null}
+                        textDirection={textDirection}
                     />
                 </li>
             ))}
