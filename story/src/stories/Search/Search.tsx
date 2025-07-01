@@ -106,8 +106,6 @@ export const Search = ({
 }: SearchProps): ReactElement => {
   const hasValue = Boolean(value);
 
-  const containerClass = searchStyles();
-
   const inputClass = inputStyles({ filled: hasValue });
 
   const searchIconClass = iconStyles({
@@ -116,7 +114,7 @@ export const Search = ({
   });
 
   return (
-    <div className={containerClass} dir={textDirection}>
+    <div className={searchStyles()} dir={textDirection}>
       <SearchIcon className={searchIconClass} fontSize={IconFontSize.Small} />
 
       <input
