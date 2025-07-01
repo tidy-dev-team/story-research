@@ -50,6 +50,6 @@ export const ProgressBar = ({
       dir={textDirection}
       aria-valuemax={max}
       max={max}
-    ></progress>
+    />
   );
 };
