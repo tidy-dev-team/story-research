@@ -6,8 +6,6 @@ export interface ProgressBarProps {
   value: number;
   max?: number;
   textDirection?: TextDirection;
-  "aria-label"?: string;
-  "aria-describedby"?: string;
 }
 
 const progressBarVariants = cva(
@@ -31,7 +29,6 @@ export const ProgressBar = (props: ProgressBarProps): React.ReactElement => {
     value,
     max = 100,
     textDirection = TextDirection.Ltr,
-    ...rest
   } = props;
   const clampedValue = Math.max(0, Math.min(max, value));
 
@@ -44,7 +41,6 @@ export const ProgressBar = (props: ProgressBarProps): React.ReactElement => {
       max={max}
       aria-valuenow={clampedValue}
       aria-valuemax={max}
-      {...rest}
     />
   );
 };
