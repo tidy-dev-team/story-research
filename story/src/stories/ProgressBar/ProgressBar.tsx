@@ -37,10 +37,11 @@ export const ProgressBar = (props: ProgressBarProps): React.ReactElement => {
   return (
     <progress
       className={progressBarVariants()}
-      aria-valuenow={clampedValue}
       value={clampedValue}
       dir={textDirection}
+      aria-valuenow={clampedValue}
       aria-valuemax={max}
+      role="progressbar"
       max={max}
     />
   );
