@@ -4,7 +4,7 @@ import RadioButton from "./RadioButton";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof RadioButton> = {
-  title: "Component/RadioButton",
+  title: "Components/RadioButton",
   component: RadioButton,
   parameters: {
     layout: "centered",
