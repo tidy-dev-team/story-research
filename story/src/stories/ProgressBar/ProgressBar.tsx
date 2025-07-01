@@ -26,17 +26,6 @@ const progressBarVariants = cva(
   ],
 );
 
-const progressFillVariants = cva(
-  [
-    "h-full",
-    "transition-all",
-    "duration-300",
-    "ease-out",
-    "rounded-pz-max",
-    "bg-pz-system-bg-primary",
-  ],
-);
-
 export const ProgressBar = (props: ProgressBarProps): React.ReactElement => {
   const {
     value,
