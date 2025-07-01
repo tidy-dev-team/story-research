@@ -11,7 +11,7 @@ const ListStyles = cva("flex", {
     variants: {
         flow: {
             vertical: "flex-col gap-pz-3xs",
-            horizontal: "flex-row gap-pz-3xs",
+            horizontal: "gap-pz-3xs",
         },
     },
     defaultVariants: {
