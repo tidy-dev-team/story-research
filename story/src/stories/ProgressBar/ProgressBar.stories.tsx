@@ -4,7 +4,7 @@ import { ProgressBar } from "./ProgressBar";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof ProgressBar> = {
-  title: "Component/ProgressBar",
+  title: "Components/ProgressBar",
   component: ProgressBar,
   parameters: {
     layout: "centered",
