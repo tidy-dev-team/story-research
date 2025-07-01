@@ -35,11 +35,12 @@ const progressFillVariants = cva(
   ],
 );
 
-export const ProgressBar = ({
-  value = 50,
-  max = 100,
-  textDirection = TextDirection.Ltr,
-}): React.ReactElement => {
+export const ProgressBar = (props: ProgressBarProps): React.ReactElement => {
+  const {
+    value,
+    max = 100,
+    textDirection = TextDirection.Ltr,
+  } = props;
   const clampedValue = Math.max(0, Math.min(max, value));
 
   return (
