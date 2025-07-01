@@ -6,7 +6,7 @@ import { TextDirection } from "../textDirection";
 type SearchStoryArgs = ComponentProps<typeof Search>;
 
 const meta: Meta<SearchStoryArgs> = {
-  title: "Component/Search",
+  title: "Components/Search",
   component: Search,
   parameters: {
     layout: "centered",
