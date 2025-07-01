@@ -26,7 +26,7 @@ const meta: Meta<typeof ProgressBar> = {
     value: {
       control: { type: "range", max: 100, step: 1 },
       description:
-        "Current progress value (will be clamped to fit min/max range)",
+        "Current progress value",
       table: {
         category: "Content",
       },
