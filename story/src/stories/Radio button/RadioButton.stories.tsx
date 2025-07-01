@@ -84,14 +84,12 @@ export const Group: Story = {
       >
         {options.map((option) => (
           <RadioButton
-            {...args}
             key={option}
             label={`Option ${option}`}
             selected={selected === option}
             onChange={() => setSelected(option)}
-            value={option}
-            name="radio-group"
-            textDirection={args.textDirection} // Pass textDirection to each RadioButton
+            disabled={args.disabled}
+            textDirection={args.textDirection}
           />
         ))}
       </div>

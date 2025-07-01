@@ -25,13 +25,14 @@ const radioButtonIconStyles = cva(
     "peer-focus-visible:ring-pz-system-border-focused-1",
     "peer-focus-visible:ring-offset-0",
     "peer-focus-visible:rounded-full",
+    "group-hover:text-pz-system-fg-hover",
+    "group-active:text-pz-system-fg-pressed",
   ],
   {
     variants: {
       selected: {
-        true: "text-pz-system-fg-primary group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
-        false:
-          "text-pz-system-border-5 group-hover:text-pz-system-fg-hover group-active:text-pz-system-fg-pressed",
+        true: "text-pz-system-fg-primary",
+        false: "text-pz-system-border-5",
       },
       disabled: {
         true: "text-pz-system-fg-disabled",
