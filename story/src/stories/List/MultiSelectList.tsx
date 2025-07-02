@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
 import { TextDirection } from "../textDirection";
 
 export interface MultiSelectListProps {
+    title: string;
+    titleCount?: number | null;
     items: string[];
     textDirection?: TextDirection;
 }
@@ -20,11 +22,13 @@ const checkboxClass = cva("", {
 });
 
 export const MultiSelectList = ({
+    title,
+    titleCount = null,
     items,
     textDirection = TextDirection.Ltr,
 }: MultiSelectListProps) => {
     const [states, setStates] = useState<CheckboxState[]>(
-        () => items.map(() => CheckboxState.Unchecked)
+        () => [CheckboxState.Unchecked, ...items.map(() => CheckboxState.Unchecked)]
     );
 
     const isAllChecked = states.slice(1).every(s => s === CheckboxState.Checked);
@@ -43,9 +47,7 @@ export const MultiSelectList = ({
                     ? CheckboxState.Unchecked
                     : CheckboxState.Checked;
 
-            setStates((prev) =>
-                prev.map((_, i) => (i === 0 ? newState : newState))
-            );
+            setStates(Array(states.length).fill(newState));
         } else {
             setStates((prev) => {
                 const newStates = [...prev];
@@ -58,8 +60,8 @@ export const MultiSelectList = ({
         }
     };
 
-    // Keep master checkbox state in sync with others
-    React.useEffect(() => {
+    // Sync master checkbox
+    useEffect(() => {
         setStates((prev) => {
             const newStates = [...prev];
             newStates[0] = masterState;
@@ -69,14 +71,24 @@ export const MultiSelectList = ({
 
     return (
         <ul className={ListStyles()} dir={textDirection}>
+            {/* Master checkbox */}
+            <li className={checkboxClass({ isMaster: true })}>
+                <Checkbox
+                    label={title}
+                    state={states[0]}
+                    onChange={() => handleToggle(0)}
+                    count={titleCount}
+                    textDirection={textDirection}
+                />
+            </li>
+
+            {/* Sub checkboxes */}
             {items.map((label, idx) => (
-                <li key={idx}
-                    className={checkboxClass({ isMaster: idx === 0 })}
-                >
+                <li key={idx} className={checkboxClass({ isMaster: false })}>
                     <Checkbox
                         label={label}
-                        state={states[idx]}
-                        onChange={() => handleToggle(idx)}
+                        state={states[idx + 1]}
+                        onChange={() => handleToggle(idx + 1)}
                         count={null}
                         textDirection={textDirection}
                     />
