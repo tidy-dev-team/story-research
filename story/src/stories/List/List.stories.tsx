@@ -4,7 +4,7 @@ import { List } from "./List";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof List> = {
-    title: "Component/List",
+    title: "Component/List/Checkbox List",
     component: List,
     parameters: {
         layout: "centered",
