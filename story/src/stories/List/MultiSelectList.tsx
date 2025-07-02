@@ -60,7 +60,6 @@ export const MultiSelectList = ({
         }
     };
 
-    // Sync master checkbox
     useEffect(() => {
         setStates((prev) => {
             const newStates = [...prev];
@@ -71,7 +70,6 @@ export const MultiSelectList = ({
 
     return (
         <ul className={ListStyles()} dir={textDirection}>
-            {/* Master checkbox */}
             <li className={checkboxClass({ isMaster: true })}>
                 <Checkbox
                     label={title}
@@ -82,7 +80,6 @@ export const MultiSelectList = ({
                 />
             </li>
 
-            {/* Sub checkboxes */}
             {items.map((label, idx) => (
                 <li key={idx} className={checkboxClass({ isMaster: false })}>
                     <Checkbox

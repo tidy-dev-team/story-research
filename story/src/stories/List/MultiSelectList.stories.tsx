@@ -46,7 +46,7 @@ export const Default: Story = {
 
 export const WithCount: Story = {
     args: {
-        title: "All Items",
+        title: "Select All",
         titleCount: 3,
         items: ["Option 1", "Option 2", "Option 3"],
         textDirection: TextDirection.Ltr,
