@@ -21,7 +21,7 @@ const ListStyles = cva("flex", {
     },
 });
 
-export const List = ({
+export const CheckboxList = ({
     items,
     flow = "vertical",
     textDirection = TextDirection.Ltr,

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
-import { List } from "./List";
+import { CheckboxList } from "./CheckboxList";
 import { TextDirection } from "../textDirection";
 
-const meta: Meta<typeof List> = {
+const meta: Meta<typeof CheckboxList> = {
     title: "Component/List/Checkbox List",
-    component: List,
+    component: CheckboxList,
     parameters: {
         layout: "centered",
     },
