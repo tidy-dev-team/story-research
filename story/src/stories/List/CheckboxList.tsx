@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
 import { TextDirection } from "../textDirection";
 
-export interface ListProps {
+export interface CheckboxListProps {
     items: string[];
     flow?: "vertical" | "horizontal";
     textDirection?: TextDirection;
@@ -25,7 +25,7 @@ export const CheckboxList = ({
     items,
     flow = "vertical",
     textDirection = TextDirection.Ltr,
-}: ListProps) => {
+}: CheckboxListProps) => {
     const [states, setStates] = useState<CheckboxState[]>(
         () => items.map(() => CheckboxState.Unchecked)
     );
