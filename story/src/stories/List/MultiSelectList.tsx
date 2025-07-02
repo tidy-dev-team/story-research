@@ -5,8 +5,8 @@ import { TextDirection } from "../textDirection";
 
 export interface MultiSelectListProps {
     title: string;
-    titleCount?: number | null;
     items: string[];
+    titleCount?: boolean;
     textDirection?: TextDirection;
 }
 
@@ -23,8 +23,8 @@ const checkboxClass = cva("", {
 
 export const MultiSelectList = ({
     title,
-    titleCount = null,
     items,
+    titleCount = false,
     textDirection = TextDirection.Ltr,
 }: MultiSelectListProps) => {
     const [states, setStates] = useState<CheckboxState[]>(
@@ -34,11 +34,14 @@ export const MultiSelectList = ({
     const isAllChecked = states.slice(1).every(s => s === CheckboxState.Checked);
     const isAllUnchecked = states.slice(1).every(s => s === CheckboxState.Unchecked);
 
-    const masterState: CheckboxState = isAllChecked
-        ? CheckboxState.Checked
-        : isAllUnchecked
-            ? CheckboxState.Unchecked
-            : CheckboxState.Indeterminate;
+    const masterState: CheckboxState =
+        items.length === 1
+            ? states[1]
+            : isAllChecked
+                ? CheckboxState.Checked
+                : isAllUnchecked
+                    ? CheckboxState.Unchecked
+                    : CheckboxState.Indeterminate;
 
     const handleToggle = (index: number) => {
         if (index === 0) {
@@ -75,7 +78,7 @@ export const MultiSelectList = ({
                     label={title}
                     state={states[0]}
                     onChange={() => handleToggle(0)}
-                    count={titleCount}
+                    count={titleCount ? items.length : null}
                     textDirection={textDirection}
                 />
             </li>
