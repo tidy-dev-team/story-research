@@ -8,7 +8,7 @@ const preview: Preview = {
       default: "dark",
       values: [
         { name: "light", value: "#dedede" },
-        { name: "dark", value: "#101010" },
+        { name: "dark", value: "#151618" },
       ],
     },
     controls: {
