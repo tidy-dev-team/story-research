@@ -45,3 +45,11 @@ export const Horizontal: Story = {
         textDirection: TextDirection.Ltr,
     },
 };
+
+export const RTL: Story = {
+    args: {
+        items: ["אפשרות 1", "אפשרות 2", "אפשרות 3"],
+        flow: "horizontal",
+        textDirection: TextDirection.Rtl,
+    },
+};
