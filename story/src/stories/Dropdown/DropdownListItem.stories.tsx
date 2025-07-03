@@ -8,29 +8,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { DropdownListItem } from "./DropdownListItem";
 import { TextDirection } from "../textDirection";
 
-type InteractiveStoryArgs = ComponentProps<typeof DropdownListItem> & {
-  showIcon: boolean;
-};
-
-// Interactive wrapper for Default story to handle icon toggle
-const InteractiveDropdownListItem = (args: InteractiveStoryArgs) => {
-  const { showIcon, ...componentProps } = args;
-
-  return (
-    <DropdownListItem
-      {...componentProps}
-      icon={showIcon ? <SettingsIcon /> : undefined}
-    />
-  );
-};
-
 const meta = {
   title: "Component/Dropdown/DropdownListItem",
   component: DropdownListItem,
   args: {
     label: "Sample List Item",
     textDirection: TextDirection.Ltr,
-    disabled: false,
+    isDisabled: false,
     onSelect: action("onSelect"),
   },
   parameters: {
@@ -52,16 +36,6 @@ const meta = {
         category: "Content",
       },
     },
-    icon: {
-      control: false,
-      description:
-        "Optional icon to display. Pass a React element like <SettingsIcon />",
-      table: {
-        category: "Content",
-        type: { summary: "React.ReactNode" },
-        defaultValue: { summary: "undefined" },
-      },
-    },
     textDirection: {
       control: "select",
       options: Object.values(TextDirection),
@@ -71,7 +45,7 @@ const meta = {
         defaultValue: { summary: TextDirection.Ltr },
       },
     },
-    disabled: {
+    isDisabled: {
       control: "boolean",
       description: "Whether the item is disabled",
       table: {
@@ -85,95 +59,46 @@ const meta = {
         category: "Events",
       },
     },
-  },
-} satisfies Meta<typeof DropdownListItem>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default = {
-  render: (args: any) => {
-    const showIcon = args.showIcon;
-    const { showIcon: _, ...componentProps } = args;
-
-    return (
-      <DropdownListItem
-        {...componentProps}
-        icon={
-          showIcon ? <SettingsIcon /> : undefined
-        }
-      />
-    );
-  },
-  args: {
-    label: "Sample List Item",
-    showIcon: false,
-    textDirection: TextDirection.Ltr,
-    disabled: false,
-    onSelect: action("onSelect"),
-  },
-  argTypes: {
-    showIcon: {
+    icon: {
       control: "boolean",
-      description: "Show/hide the icon",
+      description: "Toggle the icon visibility",
       table: {
         category: "Content",
         defaultValue: { summary: "false" },
       },
     },
-    icon: {
-      table: {
-        disable: true,
-      },
-    },
+  },
+} satisfies Meta<typeof DropdownListItem>;
+
+export default meta;
+
+export const Default: StoryObj<typeof meta> = {
+  args: {
+    label: "Sample List Item",
+    textDirection: TextDirection.Ltr,
+    isDisabled: false,
+    onSelect: action("onSelect"),
   },
 };
 
-export const WithSettingsIcon: Story = {
+export const WithSettingsIcon: StoryObj<typeof meta> = {
   args: {
     label: "Settings",
+    textDirection: TextDirection.Ltr,
     icon: <SettingsIcon />,
   },
 };
 
-/**
- * Dropdown list item with a user account icon
- */
-export const WithAccountIcon: Story = {
-  args: {
-    label: "Account",
-    icon: <AccountCircleIcon />,
-  },
-};
-
-/**
- * Dropdown list item with a delete icon and destructive styling
- */
-export const WithDeleteIcon: Story = {
-  args: {
-    label: "Delete Item",
-    icon: <DeleteIcon sx={{color: "#ef4444" }} />,
-  },
-};
-
-/**
- * Disabled dropdown list item with icon
- */
-export const DisabledWithIcon: Story = {
+export const Disabled: StoryObj<typeof meta> = {
   args: {
     label: "Disabled Option",
-    icon: <SettingsIcon />,
-    disabled: true,
+    isDisabled: true,
   },
 };
 
-/**
- * Right-to-left layout with icon
- */
-export const RTLWithIcon: Story = {
+export const RTL: StoryObj<typeof meta> = {
   args: {
-    label: "הגדרות", // "Settings" in Hebrew
-    icon: <SettingsIcon />,
+    label: "Right-to-left",
     textDirection: TextDirection.Rtl,
   },
 };
