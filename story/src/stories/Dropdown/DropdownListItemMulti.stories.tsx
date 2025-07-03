@@ -1,35 +1,31 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
+import { action } from "@storybook/addon-actions";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
 import { CheckboxState } from "../Checkbox/Checkbox";
 import { TextDirection } from "../textDirection";
-import { useState } from "react";
-import LanguageIcon from "@mui/icons-material/Language";
 
 const meta = {
   title: "Component/Dropdown/DropdownListItemMulti",
   component: DropdownListItemMulti,
   parameters: {
     layout: "centered",
+    backgrounds: {
+      default: "dark",
+      values: [
+        { name: "dark", value: "#22272B" },
+        { name: "light", value: "#ffffff" },
+      ],
+    },
   },
   tags: ["autodocs"],
-  render: (args: any) => {
-    const [checkboxState, setCheckboxState] = useState(
-      args.checkboxState ?? CheckboxState.Unchecked
-    );
-    return (
-      <DropdownListItemMulti
-        {...args}
-        checkboxState={checkboxState}
-        onSelect={setCheckboxState}
-      />
-    );
-  },
   argTypes: {
     label: {
       control: "text",
-      description: "Label text for the dropdown item",
+      description: "The text to display in the list item",
       table: {
-        type: { summary: "string" },
+        category: "Content",
       },
     },
     checkboxState: {
@@ -37,125 +33,45 @@ const meta = {
       options: Object.values(CheckboxState),
       description: "The state of the checkbox",
       table: {
-        type: { summary: "CheckboxState" },
+        category: "State",
         defaultValue: { summary: CheckboxState.Unchecked },
       },
     },
     textDirection: {
       control: "select",
-      options: [TextDirection.Ltr, TextDirection.Rtl],
-      description: "Text direction for layout",
+      options: Object.values(TextDirection),
+      description: "Text direction for RTL/LTR layout",
       table: {
-        type: { summary: "TextDirection" },
-        defaultValue: { summary: "TextDirection.Ltr" },
+        category: "Layout",
+        defaultValue: { summary: TextDirection.Ltr },
+      },
+    },
+    isDisabled: {
+      control: "boolean",
+      description: "Whether the item is disabled",
+      table: {
+        category: "State",
+        defaultValue: { summary: "false" },
       },
     },
     count: {
-      control: { type: "number", min: 0 },
-      description: "Count value to display in brackets after label",
+      control: "number",
+      description: "Optional count to display",
       table: {
-        type: { summary: "number" },
-        defaultValue: { summary: "undefined" },
+        category: "Content",
       },
-    },
-    icon: {
-      table: { disable: true },
-      control: false,
-      description: "Icon to display after the checkbox label",
     },
   },
 } satisfies Meta<typeof DropdownListItemMulti>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default: StoryObj<typeof meta> = {
   args: {
-    label: "Label",
-  },
-};
-
-export const Checked: Story = {
-  args: {
-    label: "Label",
-    checkboxState: CheckboxState.Checked,
-  },
-};
-
-export const Indeterminate: Story = {
-  args: {
-    label: "Label",
-    checkboxState: CheckboxState.Indeterminate,
-  },
-};
-
-export const RTL: Story = {
-  args: {
-    label: "Label",
-    textDirection: TextDirection.Rtl,
-  },
-};
-
-export const RTLChecked: Story = {
-  args: {
-    label: "Label",
-    textDirection: TextDirection.Rtl,
-    checkboxState: CheckboxState.Checked,
-  },
-};
-
-export const WithIcon: Story = {
-  args: {
-    label: "Enable multi-language support",
-    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
-  },
-};
-
-export const WithCount: Story = {
-  args: {
-    label: "Items",
-    count: 5,
-  },
-};
-
-export const WithCountAndIcon: Story = {
-  args: {
-    label: "Language packs",
-    count: 12,
-    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
-    checkboxState: CheckboxState.Checked,
-  },
-};
-
-export const RTLWithIcon: Story = {
-  args: {
-    label: "Enable multi-language support",
-    textDirection: TextDirection.Rtl,
-    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
-    checkboxState: CheckboxState.Checked,
-  },
-};
-
-export const RTLWithCountAndIcon: Story = {
-  args: {
-    label: "Language packs",
-    textDirection: TextDirection.Rtl,
-    count: 8,
-    icon: <LanguageIcon sx={{ fontSize: 16 }} />,
-    checkboxState: CheckboxState.Indeterminate,
-  },
-};
-
-export const AlwaysShowZeroCount: Story = {
-  args: {
-    label: "Empty items",
-    count: 0,
-  },
-};
-
-export const Playground: Story = {
-  args: {
-    label: "Interactive Label",
+    label: "Multi-select Item",
     checkboxState: CheckboxState.Unchecked,
+    textDirection: TextDirection.Ltr,
+    isDisabled: false,
+    onSelect: action("onSelect"),
   },
 };
