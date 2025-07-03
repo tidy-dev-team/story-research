@@ -1,31 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps } from "react";
 import React from "react";
 import { action } from "@storybook/addon-actions";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DropdownListItem } from "./DropdownListItem";
 import { TextDirection } from "../textDirection";
 
-type DropdownListItemStoryArgs = ComponentProps<typeof DropdownListItem> & {
-  showIcon?: boolean;
-};
-
-const meta: Meta<DropdownListItemStoryArgs> = {
+const meta = {
   title: "Component/Dropdown/DropdownListItem",
   component: DropdownListItem,
-  render: ({ showIcon, ...args }) => (
-    <DropdownListItem
-      {...args}
-      icon={showIcon ? <SettingsIcon /> : undefined}
-    />
-  ),
-  args: {
-    label: "Sample List Item",
-    textDirection: TextDirection.Ltr,
-    showIcon: false,
-    isDisabled: false,
-    onSelect: action("onSelect"),
-  },
   parameters: {
     layout: "centered",
     backgrounds: {
@@ -62,54 +44,16 @@ const meta: Meta<DropdownListItemStoryArgs> = {
         defaultValue: { summary: "false" },
       },
     },
-    onSelect: {
-      action: "clicked",
-      table: {
-        category: "Events",
-      },
-    },
-    showIcon: {
-      control: "boolean",
-      description: "Toggle the settings icon visibility",
-      table: {
-        category: "Content",
-        defaultValue: { summary: "false" },
-      },
-    },
-    icon: {
-      table: { disable: true },
-      control: false,
-    },
   },
-};
+} satisfies Meta<typeof DropdownListItem>;
 
 export default meta;
 
-type Story = StoryObj<DropdownListItemStoryArgs>;
-
-export const Default: Story = {
+export const Default: StoryObj<typeof meta> = {
   args: {
     label: "Sample List Item",
-  },
-};
-
-export const WithIcon: Story = {
-  args: {
-    label: "Settings",
-    showIcon: true,
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    label: "Disabled Option",
-    isDisabled: true,
-  },
-};
-
-export const RTL: Story = {
-  args: {
-    label: "Right-to-left",
-    textDirection: TextDirection.Rtl,
+    textDirection: TextDirection.Ltr,
+    isDisabled: false,
+    onSelect: action("onSelect"),
   },
 };
