@@ -4,15 +4,18 @@ import { ListCard, ListProps } from "./ListCard";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof ListCard> = {
-  title: "Component/List/ListCard",
-  component: ListCard,
-  tags: ["autodocs"],
-  argTypes: {
-    textDirection: {
-      control: { type: "radio" },
-      options: [TextDirection.Ltr, TextDirection.Rtl],
+    title: "Component/List/ListCard",
+    component: ListCard,
+    parameters: {
+        layout: "centered",
     },
-  },
+    tags: ["autodocs"],
+    argTypes: {
+        textDirection: {
+            control: { type: "radio" },
+            options: [TextDirection.Ltr, TextDirection.Rtl],
+        },
+    },
 };
 
 export default meta;
@@ -20,23 +23,23 @@ export default meta;
 type Story = StoryObj<typeof ListCard>;
 
 export const Default: Story = {
-  args: {
-    items: [
-      { label: "First item" },
-      { label: "Second item" },
-      { label: "Third item" },
-    ],
-    textDirection: TextDirection.Ltr,
-  },
+    args: {
+        items: [
+            { label: "First item" },
+            { label: "Second item" },
+            { label: "Third item" },
+        ],
+        textDirection: TextDirection.Ltr,
+    },
 };
 
-export const Rtl: Story = {
-  args: {
-    items: [
-      { label: "פריט ראשון" },
-      { label: "פריט שני" },
-      { label: "פריט שלישי" },
-    ],
-    textDirection: TextDirection.Rtl,
-  },
+export const RTL: Story = {
+    args: {
+        items: [
+            { label: "פריט ראשון" },
+            { label: "פריט שני" },
+            { label: "פריט שלישי" },
+        ],
+        textDirection: TextDirection.Rtl,
+    },
 };

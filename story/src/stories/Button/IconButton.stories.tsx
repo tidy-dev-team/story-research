@@ -74,6 +74,19 @@ export const Default: Story = {
   },
 };
 
+export const Ghost: Story = {
+  args: {
+    type: ButtonType.Ghost,
+    size: ButtonSize.Medium,
+    disabled: false,
+    muiIcon: "Language",
+  },
+  render: (args) => {
+    const { muiIcon, ...rest } = args;
+    return <IconButton {...rest} icon={iconMap[muiIcon]} />;
+  },
+};
+
 // Icon sizing verification story
 export const IconSizingTest: Story = {
   render: () => (

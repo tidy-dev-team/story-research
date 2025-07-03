@@ -15,11 +15,11 @@ export interface ListProps {
 }
 
 const ListStyles = cva([
-    "flex", "flex-col", "gap-pz-2xs", "pz-label-l", "w-[268px]",
+    "flex", "flex-col", "gap-pz-2xs", "pz-label-m", "w-[268px]",
 ]);
 
 const ListItemStyles = cva([
-    "flex", "relative", "justify-between", "items-center", "overflow-hidden", "gap-2", "text-pz-gray-100", "px-pz-3xs", "py-pz-5xs", "min-h-pz-l", "rounded-pz-xs", "border", "border-transparent", "border-2", "outline-none", "cursor-pointer", "hover:bg-pz-gray-950", "hover:after:absolute", "hover:after:bg-pz-system-bg-overlay-hover", "hover:after:inset-0", "active:after:bg-pz-system-bg-overlay-pressed", "focus-visible:border-pz-system-border-focused-1"
+    "flex", "relative", "justify-between", "items-center", "overflow-hidden", "gap-2", "text-pz-gray-100", "px-pz-3xs", "py-pz-4xs", "rounded-pz-xs", "border", "border-transparent", "border-2", "outline-none", "cursor-pointer", "hover:bg-pz-gray-950", "hover:before:absolute", "hover:before:bg-pz-system-bg-overlay-hover", "hover:before:inset-0", "hover:before:pointer-events-none", "active:before:bg-pz-system-bg-overlay-pressed", "focus-visible:border-pz-system-border-focused-1"
 ])
 
 export const ListCard = ({
@@ -38,8 +38,6 @@ export const ListCard = ({
                     <span className="flex gap-pz-4xs">
                         <IconButton size={ButtonSize.Medium} type={ButtonType.Ghost} icon={<EditOutlinedIcon />} />
                         <IconButton size={ButtonSize.Medium} type={ButtonType.Ghost} icon={<DeleteOutlinedIcon />} />
-                        {/* <EditOutlinedIcon color="inherit" fontSize="inherit" /> */}
-                        {/* <DeleteOutlinedIcon color="inherit" fontSize="inherit" /> */}
                     </span>
                 </li>
             ))}
