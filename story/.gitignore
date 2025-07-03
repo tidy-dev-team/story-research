@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 *storybook.log
+
+# Component refactoring guide
+COMPONENT_REFACTORING_GUIDE.md
