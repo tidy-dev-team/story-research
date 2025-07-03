@@ -1,4 +1,4 @@
-import React, { useId, type ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { cva } from "class-variance-authority";
 
 const dropdownStyles = cva([
@@ -19,24 +19,15 @@ interface DropdownProps {
   isOpen?: boolean;
 }
 
-export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
-  ({ children, isOpen = true }, ref): ReactElement | null => {
-    const dropdownId = useId();
+export const Dropdown = ({
+  children,
+  isOpen = true,
+}: DropdownProps): ReactElement | null => {
+  if (!isOpen) return null;
 
-    if (!isOpen) return null;
-
-    return (
-      <div
-        ref={ref}
-        id={dropdownId}
-        role="listbox"
-        aria-expanded={isOpen}
-        className={dropdownStyles()}
-      >
-        {children}
-      </div>
-    );
-  }
-);
-
-Dropdown.displayName = "Dropdown";
+  return (
+    <div role="listbox" aria-expanded={isOpen} className={dropdownStyles()}>
+      {children}
+    </div>
+  );
+};
