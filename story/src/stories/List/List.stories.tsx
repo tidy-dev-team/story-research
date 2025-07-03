@@ -66,3 +66,20 @@ export const LongList: Story = {
         ],
     },
 };
+
+export const WithNoIcons: Story = {
+    args: {
+        textDirection: TextDirection.Ltr,
+        items: [
+            { label: "Language" },
+            { label: "Cloud Files" },
+            { label: "Chats" },
+            { label: "Calendar" },
+            { label: "Copy/ Paste" },
+            { label: "Error Management" },
+            { label: "Favorites" },
+            { label: "Networks" },
+            { label: "Interfaces" },
+        ],
+    },
+};
