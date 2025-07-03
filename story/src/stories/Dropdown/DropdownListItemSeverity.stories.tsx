@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
+import { action } from "@storybook/addon-actions";
 import { DropdownListItemSeverity } from "./DropdownListItemSeverity";
+import { SeverityLevel } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 
 const meta = {
@@ -7,16 +10,22 @@ const meta = {
   component: DropdownListItemSeverity,
   parameters: {
     layout: "centered",
+    backgrounds: {
+      default: "dark",
+      values: [
+        { name: "dark", value: "#22272B" },
+        { name: "light", value: "#ffffff" },
+      ],
+    },
   },
   tags: ["autodocs"],
   argTypes: {
     level: {
       control: "select",
-      options: ["high", "medium", "low"],
-      description: "Severity level",
+      options: Object.values(SeverityLevel),
+      description: "The severity level",
       table: {
-        type: { summary: "'high' | 'medium' | 'low'" },
-        defaultValue: { summary: "medium" },
+        category: "Content",
       },
     },
     textDirection: {
@@ -24,37 +33,28 @@ const meta = {
       options: Object.values(TextDirection),
       description: "Text direction for RTL/LTR layout",
       table: {
-        type: { summary: "TextDirection" },
+        category: "Layout",
         defaultValue: { summary: TextDirection.Ltr },
+      },
+    },
+    isDisabled: {
+      control: "boolean",
+      description: "Whether the item is disabled",
+      table: {
+        category: "State",
+        defaultValue: { summary: "false" },
       },
     },
   },
 } satisfies Meta<typeof DropdownListItemSeverity>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default: StoryObj<typeof meta> = {
   args: {
-    level: "high",
-  },
-};
-
-export const RTL: Story = {
-  args: {
-    level: "high",
-    textDirection: TextDirection.Rtl,
-  },
-};
-
-export const Medium: Story = {
-  args: {
-    level: "medium",
-  },
-};
-
-export const Low: Story = {
-  args: {
-    level: "low",
+    level: SeverityLevel.High,
+    textDirection: TextDirection.Ltr,
+    isDisabled: false,
+    onSelect: action("onSelect"),
   },
 };
