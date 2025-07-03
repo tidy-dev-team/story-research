@@ -31,7 +31,7 @@ export const List = ({
                 <li
                     key={idx}
                     onClick={() => handleToggle(idx)}
-                    className="flex items-center gap-2 cursor-pointer select-none text-pz-system-bg-primary"
+                    className="flex items-center gap-2 cursor-pointer select-none text-pz-gray-100"
                 >
                     {selected[idx] ? (
                         <CheckCircleIcon color="inherit" />
