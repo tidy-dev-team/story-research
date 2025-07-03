@@ -3,17 +3,26 @@ import type { ComponentProps } from "react";
 import React from "react";
 import { action } from "@storybook/addon-actions";
 import SettingsIcon from "@mui/icons-material/Settings";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { DropdownListItem } from "./DropdownListItem";
 import { TextDirection } from "../textDirection";
 
-const meta = {
+type DropdownListItemStoryArgs = ComponentProps<typeof DropdownListItem> & {
+  showIcon?: boolean;
+};
+
+const meta: Meta<DropdownListItemStoryArgs> = {
   title: "Component/Dropdown/DropdownListItem",
   component: DropdownListItem,
+  render: ({ showIcon, ...args }) => (
+    <DropdownListItem
+      {...args}
+      icon={showIcon ? <SettingsIcon /> : undefined}
+    />
+  ),
   args: {
     label: "Sample List Item",
     textDirection: TextDirection.Ltr,
+    showIcon: false,
     isDisabled: false,
     onSelect: action("onSelect"),
   },
@@ -59,44 +68,46 @@ const meta = {
         category: "Events",
       },
     },
-    icon: {
+    showIcon: {
       control: "boolean",
-      description: "Toggle the icon visibility",
+      description: "Toggle the settings icon visibility",
       table: {
         category: "Content",
         defaultValue: { summary: "false" },
       },
     },
+    icon: {
+      table: { disable: true },
+      control: false,
+    },
   },
-} satisfies Meta<typeof DropdownListItem>;
+};
 
 export default meta;
 
-export const Default: StoryObj<typeof meta> = {
+type Story = StoryObj<DropdownListItemStoryArgs>;
+
+export const Default: Story = {
   args: {
     label: "Sample List Item",
-    textDirection: TextDirection.Ltr,
-    isDisabled: false,
-    onSelect: action("onSelect"),
   },
 };
 
-export const WithSettingsIcon: StoryObj<typeof meta> = {
+export const WithIcon: Story = {
   args: {
     label: "Settings",
-    textDirection: TextDirection.Ltr,
-    icon: <SettingsIcon />,
+    showIcon: true,
   },
 };
 
-export const Disabled: StoryObj<typeof meta> = {
+export const Disabled: Story = {
   args: {
     label: "Disabled Option",
     isDisabled: true,
   },
 };
 
-export const RTL: StoryObj<typeof meta> = {
+export const RTL: Story = {
   args: {
     label: "Right-to-left",
     textDirection: TextDirection.Rtl,
