@@ -1,3 +1,4 @@
 story/package-lock.json
 .DS_Store
 COMPONENT_REQUIREMENTS.md
+story/COMPONENT_REFACTORING_GUIDE.md
