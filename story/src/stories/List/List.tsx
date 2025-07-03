@@ -13,7 +13,7 @@ export interface ListProps {
     textDirection?: TextDirection;
 }
 
-const ListStyles = cva(["flex", "flex-col", "gap-pz-3xs"]);
+const ListStyles = cva(["flex", "flex-col", "gap-pz-2xs", "pz-label-l", "w-[268px]"]);
 
 export const List = ({
     items,
@@ -24,10 +24,10 @@ export const List = ({
             {items.map(({ label, icon: Icon }, idx) => (
                 <li
                     key={idx}
-                    className="flex items-center gap-2 text-pz-gray-100"
+                    className="flex items-center gap-2 text-pz-gray-100 justify-between"
                 >
-                    <Icon color="inherit" />
                     <p>{label}</p>
+                    <Icon color="inherit" />
                 </li>
             ))}
         </ul>
