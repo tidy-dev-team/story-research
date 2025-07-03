@@ -14,12 +14,12 @@ export interface ListProps {
 }
 
 const ListStyles = cva([
-    "flex",
-    "flex-col",
-    "gap-pz-2xs",
-    "pz-label-l",
-    "w-[268px]",
+    "flex", "flex-col", "gap-pz-2xs", "pz-label-l", "w-[268px]",
 ]);
+
+const ListItemStyles = cva([
+    "flex", "relative", "justify-between", "items-center", "overflow-hidden", "gap-2", "text-pz-gray-100", "px-pz-3xs", "py-pz-5xs", "min-h-pz-l", "rounded-pz-2xs", "cursor-pointer", "hover:bg-pz-gray-950", "hover:after:absolute", "hover:after:bg-pz-system-bg-overlay-hover", "hover:after:inset-0"
+])
 
 export const List = ({
     items,
@@ -30,7 +30,7 @@ export const List = ({
             {items.map(({ label, icon: Icon }, idx) => (
                 <li
                     key={idx}
-                    className="flex items-center gap-2 text-pz-gray-100 justify-between min-h-pz-s"
+                    className={ListItemStyles()}
                 >
                     <p>{label}</p>
                     {Icon && <Icon color="inherit" />}
