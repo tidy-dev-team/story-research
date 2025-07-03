@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { IconButton, ButtonSize, ButtonType } from "../Button/IconButton";
 
 export interface ListItem {
     label: string;
@@ -35,8 +36,10 @@ export const ListCard = ({
                 >
                     <p>{label}</p>
                     <span className="flex gap-pz-4xs">
-                        <EditOutlinedIcon color="inherit" fontSize="inherit" />
-                        <DeleteOutlinedIcon color="inherit" fontSize="inherit" />
+                        <IconButton size={ButtonSize.Medium} type={ButtonType.Ghost} icon={<EditOutlinedIcon />} />
+                        <IconButton size={ButtonSize.Medium} type={ButtonType.Ghost} icon={<DeleteOutlinedIcon />} />
+                        {/* <EditOutlinedIcon color="inherit" fontSize="inherit" /> */}
+                        {/* <DeleteOutlinedIcon color="inherit" fontSize="inherit" /> */}
                     </span>
                 </li>
             ))}
