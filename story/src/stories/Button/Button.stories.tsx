@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import { Button, ButtonSize, ButtonType } from "./Button";
 import { TextDirection } from "../textDirection";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -29,7 +30,7 @@ const meta: Meta<ButtonStoryArgs> = {
       control: "select",
       options: Object.values(TextDirection),
     },
-    disabled: {
+    isDisabled: {
       control: "boolean",
     },
     htmlType: {
@@ -60,10 +61,11 @@ export const Default: Story = {
     type: ButtonType.Primary,
     size: ButtonSize.Medium,
     textDirection: TextDirection.Ltr,
-    disabled: false,
+    isDisabled: false,
     htmlType: "button",
     showLeadingIcon: false,
     showTrailingIcon: false,
+    onClick: action("button-clicked"),
   },
   render: (args) => {
     const { showLeadingIcon, showTrailingIcon, ...rest } = args;
@@ -72,6 +74,7 @@ export const Default: Story = {
         {...rest}
         leadingIcon={showLeadingIcon ? <LanguageIcon /> : undefined}
         trailingIcon={showTrailingIcon ? <SettingsIcon /> : undefined}
+        onClick={action("button-clicked")}
       />
     );
   },
