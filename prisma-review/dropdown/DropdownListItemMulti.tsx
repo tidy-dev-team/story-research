@@ -1,125 +1,104 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import Checkbox, { CheckboxState } from "../Checkbox/Checkbox";
+import React, { type ReactElement } from "react";
+import { cva } from "class-variance-authority";
+import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
+import { TextDirection } from "../textDirection";
 
 const dropdownListItemMultiStyles = cva(
   [
-    // Layout
     "flex items-center w-full box-border overflow-hidden",
     "p-pz-4xs gap-pz-4xs min-h-8",
-
-    // Reset button styles
     "border-none bg-transparent cursor-pointer",
-
-    // Typography
     "text-pz-system-fg-1 pz-label-m",
-
-    // Border radius
     "rounded-pz-2xs",
-
-    // Transitions and interactions
     "transition-all duration-200",
     "hover:enabled:bg-pz-system-bg-overlay-hover",
     "active:enabled:bg-pz-system-bg-overlay-pressed",
-
-    // Focus styles
     "focus:outline-none focus-visible:ring-2",
     "focus-visible:ring-pz-system-border-focused-1",
     "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
   ],
   {
     variants: {
-      rtl: {
-        true: "flex-row-reverse text-right",
-        false: "flex-row text-left",
+      disabled: {
+        true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
+        false: "",
       },
     },
     defaultVariants: {
-      rtl: false,
+      disabled: false,
     },
   }
 );
 
-interface DropdownListItemMultiProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect">,
-    VariantProps<typeof dropdownListItemMultiStyles> {
+interface DropdownListItemMultiProps {
   label: string;
-  checked?: boolean;
-  indeterminate?: boolean;
+  checkboxState: CheckboxState;
   icon?: React.ReactNode;
-  count?: number;
-  alwaysShowCount?: boolean;
-  onSelect?: (isChecked: boolean) => void;
+  count?: number | null;
+  textDirection?: TextDirection;
+  isDisabled?: boolean;
+  onSelect?: (newState: CheckboxState) => void;
 }
 
-const DropdownListItemMulti: React.FC<DropdownListItemMultiProps> = ({
+export const DropdownListItemMulti = ({
   label,
-  checked = false,
-  indeterminate = false,
+  checkboxState = CheckboxState.Unchecked,
   icon,
   count,
-  alwaysShowCount = false,
-  className,
-  rtl = false,
-  onClick,
-  onKeyDown,
+  textDirection = TextDirection.Ltr,
+  isDisabled = false,
   onSelect,
-  ...props
-}) => {
-  // Determine the checkbox state
-  const checkboxState = indeterminate
-    ? CheckboxState.Indeterminate
-    : checked
-      ? CheckboxState.Checked
-      : CheckboxState.Unchecked;
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onClick?.(event);
-    if (!event.defaultPrevented) {
-      onSelect?.(!checked);
+}: DropdownListItemMultiProps): ReactElement => {
+  const handleClick = () => {
+    if (!isDisabled) {
+      const nextState = checkboxState === CheckboxState.Checked
+        ? CheckboxState.Unchecked
+        : CheckboxState.Checked;
+      onSelect?.(nextState);
     }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    onKeyDown?.(event);
-    if (
-      (event.key === "Enter" || event.key === " ") &&
-      !event.defaultPrevented
-    ) {
+    if ((event.key === "Enter" || event.key === " ") && !isDisabled) {
       event.preventDefault();
-      onSelect?.(!checked);
+      const nextState = checkboxState === CheckboxState.Checked
+        ? CheckboxState.Unchecked
+        : CheckboxState.Checked;
+      onSelect?.(nextState);
     }
   };
 
-  // Checkbox change handler
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSelect?.(event.target.checked);
+  const handleCheckboxChange = (checked: boolean) => {
+    if (!isDisabled) {
+      const nextState = checked ? CheckboxState.Checked : CheckboxState.Unchecked;
+      onSelect?.(nextState);
+    }
   };
 
   return (
     <button
-      {...props}
-      className={dropdownListItemMultiStyles({ rtl, className })}
+      className={dropdownListItemMultiStyles({ disabled: isDisabled })}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      disabled={isDisabled}
       type="button"
       role="menuitemcheckbox"
-      aria-checked={indeterminate ? "mixed" : checked}
+      aria-checked={
+        checkboxState === CheckboxState.Indeterminate
+          ? "mixed"
+          : checkboxState === CheckboxState.Checked
+      }
+      dir={textDirection}
     >
-      <span onClick={(e) => e.stopPropagation()}>
-        <Checkbox
-          label={label}
-          rtl={rtl || false}
-          state={checkboxState}
-          icon={icon}
-          count={count}
-          alwaysShowCount={alwaysShowCount}
-          onChange={handleCheckboxChange}
-        />
-      </span>
+      <Checkbox
+        label={label}
+        textDirection={textDirection}
+        state={checkboxState}
+        icon={icon}
+        count={count}
+        onChange={handleCheckboxChange}
+        isDisabled={isDisabled}
+      />
     </button>
   );
 };
-
-export { DropdownListItemMulti };
-export type { DropdownListItemMultiProps };

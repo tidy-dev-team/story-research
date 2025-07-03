@@ -1,11 +1,6 @@
-import React, { useId } from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import React, { useId, type ReactElement } from "react";
+import { cva } from "class-variance-authority";
+import { TextDirection } from "../textDirection";
 
 const dropdownStyles = cva(
   [
@@ -22,26 +17,26 @@ const dropdownStyles = cva(
   ],
   {
     variants: {
-      rtl: {
-        true: "text-right",
-        false: "text-left",
+      textDirection: {
+        [TextDirection.Rtl]: "text-right",
+        [TextDirection.Ltr]: "text-left",
       },
     },
     defaultVariants: {
-      rtl: false,
+      textDirection: TextDirection.Ltr,
     },
   }
 );
 
-export interface DropdownProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof dropdownStyles> {
+interface DropdownProps {
   children: React.ReactNode;
+  textDirection?: TextDirection;
   isOpen?: boolean;
+  className?: string;
 }
 
 export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
-  ({ children, className, rtl = false, isOpen = true, ...props }, ref) => {
+  ({ children, textDirection = TextDirection.Ltr, isOpen = true, className }, ref): ReactElement | null => {
     const dropdownId = useId();
 
     if (!isOpen) return null;
@@ -51,9 +46,8 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         ref={ref}
         role="listbox"
         id={dropdownId}
-        className={cn(dropdownStyles({ rtl }), className)}
-        dir={rtl ? "rtl" : "ltr"}
-        {...props}
+        className={dropdownStyles({ textDirection, className })}
+        dir={textDirection}
       >
         {children}
       </div>
@@ -62,5 +56,3 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
 );
 
 Dropdown.displayName = "Dropdown";
-
-export default Dropdown;

@@ -1,7 +1,9 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import React, { type ReactElement } from "react";
+import { cva } from "class-variance-authority";
 import { CheckboxState } from "../Checkbox/Checkbox";
 import { CheckboxSeverity } from "../Checkbox/CheckboxSeverity";
+import { SeverityLevel, SeverityType } from "../Severity/Severity";
+import { TextDirection } from "../textDirection";
 
 const dropdownListItemMultiSeverityStyles = cva(
   [
@@ -19,73 +21,76 @@ const dropdownListItemMultiSeverityStyles = cva(
   ],
   {
     variants: {
-      rtl: {
-        true: "flex-row-reverse text-right",
-        false: "flex-row text-left",
+      disabled: {
+        true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
+        false: "",
       },
     },
     defaultVariants: {
-      rtl: false,
+      disabled: false,
     },
   }
 );
 
-interface DropdownListItemMultiSeverityProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSelect">,
-    VariantProps<typeof dropdownListItemMultiSeverityStyles> {
-  severityLabel: string;
-  severityLevel: "high" | "medium" | "low";
-  severityType?: "badge" | "bar";
-  checked?: boolean;
-  indeterminate?: boolean;
+interface DropdownListItemMultiSeverityProps {
+  severityLevel: SeverityLevel;
+  severityType?: SeverityType;
+  isChecked?: boolean;
+  isIndeterminate?: boolean;
+  textDirection?: TextDirection;
+  count?: number;
+  isDisabled?: boolean;
   onSelect?: (isChecked: boolean) => void;
 }
 
-const DropdownListItemMultiSeverity: React.FC<
-  DropdownListItemMultiSeverityProps
-> = ({
-  severityLabel,
+export const DropdownListItemMultiSeverity = ({
   severityLevel,
-  severityType = "badge",
-  checked = false,
-  indeterminate = false,
-  className,
-  rtl = false,
-  onClick,
-  onKeyDown,
+  isChecked = false,
+  isIndeterminate = false,
+  textDirection = TextDirection.Ltr,
+  count,
+  isDisabled = false,
   onSelect,
-  ...props
-}) => {
-  const checkboxState = indeterminate
+}: DropdownListItemMultiSeverityProps): ReactElement => {
+  const checkboxState = isIndeterminate
     ? CheckboxState.Indeterminate
-    : checked
+    : isChecked
       ? CheckboxState.Checked
       : CheckboxState.Unchecked;
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSelect?.(event.target.checked);
+  const handleCheckboxChange = (checked: boolean) => {
+    if (!isDisabled) {
+      onSelect?.(checked);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if ((event.key === "Enter" || event.key === " ") && !isDisabled) {
+      event.preventDefault();
+      const newChecked = !isChecked;
+      onSelect?.(newChecked);
+    }
   };
 
   return (
     <button
-      {...props}
-      className={dropdownListItemMultiSeverityStyles({ rtl, className })}
+      className={dropdownListItemMultiSeverityStyles({ disabled: isDisabled })}
+      onClick={() => handleCheckboxChange(!isChecked)}
+      onKeyDown={handleKeyDown}
+      disabled={isDisabled}
       type="button"
       role="menuitemcheckbox"
-      aria-checked={indeterminate ? "mixed" : checked}
+      aria-checked={isIndeterminate ? "mixed" : isChecked}
+      dir={textDirection}
     >
-      <span onClick={(e) => e.stopPropagation()}>
-        <CheckboxSeverity
-          state={checkboxState}
-          severityLevel={severityLevel}
-          severityType={severityType}
-          rtl={rtl || false}
-          onChange={handleCheckboxChange}
-        />
-      </span>
+      <CheckboxSeverity
+        state={checkboxState}
+        severityLevel={severityLevel}
+        textDirection={textDirection}
+        count={count}
+        onChange={handleCheckboxChange}
+        disabled={isDisabled}
+      />
     </button>
   );
 };
-
-export { DropdownListItemMultiSeverity };
-export type { DropdownListItemMultiSeverityProps };
