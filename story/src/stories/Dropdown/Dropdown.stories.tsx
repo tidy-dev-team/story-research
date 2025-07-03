@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Dropdown } from "./Dropdown";
 import { DropdownListItem } from "./DropdownListItem";
-import { TextDirection } from "../textDirection";
 import { action } from "@storybook/addon-actions";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -22,15 +21,6 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    textDirection: {
-      control: "select",
-      options: Object.values(TextDirection),
-      description: "Text direction for RTL/LTR layout",
-      table: {
-        category: "Layout",
-        defaultValue: { summary: TextDirection.Ltr },
-      },
-    },
     isOpen: {
       control: "boolean",
       description: "Whether the dropdown is open",
@@ -46,7 +36,6 @@ export default meta;
 
 export const Default: StoryObj<typeof meta> = {
   args: {
-    textDirection: TextDirection.Ltr,
     isOpen: true,
     children: (
       <>
