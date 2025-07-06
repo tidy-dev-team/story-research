@@ -1,32 +1,8 @@
 import React, { type ReactElement } from "react";
-import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
+import { createDropdownListItemStyles } from "./dropdownListItemStyles";
 
-const dropdownListItemStyles = cva(
-  [
-    "flex items-center w-full box-border overflow-hidden",
-    "px-pz-4xs py-pz-3xs gap-pz-4xs h-8",
-    "border-none bg-transparent cursor-pointer",
-    "text-pz-system-fg-1 pz-label-m",
-    "rounded-pz-2xs",
-    "transition-all duration-200",
-    "hover:enabled:bg-pz-system-bg-overlay-hover",
-    "active:enabled:bg-pz-system-bg-overlay-pressed",
-    "focus:outline-none focus-visible:ring-2",
-    "focus-visible:ring-pz-system-border-focused-1",
-  ],
-  {
-    variants: {
-      disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      disabled: false,
-    },
-  }
-);
+const dropdownListItemStyles = createDropdownListItemStyles("simple", "simple");
 
 interface DropdownListItemProps {
   label: string;
