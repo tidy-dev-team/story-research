@@ -89,10 +89,10 @@ const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
 export const IconButton = ({
   icon,
   size = ButtonSize.Medium,
-  type = ButtonType.Primary,
-  isDisabled = false,
   htmlType = "button",
+  isDisabled = false,
   textDirection = TextDirection.Ltr,
+  type = ButtonType.Primary,
   onClick,
 }: IconButtonProps): ReactElement => {
   const handleClick = () => {
