@@ -1,8 +1,8 @@
-import React, { ReactElement, cloneElement } from "react";
+import React, { type ReactElement, cloneElement } from "react";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import { cva, type VariantProps } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
+import { IconFontSize } from "../iconFontSize";
 
 export enum ButtonSize {
   Small = "S",
@@ -16,10 +16,10 @@ export enum ButtonType {
   Ghost = "ghost",
 }
 
-export const ICON_SIZES = {
-  [ButtonSize.Small]: 16,
-  [ButtonSize.Medium]: 20,
-  [ButtonSize.Large]: 24,
+export const ICON_FONT_SIZES = {
+  [ButtonSize.Small]: IconFontSize.Small,
+  [ButtonSize.Medium]: IconFontSize.Medium,
+  [ButtonSize.Large]: IconFontSize.Large,
 } as const;
 
 const buttonStyles = cva(
@@ -68,52 +68,53 @@ const buttonStyles = cva(
 
 type MUIIcon = ReactElement<SvgIconProps>;
 
-interface ButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
-    VariantProps<typeof buttonStyles> {
+interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
   leadingIcon?: MUIIcon;
   trailingIcon?: MUIIcon;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  size?: ButtonSize;
+  isDisabled?: boolean;
   textDirection?: TextDirection;
+  onClick?: () => void;
 }
 
 const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
-  const px = ICON_SIZES[size];
-  const fontSizeProp: SvgIconProps["fontSize"] =
-    size === ButtonSize.Small
-      ? "small"
-      : size === ButtonSize.Medium
-        ? "medium"
-        : "large";
+  const fontSizeProp = ICON_FONT_SIZES[size];
 
   return cloneElement(icon, {
     fontSize: fontSizeProp,
-    sx: { ...(icon.props.sx ?? {}), fontSize: px },
   });
 };
 
 export const Button = ({
-  type = ButtonType.Primary,
-  size = ButtonSize.Medium,
-  htmlType = "button",
   label,
   leadingIcon,
   trailingIcon,
-  className,
-  disabled,
+  htmlType = "button",
+  type = ButtonType.Primary,
+  size = ButtonSize.Medium,
+  isDisabled = false,
   textDirection = TextDirection.Ltr,
-  ...rest
-}: ButtonProps) => (
-  <button
-    className={twMerge(buttonStyles({ type, size }), className)}
-    type={htmlType}
-    disabled={disabled}
-    dir={textDirection}
-    {...rest}
-  >
-    {leadingIcon && withIconSize(leadingIcon, size ?? ButtonSize.Medium)}
-    <span className="leading-none translate-y-px">{label}</span>
-    {trailingIcon && withIconSize(trailingIcon, size ?? ButtonSize.Medium)}
-  </button>
-);
+  onClick,
+}: ButtonProps): ReactElement => {
+  const handleClick = () => {
+    if (!isDisabled) {
+      onClick?.();
+    }
+  };
+
+  return (
+    <button
+      className={buttonStyles({ type, size })}
+      type={htmlType}
+      disabled={isDisabled}
+      dir={textDirection}
+      onClick={handleClick}
+    >
+      {leadingIcon && withIconSize(leadingIcon, size ?? ButtonSize.Medium)}
+      <span className="leading-none translate-y-px">{label}</span>
+      {trailingIcon && withIconSize(trailingIcon, size ?? ButtonSize.Medium)}
+    </button>
+  );
+};

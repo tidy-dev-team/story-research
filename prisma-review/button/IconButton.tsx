@@ -1,8 +1,8 @@
-import React, { ReactElement, cloneElement } from "react";
+import React, { type ReactElement, cloneElement } from "react";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import { cva, type VariantProps } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
+import { IconFontSize } from "../iconFontSize";
 
 export enum ButtonSize {
   XSmall = "XS",
@@ -17,17 +17,18 @@ export enum ButtonType {
   Ghost = "ghost",
 }
 
-export const ICON_SIZES = {
-  [ButtonSize.XSmall]: 12,
-  [ButtonSize.Small]: 16,
-  [ButtonSize.Medium]: 20,
-  [ButtonSize.Large]: 24,
+export const ICON_FONT_SIZES = {
+  [ButtonSize.XSmall]: IconFontSize.Small,
+  [ButtonSize.Small]: IconFontSize.Small,
+  [ButtonSize.Medium]: IconFontSize.Medium,
+  [ButtonSize.Large]: IconFontSize.Large,
 } as const;
 
 const buttonStyles = cva(
   [
     "inline-flex items-center justify-center",
-    "rounded-pz-2xs cursor-pointer",
+    "rounded-pz-2xs",
+    "cursor-pointer",
     "disabled:cursor-not-allowed disabled:pointer-events-none",
     "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-pz-system-border-focused-1",
   ],
@@ -56,62 +57,59 @@ const buttonStyles = cva(
         ],
       },
       size: {
-        [ButtonSize.XSmall]: ["w-5 h-5 p-0.5"],
-        [ButtonSize.Small]: ["w-6 h-6 p-1"],
-        [ButtonSize.Medium]: ["w-8 h-8 p-1.5"],
-        [ButtonSize.Large]: ["w-10 h-10 p-2"],
+        [ButtonSize.XSmall]: "w-5 h-5 p-0.5",
+        [ButtonSize.Small]: "w-6 h-6 p-1",
+        [ButtonSize.Medium]: "w-8 h-8 p-1.5",
+        [ButtonSize.Large]: "w-10 h-10 p-2",
       },
     },
-    defaultVariants: { type: ButtonType.Primary, size: ButtonSize.Medium },
+    defaultVariants: {
+      type: ButtonType.Primary,
+      size: ButtonSize.Medium,
+    },
   }
 );
 
 type MUIIcon = ReactElement<SvgIconProps>;
 
-interface IconButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
-    VariantProps<typeof buttonStyles> {
+interface IconButtonProps extends VariantProps<typeof buttonStyles> {
   icon: MUIIcon;
+  size?: ButtonSize;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  isDisabled?: boolean;
   textDirection?: TextDirection;
+  onClick?: () => void;
 }
 
 const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
-  const px = ICON_SIZES[size];
-  const fontSizeProp: SvgIconProps["fontSize"] =
-    size === ButtonSize.XSmall
-      ? "inherit"
-      : size === ButtonSize.Small
-        ? "small"
-        : size === ButtonSize.Medium
-          ? "medium"
-          : "large";
-
-  return cloneElement(icon, {
-    fontSize: fontSizeProp,
-    sx: { ...(icon.props.sx ?? {}), fontSize: px },
-  });
+  const fontSizeProp = ICON_FONT_SIZES[size];
+  return cloneElement(icon, { fontSize: fontSizeProp });
 };
 
-export const IconButton: React.FC<IconButtonProps> = ({
-  type,
+export const IconButton = ({
+  icon,
   size = ButtonSize.Medium,
   htmlType = "button",
-  icon,
-  className,
-  disabled,
+  isDisabled = false,
   textDirection = TextDirection.Ltr,
-  ...rest
-}) => {
+  type = ButtonType.Primary,
+  onClick,
+}: IconButtonProps): ReactElement => {
+  const handleClick = () => {
+    if (!isDisabled) {
+      onClick?.();
+    }
+  };
+
   return (
     <button
-      className={twMerge(buttonStyles({ type, size }), className)}
+      className={buttonStyles({ type, size })}
       type={htmlType}
-      disabled={disabled}
+      disabled={isDisabled}
       dir={textDirection}
-      {...rest}
+      onClick={handleClick}
     >
-      {withIconSize(icon, size ?? ButtonSize.Medium)}
+      {withIconSize(icon, size)}
     </button>
   );
 };
