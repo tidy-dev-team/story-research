@@ -14,7 +14,7 @@ export interface ListProps {
 }
 
 const ListStyles = cva([
-    "flex", "flex-col", "gap-pz-2xs", "pz-label-l", "w-[268px]",
+    "flex", "flex-col", "gap-pz-3xs", "pz-label-l", "w-[268px]",
 ]);
 
 const ListItemStyles = cva([

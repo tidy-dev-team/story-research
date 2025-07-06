@@ -15,11 +15,11 @@ export interface ListProps {
 }
 
 const ListStyles = cva([
-    "flex", "flex-col", "gap-pz-2xs", "pz-label-m", "w-[268px]",
+    "flex", "flex-col", "gap-pz-3xs", "pz-label-m", "w-[268px]",
 ]);
 
 const ListItemStyles = cva([
-    "flex", "relative", "justify-between", "items-center", "overflow-hidden", "gap-2", "text-pz-gray-100", "px-pz-3xs", "py-pz-4xs", "rounded-pz-xs", "border", "border-transparent", "border-2", "outline-none", "cursor-pointer", "hover:bg-pz-gray-950", "hover:before:absolute", "hover:before:bg-pz-system-bg-overlay-hover", "hover:before:inset-0", "hover:before:pointer-events-none", "active:before:bg-pz-system-bg-overlay-pressed", "focus-visible:border-pz-system-border-focused-1"
+    "flex", "relative", "justify-between", "items-center", "overflow-hidden", "gap-2", "bg-pz-gray-950", "text-pz-gray-100", "px-pz-3xs", "py-pz-4xs", "rounded-pz-xs", "border", "border-transparent", "border-2", "outline-none", "cursor-pointer", "hover:bg-pz-gray-950", "hover:before:absolute", "hover:before:bg-pz-system-bg-overlay-hover", "hover:before:inset-0", "hover:before:pointer-events-none", "active:before:bg-pz-system-bg-overlay-pressed", "focus-visible:border-pz-system-border-focused-1"
 ])
 
 export const ListCard = ({
