@@ -37,6 +37,13 @@ const meta: Meta<IconButtonStoryArgs> = {
       table: { disable: true },
       control: false,
     },
+    onClick: {
+      action: "clicked",
+      description: "Optional click handler.",
+      table: {
+        category: "Events",
+      },
+    },
     type: {
       control: { type: "radio" },
       options: Object.values(ButtonType),
@@ -45,7 +52,7 @@ const meta: Meta<IconButtonStoryArgs> = {
       control: { type: "radio" },
       options: Object.values(ButtonSize),
     },
-    disabled: {
+    isDisabled: {
       control: { type: "boolean" },
     },
     muiIcon: {
@@ -65,7 +72,7 @@ export const Default: Story = {
   args: {
     type: ButtonType.Primary,
     size: ButtonSize.Medium,
-    disabled: false,
+    isDisabled: false,
     muiIcon: "Language",
   },
   render: (args) => {
@@ -78,7 +85,7 @@ export const Ghost: Story = {
   args: {
     type: ButtonType.Ghost,
     size: ButtonSize.Medium,
-    disabled: false,
+    isDisabled: false,
     muiIcon: "Language",
   },
   render: (args) => {

@@ -73,6 +73,7 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
   leadingIcon?: MUIIcon;
   trailingIcon?: MUIIcon;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  size?: ButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
   onClick?: () => void;

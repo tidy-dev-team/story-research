@@ -6,7 +6,7 @@ import { TextDirection } from "../textDirection";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 type LinkButtonStoryArgs = ComponentProps<typeof LinkButton> & {
-  hasTrailingIcon?: boolean;
+  showTrailingIcon?: boolean;
 };
 
 const meta = {
@@ -15,9 +15,9 @@ const meta = {
   args: {
     label: "Link Button",
     href: "https://www.example.com",
-    hasTrailingIcon: false,
+    showTrailingIcon: false,
     textDirection: TextDirection.Ltr,
-    disabled: false,
+    isDisabled: false,
   },
   parameters: {
     layout: "centered",
@@ -43,7 +43,7 @@ const meta = {
         category: "Content",
       },
     },
-    hasTrailingIcon: {
+    showTrailingIcon: {
       control: "boolean",
       description: "If true, a trailing icon is displayed.",
       table: {
@@ -53,26 +53,17 @@ const meta = {
     },
     trailingIcon: {
       description:
-        "The trailing icon element. Used internally when `hasTrailingIcon` is true.",
+        "The trailing icon element. Used internally when `showTrailingIcon` is true.",
       table: {
         category: "Content",
         disable: true,
       },
     },
-    target: {
-      control: "text",
-      description:
-        'Specifies where to open the linked document (e.g., "_blank").',
+    onClick: {
+      action: "clicked",
+      description: "Callback fired when the link button is clicked.",
       table: {
-        category: "Behavior",
-      },
-    },
-    rel: {
-      control: "text",
-      description:
-        "Specifies the relationship of the target object to the link object.",
-      table: {
-        category: "Behavior",
+        category: "Events",
       },
     },
     textDirection: {
@@ -84,7 +75,7 @@ const meta = {
         defaultValue: { summary: "TextDirection.Ltr" },
       },
     },
-    disabled: {
+    isDisabled: {
       control: "boolean",
       description:
         "If true, the link button will be disabled and non-interactive.",
@@ -100,22 +91,15 @@ export default meta;
 
 type Story = StoryObj<LinkButtonStoryArgs>;
 
-const renderIcon = (
-  condition: boolean | undefined,
-  IconComponent: typeof ArrowForwardIcon
-) => {
-  return condition ? <IconComponent /> : undefined;
-};
-
 const renderStory = ({
-  hasTrailingIcon,
-  disabled,
+  showTrailingIcon,
+  isDisabled,
   ...args
 }: LinkButtonStoryArgs) => (
   <LinkButton
     {...args}
-    disabled={disabled}
-    trailingIcon={renderIcon(hasTrailingIcon, ArrowForwardIcon)}
+    isDisabled={isDisabled}
+    trailingIcon={showTrailingIcon ? <ArrowForwardIcon /> : undefined}
   />
 );
 
@@ -131,7 +115,7 @@ export const WithTrailingIcon: Story = {
   args: {
     label: "Visit Website",
     href: "#",
-    hasTrailingIcon: true,
+    showTrailingIcon: true,
   },
   render: renderStory,
 };
@@ -141,7 +125,7 @@ export const RTL: Story = {
     label: "קישור",
     href: "#",
     textDirection: TextDirection.Rtl,
-    hasTrailingIcon: true,
+    showTrailingIcon: true,
   },
   render: renderStory,
 };
@@ -150,8 +134,8 @@ export const Disabled: Story = {
   args: {
     label: "Disabled Link",
     href: "#",
-    disabled: true,
-    hasTrailingIcon: true,
+    isDisabled: true,
+    showTrailingIcon: true,
   },
   render: renderStory,
 };

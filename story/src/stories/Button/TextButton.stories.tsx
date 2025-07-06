@@ -19,7 +19,7 @@ const meta = {
     hasLeadingIcon: false,
     hasTrailingIcon: false,
     textDirection: TextDirection.Ltr,
-    disabled: false,
+    isDisabled: false,
   },
   parameters: {
     layout: "centered",
@@ -79,7 +79,7 @@ const meta = {
         defaultValue: { summary: "TextDirection.Ltr" },
       },
     },
-    disabled: {
+    isDisabled: {
       control: "boolean",
       description: "If true, the button will be disabled and non-interactive.",
       table: {
@@ -92,6 +92,14 @@ const meta = {
       description: "Optional click handler.",
       table: {
         category: "Events",
+      },
+    },
+    htmlType: {
+      control: "select",
+      options: ["button", "submit", "reset"],
+      description: "The HTML button type.",
+      table: {
+        category: "Behavior",
       },
     },
   },
@@ -111,12 +119,12 @@ const renderIcon = (
 const renderStory = ({
   hasLeadingIcon,
   hasTrailingIcon,
-  disabled,
+  isDisabled,
   ...args
 }: TextButtonStoryArgs) => (
   <TextButton
     {...args}
-    disabled={disabled}
+    isDisabled={isDisabled}
     leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
     trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
   />

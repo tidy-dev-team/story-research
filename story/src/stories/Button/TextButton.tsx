@@ -1,10 +1,8 @@
-import React, { ReactElement, cloneElement } from "react";
+import React, { type ReactElement, cloneElement } from "react";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import { cva } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
 import { TextDirection } from "../textDirection";
-
-const ICON_SIZE = 16;
+import { IconFontSize } from "../iconFontSize";
 
 type MUIIcon = ReactElement<SvgIconProps>;
 
@@ -30,44 +28,50 @@ const buttonStyles = cva([
   "disabled:pointer-events-none",
 ]);
 
-interface TextButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface TextButtonProps {
   label: string;
   leadingIcon?: MUIIcon;
   trailingIcon?: MUIIcon;
+  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  isDisabled?: boolean;
   textDirection?: TextDirection;
+  onClick?: () => void;
 }
 
 const withIconSize = (icon: MUIIcon) => {
   return cloneElement(icon, {
-    fontSize: "small",
-    sx: { ...(icon.props.sx ?? {}), fontSize: ICON_SIZE },
+    fontSize: IconFontSize.Small,
+    sx: { ...(icon.props.sx ?? {}), fontSize: 20 }, //fallback to 20px for consistency
   });
 };
 
 export const TextButton = ({
-  disabled,
   label,
   leadingIcon,
   trailingIcon,
-  className,
+  htmlType = "button",
+  isDisabled = false,
   textDirection = TextDirection.Ltr,
-  ...rest
-}: TextButtonProps) => {
+  onClick,
+}: TextButtonProps): ReactElement => {
+  const handleClick = () => {
+    if (!isDisabled) onClick?.();
+  };
+
   return (
     <button
-      className={twMerge(buttonStyles(), className)}
-      type="button"
-      disabled={disabled}
+      className={buttonStyles()}
+      type={htmlType}
+      disabled={isDisabled}
       dir={textDirection}
-      {...rest}
+      onClick={handleClick}
     >
       {leadingIcon && (
         <span className="flex items-center leading-none">
           {withIconSize(leadingIcon)}
         </span>
       )}
-      <span className="translate-y-px">{label}</span>
+      <span className="leading-none translate-y-px">{label}</span>
       {trailingIcon && (
         <span className="flex items-center leading-none">
           {withIconSize(trailingIcon)}
