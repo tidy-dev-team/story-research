@@ -41,7 +41,6 @@ interface TextButtonProps {
 const withIconSize = (icon: MUIIcon) => {
   return cloneElement(icon, {
     fontSize: IconFontSize.Small,
-    sx: { ...(icon.props.sx ?? {}), fontSize: 20 }, //fallback to 20px for consistency
   });
 };
 
