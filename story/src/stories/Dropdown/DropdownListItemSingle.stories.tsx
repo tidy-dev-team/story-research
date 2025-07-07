@@ -3,13 +3,13 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
-import { DropdownListItemMulti } from "./DropdownListItemMulti";
+import { DropdownListItemSingle } from "./DropdownListItemSingle";
 import { TextDirection } from "../textDirection";
 import { SeverityLevel } from "../Severity/Severity";
 
 const meta = {
-  title: "Component/Dropdown/DropdownListItemMulti",
-  component: DropdownListItemMulti,
+  title: "Component/Dropdown/DropdownListItemSingle",
+  component: DropdownListItemSingle,
   parameters: {
     layout: "centered",
     backgrounds: {
@@ -21,7 +21,7 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof DropdownListItemMulti>;
+} satisfies Meta<typeof DropdownListItemSingle>;
 
 export default meta;
 
@@ -30,8 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const TextVariant: Story = {
   args: {
     variant: "text",
-    label: "Sample Multi Item",
-    isChecked: false,
+    label: "Sample List Item",
     textDirection: TextDirection.Ltr,
     isDisabled: false,
     onSelect: action("onSelect"),
@@ -43,7 +42,6 @@ export const TextWithIcon: Story = {
     variant: "text",
     label: "Settings",
     icon: <SettingsIcon sx={{ fontSize: 16 }} />,
-    isChecked: true,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
     onSelect: action("onSelect"),
@@ -54,18 +52,6 @@ export const SeverityVariant: Story = {
   args: {
     variant: "severity",
     severityLevel: SeverityLevel.High,
-    isChecked: false,
-    textDirection: TextDirection.Ltr,
-    isDisabled: false,
-    onSelect: action("onSelect"),
-  },
-};
-
-export const SeverityChecked: Story = {
-  args: {
-    variant: "severity",
-    severityLevel: SeverityLevel.Medium,
-    isChecked: true,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
     onSelect: action("onSelect"),
@@ -77,7 +63,6 @@ export const DisabledText: Story = {
     variant: "text",
     label: "Disabled Item",
     icon: <PersonIcon sx={{ fontSize: 16 }} />,
-    isChecked: false,
     textDirection: TextDirection.Ltr,
     isDisabled: true,
     onSelect: action("onSelect"),
@@ -88,7 +73,6 @@ export const DisabledSeverity: Story = {
   args: {
     variant: "severity",
     severityLevel: SeverityLevel.Low,
-    isChecked: true,
     textDirection: TextDirection.Ltr,
     isDisabled: true,
     onSelect: action("onSelect"),

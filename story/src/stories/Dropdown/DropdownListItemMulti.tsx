@@ -1,86 +1,109 @@
 import React, { type ReactElement } from "react";
 import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
+import { CheckboxSeverity } from "../Checkbox/CheckboxSeverity";
+import { SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 import { createDropdownListItemStyles } from "./dropdownListItemStyles";
 
-const dropdownListItemMultiStyles = createDropdownListItemStyles(
-  "complex",
-  "enhanced"
-);
-
-interface DropdownListItemMultiProps {
-  label: string;
-  checkboxState: CheckboxState;
-  icon?: React.ReactNode;
-  count?: number | null;
+interface BaseDropdownListItemMultiProps {
+  isChecked?: boolean;
+  isIndeterminate?: boolean;
   textDirection?: TextDirection;
   isDisabled?: boolean;
-  onSelect?: (newState: CheckboxState) => void;
+  onSelect?: (isChecked: boolean) => void;
 }
 
+interface TextVariantProps extends BaseDropdownListItemMultiProps {
+  variant: "text";
+  label: string;
+  icon?: React.ReactNode;
+  count?: number | null;
+}
+
+interface SeverityVariantProps extends BaseDropdownListItemMultiProps {
+  variant: "severity";
+  severityLevel: SeverityLevel;
+  severityType?: SeverityType;
+  count?: number;
+}
+
+type DropdownListItemMultiProps = TextVariantProps | SeverityVariantProps;
+
+
 export const DropdownListItemMulti = ({
-  label,
-  checkboxState = CheckboxState.Unchecked,
-  icon,
-  count,
+  isChecked = false,
+  isIndeterminate = false,
   textDirection = TextDirection.Ltr,
   isDisabled = false,
   onSelect,
+  ...props
 }: DropdownListItemMultiProps): ReactElement => {
   const handleClick = () => {
     if (!isDisabled) {
-      const nextState =
-        checkboxState === CheckboxState.Checked
-          ? CheckboxState.Unchecked
-          : CheckboxState.Checked;
-      onSelect?.(nextState);
+      onSelect?.(!isChecked);
     }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if ((event.key === "Enter" || event.key === " ") && !isDisabled) {
       event.preventDefault();
-      const nextState =
-        checkboxState === CheckboxState.Checked
-          ? CheckboxState.Unchecked
-          : CheckboxState.Checked;
-      onSelect?.(nextState);
+      onSelect?.(!isChecked);
     }
   };
 
-  const handleCheckboxChange = (checked: boolean) => {
-    if (!isDisabled) {
-      const nextState = checked
-        ? CheckboxState.Checked
-        : CheckboxState.Unchecked;
-      onSelect?.(nextState);
+  const renderContent = () => {
+    if (props.variant === "text") {
+      const checkboxState = isIndeterminate
+        ? CheckboxState.Indeterminate
+        : isChecked
+          ? CheckboxState.Checked
+          : CheckboxState.Unchecked;
+
+      return (
+        <Checkbox
+          label={props.label}
+          textDirection={textDirection}
+          state={checkboxState}
+          icon={props.icon}
+          count={props.count}
+          onChange={() => {}}
+          isDisabled={isDisabled}
+        />
+      );
+    }
+
+    if (props.variant === "severity") {
+      return (
+        <CheckboxSeverity
+          isChecked={isChecked}
+          isIndeterminate={isIndeterminate}
+          severityLevel={props.severityLevel}
+          textDirection={textDirection}
+          count={props.count}
+          onChange={() => {}}
+          disabled={isDisabled}
+        />
+      );
     }
   };
+
+  const dropdownListItemStyles = createDropdownListItemStyles(
+    "complex",
+    "enhanced"
+  );
 
   return (
     <button
-      className={dropdownListItemMultiStyles({ disabled: isDisabled })}
+      className={dropdownListItemStyles({ disabled: isDisabled })}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       disabled={isDisabled}
       type="button"
       role="menuitemcheckbox"
-      aria-checked={
-        checkboxState === CheckboxState.Indeterminate
-          ? "mixed"
-          : checkboxState === CheckboxState.Checked
-      }
+      aria-checked={isIndeterminate ? "mixed" : isChecked}
       dir={textDirection}
     >
-      <Checkbox
-        label={label}
-        textDirection={textDirection}
-        state={checkboxState}
-        icon={icon}
-        count={count}
-        onChange={handleCheckboxChange}
-        isDisabled={isDisabled}
-      />
+      {renderContent()}
     </button>
   );
 };
