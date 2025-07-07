@@ -1,48 +1,37 @@
 import React, { type ReactElement } from "react";
-import { cva } from "class-variance-authority";
+import { SvgIconProps } from "@mui/material/SvgIcon";
+import { Severity, SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
+import { createDropdownListItemStyles } from "./dropdownListItemStyles";
 
-const dropdownListItemStyles = cva(
-  [
-    "flex items-center w-full box-border overflow-hidden",
-    "px-pz-4xs py-pz-3xs gap-pz-4xs h-8",
-    "border-none bg-transparent cursor-pointer",
-    "text-pz-system-fg-1 pz-label-m",
-    "rounded-pz-2xs",
-    "transition-all duration-200",
-    "hover:enabled:bg-pz-system-bg-overlay-hover",
-    "active:enabled:bg-pz-system-bg-overlay-pressed",
-    "focus:outline-none focus-visible:ring-2",
-    "focus-visible:ring-pz-system-border-focused-1",
-  ],
-  {
-    variants: {
-      disabled: {
-        true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      disabled: false,
-    },
-  }
-);
+type MUIIcon = ReactElement<SvgIconProps>;
 
-interface DropdownListItemProps {
-  label: string;
-  icon?: ReactElement;
+interface BaseDropdownListItemProps {
   textDirection?: TextDirection;
   isDisabled?: boolean;
   onSelect?: () => void;
 }
 
+interface TextVariantProps extends BaseDropdownListItemProps {
+  variant: "text";
+  label: string;
+  icon?: MUIIcon;
+}
+
+interface SeverityVariantProps extends BaseDropdownListItemProps {
+  variant: "severity";
+  severityLevel: SeverityLevel;
+}
+
+type DropdownListItemProps = TextVariantProps | SeverityVariantProps;
+
 export const DropdownListItem = ({
-  label,
-  icon,
   textDirection = TextDirection.Ltr,
   isDisabled = false,
   onSelect,
+  ...props
 }: DropdownListItemProps): ReactElement => {
+
   const handleClick = () => {
     if (!isDisabled) {
       onSelect?.();
@@ -56,6 +45,38 @@ export const DropdownListItem = ({
     }
   };
 
+  const renderContent = () => {
+    if (props.variant === "text") {
+      return (
+        <>
+          {props.icon && (
+            <span className="flex items-center leading-none">{props.icon}</span>
+          )}
+          <span className="flex-1 truncate min-w-0 translate-y-px">
+            {props.label}
+          </span>
+        </>
+      );
+    }
+
+    if (props.variant === "severity") {
+      return (
+        <Severity
+          level={props.severityLevel}
+          type={SeverityType.Badge}
+          textDirection={textDirection}
+        />
+      );
+    }
+  };
+
+  const styleVariant = props.variant === "text" ? "simple" : "complex";
+  const focusVariant = props.variant === "text" ? "simple" : "enhanced";
+  const dropdownListItemStyles = createDropdownListItemStyles(
+    styleVariant,
+    focusVariant
+  );
+
   return (
     <button
       className={dropdownListItemStyles({ disabled: isDisabled })}
@@ -66,8 +87,7 @@ export const DropdownListItem = ({
       role="option"
       dir={textDirection}
     >
-      {icon && <span className="scale-[.6667]">{icon}</span>}
-      <span className="flex-1 truncate min-w-0 translate-y-px">{label}</span>
+      {renderContent()}
     </button>
   );
 };
