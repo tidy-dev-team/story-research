@@ -1,5 +1,5 @@
-import React, { type ReactElement, cloneElement } from "react";
-import { SvgIconProps } from "@mui/material/SvgIcon";
+import React, { type ReactElement } from "react";
+import { SvgIconComponent } from "@mui/icons-material";
 import { cva, type VariantProps } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 import { IconFontSize } from "../iconFontSize";
@@ -66,26 +66,16 @@ const buttonStyles = cva(
   }
 );
 
-type MUIIcon = ReactElement<SvgIconProps>;
-
 interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
-  leadingIcon?: MUIIcon;
-  trailingIcon?: MUIIcon;
+  leadingIcon?: SvgIconComponent;
+  trailingIcon?: SvgIconComponent;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   size?: ButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
   onClick?: () => void;
 }
-
-const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
-  const fontSizeProp = ICON_FONT_SIZES[size];
-
-  return cloneElement(icon, {
-    fontSize: fontSizeProp,
-  });
-};
 
 export const Button = ({
   label,
@@ -112,9 +102,15 @@ export const Button = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      {leadingIcon && withIconSize(leadingIcon, size ?? ButtonSize.Medium)}
+      {leadingIcon &&
+        React.createElement(leadingIcon, {
+          sx: { fontSize: ICON_FONT_SIZES[size ?? ButtonSize.Medium] },
+        })}
       <span className="leading-none translate-y-px">{label}</span>
-      {trailingIcon && withIconSize(trailingIcon, size ?? ButtonSize.Medium)}
+      {trailingIcon &&
+        React.createElement(trailingIcon, {
+          sx: { fontSize: ICON_FONT_SIZES[size ?? ButtonSize.Medium] },
+        })}
     </button>
   );
 };

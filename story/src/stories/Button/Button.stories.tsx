@@ -4,10 +4,38 @@ import { Button, ButtonSize, ButtonType } from "./Button";
 import { TextDirection } from "../textDirection";
 import LanguageIcon from "@mui/icons-material/Language";
 import SettingsIcon from "@mui/icons-material/Settings";
+import PersonIcon from "@mui/icons-material/Person";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
+import DownloadIcon from "@mui/icons-material/Download";
+import UploadIcon from "@mui/icons-material/Upload";
+import HomeIcon from "@mui/icons-material/Home";
+import StarIcon from "@mui/icons-material/Star";
+
+const iconOptions = {
+  none: undefined,
+  language: LanguageIcon,
+  settings: SettingsIcon,
+  person: PersonIcon,
+  delete: DeleteIcon,
+  save: SaveIcon,
+  edit: EditIcon,
+  add: AddIcon,
+  search: SearchIcon,
+  download: DownloadIcon,
+  upload: UploadIcon,
+  home: HomeIcon,
+  star: StarIcon,
+} as const;
+
+type IconOption = keyof typeof iconOptions;
 
 type ButtonStoryArgs = React.ComponentProps<typeof Button> & {
-  showLeadingIcon?: boolean;
-  showTrailingIcon?: boolean;
+  leadingIconChoice?: IconOption;
+  trailingIconChoice?: IconOption;
 };
 
 const meta: Meta<ButtonStoryArgs> = {
@@ -37,17 +65,17 @@ const meta: Meta<ButtonStoryArgs> = {
       control: "select",
       options: ["button", "submit", "reset"],
     },
-    showLeadingIcon: {
-      control: "boolean",
-      description: "Show leading icon",
+    leadingIconChoice: {
+      control: "select",
+      options: Object.keys(iconOptions),
+      description: "Choose a leading icon",
       table: { category: "Icons" },
-      defaultValue: false,
     },
-    showTrailingIcon: {
-      control: "boolean",
-      description: "Show trailing icon",
+    trailingIconChoice: {
+      control: "select",
+      options: Object.keys(iconOptions),
+      description: "Choose a trailing icon",
       table: { category: "Icons" },
-      defaultValue: false,
     },
   },
 };
@@ -63,19 +91,57 @@ export const Default: Story = {
     textDirection: TextDirection.Ltr,
     isDisabled: false,
     htmlType: "button",
-    showLeadingIcon: false,
-    showTrailingIcon: false,
+    leadingIconChoice: "none",
+    trailingIconChoice: "none",
     onClick: action("button-clicked"),
   },
   render: (args) => {
-    const { showLeadingIcon, showTrailingIcon, ...rest } = args;
+    const { leadingIconChoice, trailingIconChoice, ...rest } = args;
     return (
       <Button
         {...rest}
-        leadingIcon={showLeadingIcon ? <LanguageIcon /> : undefined}
-        trailingIcon={showTrailingIcon ? <SettingsIcon /> : undefined}
+        leadingIcon={iconOptions[leadingIconChoice || "none"]}
+        trailingIcon={iconOptions[trailingIconChoice || "none"]}
         onClick={action("button-clicked")}
       />
     );
   },
+};
+
+export const WithLeadingIcon: Story = {
+  args: {
+    ...Default.args,
+    label: "Save Document",
+    leadingIconChoice: "save",
+  },
+  render: Default.render,
+};
+
+export const WithTrailingIcon: Story = {
+  args: {
+    ...Default.args,
+    label: "Configure",
+    trailingIconChoice: "settings",
+  },
+  render: Default.render,
+};
+
+export const WithBothIcons: Story = {
+  args: {
+    ...Default.args,
+    label: "Download File",
+    leadingIconChoice: "download",
+    trailingIconChoice: "star",
+  },
+  render: Default.render,
+};
+
+export const ActionButtons: Story = {
+  args: {
+    ...Default.args,
+    label: "Delete Item",
+    type: ButtonType.Ghost,
+    leadingIconChoice: "delete",
+  },
+  render: Default.render,
 };
