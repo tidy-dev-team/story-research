@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React, { useState } from "react";
+import React from "react";
 import { action } from "@storybook/addon-actions";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
@@ -8,13 +8,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DropdownListItemMulti } from "./DropdownListItemMulti";
+import { DropdownListItem } from "./DropdownListItem";
 import { TextDirection } from "../textDirection";
 import { SeverityLevel } from "../Severity/Severity";
 
 const meta = {
-  title: "Component/Dropdown/DropdownListItemMulti",
-  component: DropdownListItemMulti,
+  title: "Component/Dropdown/DropdownListItem",
+  component: DropdownListItem,
   parameters: {
     layout: "centered",
     backgrounds: {
@@ -55,15 +55,6 @@ const meta = {
       },
       if: { arg: "variant", eq: "text" },
     },
-    count: {
-      control: { type: "number" },
-    },
-    isChecked: {
-      control: { type: "boolean" },
-    },
-    isIndeterminate: {
-      control: { type: "boolean" },
-    },
     textDirection: {
       control: { type: "radio" },
       options: Object.values(TextDirection),
@@ -75,44 +66,21 @@ const meta = {
       control: false,
     },
   },
-} satisfies Meta<typeof DropdownListItemMulti>;
+} satisfies Meta<typeof DropdownListItem>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Interactive wrapper component with state management
-const InteractiveDropdownListItemMulti = (args: React.ComponentProps<typeof DropdownListItemMulti>) => {
-  const [isChecked, setIsChecked] = useState(args.isChecked || false);
-  const [isIndeterminate, setIsIndeterminate] = useState(args.isIndeterminate || false);
-
-  const handleSelect = (checked: boolean) => {
-    setIsChecked(checked);
-    setIsIndeterminate(false); // Clear indeterminate when explicitly checking/unchecking
-    action("onSelect")(checked);
-  };
-
-  return (
-    <DropdownListItemMulti
-      {...args}
-      isChecked={isChecked}
-      isIndeterminate={isIndeterminate}
-      onSelect={handleSelect}
-    />
-  );
-};
-
 export const Default: Story = {
   args: {
     variant: "text",
-    label: "Sample Multi Item",
+    label: "Sample List Item",
     icon: "none",
-    isChecked: false,
-    isIndeterminate: false,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
+    onSelect: action("onSelect"),
   },
-  render: InteractiveDropdownListItemMulti,
 };
 
 export const TextWithIcon: Story = {
@@ -120,53 +88,40 @@ export const TextWithIcon: Story = {
     variant: "text",
     label: "Settings",
     icon: "settings",
-    isChecked: true,
-    isIndeterminate: false,
-    count: 3,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
+    onSelect: action("onSelect"),
   },
-  render: InteractiveDropdownListItemMulti,
-};
-
-export const IndeterminateState: Story = {
-  args: {
-    variant: "text",
-    label: "Partially Selected",
-    icon: "person",
-    isChecked: false,
-    isIndeterminate: true,
-    count: 5,
-    textDirection: TextDirection.Ltr,
-    isDisabled: false,
-  },
-  render: InteractiveDropdownListItemMulti,
 };
 
 export const SeverityHigh: Story = {
   args: {
     variant: "severity",
     severityLevel: SeverityLevel.High,
-    isChecked: false,
-    isIndeterminate: false,
-    count: 12,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
+    onSelect: action("onSelect"),
   },
-  render: InteractiveDropdownListItemMulti,
 };
 
 export const SeverityMedium: Story = {
   args: {
     variant: "severity",
     severityLevel: SeverityLevel.Medium,
-    isChecked: true,
-    isIndeterminate: false,
-    count: 8,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
+    onSelect: action("onSelect"),
   },
-  render: InteractiveDropdownListItemMulti,
+};
+
+export const SeverityLow: Story = {
+  args: {
+    variant: "severity",
+    severityLevel: SeverityLevel.Low,
+    textDirection: TextDirection.Ltr,
+    isDisabled: false,
+    onSelect: action("onSelect"),
+  },
 };
 
 export const DisabledText: Story = {
@@ -174,22 +129,18 @@ export const DisabledText: Story = {
     variant: "text",
     label: "Disabled Item",
     icon: "person",
-    isChecked: false,
-    isIndeterminate: false,
     textDirection: TextDirection.Ltr,
     isDisabled: true,
+    onSelect: action("onSelect"),
   },
-  render: InteractiveDropdownListItemMulti,
 };
 
 export const DisabledSeverity: Story = {
   args: {
     variant: "severity",
     severityLevel: SeverityLevel.Low,
-    isChecked: true,
-    isIndeterminate: false,
     textDirection: TextDirection.Ltr,
     isDisabled: true,
+    onSelect: action("onSelect"),
   },
-  render: InteractiveDropdownListItemMulti,
 };

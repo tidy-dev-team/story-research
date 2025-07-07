@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React, { useState } from "react";
 import { Dropdown, type DropdownOption } from "./Dropdown";
-import { DropdownListItemSingle } from "./DropdownListItemSingle";
+import { DropdownListItem } from "./DropdownListItem";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
 import { action } from "@storybook/addon-actions";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -130,21 +130,21 @@ export const WithCustomChildren: StoryObj<typeof meta> = {
     return (
       <div className="relative">
         <Dropdown {...args}>
-          <DropdownListItemSingle
+          <DropdownListItem
             variant="text"
             label="Settings"
             icon={<SettingsIcon sx={{ fontSize: 16 }} />}
             textDirection={TextDirection.Ltr}
             onSelect={() => action("settings-selected")()}
           />
-          <DropdownListItemSingle
+          <DropdownListItem
             variant="text"
             label="Account"
             icon={<AccountCircleIcon sx={{ fontSize: 16 }} />}
             textDirection={TextDirection.Ltr}
             onSelect={() => action("account-selected")()}
           />
-          <DropdownListItemSingle
+          <DropdownListItem
             variant="text"
             label="Delete"
             icon={<DeleteIcon sx={{ fontSize: 16, color: "#ef4444" }} />}
@@ -167,19 +167,19 @@ export const WithSeverityItems: StoryObj<typeof meta> = {
     return (
       <div className="relative">
         <Dropdown {...args}>
-          <DropdownListItemSingle
+          <DropdownListItem
             variant="severity"
             severityLevel={SeverityLevel.High}
             textDirection={TextDirection.Ltr}
             onSelect={() => action("high-severity-selected")()}
           />
-          <DropdownListItemSingle
+          <DropdownListItem
             variant="severity"
             severityLevel={SeverityLevel.Medium}
             textDirection={TextDirection.Ltr}
             onSelect={() => action("medium-severity-selected")()}
           />
-          <DropdownListItemSingle
+          <DropdownListItem
             variant="severity"
             severityLevel={SeverityLevel.Low}
             textDirection={TextDirection.Ltr}

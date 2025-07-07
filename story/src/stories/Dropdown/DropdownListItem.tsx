@@ -6,31 +6,31 @@ import { createDropdownListItemStyles } from "./dropdownListItemStyles";
 
 type MUIIcon = ReactElement<SvgIconProps>;
 
-interface BaseDropdownListItemSingleProps {
+interface BaseDropdownListItemProps {
   textDirection?: TextDirection;
   isDisabled?: boolean;
   onSelect?: () => void;
 }
 
-interface TextVariantProps extends BaseDropdownListItemSingleProps {
+interface TextVariantProps extends BaseDropdownListItemProps {
   variant: "text";
   label: string;
   icon?: MUIIcon;
 }
 
-interface SeverityVariantProps extends BaseDropdownListItemSingleProps {
+interface SeverityVariantProps extends BaseDropdownListItemProps {
   variant: "severity";
   severityLevel: SeverityLevel;
 }
 
-type DropdownListItemSingleProps = TextVariantProps | SeverityVariantProps;
+type DropdownListItemProps = TextVariantProps | SeverityVariantProps;
 
-export const DropdownListItemSingle = ({
+export const DropdownListItem = ({
   textDirection = TextDirection.Ltr,
   isDisabled = false,
   onSelect,
   ...props
-}: DropdownListItemSingleProps): ReactElement => {
+}: DropdownListItemProps): ReactElement => {
 
   const handleClick = () => {
     if (!isDisabled) {
