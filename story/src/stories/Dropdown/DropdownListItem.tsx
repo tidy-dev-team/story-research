@@ -1,12 +1,15 @@
 import React, { type ReactElement } from "react";
+import { SvgIconProps } from "@mui/material/SvgIcon";
 import { TextDirection } from "../textDirection";
 import { createDropdownListItemStyles } from "./dropdownListItemStyles";
 
 const dropdownListItemStyles = createDropdownListItemStyles("simple", "simple");
 
+type MUIIcon = ReactElement<SvgIconProps>;
+
 interface DropdownListItemProps {
   label: string;
-  icon?: ReactElement;
+  icon?: MUIIcon;
   textDirection?: TextDirection;
   isDisabled?: boolean;
   onSelect?: () => void;
@@ -42,7 +45,7 @@ export const DropdownListItem = ({
       role="option"
       dir={textDirection}
     >
-      {icon && <span className="scale-[.6667]">{icon}</span>}
+      {icon && <span className="flex items-center leading-none">{icon}</span>}
       <span className="flex-1 truncate min-w-0 translate-y-px">{label}</span>
     </button>
   );

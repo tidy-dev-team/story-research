@@ -1,6 +1,5 @@
 import { cva } from "class-variance-authority";
 
-// Base styles shared across all dropdown list item components
 export const baseDropdownListItemStyles = [
   "flex items-center w-full box-border overflow-hidden",
   "border-none bg-transparent cursor-pointer",
@@ -13,20 +12,17 @@ export const baseDropdownListItemStyles = [
   "focus-visible:ring-pz-system-border-focused-1",
 ];
 
-// Padding and height variants
 export const dropdownListItemPaddingVariants = {
-  simple: "px-pz-4xs py-pz-3xs gap-pz-4xs h-8", // For basic DropdownListItem
-  complex: "p-pz-4xs gap-pz-4xs min-h-8", // For Multi/Severity variants
+  simple: "px-pz-4xs py-pz-3xs gap-pz-4xs h-8",
+  complex: "p-pz-4xs gap-pz-4xs min-h-8",
 };
 
-// Focus ring variants
 export const dropdownListItemFocusVariants = {
-  simple: "", // No additional focus styles
+  simple: "",
   enhanced:
-    "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000", // Enhanced focus for complex items
+    "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
 };
 
-// Disabled state variants (shared across all)
 export const dropdownListItemDisabledVariants = {
   disabled: {
     true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
@@ -34,7 +30,6 @@ export const dropdownListItemDisabledVariants = {
   },
 };
 
-// Factory function to create dropdown list item styles
 export const createDropdownListItemStyles = (
   paddingVariant: keyof typeof dropdownListItemPaddingVariants = "simple",
   focusVariant: keyof typeof dropdownListItemFocusVariants = "simple"

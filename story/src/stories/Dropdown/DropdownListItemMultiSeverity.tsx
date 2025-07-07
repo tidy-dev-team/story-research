@@ -1,5 +1,4 @@
 import React, { type ReactElement } from "react";
-import { CheckboxState } from "../Checkbox/Checkbox";
 import { CheckboxSeverity } from "../Checkbox/CheckboxSeverity";
 import { SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
@@ -30,12 +29,6 @@ export const DropdownListItemMultiSeverity = ({
   isDisabled = false,
   onSelect,
 }: DropdownListItemMultiSeverityProps): ReactElement => {
-  const checkboxState = isIndeterminate
-    ? CheckboxState.Indeterminate
-    : isChecked
-      ? CheckboxState.Checked
-      : CheckboxState.Unchecked;
-
   const handleCheckboxChange = (checked: boolean) => {
     if (!isDisabled) {
       onSelect?.(checked);
@@ -61,14 +54,17 @@ export const DropdownListItemMultiSeverity = ({
       aria-checked={isIndeterminate ? "mixed" : isChecked}
       dir={textDirection}
     >
-      <CheckboxSeverity
-        state={checkboxState}
-        severityLevel={severityLevel}
-        textDirection={textDirection}
-        count={count}
-        onChange={handleCheckboxChange}
-        disabled={isDisabled}
-      />
+      <div className="pointer-events-none">
+        <CheckboxSeverity
+          isChecked={isChecked}
+          isIndeterminate={isIndeterminate}
+          severityLevel={severityLevel}
+          textDirection={textDirection}
+          count={count}
+          onChange={() => {}}
+          disabled={isDisabled}
+        />
+      </div>
     </button>
   );
 };

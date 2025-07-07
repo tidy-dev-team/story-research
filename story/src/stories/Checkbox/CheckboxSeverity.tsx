@@ -4,7 +4,8 @@ import { Severity, SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 
 export interface CheckboxSeverityProps {
-  state: CheckboxState;
+  isChecked?: boolean;
+  isIndeterminate?: boolean;
   onChange: (checked: boolean) => void;
   count?: number | null;
   severityLevel: SeverityLevel;
@@ -13,7 +14,8 @@ export interface CheckboxSeverityProps {
 }
 
 export const CheckboxSeverity = ({
-  state = CheckboxState.Unchecked,
+  isChecked = false,
+  isIndeterminate = false,
   onChange,
   count = 0,
   severityLevel = SeverityLevel.Medium,
@@ -23,6 +25,12 @@ export const CheckboxSeverity = ({
   if (count !== null && (count < 0 || !Number.isInteger(count))) {
     console.warn(`CheckboxSeverity component: Invalid prop count: "${count}"`);
   }
+
+  const state = isIndeterminate
+    ? CheckboxState.Indeterminate
+    : isChecked
+      ? CheckboxState.Checked
+      : CheckboxState.Unchecked;
 
   const handleToggle = () => onChange(state !== CheckboxState.Checked);
 

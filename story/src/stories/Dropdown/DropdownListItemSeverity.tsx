@@ -45,7 +45,7 @@ export const DropdownListItemSeverity = ({
       dir={textDirection}
     >
       <Severity
-        level={level as SeverityLevel}
+        level={level}
         type={SeverityType.Badge}
         textDirection={textDirection}
       />
