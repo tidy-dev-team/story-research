@@ -28,30 +28,23 @@ export const MultiSelectList = ({
     textDirection = TextDirection.Ltr,
 }: MultiSelectListProps) => {
     const displayTitle = title ?? "Select All";
+
     const [states, setStates] = useState<CheckboxState[]>(
-        [CheckboxState.Unchecked, ...items.map(() => CheckboxState.Unchecked)]
+        items.map(() => CheckboxState.Unchecked)
     );
 
-    const isAllChecked = states.slice(1).every(s => s === CheckboxState.Checked);
-    const isAllUnchecked = states.slice(1).every(s => s === CheckboxState.Unchecked);
-
-    const masterState: CheckboxState =
-        items.length === 1
-            ? states[1]
-            : isAllChecked
-                ? CheckboxState.Checked
-                : isAllUnchecked
-                    ? CheckboxState.Unchecked
-                    : CheckboxState.Indeterminate;
+    const [selectAllState, setSelectAllState] = useState<CheckboxState>(
+        CheckboxState.Unchecked
+    );
 
     const handleToggle = (index: number) => {
-        if (index === 0) {
+        if (index === -1) {
             const newState =
-                masterState === CheckboxState.Checked
+                selectAllState === CheckboxState.Checked
                     ? CheckboxState.Unchecked
                     : CheckboxState.Checked;
 
-            setStates(Array(states.length).fill(newState));
+            setStates(states.map(() => newState));
         } else {
             setStates((prev) => {
                 const newStates = [...prev];
@@ -65,20 +58,25 @@ export const MultiSelectList = ({
     };
 
     useEffect(() => {
-        setStates((prev) => {
-            const newStates = [...prev];
-            newStates[0] = masterState;
-            return newStates;
-        });
-    }, [masterState]);
+        const isAllChecked = states.every(s => s === CheckboxState.Checked);
+        const isAllUnchecked = states.every(s => s === CheckboxState.Unchecked);
+
+        const newState = isAllChecked
+            ? CheckboxState.Checked
+            : isAllUnchecked
+                ? CheckboxState.Unchecked
+                : CheckboxState.Indeterminate;
+
+        setSelectAllState(newState);
+    }, [states]);
 
     return (
         <ul className={listStyles()} dir={textDirection}>
             <li className={checkboxClass({ isMaster: true })}>
                 <Checkbox
                     label={displayTitle}
-                    state={states[0]}
-                    onChange={() => handleToggle(0)}
+                    state={selectAllState}
+                    onChange={() => handleToggle(-1)}
                     count={titleCount ? items.length : null}
                     textDirection={textDirection}
                 />
@@ -88,8 +86,8 @@ export const MultiSelectList = ({
                 <li key={idx} className={checkboxClass({ isMaster: false })}>
                     <Checkbox
                         label={label}
-                        state={states[idx + 1]}
-                        onChange={() => handleToggle(idx + 1)}
+                        state={states[idx]}
+                        onChange={() => handleToggle(idx)}
                         count={null}
                         textDirection={textDirection}
                     />
