@@ -9,11 +9,11 @@ export interface RadioButtonListProps {
     textDirection?: TextDirection;
 }
 
-const listStyles = cva("flex", {
+const listStyles = cva("flex gap-pz-3xs", {
     variants: {
         flow: {
-            vertical: "flex-col gap-pz-3xs",
-            horizontal: "gap-pz-3xs",
+            vertical: "flex-col",
+            horizontal: "",
         },
     },
     defaultVariants: {
