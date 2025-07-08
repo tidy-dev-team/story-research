@@ -14,11 +14,11 @@ export interface CheckboxListProps {
     textDirection?: TextDirection;
 }
 
-const ListStyles = cva("flex", {
+const listStyles = cva("flex gap-pz-3xs", {
     variants: {
         flow: {
-            [CheckboxListFlow.Vertical]: "flex-col gap-pz-3xs",
-            [CheckboxListFlow.Horizontal]: "gap-pz-3xs",
+            [CheckboxListFlow.Vertical]: "flex-col",
+            [CheckboxListFlow.Horizontal]: "",
         },
     },
     defaultVariants: {
@@ -48,7 +48,7 @@ export const CheckboxList = ({
     };
 
     return (
-        <ul className={ListStyles({ flow })} dir={textDirection}>
+        <ul className={listStyles({ flow })} dir={textDirection}>
             {items.map((label, idx) => (
                 <li key={idx}>
                     <Checkbox
