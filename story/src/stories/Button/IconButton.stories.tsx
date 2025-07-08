@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import { IconButton, IconButtonSize, IconButtonType } from "./IconButton";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
@@ -6,10 +7,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AddIcon from "@mui/icons-material/Add";
 
 const iconMap = {
-  Language: <LanguageIcon />,
-  Settings: <SettingsIcon />,
-  Headphones: <HeadphonesIcon />,
-  Add: <AddIcon />,
+  Language: LanguageIcon,
+  Settings: SettingsIcon,
+  Headphones: HeadphonesIcon,
+  Add: AddIcon,
 };
 
 type MuiIconName = keyof typeof iconMap;
@@ -29,17 +30,13 @@ const meta: Meta<IconButtonStoryArgs> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    htmlType: {
-      table: { disable: true },
-      control: false,
-    },
     textDirection: {
       table: { disable: true },
       control: false,
     },
     onClick: {
       action: "clicked",
-      description: "Optional click handler.",
+      description: "Required click handler.",
       table: {
         category: "Events",
       },
@@ -74,6 +71,7 @@ export const Default: Story = {
     size: IconButtonSize.Medium,
     isDisabled: false,
     muiIcon: "Language",
+    onClick: action("icon-button-clicked"),
   },
   render: (args) => {
     const { muiIcon, ...rest } = args;
@@ -87,6 +85,7 @@ export const Ghost: Story = {
     size: IconButtonSize.Medium,
     isDisabled: false,
     muiIcon: "Language",
+    onClick: action("icon-button-clicked"),
   },
   render: (args) => {
     const { muiIcon, ...rest } = args;
@@ -104,11 +103,23 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">XSmall Buttons (12px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={IconButtonSize.XSmall} icon={<AddIcon />} />
+            <IconButton
+              size={IconButtonSize.XSmall}
+              icon={AddIcon}
+              onClick={action("xsmall-add-clicked")}
+            />
             <span className="text-xs text-gray-500">12px</span>
-            <IconButton size={IconButtonSize.XSmall} icon={<SettingsIcon />} />
+            <IconButton
+              size={IconButtonSize.XSmall}
+              icon={SettingsIcon}
+              onClick={action("xsmall-settings-clicked")}
+            />
             <span className="text-xs text-gray-500">12px</span>
-            <IconButton size={IconButtonSize.XSmall} icon={<LanguageIcon />} />
+            <IconButton
+              size={IconButtonSize.XSmall}
+              icon={LanguageIcon}
+              onClick={action("xsmall-language-clicked")}
+            />
             <span className="text-xs text-gray-500">12px</span>
           </div>
         </div>
@@ -116,11 +127,23 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">Small Buttons (16px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={IconButtonSize.Small} icon={<AddIcon />} />
+            <IconButton
+              size={IconButtonSize.Small}
+              icon={AddIcon}
+              onClick={action("small-add-clicked")}
+            />
             <span className="text-xs text-gray-500">16px</span>
-            <IconButton size={IconButtonSize.Small} icon={<SettingsIcon />} />
+            <IconButton
+              size={IconButtonSize.Small}
+              icon={SettingsIcon}
+              onClick={action("small-settings-clicked")}
+            />
             <span className="text-xs text-gray-500">16px</span>
-            <IconButton size={IconButtonSize.Small} icon={<LanguageIcon />} />
+            <IconButton
+              size={IconButtonSize.Small}
+              icon={LanguageIcon}
+              onClick={action("small-language-clicked")}
+            />
             <span className="text-xs text-gray-500">16px</span>
           </div>
         </div>
@@ -128,11 +151,23 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">Medium Buttons (20px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={IconButtonSize.Medium} icon={<AddIcon />} />
+            <IconButton
+              size={IconButtonSize.Medium}
+              icon={AddIcon}
+              onClick={action("medium-add-clicked")}
+            />
             <span className="text-xs text-gray-500">20px</span>
-            <IconButton size={IconButtonSize.Medium} icon={<SettingsIcon />} />
+            <IconButton
+              size={IconButtonSize.Medium}
+              icon={SettingsIcon}
+              onClick={action("medium-settings-clicked")}
+            />
             <span className="text-xs text-gray-500">20px</span>
-            <IconButton size={IconButtonSize.Medium} icon={<LanguageIcon />} />
+            <IconButton
+              size={IconButtonSize.Medium}
+              icon={LanguageIcon}
+              onClick={action("medium-language-clicked")}
+            />
             <span className="text-xs text-gray-500">20px</span>
           </div>
         </div>
@@ -140,11 +175,23 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">Large Buttons (24px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={IconButtonSize.Large} icon={<AddIcon />} />
+            <IconButton
+              size={IconButtonSize.Large}
+              icon={AddIcon}
+              onClick={action("large-add-clicked")}
+            />
             <span className="text-xs text-gray-500">24px</span>
-            <IconButton size={IconButtonSize.Large} icon={<SettingsIcon />} />
+            <IconButton
+              size={IconButtonSize.Large}
+              icon={SettingsIcon}
+              onClick={action("large-settings-clicked")}
+            />
             <span className="text-xs text-gray-500">24px</span>
-            <IconButton size={IconButtonSize.Large} icon={<LanguageIcon />} />
+            <IconButton
+              size={IconButtonSize.Large}
+              icon={LanguageIcon}
+              onClick={action("large-language-clicked")}
+            />
             <span className="text-xs text-gray-500">24px</span>
           </div>
         </div>

@@ -1,8 +1,6 @@
 import React, { type ReactElement } from "react";
-import { SvgIconComponent } from "@mui/icons-material";
 import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
-import { IconFontSize } from "../iconFontSize";
 
 const buttonStyles = cva([
   "inline-flex",
@@ -28,20 +26,16 @@ const buttonStyles = cva([
 
 interface TextButtonProps {
   label: string;
-  leadingIcon?: SvgIconComponent;
-  trailingIcon?: SvgIconComponent;
+  onClick: () => void;
   isDisabled?: boolean;
   textDirection?: TextDirection;
-  onClick: () => void;
 }
 
 export const TextButton = ({
   label,
-  leadingIcon,
-  trailingIcon,
+  onClick,
   isDisabled = false,
   textDirection = TextDirection.Ltr,
-  onClick,
 }: TextButtonProps): ReactElement => {
   const handleClick = () => {
     if (!isDisabled) {
@@ -57,21 +51,7 @@ export const TextButton = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      {leadingIcon && (
-        <span className="flex items-center leading-none">
-          {React.createElement(leadingIcon, {
-            sx: { fontSize: IconFontSize.Small },
-          })}
-        </span>
-      )}
       <span className="leading-none translate-y-px">{label}</span>
-      {trailingIcon && (
-        <span className="flex items-center leading-none">
-          {React.createElement(trailingIcon, {
-            sx: { fontSize: IconFontSize.Small },
-          })}
-        </span>
-      )}
     </button>
   );
 };

@@ -38,8 +38,8 @@ const buttonStyles = cva(
         [IconButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-component-button-fg-primary-idle",
-          "hover:enabled:bg-pz-system-bg-overlay-hover-on-primary",
-          "active:enabled:bg-pz-system-bg-overlay-pressed-on-primary",
+          "hover:enabled:bg-gradient-to-r hover:from-pz-system-bg-overlay-hover-on-primary hover:to-pz-system-bg-overlay-hover-on-primary",
+          "active:enabled:bg-gradient-to-r active:from-pz-system-bg-overlay-pressed-on-primary active:to-pz-system-bg-overlay-pressed-on-primary",
           "disabled:bg-pz-system-bg-disabled disabled:text-pz-system-fg-disabled",
         ],
         [IconButtonType.Secondary]: [
