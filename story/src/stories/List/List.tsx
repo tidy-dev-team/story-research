@@ -33,7 +33,7 @@ export const List = ({
                     tabIndex={0}
                     className={listItemStyles()}
                 >
-                    <p>{label}</p>
+                    <span>{label}</span>
                     {Icon && <Icon color="inherit" fontSize="inherit" />}
                 </li>
             ))}
