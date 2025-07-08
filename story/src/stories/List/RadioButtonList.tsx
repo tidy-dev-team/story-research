@@ -3,27 +3,32 @@ import { cva } from "class-variance-authority";
 import RadioButton from "../Radio button/RadioButton";
 import { TextDirection } from "../textDirection";
 
+export enum RadioButtonListFlow {
+    Vertical = "vertical",
+    Horizontal = "horizontal",
+}
+
 export interface RadioButtonListProps {
     items: string[];
-    flow?: "vertical" | "horizontal";
+    flow?: RadioButtonListFlow;
     textDirection?: TextDirection;
 }
 
 const listStyles = cva("flex gap-pz-3xs", {
     variants: {
         flow: {
-            vertical: "flex-col",
-            horizontal: "",
+            [RadioButtonListFlow.Vertical]: "flex-col",
+            [RadioButtonListFlow.Horizontal]: "",
         },
     },
     defaultVariants: {
-        flow: "vertical",
+        flow: RadioButtonListFlow.Vertical,
     },
 });
 
 export const RadioButtonList = ({
     items,
-    flow = "vertical",
+    flow = RadioButtonListFlow.Vertical,
     textDirection = TextDirection.Ltr,
 }: RadioButtonListProps) => {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
