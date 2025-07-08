@@ -9,7 +9,7 @@ export interface RadioButtonListProps {
     textDirection?: TextDirection;
 }
 
-const ListStyles = cva("flex", {
+const listStyles = cva("flex", {
     variants: {
         flow: {
             vertical: "flex-col gap-pz-3xs",
@@ -33,7 +33,7 @@ export const RadioButtonList = ({
     };
 
     return (
-        <ul className={ListStyles({ flow })} dir={textDirection}>
+        <ul className={listStyles({ flow })} dir={textDirection}>
             {items.map((label, idx) => (
                 <li key={idx}>
                     <RadioButton
