@@ -1,27 +1,27 @@
-import React, { type ReactElement, cloneElement } from "react";
-import { SvgIconProps } from "@mui/material/SvgIcon";
+import React, { type ReactElement } from "react";
+import { SvgIconComponent } from "@mui/icons-material";
 import { cva, type VariantProps } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 import { IconFontSize } from "../iconFontSize";
 
-export enum ButtonSize {
+export enum IconButtonSize {
   XSmall = "XS",
   Small = "S",
   Medium = "M",
   Large = "L",
 }
 
-export enum ButtonType {
+export enum IconButtonType {
   Primary = "primary",
   Secondary = "secondary",
   Ghost = "ghost",
 }
 
 export const ICON_FONT_SIZES = {
-  [ButtonSize.XSmall]: IconFontSize.Small,
-  [ButtonSize.Small]: IconFontSize.Small,
-  [ButtonSize.Medium]: IconFontSize.Medium,
-  [ButtonSize.Large]: IconFontSize.Large,
+  [IconButtonSize.XSmall]: IconFontSize.Small,
+  [IconButtonSize.Small]: IconFontSize.Small,
+  [IconButtonSize.Medium]: IconFontSize.Medium,
+  [IconButtonSize.Large]: IconFontSize.Large,
 } as const;
 
 const buttonStyles = cva(
@@ -35,21 +35,21 @@ const buttonStyles = cva(
   {
     variants: {
       type: {
-        [ButtonType.Primary]: [
+        [IconButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-component-button-fg-primary-idle",
-          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
-          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
+          "hover:enabled:bg-pz-system-bg-overlay-hover-on-primary",
+          "active:enabled:bg-pz-system-bg-overlay-pressed-on-primary",
           "disabled:bg-pz-system-bg-disabled disabled:text-pz-system-fg-disabled",
         ],
-        [ButtonType.Secondary]: [
+        [IconButtonType.Secondary]: [
           "border border-pz-system-border-primary",
           "text-pz-system-fg-primary",
           "hover:enabled:bg-pz-component-button-bg-secondary-hover hover:enabled:border-pz-system-border-hover hover:enabled:text-pz-system-fg-hover",
           "active:enabled:bg-pz-component-button-bg-secondary-pressed active:enabled:border-pz-system-border-pressed active:enabled:text-pz-system-fg-pressed",
           "disabled:border-pz-system-border-disabled disabled:text-pz-system-fg-disabled",
         ],
-        [ButtonType.Ghost]: [
+        [IconButtonType.Ghost]: [
           "text-pz-component-button-fg-ghost-idle",
           "hover:enabled:bg-pz-component-button-bg-ghost-hover hover:enabled:text-pz-component-button-fg-ghost-hover",
           "active:enabled:bg-pz-component-button-bg-ghost-pressed",
@@ -57,59 +57,52 @@ const buttonStyles = cva(
         ],
       },
       size: {
-        [ButtonSize.XSmall]: "w-5 h-5 p-0.5",
-        [ButtonSize.Small]: "w-6 h-6 p-1",
-        [ButtonSize.Medium]: "w-8 h-8 p-1.5",
-        [ButtonSize.Large]: "w-10 h-10 p-2",
+        [IconButtonSize.XSmall]: "w-5 h-5 p-0.5",
+        [IconButtonSize.Small]: "w-6 h-6 p-1",
+        [IconButtonSize.Medium]: "w-8 h-8 p-1.5",
+        [IconButtonSize.Large]: "w-10 h-10 p-2",
       },
     },
     defaultVariants: {
-      type: ButtonType.Primary,
-      size: ButtonSize.Medium,
+      type: IconButtonType.Primary,
+      size: IconButtonSize.Medium,
     },
   }
 );
 
-type MUIIcon = ReactElement<SvgIconProps>;
-
 interface IconButtonProps extends VariantProps<typeof buttonStyles> {
-  icon: MUIIcon;
-  size?: ButtonSize;
-  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  icon: SvgIconComponent;
+  onClick: () => void;
+  size?: IconButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
-  onClick?: () => void;
 }
-
-const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
-  const fontSizeProp = ICON_FONT_SIZES[size];
-  return cloneElement(icon, { fontSize: fontSizeProp });
-};
 
 export const IconButton = ({
   icon,
-  size = ButtonSize.Medium,
-  htmlType = "button",
+  onClick,
+  size = IconButtonSize.Medium,
   isDisabled = false,
   textDirection = TextDirection.Ltr,
-  type = ButtonType.Primary,
-  onClick,
+  type = IconButtonType.Primary,
 }: IconButtonProps): ReactElement => {
   const handleClick = () => {
     if (!isDisabled) {
-      onClick?.();
+      onClick();
     }
   };
 
   return (
     <button
       className={buttonStyles({ type, size })}
-      type={htmlType}
+      type="button"
       disabled={isDisabled}
       dir={textDirection}
       onClick={handleClick}
     >
-      {withIconSize(icon, size)}
+      {React.createElement(icon, {
+        sx: { fontSize: ICON_FONT_SIZES[size] },
+      })}
     </button>
   );
 };

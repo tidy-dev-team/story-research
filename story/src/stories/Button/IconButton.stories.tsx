@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { IconButton, ButtonSize, ButtonType } from "./IconButton";
+import { IconButton, IconButtonSize, IconButtonType } from "./IconButton";
 import LanguageIcon from "@mui/icons-material/Language";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -46,11 +46,11 @@ const meta: Meta<IconButtonStoryArgs> = {
     },
     type: {
       control: { type: "radio" },
-      options: Object.values(ButtonType),
+      options: Object.values(IconButtonType),
     },
     size: {
       control: { type: "radio" },
-      options: Object.values(ButtonSize),
+      options: Object.values(IconButtonSize),
     },
     isDisabled: {
       control: { type: "boolean" },
@@ -70,8 +70,8 @@ type Story = StoryObj<IconButtonStoryArgs>;
 
 export const Default: Story = {
   args: {
-    type: ButtonType.Primary,
-    size: ButtonSize.Medium,
+    type: IconButtonType.Primary,
+    size: IconButtonSize.Medium,
     isDisabled: false,
     muiIcon: "Language",
   },
@@ -83,8 +83,8 @@ export const Default: Story = {
 
 export const Ghost: Story = {
   args: {
-    type: ButtonType.Ghost,
-    size: ButtonSize.Medium,
+    type: IconButtonType.Ghost,
+    size: IconButtonSize.Medium,
     isDisabled: false,
     muiIcon: "Language",
   },
@@ -104,11 +104,11 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">XSmall Buttons (12px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={ButtonSize.XSmall} icon={<AddIcon />} />
+            <IconButton size={IconButtonSize.XSmall} icon={<AddIcon />} />
             <span className="text-xs text-gray-500">12px</span>
-            <IconButton size={ButtonSize.XSmall} icon={<SettingsIcon />} />
+            <IconButton size={IconButtonSize.XSmall} icon={<SettingsIcon />} />
             <span className="text-xs text-gray-500">12px</span>
-            <IconButton size={ButtonSize.XSmall} icon={<LanguageIcon />} />
+            <IconButton size={IconButtonSize.XSmall} icon={<LanguageIcon />} />
             <span className="text-xs text-gray-500">12px</span>
           </div>
         </div>
@@ -116,11 +116,11 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">Small Buttons (16px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={ButtonSize.Small} icon={<AddIcon />} />
+            <IconButton size={IconButtonSize.Small} icon={<AddIcon />} />
             <span className="text-xs text-gray-500">16px</span>
-            <IconButton size={ButtonSize.Small} icon={<SettingsIcon />} />
+            <IconButton size={IconButtonSize.Small} icon={<SettingsIcon />} />
             <span className="text-xs text-gray-500">16px</span>
-            <IconButton size={ButtonSize.Small} icon={<LanguageIcon />} />
+            <IconButton size={IconButtonSize.Small} icon={<LanguageIcon />} />
             <span className="text-xs text-gray-500">16px</span>
           </div>
         </div>
@@ -128,11 +128,11 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">Medium Buttons (20px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={ButtonSize.Medium} icon={<AddIcon />} />
+            <IconButton size={IconButtonSize.Medium} icon={<AddIcon />} />
             <span className="text-xs text-gray-500">20px</span>
-            <IconButton size={ButtonSize.Medium} icon={<SettingsIcon />} />
+            <IconButton size={IconButtonSize.Medium} icon={<SettingsIcon />} />
             <span className="text-xs text-gray-500">20px</span>
-            <IconButton size={ButtonSize.Medium} icon={<LanguageIcon />} />
+            <IconButton size={IconButtonSize.Medium} icon={<LanguageIcon />} />
             <span className="text-xs text-gray-500">20px</span>
           </div>
         </div>
@@ -140,11 +140,11 @@ export const IconSizingTest: Story = {
         <div className="border-b pb-2">
           <h4 className="font-medium mb-2">Large Buttons (24px icons)</h4>
           <div className="flex gap-4 items-center">
-            <IconButton size={ButtonSize.Large} icon={<AddIcon />} />
+            <IconButton size={IconButtonSize.Large} icon={<AddIcon />} />
             <span className="text-xs text-gray-500">24px</span>
-            <IconButton size={ButtonSize.Large} icon={<SettingsIcon />} />
+            <IconButton size={IconButtonSize.Large} icon={<SettingsIcon />} />
             <span className="text-xs text-gray-500">24px</span>
-            <IconButton size={ButtonSize.Large} icon={<LanguageIcon />} />
+            <IconButton size={IconButtonSize.Large} icon={<LanguageIcon />} />
             <span className="text-xs text-gray-500">24px</span>
           </div>
         </div>

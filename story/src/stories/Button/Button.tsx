@@ -35,8 +35,8 @@ const buttonStyles = cva(
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-component-button-fg-primary-idle",
-          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
-          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
+          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.1200)_0%,rgba(0,0,0,0.1200)_100%)]",
+          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.3800)_0%,rgba(0,0,0,0.3800)_100%)]",
           "disabled:bg-pz-system-bg-disabled disabled:text-pz-system-fg-disabled",
         ],
         [ButtonType.Secondary]: [
@@ -68,17 +68,18 @@ const buttonStyles = cva(
 
 interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
+  onClick: () => void;
   leadingIcon?: SvgIconComponent;
   trailingIcon?: SvgIconComponent;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   size?: ButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
-  onClick?: () => void;
 }
 
 export const Button = ({
   label,
+  onClick,
   leadingIcon,
   trailingIcon,
   htmlType = "button",
@@ -86,11 +87,10 @@ export const Button = ({
   size = ButtonSize.Medium,
   isDisabled = false,
   textDirection = TextDirection.Ltr,
-  onClick,
 }: ButtonProps): ReactElement => {
   const handleClick = () => {
     if (!isDisabled) {
-      onClick?.();
+      onClick();
     }
   };
 

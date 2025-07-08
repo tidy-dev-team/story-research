@@ -20,19 +20,19 @@ const linkButtonStyles = cva([
 interface LinkButtonProps {
   label: string;
   href: string;
+  onClick: () => void;
   isDisabled?: boolean;
   trailingIcon?: ReactElement;
   textDirection?: TextDirection;
-  onClick?: () => void;
 }
 
 export const LinkButton = ({
   label,
   href,
+  onClick,
   isDisabled = false,
   trailingIcon,
   textDirection = TextDirection.Ltr,
-  onClick,
 }: LinkButtonProps): ReactElement => {
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (isDisabled) {
@@ -63,5 +63,3 @@ export const LinkButton = ({
     </a>
   );
 };
-
-LinkButton.displayName = "LinkButton";

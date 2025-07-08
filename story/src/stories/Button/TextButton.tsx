@@ -1,10 +1,8 @@
-import React, { type ReactElement, cloneElement } from "react";
-import { SvgIconProps } from "@mui/material/SvgIcon";
+import React, { type ReactElement } from "react";
+import { SvgIconComponent } from "@mui/icons-material";
 import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 import { IconFontSize } from "../iconFontSize";
-
-type MUIIcon = ReactElement<SvgIconProps>;
 
 const buttonStyles = cva([
   "inline-flex",
@@ -30,50 +28,48 @@ const buttonStyles = cva([
 
 interface TextButtonProps {
   label: string;
-  leadingIcon?: MUIIcon;
-  trailingIcon?: MUIIcon;
-  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  leadingIcon?: SvgIconComponent;
+  trailingIcon?: SvgIconComponent;
   isDisabled?: boolean;
   textDirection?: TextDirection;
-  onClick?: () => void;
+  onClick: () => void;
 }
-
-const withIconSize = (icon: MUIIcon) => {
-  return cloneElement(icon, {
-    fontSize: IconFontSize.Small,
-  });
-};
 
 export const TextButton = ({
   label,
   leadingIcon,
   trailingIcon,
-  htmlType = "button",
   isDisabled = false,
   textDirection = TextDirection.Ltr,
   onClick,
 }: TextButtonProps): ReactElement => {
   const handleClick = () => {
-    if (!isDisabled) onClick?.();
+    if (!isDisabled) {
+      onClick();
+    }
   };
 
   return (
     <button
       className={buttonStyles()}
-      type={htmlType}
+      type="button"
       disabled={isDisabled}
       dir={textDirection}
       onClick={handleClick}
     >
       {leadingIcon && (
         <span className="flex items-center leading-none">
-          {withIconSize(leadingIcon)}
+          {React.createElement(leadingIcon, {
+            sx: { fontSize: IconFontSize.Small },
+          })}
         </span>
       )}
       <span className="leading-none translate-y-px">{label}</span>
       {trailingIcon && (
         <span className="flex items-center leading-none">
-          {withIconSize(trailingIcon)}
+          {React.createElement(trailingIcon, {
+            sx: { fontSize: IconFontSize.Small },
+          })}
         </span>
       )}
     </button>
