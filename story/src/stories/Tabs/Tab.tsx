@@ -63,7 +63,7 @@ export const Tab = ({
   >
     {leadingIcon && (
       <span className="flex items-center justify-center">
-        {React.createElement(leadingIcon)}
+        {React.createElement(leadingIcon, { fontSize: "inherit" })}
       </span>
     )}
     <span>{label}</span>
