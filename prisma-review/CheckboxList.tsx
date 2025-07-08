@@ -3,27 +3,32 @@ import { cva } from "class-variance-authority";
 import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
 import { TextDirection } from "../textDirection";
 
+export enum CheckboxListFlow {
+    Vertical = "vertical",
+    Horizontal = "horizontal",
+}
+
 export interface CheckboxListProps {
     items: string[];
-    flow?: "vertical" | "horizontal";
+    flow?: CheckboxListFlow;
     textDirection?: TextDirection;
 }
 
-const ListStyles = cva("flex", {
+const listStyles = cva("flex gap-pz-3xs", {
     variants: {
         flow: {
-            vertical: "flex-col gap-pz-3xs",
-            horizontal: "gap-pz-3xs",
+            [CheckboxListFlow.Vertical]: "flex-col",
+            [CheckboxListFlow.Horizontal]: "",
         },
     },
     defaultVariants: {
-        flow: "vertical",
+        flow: CheckboxListFlow.Vertical,
     },
 });
 
 export const CheckboxList = ({
     items,
-    flow = "vertical",
+    flow = CheckboxListFlow.Vertical,
     textDirection = TextDirection.Ltr,
 }: CheckboxListProps) => {
     const [states, setStates] = useState<CheckboxState[]>(
@@ -43,7 +48,7 @@ export const CheckboxList = ({
     };
 
     return (
-        <ul className={ListStyles({ flow })} dir={textDirection}>
+        <ul className={listStyles({ flow })} dir={textDirection}>
             {items.map((label, idx) => (
                 <li key={idx}>
                     <Checkbox
