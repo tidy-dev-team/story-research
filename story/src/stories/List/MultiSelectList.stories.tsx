@@ -42,6 +42,12 @@ export const Default: Story = {
         textDirection: TextDirection.Ltr,
     },
 };
+export const NoTitle: Story = {
+    args: {
+        items: ["Option 1", "Option 2", "Option 3"],
+        textDirection: TextDirection.Ltr,
+    },
+};
 
 export const WithCount: Story = {
     args: {

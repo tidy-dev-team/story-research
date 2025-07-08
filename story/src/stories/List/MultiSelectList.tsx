@@ -4,7 +4,7 @@ import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
 import { TextDirection } from "../textDirection";
 
 export interface MultiSelectListProps {
-    title: string;
+    title?: string;
     items: string[];
     titleCount?: boolean;
     textDirection?: TextDirection;
@@ -27,6 +27,7 @@ export const MultiSelectList = ({
     titleCount = false,
     textDirection = TextDirection.Ltr,
 }: MultiSelectListProps) => {
+    const displayTitle = title ?? "Select All";
     const [states, setStates] = useState<CheckboxState[]>(
         () => [CheckboxState.Unchecked, ...items.map(() => CheckboxState.Unchecked)]
     );
@@ -75,7 +76,7 @@ export const MultiSelectList = ({
         <ul className={ListStyles()} dir={textDirection}>
             <li className={checkboxClass({ isMaster: true })}>
                 <Checkbox
-                    label={title}
+                    label={displayTitle}
                     state={states[0]}
                     onChange={() => handleToggle(0)}
                     count={titleCount ? items.length : null}
