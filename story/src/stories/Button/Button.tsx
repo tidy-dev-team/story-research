@@ -35,7 +35,7 @@ const buttonStyles = cva(
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-component-button-fg-primary-idle",
-          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.1200)_0%,rgba(0,0,0,0.1200)_100%)]",
+          "hover:enabled:bg-gradient-to-r from-pz-system-bg-overlay-hover-on-primary to-pz-system-bg-overlay-hover-on-primary",
           "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.3800)_0%,rgba(0,0,0,0.3800)_100%)]",
           "disabled:bg-pz-system-bg-disabled disabled:text-pz-system-fg-disabled",
         ],
