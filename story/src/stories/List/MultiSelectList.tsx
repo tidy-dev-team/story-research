@@ -29,7 +29,7 @@ export const MultiSelectList = ({
 }: MultiSelectListProps) => {
     const displayTitle = title ?? "Select All";
     const [states, setStates] = useState<CheckboxState[]>(
-        () => [CheckboxState.Unchecked, ...items.map(() => CheckboxState.Unchecked)]
+        [CheckboxState.Unchecked, ...items.map(() => CheckboxState.Unchecked)]
     );
 
     const isAllChecked = states.slice(1).every(s => s === CheckboxState.Checked);
