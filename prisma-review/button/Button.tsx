@@ -1,5 +1,5 @@
-import React, { type ReactElement, cloneElement } from "react";
-import { SvgIconProps } from "@mui/material/SvgIcon";
+import React, { type ReactElement } from "react";
+import { SvgIconComponent } from "@mui/icons-material";
 import { cva, type VariantProps } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 import { IconFontSize } from "../iconFontSize";
@@ -35,8 +35,8 @@ const buttonStyles = cva(
         [ButtonType.Primary]: [
           "bg-pz-system-bg-primary",
           "text-pz-component-button-fg-primary-idle",
-          "hover:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_100%)]",
-          "active:enabled:bg-[linear-gradient(0deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.38)_100%)]",
+          "hover:enabled:bg-gradient-to-r hover:from-pz-system-bg-overlay-hover-on-primary hover:to-pz-system-bg-overlay-hover-on-primary",
+          "active:enabled:bg-gradient-to-r active:from-pz-system-bg-overlay-pressed-on-primary active:to-pz-system-bg-overlay-pressed-on-primary",
           "disabled:bg-pz-system-bg-disabled disabled:text-pz-system-fg-disabled",
         ],
         [ButtonType.Secondary]: [
@@ -66,29 +66,20 @@ const buttonStyles = cva(
   }
 );
 
-type MUIIcon = ReactElement<SvgIconProps>;
-
 interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
-  leadingIcon?: MUIIcon;
-  trailingIcon?: MUIIcon;
+  onClick: () => void;
+  leadingIcon?: SvgIconComponent;
+  trailingIcon?: SvgIconComponent;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   size?: ButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
-  onClick?: () => void;
 }
-
-const withIconSize = (icon: MUIIcon, size: ButtonSize) => {
-  const fontSizeProp = ICON_FONT_SIZES[size];
-
-  return cloneElement(icon, {
-    fontSize: fontSizeProp,
-  });
-};
 
 export const Button = ({
   label,
+  onClick,
   leadingIcon,
   trailingIcon,
   htmlType = "button",
@@ -96,11 +87,10 @@ export const Button = ({
   size = ButtonSize.Medium,
   isDisabled = false,
   textDirection = TextDirection.Ltr,
-  onClick,
 }: ButtonProps): ReactElement => {
   const handleClick = () => {
     if (!isDisabled) {
-      onClick?.();
+      onClick();
     }
   };
 
@@ -112,9 +102,15 @@ export const Button = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      {leadingIcon && withIconSize(leadingIcon, size ?? ButtonSize.Medium)}
+      {leadingIcon &&
+        React.createElement(leadingIcon, {
+          sx: { fontSize: ICON_FONT_SIZES[size ?? ButtonSize.Medium] },
+        })}
       <span className="leading-none translate-y-px">{label}</span>
-      {trailingIcon && withIconSize(trailingIcon, size ?? ButtonSize.Medium)}
+      {trailingIcon &&
+        React.createElement(trailingIcon, {
+          sx: { fontSize: ICON_FONT_SIZES[size ?? ButtonSize.Medium] },
+        })}
     </button>
   );
 };
