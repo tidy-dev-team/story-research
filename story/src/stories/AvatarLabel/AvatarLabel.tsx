@@ -1,8 +1,11 @@
 import React, { ReactElement } from "react";
 import Avatar from "../Avatar/Avatar";
 import { AvatarSize } from "../Avatar/Avatar";
-import { IconButton } from "../Button/IconButton";
-import { ButtonSize, ButtonType } from "../Button/IconButton";
+import {
+  IconButton,
+  IconButtonSize,
+  IconButtonType,
+} from "../Button/IconButton";
 import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -25,7 +28,7 @@ interface AvatarLabelProps extends VariantProps<typeof avatarLabelStyles> {
   textLabel: string;
   rtl?: boolean;
   disabled?: boolean;
-  onIconClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onIconClick?: () => void;
   className?: string;
 }
 
@@ -43,11 +46,11 @@ const AvatarLabel = ({
       <Avatar firstName={firstName} lastName={lastName} size={AvatarSize.S} />
       <span className="text-pz-system-fg-1 pz-body-m400">{textLabel}</span>
       <IconButton
-        icon={<KeyboardArrowDownIcon />}
-        size={ButtonSize.Small}
-        type={ButtonType.Ghost}
-        onClick={onIconClick}
-        disabled={disabled}
+        icon={KeyboardArrowDownIcon}
+        size={IconButtonSize.Small}
+        type={IconButtonType.Ghost}
+        onClick={onIconClick || (() => {})}
+        isDisabled={disabled}
       />
     </div>
   );
