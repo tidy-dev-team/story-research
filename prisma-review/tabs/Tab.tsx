@@ -1,6 +1,7 @@
 import React, { ReactNode, ReactElement } from "react";
 import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
+import type { SvgIconComponent } from "@mui/icons-material";
 
 const tabStyles = cva([
   "aria-selected:text-pz-system-fg-1",
@@ -30,7 +31,7 @@ const tabStyles = cva([
 
 export interface TabProps {
   label: string;
-  leadingIcon?: ReactElement;
+  leadingIcon?: SvgIconComponent;
   selected?: boolean;
   disabled?: boolean;
   onClick?: () => void;
@@ -38,7 +39,7 @@ export interface TabProps {
 }
 
 export const Tab = ({
-  label = 'Label',
+  label,
   leadingIcon,
   textDirection = TextDirection.Ltr,
   selected = false,
@@ -62,7 +63,7 @@ export const Tab = ({
   >
     {leadingIcon && (
       <span className="flex items-center justify-center">
-        {leadingIcon}
+        {React.createElement(leadingIcon, { fontSize: "inherit" })}
       </span>
     )}
     <span>{label}</span>
