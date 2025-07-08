@@ -10,7 +10,7 @@ export interface MultiSelectListProps {
     textDirection?: TextDirection;
 }
 
-const ListStyles = cva(["flex", "flex-col", "gap-pz-3xs"]);
+const listStyles = cva(["flex", "flex-col", "gap-pz-3xs"]);
 
 const checkboxClass = cva("", {
     variants: {
@@ -73,7 +73,7 @@ export const MultiSelectList = ({
     }, [masterState]);
 
     return (
-        <ul className={ListStyles()} dir={textDirection}>
+        <ul className={listStyles()} dir={textDirection}>
             <li className={checkboxClass({ isMaster: true })}>
                 <Checkbox
                     label={displayTitle}
