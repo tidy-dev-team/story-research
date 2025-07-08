@@ -29,7 +29,7 @@ const tabStyles = cva([
 ]);
 
 export interface TabProps {
-  children: ReactNode;
+  label: string;
   leadingIcon?: ReactElement;
   selected?: boolean;
   disabled?: boolean;
@@ -38,7 +38,7 @@ export interface TabProps {
 }
 
 export const Tab = ({
-  children,
+  label = 'Label',
   leadingIcon,
   textDirection = TextDirection.Ltr,
   selected = false,
@@ -61,10 +61,10 @@ export const Tab = ({
     }}
   >
     {leadingIcon && (
-      <span className="flex items-center justify-center h-pz-2xs w-pz-2xs scale-[0.6667] text-pz-2xs">
+      <span className="flex items-center justify-center">
         {leadingIcon}
       </span>
     )}
-    <span>{children}</span>
+    <span>{label}</span>
   </button>
 );
