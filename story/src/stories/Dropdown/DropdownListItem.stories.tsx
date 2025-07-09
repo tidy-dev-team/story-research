@@ -12,7 +12,26 @@ import { DropdownListItem } from "./DropdownListItem";
 import { TextDirection } from "../textDirection";
 import { SeverityLevel } from "../Severity/Severity";
 
-const meta = {
+const iconOptions = {
+  none: undefined,
+  settings: SettingsIcon,
+  person: PersonIcon,
+  home: HomeIcon,
+  search: SearchIcon,
+  notifications: NotificationsIcon,
+  favorite: FavoriteIcon,
+  delete: DeleteIcon,
+} as const;
+
+type IconOption = keyof typeof iconOptions;
+
+type DropdownListItemStoryArgs = React.ComponentProps<
+  typeof DropdownListItem
+> & {
+  iconChoice?: IconOption;
+};
+
+const meta: Meta<DropdownListItemStoryArgs> = {
   title: "Component/Dropdown/DropdownListItem",
   component: DropdownListItem,
   parameters: {
@@ -40,19 +59,11 @@ const meta = {
       control: { type: "text" },
       if: { arg: "variant", eq: "text" },
     },
-    icon: {
+    iconChoice: {
       control: { type: "select" },
-      options: ["none", "settings", "person", "home", "search", "notifications", "favorite", "delete"],
-      mapping: {
-        none: undefined,
-        settings: <SettingsIcon sx={{ fontSize: 16 }} />,
-        person: <PersonIcon sx={{ fontSize: 16 }} />,
-        home: <HomeIcon sx={{ fontSize: 16 }} />,
-        search: <SearchIcon sx={{ fontSize: 16 }} />,
-        notifications: <NotificationsIcon sx={{ fontSize: 16 }} />,
-        favorite: <FavoriteIcon sx={{ fontSize: 16 }} />,
-        delete: <DeleteIcon sx={{ fontSize: 16, color: "#ef4444" }} />,
-      },
+      options: Object.keys(iconOptions),
+      description: "Choose an icon",
+      table: { category: "Icons" },
       if: { arg: "variant", eq: "text" },
     },
     textDirection: {
@@ -66,20 +77,29 @@ const meta = {
       control: false,
     },
   },
-} satisfies Meta<typeof DropdownListItem>;
+} satisfies Meta<DropdownListItemStoryArgs>;
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<DropdownListItemStoryArgs>;
 
 export const Default: Story = {
   args: {
     variant: "text",
     label: "Sample List Item",
-    icon: "none",
+    iconChoice: "none",
     textDirection: TextDirection.Ltr,
     isDisabled: false,
     onSelect: action("onSelect"),
+  },
+  render: (args: DropdownListItemStoryArgs) => {
+    const { iconChoice, ...rest } = args;
+    if (rest.variant === "text") {
+      return (
+        <DropdownListItem {...rest} icon={iconOptions[iconChoice || "none"]} />
+      );
+    }
+    return <DropdownListItem {...rest} />;
   },
 };
 
@@ -87,11 +107,12 @@ export const TextWithIcon: Story = {
   args: {
     variant: "text",
     label: "Settings",
-    icon: "settings",
+    iconChoice: "settings",
     textDirection: TextDirection.Ltr,
     isDisabled: false,
     onSelect: action("onSelect"),
   },
+  render: Default.render,
 };
 
 export const SeverityHigh: Story = {
@@ -128,11 +149,12 @@ export const DisabledText: Story = {
   args: {
     variant: "text",
     label: "Disabled Item",
-    icon: "person",
+    iconChoice: "person",
     textDirection: TextDirection.Ltr,
     isDisabled: true,
     onSelect: action("onSelect"),
   },
+  render: Default.render,
 };
 
 export const DisabledSeverity: Story = {

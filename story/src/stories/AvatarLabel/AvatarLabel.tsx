@@ -46,7 +46,7 @@ const AvatarLabel = ({
       <Avatar firstName={firstName} lastName={lastName} size={AvatarSize.S} />
       <span className="text-pz-system-fg-1 pz-body-m400">{textLabel}</span>
       <IconButton
-        icon={KeyboardArrowDownIcon}
+        Icon={KeyboardArrowDownIcon}
         size={IconButtonSize.Small}
         type={IconButtonType.Ghost}
         onClick={onIconClick || (() => {})}
