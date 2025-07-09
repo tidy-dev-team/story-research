@@ -18,8 +18,8 @@ export enum ButtonType {
 
 export const ICON_FONT_SIZES = {
   [ButtonSize.Small]: IconFontSize.Small,
-  [ButtonSize.Medium]: IconFontSize.Medium,
-  [ButtonSize.Large]: IconFontSize.Large,
+  [ButtonSize.Medium]: IconFontSize.Small,
+  [ButtonSize.Large]: IconFontSize.Medium,
 } as const;
 
 const buttonStyles = cva(
@@ -69,8 +69,8 @@ const buttonStyles = cva(
 interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
   onClick: () => void;
-  leadingIcon?: SvgIconComponent;
-  trailingIcon?: SvgIconComponent;
+  LeadingIcon?: SvgIconComponent;
+  TrailingIcon?: SvgIconComponent;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   size?: ButtonSize;
   isDisabled?: boolean;
@@ -80,8 +80,8 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
 export const Button = ({
   label,
   onClick,
-  leadingIcon,
-  trailingIcon,
+  LeadingIcon,
+  TrailingIcon,
   htmlType = "button",
   type = ButtonType.Primary,
   size = ButtonSize.Medium,
@@ -102,15 +102,19 @@ export const Button = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      {leadingIcon &&
-        React.createElement(leadingIcon, {
-          sx: { fontSize: ICON_FONT_SIZES[size ?? ButtonSize.Medium] },
-        })}
+      {LeadingIcon && (
+        <LeadingIcon
+          fontSize={ICON_FONT_SIZES[size ?? ButtonSize.Medium]}
+          sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
+        />
+      )}
       <span className="leading-none translate-y-px">{label}</span>
-      {trailingIcon &&
-        React.createElement(trailingIcon, {
-          sx: { fontSize: ICON_FONT_SIZES[size ?? ButtonSize.Medium] },
-        })}
+      {TrailingIcon && (
+        <TrailingIcon
+          fontSize={ICON_FONT_SIZES[size ?? ButtonSize.Medium]}
+          sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
+        />
+      )}
     </button>
   );
 };

@@ -20,8 +20,8 @@ export enum IconButtonType {
 export const ICON_FONT_SIZES = {
   [IconButtonSize.XSmall]: IconFontSize.Small,
   [IconButtonSize.Small]: IconFontSize.Small,
-  [IconButtonSize.Medium]: IconFontSize.Medium,
-  [IconButtonSize.Large]: IconFontSize.Large,
+  [IconButtonSize.Medium]: IconFontSize.Small,
+  [IconButtonSize.Large]: IconFontSize.Medium,
 } as const;
 
 const buttonStyles = cva(
@@ -71,7 +71,7 @@ const buttonStyles = cva(
 );
 
 interface IconButtonProps extends VariantProps<typeof buttonStyles> {
-  icon: SvgIconComponent;
+  Icon: SvgIconComponent;
   onClick: () => void;
   size?: IconButtonSize;
   isDisabled?: boolean;
@@ -79,7 +79,7 @@ interface IconButtonProps extends VariantProps<typeof buttonStyles> {
 }
 
 export const IconButton = ({
-  icon,
+  Icon,
   onClick,
   size = IconButtonSize.Medium,
   isDisabled = false,
@@ -100,9 +100,16 @@ export const IconButton = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      {React.createElement(icon, {
-        sx: { fontSize: ICON_FONT_SIZES[size] },
-      })}
+      <Icon
+        fontSize={ICON_FONT_SIZES[size]}
+        sx={
+          size === IconButtonSize.XSmall
+            ? { fontSize: 12 }
+            : size === IconButtonSize.Small
+              ? { fontSize: 16 }
+              : undefined
+        }
+      />
     </button>
   );
 };

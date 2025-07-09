@@ -17,7 +17,7 @@ type MuiIconName = keyof typeof iconMap;
 
 type IconButtonStoryArgs = Omit<
   React.ComponentProps<typeof IconButton>,
-  "icon"
+  "Icon"
 > & {
   muiIcon: MuiIconName;
 };
@@ -75,7 +75,7 @@ export const Default: Story = {
   },
   render: (args) => {
     const { muiIcon, ...rest } = args;
-    return <IconButton {...rest} icon={iconMap[muiIcon]} />;
+    return <IconButton {...rest} Icon={iconMap[muiIcon]} />;
   },
 };
 
@@ -89,7 +89,7 @@ export const Ghost: Story = {
   },
   render: (args) => {
     const { muiIcon, ...rest } = args;
-    return <IconButton {...rest} icon={iconMap[muiIcon]} />;
+    return <IconButton {...rest} Icon={iconMap[muiIcon]} />;
   },
 };
 
@@ -105,19 +105,19 @@ export const IconSizingTest: Story = {
           <div className="flex gap-4 items-center">
             <IconButton
               size={IconButtonSize.XSmall}
-              icon={AddIcon}
+              Icon={AddIcon}
               onClick={action("xsmall-add-clicked")}
             />
             <span className="text-xs text-gray-500">12px</span>
             <IconButton
               size={IconButtonSize.XSmall}
-              icon={SettingsIcon}
+              Icon={SettingsIcon}
               onClick={action("xsmall-settings-clicked")}
             />
             <span className="text-xs text-gray-500">12px</span>
             <IconButton
               size={IconButtonSize.XSmall}
-              icon={LanguageIcon}
+              Icon={LanguageIcon}
               onClick={action("xsmall-language-clicked")}
             />
             <span className="text-xs text-gray-500">12px</span>
@@ -129,19 +129,19 @@ export const IconSizingTest: Story = {
           <div className="flex gap-4 items-center">
             <IconButton
               size={IconButtonSize.Small}
-              icon={AddIcon}
+              Icon={AddIcon}
               onClick={action("small-add-clicked")}
             />
             <span className="text-xs text-gray-500">16px</span>
             <IconButton
               size={IconButtonSize.Small}
-              icon={SettingsIcon}
+              Icon={SettingsIcon}
               onClick={action("small-settings-clicked")}
             />
             <span className="text-xs text-gray-500">16px</span>
             <IconButton
               size={IconButtonSize.Small}
-              icon={LanguageIcon}
+              Icon={LanguageIcon}
               onClick={action("small-language-clicked")}
             />
             <span className="text-xs text-gray-500">16px</span>
@@ -153,19 +153,19 @@ export const IconSizingTest: Story = {
           <div className="flex gap-4 items-center">
             <IconButton
               size={IconButtonSize.Medium}
-              icon={AddIcon}
+              Icon={AddIcon}
               onClick={action("medium-add-clicked")}
             />
             <span className="text-xs text-gray-500">20px</span>
             <IconButton
               size={IconButtonSize.Medium}
-              icon={SettingsIcon}
+              Icon={SettingsIcon}
               onClick={action("medium-settings-clicked")}
             />
             <span className="text-xs text-gray-500">20px</span>
             <IconButton
               size={IconButtonSize.Medium}
-              icon={LanguageIcon}
+              Icon={LanguageIcon}
               onClick={action("medium-language-clicked")}
             />
             <span className="text-xs text-gray-500">20px</span>
@@ -177,19 +177,19 @@ export const IconSizingTest: Story = {
           <div className="flex gap-4 items-center">
             <IconButton
               size={IconButtonSize.Large}
-              icon={AddIcon}
+              Icon={AddIcon}
               onClick={action("large-add-clicked")}
             />
             <span className="text-xs text-gray-500">24px</span>
             <IconButton
               size={IconButtonSize.Large}
-              icon={SettingsIcon}
+              Icon={SettingsIcon}
               onClick={action("large-settings-clicked")}
             />
             <span className="text-xs text-gray-500">24px</span>
             <IconButton
               size={IconButtonSize.Large}
-              icon={LanguageIcon}
+              Icon={LanguageIcon}
               onClick={action("large-language-clicked")}
             />
             <span className="text-xs text-gray-500">24px</span>

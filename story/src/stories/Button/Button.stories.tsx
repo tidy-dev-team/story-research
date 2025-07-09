@@ -100,8 +100,8 @@ export const Default: Story = {
     return (
       <Button
         {...rest}
-        leadingIcon={iconOptions[leadingIconChoice || "none"]}
-        trailingIcon={iconOptions[trailingIconChoice || "none"]}
+        LeadingIcon={iconOptions[leadingIconChoice || "none"]}
+        TrailingIcon={iconOptions[trailingIconChoice || "none"]}
         onClick={action("button-clicked")}
       />
     );
