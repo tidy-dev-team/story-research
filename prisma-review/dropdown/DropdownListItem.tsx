@@ -1,10 +1,8 @@
 import React, { type ReactElement } from "react";
-import { SvgIconProps } from "@mui/material/SvgIcon";
+import { SvgIconComponent } from "@mui/icons-material";
 import { Severity, SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
 import { createDropdownListItemStyles } from "./dropdownListItemStyles";
-
-type MUIIcon = ReactElement<SvgIconProps>;
 
 interface BaseDropdownListItemProps {
   textDirection?: TextDirection;
@@ -15,7 +13,7 @@ interface BaseDropdownListItemProps {
 interface TextVariantProps extends BaseDropdownListItemProps {
   variant: "text";
   label: string;
-  icon?: MUIIcon;
+  icon?: SvgIconComponent;
 }
 
 interface SeverityVariantProps extends BaseDropdownListItemProps {
@@ -31,7 +29,6 @@ export const DropdownListItem = ({
   onSelect,
   ...props
 }: DropdownListItemProps): ReactElement => {
-
   const handleClick = () => {
     if (!isDisabled) {
       onSelect?.();
@@ -47,10 +44,13 @@ export const DropdownListItem = ({
 
   const renderContent = () => {
     if (props.variant === "text") {
+      const IconComponent = props.icon;
       return (
         <>
-          {props.icon && (
-            <span className="flex items-center leading-none">{props.icon}</span>
+          {IconComponent && (
+            <span className="flex items-center leading-none">
+              <IconComponent fontSize="small" />
+            </span>
           )}
           <span className="flex-1 truncate min-w-0 translate-y-px">
             {props.label}
