@@ -78,6 +78,13 @@ interface IconButtonProps extends VariantProps<typeof buttonStyles> {
   textDirection?: TextDirection;
 }
 
+const sizeClassMap: Record<IconButtonSize, string> = {
+  [IconButtonSize.Large]: "text-[24px]",
+  [IconButtonSize.Medium]: "text-[20px]",
+  [IconButtonSize.Small]: "text-[16px]",
+  [IconButtonSize.XSmall]: "text-[12px]",
+};
+
 export const IconButton = ({
   Icon,
   onClick,
@@ -92,6 +99,13 @@ export const IconButton = ({
     }
   };
 
+  const getIconTextSizeClass = (buttonSize: IconButtonSize | null) => {
+    if (buttonSize && sizeClassMap[buttonSize]) {
+      return sizeClassMap[buttonSize];
+    }
+    return "text-[20px]"; // fallback to medium
+  };
+
   return (
     <button
       className={buttonStyles({ type, size })}
@@ -100,16 +114,9 @@ export const IconButton = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      <Icon
-        fontSize={ICON_FONT_SIZES[size]}
-        sx={
-          size === IconButtonSize.XSmall
-            ? { fontSize: 12 }
-            : size === IconButtonSize.Small
-              ? { fontSize: 16 }
-              : undefined
-        }
-      />
+      <div className={getIconTextSizeClass(size)}>
+        <Icon fontSize={IconFontSize.Inherit} />
+      </div>
     </button>
   );
 };

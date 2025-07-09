@@ -76,6 +76,12 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
   textDirection?: TextDirection;
 }
 
+const sizeClassMap: Record<ButtonSize, string> = {
+  [ButtonSize.Large]: "text-[24px]",
+  [ButtonSize.Medium]: "text-[20px]",
+  [ButtonSize.Small]: "text-[16px]",
+};
+
 export const Button = ({
   label,
   onClick,
@@ -93,6 +99,13 @@ export const Button = ({
     }
   };
 
+  const getIconTextSizeClass = (buttonSize: ButtonSize | null) => {
+    if (buttonSize && sizeClassMap[buttonSize]) {
+      return sizeClassMap[buttonSize];
+    }
+    return "text-[20px]";
+  };
+
   return (
     <button
       className={buttonStyles({ type, size })}
@@ -102,18 +115,14 @@ export const Button = ({
       onClick={handleClick}
     >
       {!!LeadingIcon && (
-        <LeadingIcon
-          fontSize={ICON_FONT_SIZES[size as ButtonSize]}
-          sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
-        />
+        <div className={getIconTextSizeClass(size)}>
+          <LeadingIcon fontSize={IconFontSize.Inherit} />
+        </div>
       )}
       <span className="leading-none translate-y-px">{label}</span>
       {!!TrailingIcon && (
-        <div>
-          <TrailingIcon
-            fontSize={ICON_FONT_SIZES[size as ButtonSize]}
-            sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
-          />
+        <div className={getIconTextSizeClass(size)}>
+          <TrailingIcon fontSize={IconFontSize.Inherit} />
         </div>
       )}
     </button>
