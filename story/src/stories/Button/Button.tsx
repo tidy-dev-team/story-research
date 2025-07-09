@@ -66,6 +66,19 @@ const buttonStyles = cva(
   }
 );
 
+const iconWrapperStyles = cva("", {
+  variants: {
+    size: {
+      [ButtonSize.Small]: ["text-[16px]"],
+      [ButtonSize.Medium]: ["text-[20px]"],
+      [ButtonSize.Large]: ["text-[24px]"],
+    },
+  },
+  defaultVariants: {
+    size: ButtonSize.Medium,
+  },
+});
+
 interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
   onClick: () => void;
@@ -75,12 +88,6 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
   isDisabled?: boolean;
   textDirection?: TextDirection;
 }
-
-const sizeClassMap: Record<ButtonSize, string> = {
-  [ButtonSize.Large]: "text-[24px]",
-  [ButtonSize.Medium]: "text-[20px]",
-  [ButtonSize.Small]: "text-[16px]",
-};
 
 export const Button = ({
   label,
@@ -99,13 +106,6 @@ export const Button = ({
     }
   };
 
-  const getIconTextSizeClass = (buttonSize: ButtonSize | null) => {
-    if (buttonSize && sizeClassMap[buttonSize]) {
-      return sizeClassMap[buttonSize];
-    }
-    return "text-[20px]";
-  };
-
   return (
     <button
       className={buttonStyles({ type, size })}
@@ -115,13 +115,13 @@ export const Button = ({
       onClick={handleClick}
     >
       {!!LeadingIcon && (
-        <div className={getIconTextSizeClass(size)}>
+        <div className={iconWrapperStyles({ size })}>
           <LeadingIcon fontSize={IconFontSize.Inherit} />
         </div>
       )}
       <span className="leading-none translate-y-px">{label}</span>
       {!!TrailingIcon && (
-        <div className={getIconTextSizeClass(size)}>
+        <div className={iconWrapperStyles({ size })}>
           <TrailingIcon fontSize={IconFontSize.Inherit} />
         </div>
       )}
