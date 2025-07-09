@@ -37,7 +37,7 @@ export const LinkButton = ({
     if (isDisabled) {
       event.preventDefault();
     } else {
-      onClick?.();
+      onClick();
     }
   };
 
