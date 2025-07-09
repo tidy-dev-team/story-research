@@ -9,11 +9,10 @@ const linkButtonStyles = cva([
   "inline-flex items-center justify-center gap-1 h-6 px-2",
   "bg-transparent cursor-pointer",
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-pz-system-border-focused-1 focus-visible:ring-offset-0",
-  "pz-link400 underline transition-colors",
+  "pz-link400 transition-colors",
   "text-pz-system-fg-primary hover:text-pz-system-fg-hover active:text-pz-system-fg-pressed",
   "[&[aria-disabled=true]]:text-pz-system-fg-disabled",
   "[&[aria-disabled=true]]:cursor-not-allowed",
-  "[&[aria-disabled=true]]:no-underline",
   "[&[aria-disabled=true]]:pointer-events-none",
 ]);
 
@@ -49,8 +48,11 @@ export const LinkButton = ({
       aria-disabled={isDisabled}
       dir={textDirection}
       onClick={handleClick}
+      tabIndex={isDisabled ? -1 : 0}
     >
-      <span>{label}</span>
+      <span className="underline [a[aria-disabled=true]_&]:no-underline">
+        {label}
+      </span>
       {trailingIcon && (
         <span className="flex items-center leading-none">
           {textDirection === TextDirection.Rtl ? (
