@@ -72,10 +72,15 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
   LeadingIcon?: SvgIconComponent;
   TrailingIcon?: SvgIconComponent;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  size?: ButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
 }
+
+const sizeClassMap: Record<ButtonSize, string> = {
+  [ButtonSize.Large]: "text-[24px]",
+  [ButtonSize.Medium]: "text-[20px]",
+  [ButtonSize.Small]: "text-[16px]",
+};
 
 export const Button = ({
   label,
@@ -94,6 +99,13 @@ export const Button = ({
     }
   };
 
+  const getIconTextSizeClass = (buttonSize: ButtonSize | null) => {
+    if (buttonSize && sizeClassMap[buttonSize]) {
+      return sizeClassMap[buttonSize];
+    }
+    return "text-[20px]";
+  };
+
   return (
     <button
       className={buttonStyles({ type, size })}
@@ -102,18 +114,16 @@ export const Button = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      {LeadingIcon && (
-        <LeadingIcon
-          fontSize={ICON_FONT_SIZES[size ?? ButtonSize.Medium]}
-          sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
-        />
+      {!!LeadingIcon && (
+        <div className={getIconTextSizeClass(size)}>
+          <LeadingIcon fontSize={IconFontSize.Inherit} />
+        </div>
       )}
       <span className="leading-none translate-y-px">{label}</span>
-      {TrailingIcon && (
-        <TrailingIcon
-          fontSize={ICON_FONT_SIZES[size ?? ButtonSize.Medium]}
-          sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
-        />
+      {!!TrailingIcon && (
+        <div className={getIconTextSizeClass(size)}>
+          <TrailingIcon fontSize={IconFontSize.Inherit} />
+        </div>
       )}
     </button>
   );
