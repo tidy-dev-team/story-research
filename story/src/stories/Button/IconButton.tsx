@@ -103,7 +103,7 @@ export const IconButton = ({
     if (buttonSize && sizeClassMap[buttonSize]) {
       return sizeClassMap[buttonSize];
     }
-    return "text-[20px]"; // fallback to medium
+    return "text-[20px]";
   };
 
   return (
