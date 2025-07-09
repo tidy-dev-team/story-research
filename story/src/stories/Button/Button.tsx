@@ -72,7 +72,6 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
   LeadingIcon?: SvgIconComponent;
   TrailingIcon?: SvgIconComponent;
   htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  size?: ButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
 }
@@ -102,18 +101,20 @@ export const Button = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      {LeadingIcon && (
+      {!!LeadingIcon && (
         <LeadingIcon
-          fontSize={ICON_FONT_SIZES[size ?? ButtonSize.Medium]}
+          fontSize={ICON_FONT_SIZES[size as ButtonSize]}
           sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
         />
       )}
       <span className="leading-none translate-y-px">{label}</span>
-      {TrailingIcon && (
-        <TrailingIcon
-          fontSize={ICON_FONT_SIZES[size ?? ButtonSize.Medium]}
-          sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
-        />
+      {!!TrailingIcon && (
+        <div>
+          <TrailingIcon
+            fontSize={ICON_FONT_SIZES[size as ButtonSize]}
+            sx={size === ButtonSize.Small ? { fontSize: 16 } : undefined}
+          />
+        </div>
       )}
     </button>
   );

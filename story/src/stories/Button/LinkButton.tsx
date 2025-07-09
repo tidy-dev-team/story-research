@@ -4,6 +4,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 import { IconFontSize } from "../iconFontSize";
+import { SvgIconComponent } from "@mui/icons-material";
 
 const linkButtonStyles = cva([
   "inline-flex items-center justify-center gap-1 h-6 px-2",
@@ -14,6 +15,7 @@ const linkButtonStyles = cva([
   "[&[aria-disabled=true]]:text-pz-system-fg-disabled",
   "[&[aria-disabled=true]]:cursor-not-allowed",
   "[&[aria-disabled=true]]:pointer-events-none",
+  "underline [&[aria-disabled=true]]:no-underline",
 ]);
 
 interface LinkButtonProps {
@@ -21,7 +23,7 @@ interface LinkButtonProps {
   href: string;
   onClick: () => void;
   isDisabled?: boolean;
-  trailingIcon?: ReactElement;
+  trailingIcon?: SvgIconComponent;
   textDirection?: TextDirection;
 }
 
@@ -50,9 +52,7 @@ export const LinkButton = ({
       onClick={handleClick}
       tabIndex={isDisabled ? -1 : 0}
     >
-      <span className="underline [a[aria-disabled=true]_&]:no-underline">
-        {label}
-      </span>
+      {label}
       {trailingIcon && (
         <span className="flex items-center leading-none">
           {textDirection === TextDirection.Rtl ? (
