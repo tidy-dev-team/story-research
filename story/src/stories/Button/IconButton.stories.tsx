@@ -23,7 +23,7 @@ type IconButtonStoryArgs = Omit<
 };
 
 const meta: Meta<IconButtonStoryArgs> = {
-  title: "Component/Button/IconButton",
+  title: "Components/Button/IconButton",
   component: IconButton,
   parameters: {
     layout: "centered",

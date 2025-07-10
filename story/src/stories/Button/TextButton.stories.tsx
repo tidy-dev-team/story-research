@@ -1,33 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps } from "react";
-import React from "react";
+import { action } from "@storybook/addon-actions";
 import { TextButton } from "./TextButton";
 import { TextDirection } from "../textDirection";
-import LanguageIcon from "@mui/icons-material/Language";
-import HeadphonesIcon from "@mui/icons-material/Headphones";
 
-type TextButtonStoryArgs = ComponentProps<typeof TextButton> & {
-  hasLeadingIcon?: boolean;
-  hasTrailingIcon?: boolean;
-};
-
-const meta = {
-  title: "Component/Button/TextButton",
+const meta: Meta<React.ComponentProps<typeof TextButton>> = {
+  title: "Components/Button/TextButton",
   component: TextButton,
-  args: {
-    label: "Text Button",
-    hasLeadingIcon: false,
-    hasTrailingIcon: false,
-    textDirection: TextDirection.Ltr,
-    isDisabled: false,
-  },
   parameters: {
     layout: "centered",
-    docs: {
-      source: {
-        state: "open",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -38,36 +18,11 @@ const meta = {
         category: "Content",
       },
     },
-    hasLeadingIcon: {
-      control: "boolean",
-      description: "If true, a leading icon is displayed.",
+    onClick: {
+      action: "clicked",
+      description: "Required click handler.",
       table: {
-        category: "Content",
-        defaultValue: { summary: "false" },
-      },
-    },
-    hasTrailingIcon: {
-      control: "boolean",
-      description: "If true, a trailing icon is displayed.",
-      table: {
-        category: "Content",
-        defaultValue: { summary: "false" },
-      },
-    },
-    leadingIcon: {
-      description:
-        "The leading icon element. Used internally when `hasLeadingIcon` is true.",
-      table: {
-        category: "Content",
-        disable: true,
-      },
-    },
-    trailingIcon: {
-      description:
-        "The trailing icon element. Used internally when `hasTrailingIcon` is true.",
-      table: {
-        category: "Content",
-        disable: true,
+        category: "Events",
       },
     },
     textDirection: {
@@ -87,77 +42,40 @@ const meta = {
         defaultValue: { summary: "false" },
       },
     },
-    onClick: {
-      action: "clicked",
-      description: "Optional click handler.",
-      table: {
-        category: "Events",
-      },
-    },
-    htmlType: {
-      control: "select",
-      options: ["button", "submit", "reset"],
-      description: "The HTML button type.",
-      table: {
-        category: "Behavior",
-      },
-    },
   },
-} satisfies Meta<TextButtonStoryArgs>;
-
-export default meta;
-
-type Story = StoryObj<TextButtonStoryArgs>;
-
-const renderIcon = (
-  condition: boolean | undefined,
-  Icon: typeof LanguageIcon
-) => {
-  return condition ? <Icon /> : undefined;
 };
 
-const renderStory = ({
-  hasLeadingIcon,
-  hasTrailingIcon,
-  isDisabled,
-  ...args
-}: TextButtonStoryArgs) => (
-  <TextButton
-    {...args}
-    isDisabled={isDisabled}
-    leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
-    trailingIcon={renderIcon(hasTrailingIcon, HeadphonesIcon)}
-  />
-);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     label: "Text Button",
+    textDirection: TextDirection.Ltr,
+    isDisabled: false,
+    onClick: action("text-button-clicked"),
   },
-  render: renderStory,
-};
-
-export const WithLeadingIcon: Story = {
-  args: {
-    label: "Visit Website",
-    hasLeadingIcon: true,
-  },
-  render: renderStory,
-};
-
-export const WithTrailingIcon: Story = {
-  args: {
-    label: "Next Page",
-    hasTrailingIcon: true,
-  },
-  render: renderStory,
 };
 
 export const RTL: Story = {
   args: {
+    ...Default.args,
     label: "טקסט",
     textDirection: TextDirection.Rtl,
-    hasLeadingIcon: true,
   },
-  render: renderStory,
+};
+
+export const Disabled: Story = {
+  args: {
+    ...Default.args,
+    label: "Disabled Button",
+    isDisabled: true,
+  },
+};
+
+export const LongText: Story = {
+  args: {
+    ...Default.args,
+    label: "This is a very long text button to test wrapping behavior",
+  },
 };

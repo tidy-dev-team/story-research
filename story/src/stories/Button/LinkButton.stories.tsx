@@ -1,31 +1,31 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps } from "react";
-import React from "react";
+import { action } from "@storybook/addon-actions";
 import { LinkButton } from "./LinkButton";
 import { TextDirection } from "../textDirection";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import LanguageIcon from "@mui/icons-material/Language";
+import SettingsIcon from "@mui/icons-material/Settings";
+import PersonIcon from "@mui/icons-material/Person";
 
-type LinkButtonStoryArgs = ComponentProps<typeof LinkButton> & {
-  showTrailingIcon?: boolean;
+const iconOptions = {
+  none: undefined,
+  arrowForward: ArrowForwardIcon,
+  language: LanguageIcon,
+  settings: SettingsIcon,
+  person: PersonIcon,
+} as const;
+
+type IconOption = keyof typeof iconOptions;
+
+type LinkButtonStoryArgs = React.ComponentProps<typeof LinkButton> & {
+  trailingIconChoice?: IconOption;
 };
 
-const meta = {
-  title: "Component/Button/LinkButton",
+const meta: Meta<LinkButtonStoryArgs> = {
+  title: "Components/Button/LinkButton",
   component: LinkButton,
-  args: {
-    label: "Link Button",
-    href: "https://www.example.com",
-    showTrailingIcon: false,
-    textDirection: TextDirection.Ltr,
-    isDisabled: false,
-  },
   parameters: {
     layout: "centered",
-    docs: {
-      source: {
-        state: "open",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -43,17 +43,14 @@ const meta = {
         category: "Content",
       },
     },
-    showTrailingIcon: {
-      control: "boolean",
-      description: "If true, a trailing icon is displayed.",
-      table: {
-        category: "Content",
-        defaultValue: { summary: "false" },
-      },
+    trailingIconChoice: {
+      control: "select",
+      options: Object.keys(iconOptions),
+      description: "Choose a trailing icon",
+      table: { category: "Icons" },
     },
     trailingIcon: {
-      description:
-        "The trailing icon element. Used internally when `showTrailingIcon` is true.",
+      description: "The trailing icon component.",
       table: {
         category: "Content",
         disable: true,
@@ -85,57 +82,56 @@ const meta = {
       },
     },
   },
-} satisfies Meta<LinkButtonStoryArgs>;
+};
 
 export default meta;
-
 type Story = StoryObj<LinkButtonStoryArgs>;
-
-const renderStory = ({
-  showTrailingIcon,
-  isDisabled,
-  ...args
-}: LinkButtonStoryArgs) => (
-  <LinkButton
-    {...args}
-    isDisabled={isDisabled}
-    trailingIcon={showTrailingIcon ? <ArrowForwardIcon /> : undefined}
-  />
-);
 
 export const Default: Story = {
   args: {
     label: "Link Button",
     href: "#",
+    trailingIconChoice: "none",
+    textDirection: TextDirection.Ltr,
+    isDisabled: false,
+    onClick: action("link-button-clicked"),
   },
-  render: renderStory,
+  render: (args) => {
+    const { trailingIconChoice, ...rest } = args;
+    return (
+      <LinkButton
+        {...rest}
+        trailingIcon={iconOptions[trailingIconChoice || "none"]}
+      />
+    );
+  },
 };
 
 export const WithTrailingIcon: Story = {
   args: {
+    ...Default.args,
     label: "Visit Website",
-    href: "#",
-    showTrailingIcon: true,
+    trailingIconChoice: "arrowForward",
   },
-  render: renderStory,
+  render: Default.render,
 };
 
 export const RTL: Story = {
   args: {
+    ...Default.args,
     label: "קישור",
-    href: "#",
     textDirection: TextDirection.Rtl,
-    showTrailingIcon: true,
+    trailingIconChoice: "arrowForward",
   },
-  render: renderStory,
+  render: Default.render,
 };
 
 export const Disabled: Story = {
   args: {
+    ...Default.args,
     label: "Disabled Link",
-    href: "#",
     isDisabled: true,
-    showTrailingIcon: true,
+    trailingIconChoice: "arrowForward",
   },
-  render: renderStory,
+  render: Default.render,
 };
