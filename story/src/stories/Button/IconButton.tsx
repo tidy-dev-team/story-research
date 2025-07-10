@@ -87,7 +87,6 @@ const iconWrapperStyles = cva("", {
 interface IconButtonProps extends VariantProps<typeof buttonStyles> {
   Icon: SvgIconComponent;
   onClick: () => void;
-  size?: IconButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
 }
