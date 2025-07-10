@@ -70,20 +70,26 @@ const buttonStyles = cva(
   }
 );
 
+const iconWrapperStyles = cva("", {
+  variants: {
+    size: {
+      [IconButtonSize.XSmall]: "text-pz-size-icon-xs",
+      [IconButtonSize.Small]: "text-pz-size-icon-s",
+      [IconButtonSize.Medium]: "text-pz-size-icon-l",
+      [IconButtonSize.Large]: "text-pz-size-icon-xl",
+    },
+  },
+  defaultVariants: {
+    size: IconButtonSize.Medium,
+  },
+});
+
 interface IconButtonProps extends VariantProps<typeof buttonStyles> {
   Icon: SvgIconComponent;
   onClick: () => void;
-  size?: IconButtonSize;
   isDisabled?: boolean;
   textDirection?: TextDirection;
 }
-
-const sizeClassMap: Record<IconButtonSize, string> = {
-  [IconButtonSize.Large]: "text-[24px]",
-  [IconButtonSize.Medium]: "text-[20px]",
-  [IconButtonSize.Small]: "text-[16px]",
-  [IconButtonSize.XSmall]: "text-[12px]",
-};
 
 export const IconButton = ({
   Icon,
@@ -99,13 +105,6 @@ export const IconButton = ({
     }
   };
 
-  const getIconTextSizeClass = (buttonSize: IconButtonSize | null) => {
-    if (buttonSize && sizeClassMap[buttonSize]) {
-      return sizeClassMap[buttonSize];
-    }
-    return "text-[20px]";
-  };
-
   return (
     <button
       className={buttonStyles({ type, size })}
@@ -114,7 +113,7 @@ export const IconButton = ({
       dir={textDirection}
       onClick={handleClick}
     >
-      <div className={getIconTextSizeClass(size)}>
+      <div className={iconWrapperStyles({ size })}>
         <Icon fontSize={IconFontSize.Inherit} />
       </div>
     </button>
