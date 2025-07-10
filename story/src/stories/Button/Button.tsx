@@ -16,12 +16,6 @@ export enum ButtonType {
   Ghost = "ghost",
 }
 
-export const ICON_FONT_SIZES = {
-  [ButtonSize.Small]: IconFontSize.Small,
-  [ButtonSize.Medium]: IconFontSize.Small,
-  [ButtonSize.Large]: IconFontSize.Medium,
-} as const;
-
 const buttonStyles = cva(
   [
     "inline-flex items-center justify-center gap-2",
