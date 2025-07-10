@@ -33,6 +33,15 @@ module.exports = {
           },
         },
       },
+      fontSize: {
+        pz: {
+          size: {
+            icon: {
+              ...pzIconSizes,
+            },
+          },
+        },
+      },
     },
   },
   plugins: [

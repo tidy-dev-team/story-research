@@ -73,10 +73,10 @@ const buttonStyles = cva(
 const iconWrapperStyles = cva("", {
   variants: {
     size: {
-      [IconButtonSize.XSmall]: "text-[12px]",
-      [IconButtonSize.Small]: "text-[16px]",
-      [IconButtonSize.Medium]: "text-[20px]",
-      [IconButtonSize.Large]: "text-[24px]",
+      [IconButtonSize.XSmall]: "text-pz-size-icon-xs",
+      [IconButtonSize.Small]: "text-pz-size-icon-s",
+      [IconButtonSize.Medium]: "text-pz-size-icon-l",
+      [IconButtonSize.Large]: "text-pz-size-icon-xl",
     },
   },
   defaultVariants: {
