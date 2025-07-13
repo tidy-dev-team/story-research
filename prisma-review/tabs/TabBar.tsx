@@ -2,7 +2,7 @@ import React, { ReactNode, ReactElement } from "react";
 import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
 
-const tabBarVariants = cva(["flex", "items-center", "gap-1"]);
+const tabBarStyles = cva(["flex", "items-center", "gap-1"]);
 
 export interface TabBarProps {
   children?: ReactNode;
@@ -14,7 +14,7 @@ export const TabBar = ({
   textDirection = TextDirection.Ltr,
 }: TabBarProps): ReactElement => {
   return (
-    <div role="tablist" dir={textDirection} className={tabBarVariants()}>
+    <div role="tablist" dir={textDirection} className={tabBarStyles()}>
       {children}
     </div>
   );
