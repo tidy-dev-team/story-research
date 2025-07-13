@@ -66,7 +66,7 @@ export const TabBarWithIcons: Story = {
   render: (args) => {
     const [selected, setSelected] = React.useState(0);
     const tabs = ["Home", "About", "Services", "Contact"];
-    const icons = [HomeIcon, AccountCircleIcon, SettingsIcon, MailIcon];
+    const icons = [<HomeIcon fontSize="inherit" />, <AccountCircleIcon fontSize="inherit" />, <SettingsIcon fontSize="inherit" />, <MailIcon fontSize="inherit" />];
     return (
       <TabBar {...args}>
         {tabs.map((label, idx) => (
