@@ -10,8 +10,6 @@ export interface MultiSelectListProps {
     textDirection?: TextDirection;
 }
 
-const listStyles = cva(["flex", "flex-col", "gap-pz-3xs"]);
-
 const checkboxClass = cva("", {
     variants: {
         isMaster: {
@@ -22,12 +20,11 @@ const checkboxClass = cva("", {
 });
 
 export const MultiSelectList = ({
-    title,
+    title = "Select All",
     items,
     titleCount = false,
     textDirection = TextDirection.Ltr,
 }: MultiSelectListProps) => {
-    const displayTitle = title ?? "Select All";
 
     const [states, setStates] = useState<CheckboxState[]>(
         items.map(() => CheckboxState.Unchecked)
@@ -71,10 +68,10 @@ export const MultiSelectList = ({
     }, [states]);
 
     return (
-        <ul className={listStyles()} dir={textDirection}>
+        <ul className="flex flex-col gap-pz-3xs" dir={textDirection}>
             <li className={checkboxClass({ isMaster: true })}>
                 <Checkbox
-                    label={displayTitle}
+                    label={title}
                     state={selectAllState}
                     onChange={() => handleToggle(-1)}
                     count={titleCount ? items.length : null}

@@ -13,7 +13,7 @@ const meta: Meta<typeof MultiSelectList> = {
         title: {
             control: { type: "text" },
             description: "Label for the master checkbox",
-            defaultValue: "Select All",
+            defaultValue: "List Title",
         },
         titleCount: {
             control: { type: "radio" },
@@ -37,7 +37,7 @@ type Story = StoryObj<typeof MultiSelectList>;
 
 export const Default: Story = {
     args: {
-        title: "Select All",
+        title: "List Title",
         items: ["Option 1", "Option 2", "Option 3"],
         textDirection: TextDirection.Ltr,
     },
@@ -51,7 +51,7 @@ export const NoTitle: Story = {
 
 export const WithCount: Story = {
     args: {
-        title: "Select All",
+        title: "List Title",
         titleCount: true,
         items: ["Option 1", "Option 2", "Option 3"],
         textDirection: TextDirection.Ltr,
