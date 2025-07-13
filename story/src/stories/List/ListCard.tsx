@@ -4,7 +4,6 @@ import { TextDirection } from "../textDirection";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { IconButton, IconButtonType } from "../Button/IconButton";
-import { Ghost } from "../Button/IconButton.stories";
 
 export interface ListItem {
     label: string;
@@ -13,6 +12,8 @@ export interface ListItem {
 export interface ListProps {
     items: ListItem[];
     textDirection?: TextDirection;
+    onEdit?: (label: string) => void;
+    onDelete?: (label: string) => void;
 }
 
 const listStyles = cva([
@@ -26,6 +27,8 @@ const listItemStyles = cva([
 export const ListCard = ({
     items,
     textDirection = TextDirection.Ltr,
+    onEdit,
+    onDelete,
 }: ListProps) => {
     return (
         <ul className={listStyles()} dir={textDirection}>
@@ -38,13 +41,13 @@ export const ListCard = ({
                     <p>{label}</p>
                     <span className="flex gap-pz-4xs">
                         <IconButton
-                            icon={EditOutlinedIcon}
-                            onClick={() => console.log(`Edit ${label}`)}
+                            Icon={EditOutlinedIcon}
+                            onClick={() => onEdit?.(label)}
                             type={IconButtonType.Ghost}
                         />
                         <IconButton
-                            icon={DeleteOutlinedIcon}
-                            onClick={() => console.log(`Delete ${label}`)}
+                            Icon={DeleteOutlinedIcon}
+                            onClick={() => onDelete?.(label)}
                             type={IconButtonType.Ghost}
                         />
                     </span>

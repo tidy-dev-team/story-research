@@ -30,6 +30,8 @@ export const Default: Story = {
             { label: "Third item" },
         ],
         textDirection: TextDirection.Ltr,
+        onEdit: () => { console.log('edit') },
+        onDelete: () => { console.log('delete') },
     },
 };
 
