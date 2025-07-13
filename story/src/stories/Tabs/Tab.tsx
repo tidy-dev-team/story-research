@@ -48,7 +48,7 @@ export const Tab = ({
   <button
     type="button"
     role="tab"
-    aria-selected={selected}
+    aria-selected={disabled ? false : selected}
     disabled={disabled}
     dir={textDirection}
     className={tabStyles()}
