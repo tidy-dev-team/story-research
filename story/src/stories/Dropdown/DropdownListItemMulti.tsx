@@ -7,12 +7,8 @@ import { TextDirection } from "../textDirection";
 import {
   getDropdownListStyles,
   DropdownListItemPaddingVariant,
+  DropdownListItemVariant,
 } from "./dropdownListItemStyles";
-
-export enum DropdownListItemVariant {
-  Text = "text",
-  Severity = "severity",
-}
 
 interface BaseDropdownListItemMultiProps {
   variant: DropdownListItemVariant;
@@ -91,27 +87,33 @@ export const DropdownListItemMulti = ({
       aria-checked={getAriaChecked()}
       dir={textDirection}
     >
-      {props.variant === DropdownListItemVariant.Text ? (
-        <Checkbox
-          label={props.label}
-          textDirection={textDirection}
-          state={checkboxState}
-          icon={props.icon ? <props.icon fontSize="small" /> : undefined}
-          count={props.count}
-          onChange={() => {}}
-          isDisabled={isDisabled}
-        />
-      ) : props.variant === DropdownListItemVariant.Severity ? (
-        <CheckboxSeverity
-          isChecked={checkboxState === CheckboxState.Checked}
-          isIndeterminate={checkboxState === CheckboxState.Indeterminate}
-          severityLevel={props.severityLevel}
-          textDirection={textDirection}
-          count={props.count}
-          onChange={() => {}}
-          disabled={isDisabled}
-        />
-      ) : null}
+      <div
+        onClick={(e) => e.preventDefault()}
+        onPointerDown={(e) => e.preventDefault()}
+        style={{ pointerEvents: "none" }}
+      >
+        {props.variant === DropdownListItemVariant.Text ? (
+          <Checkbox
+            label={props.label}
+            textDirection={textDirection}
+            state={checkboxState}
+            icon={props.icon ? <props.icon fontSize="small" /> : undefined}
+            count={props.count}
+            onChange={() => {}}
+            isDisabled={isDisabled}
+          />
+        ) : props.variant === DropdownListItemVariant.Severity ? (
+          <CheckboxSeverity
+            isChecked={checkboxState === CheckboxState.Checked}
+            isIndeterminate={checkboxState === CheckboxState.Indeterminate}
+            severityLevel={props.severityLevel}
+            textDirection={textDirection}
+            count={props.count}
+            onChange={() => {}}
+            disabled={isDisabled}
+          />
+        ) : null}
+      </div>
     </button>
   );
 };

@@ -1,5 +1,10 @@
 import { cva, VariantProps } from "class-variance-authority";
 
+export enum DropdownListItemVariant {
+  Text = "text",
+  Severity = "severity",
+}
+
 export enum DropdownListItemPaddingVariant {
   Simple = "simple",
   Complex = "complex",

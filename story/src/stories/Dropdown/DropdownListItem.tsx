@@ -5,8 +5,9 @@ import { TextDirection } from "../textDirection";
 import {
   getDropdownListStyles,
   DropdownListItemPaddingVariant,
+  DropdownListItemVariant,
 } from "./dropdownListItemStyles";
-import { DropdownListItemVariant } from "./DropdownListItemMulti";
+import { IconFontSize } from "../iconFontSize";
 
 interface BaseDropdownListItemProps {
   variant: DropdownListItemVariant;
@@ -65,7 +66,7 @@ export const DropdownListItem = ({
         <>
           {props.icon && (
             <span className="flex items-center leading-none">
-              <props.icon fontSize="small" />
+              <props.icon fontSize={IconFontSize.Small} />
             </span>
           )}
           <span className="flex-1 truncate min-w-0 translate-y-px">
