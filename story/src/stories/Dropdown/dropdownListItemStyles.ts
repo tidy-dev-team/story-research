@@ -1,4 +1,9 @@
-import { cva } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
+
+export enum DropdownListItemPaddingVariant {
+  Simple = "simple",
+  Complex = "complex",
+}
 
 export const baseDropdownListItemStyles = [
   "flex items-center w-full box-border overflow-hidden",
@@ -12,39 +17,29 @@ export const baseDropdownListItemStyles = [
   "focus-visible:ring-pz-system-border-focused-1",
 ];
 
-export const dropdownListItemPaddingVariants = {
-  simple: "px-pz-4xs py-pz-3xs gap-pz-4xs h-8",
-  complex: "p-pz-4xs gap-pz-4xs min-h-8",
-};
-
-export const dropdownListItemFocusVariants = {
-  simple: "",
-  enhanced:
-    "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
-};
-
-export const dropdownListItemDisabledVariants = {
-  disabled: {
-    true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
-    false: "",
+export const getDropdownListStyles = cva(baseDropdownListItemStyles, {
+  variants: {
+    isDisabled: {
+      true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
+      false: "",
+    },
+    isFocused: {
+      true: "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
+      false: "",
+    },
+    paddingVariant: {
+      [DropdownListItemPaddingVariant.Simple]:
+        "px-pz-4xs py-pz-3xs gap-pz-4xs h-8",
+      [DropdownListItemPaddingVariant.Complex]: "p-pz-4xs gap-pz-4xs min-h-8",
+    },
   },
-};
+  defaultVariants: {
+    isDisabled: false,
+    isFocused: false,
+    paddingVariant: DropdownListItemPaddingVariant.Simple,
+  },
+});
 
-export const createDropdownListItemStyles = (
-  paddingVariant: keyof typeof dropdownListItemPaddingVariants = "simple",
-  focusVariant: keyof typeof dropdownListItemFocusVariants = "simple"
-) => {
-  return cva(
-    [
-      ...baseDropdownListItemStyles,
-      dropdownListItemPaddingVariants[paddingVariant],
-      dropdownListItemFocusVariants[focusVariant],
-    ],
-    {
-      variants: dropdownListItemDisabledVariants,
-      defaultVariants: {
-        disabled: false,
-      },
-    }
-  );
-};
+export type GetDropdownListStylesProps = VariantProps<
+  typeof getDropdownListStyles
+>;

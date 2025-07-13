@@ -1,27 +1,36 @@
 import React, { type ReactElement } from "react";
+import { SvgIconComponent } from "@mui/icons-material";
 import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
 import { CheckboxSeverity } from "../Checkbox/CheckboxSeverity";
 import { SeverityLevel, SeverityType } from "../Severity/Severity";
 import { TextDirection } from "../textDirection";
-import { createDropdownListItemStyles } from "./dropdownListItemStyles";
+import {
+  getDropdownListStyles,
+  DropdownListItemPaddingVariant,
+} from "./dropdownListItemStyles";
+
+export enum DropdownListItemVariant {
+  Text = "text",
+  Severity = "severity",
+}
 
 interface BaseDropdownListItemMultiProps {
-  isChecked?: boolean;
-  isIndeterminate?: boolean;
+  variant: DropdownListItemVariant;
+  checkboxState?: CheckboxState;
   textDirection?: TextDirection;
   isDisabled?: boolean;
-  onSelect?: (isChecked: boolean) => void;
+  onSelect?: (newState: CheckboxState) => void;
 }
 
 interface TextVariantProps extends BaseDropdownListItemMultiProps {
-  variant: "text";
+  variant: DropdownListItemVariant.Text;
   label: string;
-  icon?: React.ReactNode;
+  icon?: SvgIconComponent;
   count?: number | null;
 }
 
 interface SeverityVariantProps extends BaseDropdownListItemMultiProps {
-  variant: "severity";
+  variant: DropdownListItemVariant.Severity;
   severityLevel: SeverityLevel;
   severityType?: SeverityType;
   count?: number;
@@ -29,81 +38,80 @@ interface SeverityVariantProps extends BaseDropdownListItemMultiProps {
 
 type DropdownListItemMultiProps = TextVariantProps | SeverityVariantProps;
 
-
 export const DropdownListItemMulti = ({
-  isChecked = false,
-  isIndeterminate = false,
+  checkboxState = CheckboxState.Unchecked,
   textDirection = TextDirection.Ltr,
   isDisabled = false,
   onSelect,
   ...props
 }: DropdownListItemMultiProps): ReactElement => {
   const handleClick = () => {
-    if (!isDisabled) {
-      onSelect?.(!isChecked);
+    if (!isDisabled && onSelect) {
+      const newState =
+        checkboxState === CheckboxState.Checked
+          ? CheckboxState.Unchecked
+          : CheckboxState.Checked;
+      onSelect(newState);
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if ((event.key === "Enter" || event.key === " ") && !isDisabled) {
-      event.preventDefault();
-      onSelect?.(!isChecked);
+  const getAriaChecked = () => {
+    switch (checkboxState) {
+      case CheckboxState.Indeterminate:
+        return "mixed";
+      case CheckboxState.Checked:
+        return true;
+      case CheckboxState.Unchecked:
+      default:
+        return false;
     }
   };
 
-  const renderContent = () => {
-    if (props.variant === "text") {
-      const checkboxState = isIndeterminate
-        ? CheckboxState.Indeterminate
-        : isChecked
-          ? CheckboxState.Checked
-          : CheckboxState.Unchecked;
-
-      return (
+  return (
+    <button
+      className={getDropdownListStyles({
+        isDisabled,
+        isFocused: true,
+        paddingVariant: DropdownListItemPaddingVariant.Complex,
+      })}
+      onClick={handleClick}
+      onKeyDown={(event) => {
+        (event.key === "Enter" || event.key === " ") && !isDisabled && onSelect
+          ? (event.preventDefault(),
+            onSelect(
+              checkboxState === CheckboxState.Checked
+                ? CheckboxState.Unchecked
+                : CheckboxState.Checked
+            ))
+          : null;
+      }}
+      disabled={isDisabled}
+      type="button"
+      role="menuitemcheckbox"
+      aria-checked={getAriaChecked()}
+      dir={textDirection}
+    >
+      {props.variant === DropdownListItemVariant.Text ? (
         <Checkbox
           label={props.label}
           textDirection={textDirection}
           state={checkboxState}
-          icon={props.icon}
+          icon={props.icon ? <props.icon fontSize="small" /> : undefined}
           count={props.count}
           onChange={() => {}}
           isDisabled={isDisabled}
         />
-      );
-    }
-
-    if (props.variant === "severity") {
-      return (
+      ) : props.variant === DropdownListItemVariant.Severity ? (
         <CheckboxSeverity
-          isChecked={isChecked}
-          isIndeterminate={isIndeterminate}
+          isChecked={checkboxState === CheckboxState.Checked}
+          isIndeterminate={checkboxState === CheckboxState.Indeterminate}
           severityLevel={props.severityLevel}
           textDirection={textDirection}
           count={props.count}
           onChange={() => {}}
           disabled={isDisabled}
         />
-      );
-    }
-  };
-
-  const dropdownListItemStyles = createDropdownListItemStyles(
-    "complex",
-    "enhanced"
-  );
-
-  return (
-    <button
-      className={dropdownListItemStyles({ disabled: isDisabled })}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      disabled={isDisabled}
-      type="button"
-      role="menuitemcheckbox"
-      aria-checked={isIndeterminate ? "mixed" : isChecked}
-      dir={textDirection}
-    >
-      {renderContent()}
+      ) : null}
     </button>
   );
 };
