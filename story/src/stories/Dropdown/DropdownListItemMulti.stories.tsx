@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { action } from "@storybook/addon-actions";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
@@ -11,8 +11,29 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { DropdownListItemMulti } from "./DropdownListItemMulti";
 import { TextDirection } from "../textDirection";
 import { SeverityLevel } from "../Severity/Severity";
+import { CheckboxState } from "../Checkbox/Checkbox";
+import { DropdownListItemVariant } from "./dropdownListItemStyles";
 
-const meta = {
+const iconOptions = {
+  none: undefined,
+  settings: SettingsIcon,
+  person: PersonIcon,
+  home: HomeIcon,
+  search: SearchIcon,
+  notifications: NotificationsIcon,
+  favorite: FavoriteIcon,
+  delete: DeleteIcon,
+} as const;
+
+type IconOption = keyof typeof iconOptions;
+
+type DropdownListItemMultiStoryArgs = React.ComponentProps<
+  typeof DropdownListItemMulti
+> & {
+  iconChoice?: IconOption;
+};
+
+const meta: Meta<DropdownListItemMultiStoryArgs> = {
   title: "Component/Dropdown/DropdownListItemMulti",
   component: DropdownListItemMulti,
   parameters: {
@@ -29,40 +50,30 @@ const meta = {
   argTypes: {
     variant: {
       control: { type: "radio" },
-      options: ["text", "severity"],
+      options: Object.values(DropdownListItemVariant),
     },
     severityLevel: {
       control: { type: "select" },
       options: Object.values(SeverityLevel),
-      if: { arg: "variant", eq: "severity" },
+      if: { arg: "variant", eq: DropdownListItemVariant.Severity },
     },
     label: {
       control: { type: "text" },
-      if: { arg: "variant", eq: "text" },
+      if: { arg: "variant", eq: DropdownListItemVariant.Text },
     },
-    icon: {
+    iconChoice: {
       control: { type: "select" },
-      options: ["none", "settings", "person", "home", "search", "notifications", "favorite", "delete"],
-      mapping: {
-        none: undefined,
-        settings: <SettingsIcon sx={{ fontSize: 16 }} />,
-        person: <PersonIcon sx={{ fontSize: 16 }} />,
-        home: <HomeIcon sx={{ fontSize: 16 }} />,
-        search: <SearchIcon sx={{ fontSize: 16 }} />,
-        notifications: <NotificationsIcon sx={{ fontSize: 16 }} />,
-        favorite: <FavoriteIcon sx={{ fontSize: 16 }} />,
-        delete: <DeleteIcon sx={{ fontSize: 16, color: "#ef4444" }} />,
-      },
-      if: { arg: "variant", eq: "text" },
+      options: Object.keys(iconOptions),
+      description: "Choose an icon",
+      table: { category: "Icons" },
+      if: { arg: "variant", eq: DropdownListItemVariant.Text },
     },
     count: {
       control: { type: "number" },
     },
-    isChecked: {
-      control: { type: "boolean" },
-    },
-    isIndeterminate: {
-      control: { type: "boolean" },
+    checkboxState: {
+      control: { type: "radio" },
+      options: Object.values(CheckboxState),
     },
     textDirection: {
       control: { type: "radio" },
@@ -75,40 +86,51 @@ const meta = {
       control: false,
     },
   },
-} satisfies Meta<typeof DropdownListItemMulti>;
+} satisfies Meta<DropdownListItemMultiStoryArgs>;
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<DropdownListItemMultiStoryArgs>;
 
 // Interactive wrapper component with state management
-const InteractiveDropdownListItemMulti = (args: React.ComponentProps<typeof DropdownListItemMulti>) => {
-  const [isChecked, setIsChecked] = useState(args.isChecked || false);
-  const [isIndeterminate, setIsIndeterminate] = useState(args.isIndeterminate || false);
+const InteractiveDropdownListItemMulti = (
+  args: DropdownListItemMultiStoryArgs
+) => {
+  const [checkboxState, setCheckboxState] = useState(
+    args.checkboxState || CheckboxState.Unchecked
+  );
 
-  const handleSelect = (checked: boolean) => {
-    setIsChecked(checked);
-    setIsIndeterminate(false); // Clear indeterminate when explicitly checking/unchecking
-    action("onSelect")(checked);
+  // Sync internal state with args when they change from Storybook controls
+  useEffect(() => {
+    if (args.checkboxState !== undefined) {
+      setCheckboxState(args.checkboxState);
+    }
+  }, [args.checkboxState]);
+
+  const handleSelect = (newState: CheckboxState) => {
+    setCheckboxState(newState);
+    action("onSelect")(newState);
   };
 
-  return (
-    <DropdownListItemMulti
-      {...args}
-      isChecked={isChecked}
-      isIndeterminate={isIndeterminate}
-      onSelect={handleSelect}
-    />
-  );
+  const { iconChoice, ...rest } = args;
+  const props = {
+    ...rest,
+    checkboxState,
+    onSelect: handleSelect,
+    ...(rest.variant === DropdownListItemVariant.Text && {
+      icon: iconOptions[iconChoice || "none"],
+    }),
+  };
+
+  return <DropdownListItemMulti {...props} />;
 };
 
 export const Default: Story = {
   args: {
-    variant: "text",
+    variant: DropdownListItemVariant.Text,
     label: "Sample Multi Item",
-    icon: "none",
-    isChecked: false,
-    isIndeterminate: false,
+    iconChoice: "none",
+    checkboxState: CheckboxState.Unchecked,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
   },
@@ -117,11 +139,10 @@ export const Default: Story = {
 
 export const TextWithIcon: Story = {
   args: {
-    variant: "text",
+    variant: DropdownListItemVariant.Text,
     label: "Settings",
-    icon: "settings",
-    isChecked: true,
-    isIndeterminate: false,
+    iconChoice: "settings",
+    checkboxState: CheckboxState.Checked,
     count: 3,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
@@ -131,11 +152,10 @@ export const TextWithIcon: Story = {
 
 export const IndeterminateState: Story = {
   args: {
-    variant: "text",
+    variant: DropdownListItemVariant.Text,
     label: "Partially Selected",
-    icon: "person",
-    isChecked: false,
-    isIndeterminate: true,
+    iconChoice: "person",
+    checkboxState: CheckboxState.Indeterminate,
     count: 5,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
@@ -145,10 +165,9 @@ export const IndeterminateState: Story = {
 
 export const SeverityHigh: Story = {
   args: {
-    variant: "severity",
+    variant: DropdownListItemVariant.Severity,
     severityLevel: SeverityLevel.High,
-    isChecked: false,
-    isIndeterminate: false,
+    checkboxState: CheckboxState.Unchecked,
     count: 12,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
@@ -158,10 +177,9 @@ export const SeverityHigh: Story = {
 
 export const SeverityMedium: Story = {
   args: {
-    variant: "severity",
+    variant: DropdownListItemVariant.Severity,
     severityLevel: SeverityLevel.Medium,
-    isChecked: true,
-    isIndeterminate: false,
+    checkboxState: CheckboxState.Checked,
     count: 8,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
@@ -171,11 +189,10 @@ export const SeverityMedium: Story = {
 
 export const DisabledText: Story = {
   args: {
-    variant: "text",
+    variant: DropdownListItemVariant.Text,
     label: "Disabled Item",
-    icon: "person",
-    isChecked: false,
-    isIndeterminate: false,
+    iconChoice: "person",
+    checkboxState: CheckboxState.Unchecked,
     textDirection: TextDirection.Ltr,
     isDisabled: true,
   },
@@ -184,10 +201,9 @@ export const DisabledText: Story = {
 
 export const DisabledSeverity: Story = {
   args: {
-    variant: "severity",
+    variant: DropdownListItemVariant.Severity,
     severityLevel: SeverityLevel.Low,
-    isChecked: true,
-    isIndeterminate: false,
+    checkboxState: CheckboxState.Checked,
     textDirection: TextDirection.Ltr,
     isDisabled: true,
   },

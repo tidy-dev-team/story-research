@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { DropdownListItem } from "./DropdownListItem";
 import { TextDirection } from "../textDirection";
 import { SeverityLevel } from "../Severity/Severity";
+import { DropdownListItemVariant } from "./dropdownListItemStyles";
 
 const iconOptions = {
   none: undefined,
@@ -48,23 +49,23 @@ const meta: Meta<DropdownListItemStoryArgs> = {
   argTypes: {
     variant: {
       control: { type: "radio" },
-      options: ["text", "severity"],
+      options: Object.values(DropdownListItemVariant),
     },
     severityLevel: {
       control: { type: "select" },
       options: Object.values(SeverityLevel),
-      if: { arg: "variant", eq: "severity" },
+      if: { arg: "variant", eq: DropdownListItemVariant.Severity },
     },
     label: {
       control: { type: "text" },
-      if: { arg: "variant", eq: "text" },
+      if: { arg: "variant", eq: DropdownListItemVariant.Text },
     },
     iconChoice: {
       control: { type: "select" },
       options: Object.keys(iconOptions),
       description: "Choose an icon",
       table: { category: "Icons" },
-      if: { arg: "variant", eq: "text" },
+      if: { arg: "variant", eq: DropdownListItemVariant.Text },
     },
     textDirection: {
       control: { type: "radio" },
@@ -85,7 +86,7 @@ type Story = StoryObj<DropdownListItemStoryArgs>;
 
 export const Default: Story = {
   args: {
-    variant: "text",
+    variant: DropdownListItemVariant.Text,
     label: "Sample List Item",
     iconChoice: "none",
     textDirection: TextDirection.Ltr,
@@ -94,7 +95,7 @@ export const Default: Story = {
   },
   render: (args: DropdownListItemStoryArgs) => {
     const { iconChoice, ...rest } = args;
-    if (rest.variant === "text") {
+    if (rest.variant === DropdownListItemVariant.Text) {
       return (
         <DropdownListItem {...rest} icon={iconOptions[iconChoice || "none"]} />
       );
@@ -105,7 +106,7 @@ export const Default: Story = {
 
 export const TextWithIcon: Story = {
   args: {
-    variant: "text",
+    variant: DropdownListItemVariant.Text,
     label: "Settings",
     iconChoice: "settings",
     textDirection: TextDirection.Ltr,
@@ -117,7 +118,7 @@ export const TextWithIcon: Story = {
 
 export const SeverityHigh: Story = {
   args: {
-    variant: "severity",
+    variant: DropdownListItemVariant.Severity,
     severityLevel: SeverityLevel.High,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
@@ -127,7 +128,7 @@ export const SeverityHigh: Story = {
 
 export const SeverityMedium: Story = {
   args: {
-    variant: "severity",
+    variant: DropdownListItemVariant.Severity,
     severityLevel: SeverityLevel.Medium,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
@@ -137,7 +138,7 @@ export const SeverityMedium: Story = {
 
 export const SeverityLow: Story = {
   args: {
-    variant: "severity",
+    variant: DropdownListItemVariant.Severity,
     severityLevel: SeverityLevel.Low,
     textDirection: TextDirection.Ltr,
     isDisabled: false,
@@ -147,7 +148,7 @@ export const SeverityLow: Story = {
 
 export const DisabledText: Story = {
   args: {
-    variant: "text",
+    variant: DropdownListItemVariant.Text,
     label: "Disabled Item",
     iconChoice: "person",
     textDirection: TextDirection.Ltr,
@@ -159,7 +160,7 @@ export const DisabledText: Story = {
 
 export const DisabledSeverity: Story = {
   args: {
-    variant: "severity",
+    variant: DropdownListItemVariant.Severity,
     severityLevel: SeverityLevel.Low,
     textDirection: TextDirection.Ltr,
     isDisabled: true,

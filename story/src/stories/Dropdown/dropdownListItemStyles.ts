@@ -12,7 +12,7 @@ export enum DropdownListItemPaddingVariant {
 
 export const baseDropdownListItemStyles = [
   "flex items-center w-full box-border overflow-hidden",
-  "border-none bg-transparent cursor-pointer",
+  "border-none bg-transparent",
   "text-pz-system-fg-1 pz-label-m",
   "rounded-pz-2xs",
   "transition-all duration-200",
@@ -26,7 +26,7 @@ export const getDropdownListStyles = cva(baseDropdownListItemStyles, {
   variants: {
     isDisabled: {
       true: "text-pz-system-fg-disabled cursor-not-allowed hover:bg-transparent",
-      false: "",
+      false: "cursor-pointer",
     },
     isFocused: {
       true: "focus-visible:rounded-pz-2xs ring-offset-1 ring-offset-pz-gray-1000",
