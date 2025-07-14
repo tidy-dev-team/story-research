@@ -4,7 +4,7 @@ import { ListCard, ListProps } from "./ListCard";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof ListCard> = {
-    title: "Component/List/ListCard",
+    title: "Components/List/ListCard",
     component: ListCard,
     parameters: {
         layout: "centered",
