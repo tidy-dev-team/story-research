@@ -137,6 +137,7 @@ export const WithoutLabel: Story = {
   render: InteractiveCheckbox,
   args: {
     label: undefined,
+    count: null,
   },
 };
 
