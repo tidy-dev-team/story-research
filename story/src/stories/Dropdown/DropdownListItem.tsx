@@ -17,13 +17,11 @@ interface BaseDropdownListItemProps {
 }
 
 interface TextVariantProps extends BaseDropdownListItemProps {
-  variant: DropdownListItemVariant.Text;
   label: string;
   icon?: SvgIconComponent;
 }
 
 interface SeverityVariantProps extends BaseDropdownListItemProps {
-  variant: DropdownListItemVariant.Severity;
   severityLevel: SeverityLevel;
 }
 
@@ -53,6 +51,8 @@ export const DropdownListItem = ({
     }
   };
 
+  const Icon = "icon" in props ? props.icon : undefined;
+
   return (
     <button
       className={getDropdownListStyles({
@@ -72,9 +72,9 @@ export const DropdownListItem = ({
     >
       {variant === DropdownListItemVariant.Text ? (
         <>
-          {"icon" in props && props.icon && (
+          {Icon && (
             <span className="flex items-center leading-none">
-              <props.icon fontSize={IconFontSize.Small} />
+              <Icon fontSize={IconFontSize.Small} />
             </span>
           )}
           <span className="flex-1 truncate min-w-0 translate-y-px">

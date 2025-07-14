@@ -19,14 +19,12 @@ interface BaseDropdownListItemMultiProps {
 }
 
 interface TextVariantProps extends BaseDropdownListItemMultiProps {
-  variant: DropdownListItemVariant.Text;
   label: string;
   icon?: SvgIconComponent;
   count?: number | null;
 }
 
 interface SeverityVariantProps extends BaseDropdownListItemMultiProps {
-  variant: DropdownListItemVariant.Severity;
   severityLevel: SeverityLevel;
   severityType?: SeverityType;
   count?: number;
@@ -75,6 +73,8 @@ export const DropdownListItemMulti = ({
     }
   };
 
+  const Icon = "icon" in props ? props.icon : undefined;
+
   return (
     <button
       className={getDropdownListStyles({
@@ -92,11 +92,11 @@ export const DropdownListItemMulti = ({
     >
       {props.variant === DropdownListItemVariant.Text ? (
         <Checkbox
-          label={props.label}
+          label={"label" in props ? props.label : ""}
           textDirection={textDirection}
           state={checkboxState}
-          icon={props.icon ? <props.icon fontSize="small" /> : undefined}
-          count={props.count}
+          icon={Icon ? <Icon fontSize="small" /> : undefined}
+          count={"count" in props ? props.count : undefined}
           onChange={() => {}}
           isDisabled={isDisabled}
         />
@@ -104,9 +104,11 @@ export const DropdownListItemMulti = ({
         <CheckboxSeverity
           isChecked={checkboxState === CheckboxState.Checked}
           isIndeterminate={checkboxState === CheckboxState.Indeterminate}
-          severityLevel={props.severityLevel}
+          severityLevel={
+            "severityLevel" in props ? props.severityLevel : SeverityLevel.Low
+          }
           textDirection={textDirection}
-          count={props.count}
+          count={"count" in props ? props.count : undefined}
           onChange={() => {}}
           disabled={isDisabled}
         />
