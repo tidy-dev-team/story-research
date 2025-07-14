@@ -12,7 +12,7 @@ import SignalWifiStatusbarNullIcon from '@mui/icons-material/SignalWifiStatusbar
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 
 const meta: Meta<typeof List> = {
-    title: "Component/List/List",
+    title: "Components/List/List",
     component: List,
     parameters: {
         layout: "centered",
