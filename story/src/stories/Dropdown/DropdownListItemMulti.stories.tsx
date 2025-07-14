@@ -34,7 +34,7 @@ type DropdownListItemMultiStoryArgs = React.ComponentProps<
 };
 
 const meta: Meta<DropdownListItemMultiStoryArgs> = {
-  title: "Component/Dropdown/DropdownListItemMulti",
+  title: "Components/Dropdown/DropdownListItemMulti",
   component: DropdownListItemMulti,
   parameters: {
     layout: "centered",

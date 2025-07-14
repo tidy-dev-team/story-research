@@ -33,7 +33,7 @@ type DropdownListItemStoryArgs = React.ComponentProps<
 };
 
 const meta: Meta<DropdownListItemStoryArgs> = {
-  title: "Component/Dropdown/DropdownListItem",
+  title: "Components/Dropdown/DropdownListItem",
   component: DropdownListItem,
   parameters: {
     layout: "centered",
