@@ -37,7 +37,7 @@ export const CheckboxList = ({
 
     const handleToggle = (index: number) => {
         setStates((prev) => {
-            const newStates = [...prev]; // shallow copy
+            const newStates = [...prev];
             newStates[index] =
                 prev[index] === CheckboxState.Checked
                     ? CheckboxState.Unchecked
