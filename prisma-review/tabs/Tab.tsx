@@ -1,6 +1,8 @@
 import React, { ReactElement } from "react";
 import { cva } from "class-variance-authority";
 import { TextDirection } from "../textDirection";
+import { IconFontSize } from "../iconFontSize";
+import { SvgIconComponent } from "@mui/icons-material";
 
 const tabStyles = cva([
   "aria-selected:text-pz-system-fg-1",
@@ -30,7 +32,7 @@ const tabStyles = cva([
 
 export interface TabProps {
   label: string;
-  leadingIcon?: ReactElement;
+  leadingIcon?: SvgIconComponent;
   selected?: boolean;
   disabled?: boolean;
   onClick?: () => void;
@@ -44,27 +46,31 @@ export const Tab = ({
   selected = false,
   disabled = false,
   onClick,
-}: TabProps): ReactElement => (
-  <button
-    type="button"
-    role="tab"
-    aria-selected={disabled ? false : selected}
-    disabled={disabled}
-    dir={textDirection}
-    className={tabStyles()}
-    onClick={onClick}
-    onKeyDown={(event) => {
-      if (!disabled && (event.key === "Enter" || event.key === " ")) {
-        event.preventDefault();
-        onClick?.();
-      }
-    }}
-  >
-    {leadingIcon && (
-      <span className="flex items-center justify-center">
-        {leadingIcon}
-      </span>
-    )}
-    <span>{label}</span>
-  </button>
-);
+}: TabProps): ReactElement => {
+  const Icon = leadingIcon;
+
+  return (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={disabled ? false : selected}
+      disabled={disabled}
+      dir={textDirection}
+      className={tabStyles()}
+      onClick={onClick}
+      onKeyDown={(event) => {
+        if (!disabled && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          onClick?.();
+        }
+      }}
+    >
+      {Icon && (
+        <span className="flex items-center justify-center">
+          <Icon fontSize={IconFontSize.Inherit} />
+        </span>
+      )}
+      <span>{label}</span>
+    </button>
+  );
+};
