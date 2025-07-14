@@ -41,13 +41,24 @@ export const DropdownListItemMulti = ({
   onSelect,
   ...props
 }: DropdownListItemMultiProps): ReactElement => {
-  const handleClick = () => {
+  const toggleCheckboxState = () => {
     if (!isDisabled && onSelect) {
       const newState =
         checkboxState === CheckboxState.Checked
           ? CheckboxState.Unchecked
           : CheckboxState.Checked;
       onSelect(newState);
+    }
+  };
+
+  const handleClick = () => {
+    toggleCheckboxState();
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggleCheckboxState();
     }
   };
 
@@ -71,16 +82,7 @@ export const DropdownListItemMulti = ({
         paddingVariant: DropdownListItemPaddingVariant.Complex,
       })}
       onClick={handleClick}
-      onKeyDown={(event) => {
-        (event.key === "Enter" || event.key === " ") && !isDisabled && onSelect
-          ? (event.preventDefault(),
-            onSelect(
-              checkboxState === CheckboxState.Checked
-                ? CheckboxState.Unchecked
-                : CheckboxState.Checked
-            ))
-          : null;
-      }}
+      onKeyDown={handleKeyDown}
       disabled={isDisabled}
       type="button"
       role="menuitemcheckbox"
