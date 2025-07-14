@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
-import { RadioButtonList } from "./RadioButtonList";
+import { RadioButtonList, RadioButtonListFlow } from "./RadioButtonList";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof RadioButtonList> = {
@@ -33,7 +33,7 @@ type Story = StoryObj<typeof RadioButtonList>;
 export const Vertical: Story = {
     args: {
         items: ["Option 1", "Option 2", "Option 3"],
-        flow: "vertical",
+        flow: RadioButtonListFlow.Vertical,
         textDirection: TextDirection.Ltr,
     },
 };
@@ -41,7 +41,7 @@ export const Vertical: Story = {
 export const Horizontal: Story = {
     args: {
         items: ["Option 1", "Option 2", "Option 3"],
-        flow: "horizontal",
+        flow: RadioButtonListFlow.Horizontal,
         textDirection: TextDirection.Ltr,
     },
 };
@@ -49,7 +49,7 @@ export const Horizontal: Story = {
 export const RTL: Story = {
     args: {
         items: ["אפשרות 1", "אפשרות 2", "אפשרות 3"],
-        flow: "horizontal",
+        flow: RadioButtonListFlow.Horizontal,
         textDirection: TextDirection.Rtl,
     },
 };
