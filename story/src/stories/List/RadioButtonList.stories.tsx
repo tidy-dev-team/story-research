@@ -4,7 +4,7 @@ import { RadioButtonList } from "./RadioButtonList";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof RadioButtonList> = {
-    title: "Component/List/RadioButton List",
+    title: "Components/List/RadioButton List",
     component: RadioButtonList,
     parameters: {
         layout: "centered",
