@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { cva } from "class-variance-authority";
 import { Checkbox, CheckboxState } from "../Checkbox/Checkbox";
 import { TextDirection } from "../textDirection";
 
@@ -9,15 +8,6 @@ export interface MultiSelectListProps {
     titleCount?: boolean;
     textDirection?: TextDirection;
 }
-
-const checkboxClass = cva("", {
-    variants: {
-        isMaster: {
-            true: "",
-            false: "ms-pz-3xs",
-        },
-    },
-});
 
 export const MultiSelectList = ({
     title = "Select All",
@@ -69,7 +59,7 @@ export const MultiSelectList = ({
 
     return (
         <ul className="flex flex-col gap-pz-3xs" dir={textDirection}>
-            <li className={checkboxClass({ isMaster: true })}>
+            <li>
                 <Checkbox
                     label={title}
                     state={selectAllState}
@@ -80,7 +70,7 @@ export const MultiSelectList = ({
             </li>
 
             {items.map((label, idx) => (
-                <li key={idx} className={checkboxClass({ isMaster: false })}>
+                <li key={idx} className="ms-pz-3xs">
                     <Checkbox
                         label={label}
                         state={states[idx]}
