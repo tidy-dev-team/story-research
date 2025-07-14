@@ -8,7 +8,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 type TabStoryArgs = ComponentProps<typeof Tab> & { hasLeadingIcon?: boolean };
 
 const meta = {
-  title: "Component/Tabs/Tab",
+  title: "Components/Tabs/Tab",
   component: Tab,
   args: {
     hasLeadingIcon: false,

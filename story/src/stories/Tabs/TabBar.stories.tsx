@@ -9,7 +9,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import HomeIcon from "@mui/icons-material/Home";
 
 const meta = {
-  title: "Component/Tabs/TabBar",
+  title: "Components/Tabs/TabBar",
   component: TabBar,
   parameters: {
     layout: "centered",
