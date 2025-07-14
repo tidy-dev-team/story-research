@@ -4,7 +4,7 @@ import { CheckboxList } from "./CheckboxList";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof CheckboxList> = {
-    title: "Component/List/Checkbox List",
+    title: "Components/List/Checkbox List",
     component: CheckboxList,
     parameters: {
         layout: "centered",
