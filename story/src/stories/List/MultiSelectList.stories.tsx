@@ -4,7 +4,7 @@ import { MultiSelectList } from "./MultiSelectList";
 import { TextDirection } from "../textDirection";
 
 const meta: Meta<typeof MultiSelectList> = {
-    title: "Component/List/MultiSelect List",
+    title: "Components/List/MultiSelect List",
     component: MultiSelectList,
     parameters: {
         layout: "centered",
