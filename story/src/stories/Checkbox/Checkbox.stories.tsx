@@ -98,7 +98,7 @@ const meta: Meta<CheckboxStoryArgs> = {
       description: "Optional label text for the checkbox",
       table: {
         category: "Content",
-        defaultValue: { summary: "undefined" },
+        defaultValue: { summary: "null" },
       },
     },
     count: {
