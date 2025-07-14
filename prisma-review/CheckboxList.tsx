@@ -32,19 +32,18 @@ export const CheckboxList = ({
     textDirection = TextDirection.Ltr,
 }: CheckboxListProps) => {
     const [states, setStates] = useState<CheckboxState[]>(
-        () => items.map(() => CheckboxState.Unchecked)
+        items.map(() => CheckboxState.Unchecked)
     );
 
     const handleToggle = (index: number) => {
-        setStates((prev) =>
-            prev.map((state, idx) =>
-                idx === index
-                    ? state === CheckboxState.Checked
-                        ? CheckboxState.Unchecked
-                        : CheckboxState.Checked
-                    : state
-            )
-        );
+        setStates((prev) => {
+            const newStates = [...prev];
+            newStates[index] =
+                prev[index] === CheckboxState.Checked
+                    ? CheckboxState.Unchecked
+                    : CheckboxState.Checked;
+            return newStates;
+        });
     };
 
     return (
