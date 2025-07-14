@@ -30,6 +30,7 @@ interface SeverityVariantProps extends BaseDropdownListItemProps {
 type DropdownListItemProps = TextVariantProps | SeverityVariantProps;
 
 export const DropdownListItem = ({
+  variant,
   textDirection = TextDirection.Ltr,
   isDisabled = false,
   onSelect,
@@ -41,45 +42,54 @@ export const DropdownListItem = ({
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (
+      (event.key === "Enter" || event.key === " ") &&
+      !isDisabled &&
+      onSelect
+    ) {
+      event.preventDefault();
+      onSelect();
+    }
+  };
+
   return (
     <button
       className={getDropdownListStyles({
         isDisabled,
-        isFocused: props.variant === DropdownListItemVariant.Severity,
+        isFocused: variant === DropdownListItemVariant.Severity,
         paddingVariant:
-          props.variant === DropdownListItemVariant.Text
+          variant === DropdownListItemVariant.Text
             ? DropdownListItemPaddingVariant.Simple
             : DropdownListItemPaddingVariant.Complex,
       })}
       onClick={handleClick}
-      onKeyDown={(event) => {
-        (event.key === "Enter" || event.key === " ") && !isDisabled && onSelect
-          ? (event.preventDefault(), onSelect())
-          : null;
-      }}
+      onKeyDown={handleKeyDown}
       disabled={isDisabled}
       type="button"
       role="option"
       dir={textDirection}
     >
-      {props.variant === DropdownListItemVariant.Text ? (
+      {variant === DropdownListItemVariant.Text ? (
         <>
-          {props.icon && (
+          {"icon" in props && props.icon && (
             <span className="flex items-center leading-none">
               <props.icon fontSize={IconFontSize.Small} />
             </span>
           )}
           <span className="flex-1 truncate min-w-0 translate-y-px">
-            {props.label}
+            {"label" in props ? props.label : ""}
           </span>
         </>
-      ) : props.variant === DropdownListItemVariant.Severity ? (
+      ) : (
         <Severity
-          level={props.severityLevel}
+          level={
+            "severityLevel" in props ? props.severityLevel : SeverityLevel.Low
+          }
           type={SeverityType.Badge}
           textDirection={textDirection}
         />
-      ) : null}
+      )}
     </button>
   );
 };
