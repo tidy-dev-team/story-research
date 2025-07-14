@@ -83,7 +83,7 @@ const renderStory = ({
     {...args}
     disabled={disabled}
     selected={selected}
-    leadingIcon={renderIcon(hasLeadingIcon, LanguageIcon)}
+    leadingIcon={LanguageIcon}
   />
 );
 export const Default: Story = {
